@@ -1,0 +1,33 @@
+#header-searchForm{
+    position: relative;
+    width: 602px;
+    border: solid 1px red;
+}
+#header-searchForm .dropdown{
+    width: 100px;
+    margin: 0;
+    padding: 0;
+}
+#header-searchForm .dropdown button{
+    width: 100px;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background-color: #fff;
+}
+
+#header{
+    display: flex;
+    position: relative;
+}
+#header-info{
+    display: flex;
+}
+
+.grid2{
+    width: 1px;
+    height: 16px;
+    margin: 4px 12px;
+    border-left: solid 1px black;
+}

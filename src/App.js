@@ -1,25 +1,31 @@
 import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import Hello from './component/Hello';
+import Hello2 from './component/Hello2';
+import Header from './component/Header';
+import IndexPage from './component/Index'
 
-function App() {
+// function App() {
+//   return (
+//     <div className="App">
+//       <Hello />
+//     </div>
+//   );
+// }
+
+// export default App;
+
+const Router = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<IndexPage />} />
+        <Route path="/hello" element={<Hello />} />
+        <Route path="/hello2" element={<Hello2 />} />
+        <Route path='/header' element={<Header />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
-export default App;
+export default Router;
