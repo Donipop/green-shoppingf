@@ -2,50 +2,69 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button} from "react-bootstrap";
 import {input} from "react-bootstrap";
 import React, {useState, useEffect} from "react";
+import Dropdown from 'react-bootstrap/Dropdown';
 
 
 export default function Hello() {
     const [name, setName] = useState('');
     const [ptest, setPtest] = useState('');
-    const [hoho, setHoho] = useState('');
-
+    const [check_the_password, setCheck_the_password] = useState('비밀번호를 입력하세요.');
+    
     const [account, setAccount] = useState({
         username: '',
         name: '',
         email: '',
         password: '',
-        password2: '',
         year: '',
         month: '',
         day: '',
-        address: ''
+        address: '',
+        sex: '',
+        nick: ''
     });
     const onChangeAccount = (e) => {
         setAccount({...account, [e.target.name]: e.target.value,});
     }
+
     useEffect (() => {
     fetch('/api/name')
     .then(response => response.text())
     .then(name => setName(name));
     });
 
-    useEffect(() => {
-        fetch('/api/hoho')
-        .then(response => response.text())
-        .then(hoho => setHoho(hoho));
-    })
-    function posttest(){
-        fetch('/api/signup', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-            },
-            body: account,
-        })
-        .then(response => response.text())
-        .then(name => setPtest(name));
+    function CheckPassword() {
+        var password2 = document.getElementById("password2").value;
+        
+        if(account.password === password2) { 
+            setCheck_the_password('비밀번호가 동일합니다.');
+        }
+        else {
+            setCheck_the_password('비밀번호가 동일하지 않습니다.');   
+        }
+        
         
     }
+
+    function posttest(){
+
+
+        fetch('/api/post', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(account),
+        })
+        .then(
+            response => response.text()
+            ,console.log(account))
+        .then(name => setPtest(name));
+        
+        alert(JSON.stringify(account));
+    }
+
+    
+
   return (
     <div className='container'>
       <h1>회원가입</h1>
@@ -73,13 +92,21 @@ export default function Hello() {
             <div className='d-flex gap-2 w-100 justify-content-between'>
                 <div className='w-100'>
                 <span className='mb-0 d-block text-start'>비밀번호</span>
-                <input id='password' name='password' onChange={onChangeAccount} className='mb-0 d-block w-100 form-control'></input>
+                <input id='password' name='password' type="password" onChange={onChangeAccount} className='mb-0 d-block w-100 form-control'></input>
                 </div>
                 <div className='w-100'>
                 <span className='mb-0 d-block text-start'>비밀번호 재확인</span>
-                <input id='password2' name='password2' onChange={onChangeAccount} className='mb-0 d-block w-100 form-control'></input>
+                <input id='password2' name='password2' type="password" onChange={CheckPassword} className='mb-0 d-block w-100 form-control'></input>
                 </div>
             </div>     
+        </div>
+
+        <div className='list-group-item d-flex gap-3 py-3'>
+            <div className='d-flex gap-2 w-100 justify-content-between'>
+                <div className='w-100'>
+                <span className='mb-0 d-block text-start' name="check_the_password">비밀번호체크: {check_the_password}</span>
+                </div>
+            </div>
         </div>
 
         <div className='list-group-item d-flex gap-3 py-3'>
@@ -115,19 +142,37 @@ export default function Hello() {
             <div className='d-flex gap-2 w-100 justify-content-between'>
                 <div className='w-100'>
                 <span className='mb-0 d-block text-start'>주소</span>
-                <input id='address' name='address' onChange={onChangeAccount} className='mb-0 d-block w-100 form-control'></input>
+                <input id='address' name='address' onChange={onChangeAccount} className='mb-0 d-block w-100 form-control' ></input>
                 </div>
             </div>     
         </div>
 
+        <div className='list-group-item d-flex gap-3 py-3'>
+            <div className='d-flex gap-2 w-100 justify-content-between'>
+                <div className='w-100'>
+                <span className='mb-0 d-block text-start'>성별</span>
+                <input id='sex' name='sex' onChange={onChangeAccount} className='mb-0 d-block w-100 form-control' ></input>
+                </div>
+            </div>    
+        </div>
+
+        
+
+        <div className='list-group-item d-flex gap-3 py-3'>
+            <div className='d-flex gap-2 w-100 justify-content-between'>
+                <div className='w-100'>
+                <span className='mb-0 d-block text-start'>닉네임</span>
+                <input id='nick' name='nick' onChange={onChangeAccount} className='mb-0 d-block w-100 form-control' ></input>
+                </div>
+            </div>     
+        </div>
+
+        
+
         <Button className='mt-3' onClick={posttest}>회원가입</Button>
-
-
-
         <div>
-            {/* <h1>{name}</h1>
-            <h2>{ptest}</h2> */}
-            <h1>{hoho}</h1>
+            <h1>{name}</h1>
+            <h2>{ptest}</h2>
         </div>
       </div>
       
