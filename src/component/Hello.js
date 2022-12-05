@@ -1,8 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Button} from "react-bootstrap";
+import {Button, Dropdown} from "react-bootstrap";
 import {input} from "react-bootstrap";
 import React, {useState, useEffect} from "react";
-import Dropdown from 'react-bootstrap/Dropdown';
+import Header from './Header'
 
 
 export default function Hello() {
@@ -20,16 +20,14 @@ export default function Hello() {
         day: '',
         address: '',
         sex: '',
-        nick: ''
+        nick: '',
+        tel: ''
     });
     const onChangeAccount = (e) => {
         setAccount({...account, [e.target.name]: e.target.value,});
     }
 
-    useEffect (() => {
-    fetch('/api/name')
-    .then(response => response.text())
-    .then(name => setName(name));
+    useEffect(() => {
     });
 
     function CheckPassword() {
@@ -66,7 +64,9 @@ export default function Hello() {
     
 
   return (
+    
     <div className='container'>
+        <Header/>
       <h1>회원가입</h1>
       <div className='list-group w-auto'>
 
@@ -75,6 +75,15 @@ export default function Hello() {
                 <div className='w-100'>
                 <span className='mb-0 d-block text-start'>아이디</span>
                 <input id='username' name='username' onChange={onChangeAccount} className='mb-0 d-block w-100 form-control'></input>
+                </div>
+            </div>     
+        </div>
+
+        <div className='list-group-item d-flex gap-3 py-3'>
+            <div className='d-flex gap-2 w-100 justify-content-between'>
+                <div className='w-100'>
+                <span className='mb-0 d-block text-start'>전화번호</span>
+                <input id='tel' name='tel' onChange={onChangeAccount} className='mb-0 d-block w-100 form-control'></input>
                 </div>
             </div>     
         </div>
@@ -129,6 +138,7 @@ export default function Hello() {
                     <div className='w-100'>
                     <span className='mb-0 d-block text-start'>월</span>
                     <input id='month' name='month' onChange={onChangeAccount} className='mb-0 d-block w-100 form-control'></input>
+                    
                     </div>
                     <div className='w-100'>
                     <span className='mb-0 d-block text-start'>일</span>

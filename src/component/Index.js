@@ -11,7 +11,7 @@ function Index(){
                 <div  className='col-9'>
                     <Header/>
                 </div>
-                
+                    <h2>ㅎㅇ</h2>
             </div>
             
         </div>
