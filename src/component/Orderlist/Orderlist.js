@@ -4,7 +4,7 @@ import Tr,{data2} from './Tr'
 import postcss from "postcss";
 
 
-const Board = () => {
+const Orderlist = () => {
   const [info, setInfo] = useState([]);
   const [checkItems, setCheckItems] = useState([]);
 
@@ -71,4 +71,4 @@ const Board = () => {
   );
 };
 
-export default Board;
+export default Orderlist;
