@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Hello from './component/Hello';
 import Hello2 from './component/Hello2';
 import Header from './component/Header';
-import IndexPage from './component/Index'
+import IndexPage from './component/Index';
+import Login from './component/Login';
 
 // function App() {
 //   return (
@@ -23,6 +24,7 @@ const Router = () => {
         <Route path="/signup" element={<Hello />} />
         <Route path="/hello2" element={<Hello2 />} />
         <Route path='/header' element={<Header />} />
+        <Route path='/login' element={<Login/>} />
       </Routes>
     </BrowserRouter>
   );
