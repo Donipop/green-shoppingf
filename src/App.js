@@ -3,10 +3,9 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Hello from './component/Hello';
 import Hello2 from './component/Hello2';
 import Header from './component/Header';
-
 import IndexPage from './component/Index'
 import SellerCenter from './component/sellercenter/SellerCenter';
-
+import Login from './component/Login'
 
 // function App() {
 //   return (
