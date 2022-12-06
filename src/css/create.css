@@ -1,0 +1,8 @@
+.alert-btn{
+    float: right;
+    margin-top: auto;
+}
+.scrollarea{
+    height: 100px;
+    overflow-y: auto;
+}
