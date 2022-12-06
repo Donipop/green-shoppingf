@@ -2,7 +2,7 @@
 // 상품등록 페이지
 ////////////////////////////////////
 import React, { useState } from 'react';
-import '../css/create.css'
+import '../../css/create.css'
 
 
 

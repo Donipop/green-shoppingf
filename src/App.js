@@ -4,6 +4,7 @@ import Hello from './component/Hello';
 import Hello2 from './component/Hello2';
 import Header from './component/Header';
 import IndexPage from './component/Index'
+import SellerCenter from './component/sellercenter/SellerCenter';
 
 // function App() {
 //   return (
@@ -23,6 +24,7 @@ const Router = () => {
         <Route path="/signup" element={<Hello />} />
         <Route path="/hello2" element={<Hello2 />} />
         <Route path='/header' element={<Header />} />
+        <Route path='/sellercenter/*' element={<SellerCenter />} />
       </Routes>
     </BrowserRouter>
   );

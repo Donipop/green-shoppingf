@@ -1,6 +1,6 @@
-import logo from '../logo.svg'
+import logo from '../../logo.svg'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../css/sellersidebar.css';
+import '../../css/sellersidebar.css';
 
 export default Sidebar;
 

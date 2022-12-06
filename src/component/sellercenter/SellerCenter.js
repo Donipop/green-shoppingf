@@ -1,4 +1,3 @@
-import logo from '../logo.svg'
 import React from 'react';
 import { Route, Routes, useParams } from 'react-router-dom';
 import SellerHeader from './SellerHeader';
