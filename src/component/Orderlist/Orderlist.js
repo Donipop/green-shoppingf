@@ -8,66 +8,88 @@ const Orderlist = () => {
   const [info, setInfo] = useState([]);
   const [checkItems, setCheckItems] = useState([]);
 
+  function User({user}){
+   return (
+     <div>
+      <td><input type='checkbox'></input></td>
+      <td>{user.id}</td>
+      <td>{user.name}</td>
+      <td>{user.email}</td>
+      <td>{user.phone}</td>
+      <td>{user.website}</td>
+      
+     </div>
+
+   )
+
+  }
 //더미 데이터 호출
   useEffect(() => {
     axios.get('https://jsonplaceholder.typicode.com/users')
-      .then(function g(res){
-        let ww = [];
-        for(let i=0; i<res.data.length; i++){
-          let w = {
-            name: [],
-            id: [],
-            email: [],
-            phone: [],
-            website: [],
-            checked: true
-          }
-          w.id.push(res.data[i].id)
-          w.email.push(res.data[i].email)
-          w.name.push(res.data[i].name)
-          w.phone.push(res.data[i].phone)
-          w.website.push(res.data[i].website)
-          ww.push(w)
-        }
-
-        setInfo(ww)
+     .then(res => setInfo(res.data))
+     .catch(err => console.log(err))
         
-        // console.log(res.data)
-        // data.cookie.push(res.data);
-        // console.log(data.cookie);
-      })
-      .catch(err => console.log(err));
+        
   }, []);
+  const [isChecked, setIsChecked] = useState(false);
+  const [checkedItems, setCheckedItems] = useState(new Set());
+  const checkHandler = ({target}) => {
+         setIsChecked(!isChecked)
+         checkedItemHandler(target.parentNode, target.value, target.checked)
+         console.log(target.parentNode)
 
-  const handleAllCheck = (checked) => {
-    if (checked){
-      const idArray = [];
-      info.id.forEach((el) => idArray.push(el.id))
-      setCheckItems(idArray);
-    }
-    else {
-      setCheckItems([]);
-    }
   }
+  const checkedItemHandler = (box,id, isChecked) => {
+    if(isChecked){
+checkedItems.add(id)
+setCheckedItems(checkedItems);
+box.style.backgroundColor = "#F6CB44";
+    } else if(!isChecked && checkedItems.has(id)){
+checkedItems.delete(id)
+setCheckedItems(checkedItems)
+box.style.backgroundColor='#fff';
 
+    }
+    return checkItems
 
-  // console.log(data2);
+  }
   
+  const ddd = document.getElementById('ddd')
+
   return (
     <div className="container max-w-screen-lg mx-auto">
       <div className='text-xl font-bold mt-5 mb-3 text-center'>고객 정보 리스트</div>
         <thead className=''>
           <tr className=''>
-            <th><input type="checkbox" onChange={(e) => handleAllCheck(e.target.checked)}  /></th>
-            <th className="">Id.</th>
-            <th className="">Name</th>
-            <th className="">Email</th>
-            <th className="">Phone No.</th>
-            <th className="">Website</th>
+            <td className="">Id.</td>
+            <td className="">Name</td>
+            <td className="">Email</td>
+            <td className="">Phone No.</td>
+            <td className="">Website</td>
           </tr>
-        </thead>
-         <Tr info={info}/> 
-            </div>
+         <tr className="bg-white border-2 border-gray-20"> 
+         <div>
+
+          {info.map((user) => (<label key = {user.id}>
+            <td><input type="checkbox" value={user.id} onChange={(e) => checkHandler(e)}/></td>
+            <tr>
+              <td  >{user.id}</td>  
+              <td >{user.name}</td>
+              <td >{user.email}</td>
+              <td  >{user.phone}</td>
+              <td >{user.website}</td>
+            </tr>
+            
+             </label>
+            
+             
+          ))}
+             </div>
+
+         </tr>
+         </thead>
+         
+         </div>
   );
 };
 
