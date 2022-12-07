@@ -1,8 +1,11 @@
 import Header from './Header'
 import logo from '../logo.svg'
+import { Cookies } from 'react-cookie';
 export default Index;
 
 function Index(){
+
+    
 
     return(
         <div className='container'>
@@ -12,6 +15,7 @@ function Index(){
                     <Header/>
                 </div>
                     <h2>ㅎㅇ</h2>
+                    <h2>뭔데 ㅅㅂ ㅋ</h2>
             </div>
             
         </div>

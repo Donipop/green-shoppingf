@@ -5,8 +5,9 @@ import Hello2 from './component/Hello2';
 import Header from './component/Header';
 import IndexPage from './component/Index'
 import SellerCenter from './component/sellercenter/SellerCenter';
-import Login from './component/Login'
-import Orderlist from './component/Orderlist/Orderlist'
+import Login from './component/Login';
+import Orderlist from './component/Orderlist/Orderlist';
+
 
 // function App() {
 //   return (
@@ -29,6 +30,7 @@ const Router = () => {
         <Route path='/sellercenter/*' element={<SellerCenter />} />
         <Route path='/login' element={<Login/>} />
         <Route path='/Orderlist' element={<Orderlist/>} />
+        
 
       </Routes>
     </BrowserRouter>
