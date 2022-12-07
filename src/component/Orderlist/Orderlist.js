@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from 'axios';
 import Tr,{data2} from './Tr'
 import postcss from "postcss";
+import { render } from "@testing-library/react";
 
 
 const Orderlist = () => {
@@ -50,30 +51,28 @@ setCheckedItems(checkedItems)
 box.style.backgroundColor='#fff';
 
     }
-    return checkItems
+    return checkedItems
 
   }
-  
-  const ddd = document.getElementById('ddd')
 
+
+  
   return (
-    <div className="container max-w-screen-lg mx-auto">
+    <div className="container  mx-auto">
       <div className='text-xl font-bold mt-5 mb-3 text-center'>고객 정보 리스트</div>
         <thead className=''>
-          <tr className=''>
-            <td className="">Id.</td>
+            <td >Id.</td>
             <td className="">Name</td>
             <td className="">Email</td>
             <td className="">Phone No.</td>
             <td className="">Website</td>
-          </tr>
          <tr className="bg-white border-2 border-gray-20"> 
          <div>
 
           {info.map((user) => (<label key = {user.id}>
             <td><input type="checkbox" value={user.id} onChange={(e) => checkHandler(e)}/></td>
             <tr>
-              <td  >{user.id}</td>  
+              <td >{user.id}</td>  
               <td >{user.name}</td>
               <td >{user.email}</td>
               <td  >{user.phone}</td>
