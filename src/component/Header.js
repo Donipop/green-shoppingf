@@ -6,6 +6,7 @@ import searchicon from 'bootstrap-icons/icons/search.svg';
 import '../css/header.css';
 import { Navigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import axios from 'axios';
 
 export default Header;
 
@@ -17,7 +18,7 @@ function Header() {
         removeCookie('vo');
         Navigate('/');
     }
-
+    
     return (
         <div id='header'>
             <div className='row' id='header-searchForm'>

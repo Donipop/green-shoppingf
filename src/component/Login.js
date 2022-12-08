@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import { json, Route, useNavigate, Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import Header from "./Header";
 
 
 function Login() {
@@ -45,6 +46,9 @@ function Login() {
                     path: '/',
                     maxAge: 3600000
                 })
+                localStorage.setItem("token", res.vo)
+                const TOKEN = localStorage.getItem("token");
+                console.log(TOKEN);
                 alert("홈으로 이동합니다.");
                 Navigate(res.returnURL)
             }
@@ -55,14 +59,10 @@ function Login() {
         })
         
     }
-    
-    function tlqkf() {
-        Navigate('/');
-    }
-    
 
     return(
         <div>
+            <Header />
             <h2>Login</h2>
             <form onSubmit={onSubmitHandler}>
             <div>
@@ -78,7 +78,7 @@ function Login() {
             </div>
             </form>
 
-            <button onClick={tlqkf}>tlqkf</button>
+            
 
             <Link to="/"> 홈으로 </Link>
         </div>
