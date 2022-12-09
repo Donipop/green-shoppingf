@@ -1,4 +1,5 @@
 import logo from './logo.svg';
+import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Hello from './component/Hello';
 import Hello2 from './component/Hello2';
