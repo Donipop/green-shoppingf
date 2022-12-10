@@ -17,7 +17,6 @@ function SellerCenter(){
                     <Route path='/create' element={<Create />}></Route>
                 </Routes>
             </div>
-            
         </div>
         
     );

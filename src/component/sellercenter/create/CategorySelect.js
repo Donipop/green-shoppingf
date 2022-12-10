@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function CategorySelect(){
+function CategorySelect({getData}){
     const [categorylist, setCategorylist] = useState({
         category1: [],
         category2: [],
@@ -21,6 +21,7 @@ function CategorySelect(){
     },[]);
     
     
+    
     const [category, setCategory] = useState({
         category1: '',
         category2: '',
@@ -35,7 +36,7 @@ function CategorySelect(){
      * dropdown menu에서 선택한 카테고리를 state에 저장
      * 
      */
-    const onChangeCategory = (e) => {
+    const onChangeCategory = ((e) => {
         let num = Number(e.target.parentElement.id.split('category')[1]) + 1;
     
         //대분류를 제외한 카테고리를 선택했을 때
@@ -85,7 +86,9 @@ function CategorySelect(){
                 }
             })
         }
-    }
+
+        
+    }, getData('category', category));
     return(
         <>
             <div className='col-3'>
