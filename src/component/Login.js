@@ -44,11 +44,12 @@ function Login() {
             if(res.returnURL === "/") {
                 setCookie('vo', res.vo, {
                     path: '/',
-                    maxAge: 3600000
+                    maxAge: 360
                 })
-                localStorage.setItem("token", res.vo)
-                const TOKEN = localStorage.getItem("token");
+                sessionStorage.setItem("login", res.vo)
+                const TOKEN = sessionStorage.getItem("login");
                 console.log(TOKEN);
+                
                 alert("홈으로 이동합니다.");
                 Navigate(res.returnURL)
             }

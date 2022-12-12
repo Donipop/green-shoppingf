@@ -7,6 +7,9 @@ import IndexPage from './component/Index'
 import SellerCenter from './component/sellercenter/SellerCenter';
 import Login from './component/Login';
 import Orderlist from './component/Orderlist/Orderlist';
+import Information from './component/Information';
+import Logout from './component/Logout';
+
 
 
 // function App() {
@@ -30,7 +33,8 @@ const Router = () => {
         <Route path='/sellercenter/*' element={<SellerCenter />} />
         <Route path='/login' element={<Login/>} />
         <Route path='/Orderlist' element={<Orderlist/>} />
-        
+        <Route path='/information' element={<Information/>} />
+        <Route path='/logout' element={<Logout/>} />
 
       </Routes>
     </BrowserRouter>
