@@ -7,6 +7,7 @@ import IndexPage from './component/Index'
 import SellerCenter from './component/sellercenter/SellerCenter';
 import Login from './component/Login'
 import Orderlist from './component/Orderlist/Orderlist'
+import Ordersearch from './component/Orderlist/Ordersearch'
 
 // function App() {
 //   return (
@@ -29,6 +30,7 @@ const Router = () => {
         <Route path='/sellercenter/*' element={<SellerCenter />} />
         <Route path='/login' element={<Login/>} />
         <Route path='/Orderlist' element={<Orderlist/>} />
+        <Route path='/Ordersearch' element={<Ordersearch/>} />
 
       </Routes>
     </BrowserRouter>
