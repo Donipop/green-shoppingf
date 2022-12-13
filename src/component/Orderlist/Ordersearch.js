@@ -5,6 +5,7 @@ import styled from "styled-components";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Dropdown} from "react-bootstrap";
 import axios from 'axios';
+import { json } from 'react-router-dom';
 
 
 
@@ -15,6 +16,7 @@ const Ordersearch = (props) => {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [List, setList] = useState([]);
+    const [values, setValues] = useState();
     const DateFilterData = [
         {
           id: 1,
@@ -88,7 +90,6 @@ const Ordersearch = (props) => {
   const onChangeSearch = (e) => {
     e.preventDefault();
     setSearch(e.target.value);
-    console.log(search)
   };
 
   const onSearch = (e) => {
@@ -96,9 +97,12 @@ const Ordersearch = (props) => {
     if(search === null || search === ""){
     e.preventDefault(); 
       alert("검색어를 입력해주세요.")
-  } {
-    const data = List.filter((row) => row.includes(search));
-    setList(data)
+  } else if(List.includes(search)){
+    e.preventDefault();
+
+    const a = (props.value.filter((row) => row.name === search))
+    setValues(a);
+     
     
 }
     
@@ -110,31 +114,13 @@ useEffect(() => {
   if (props.value.length === 0) {
     return;
   }
-  {props.value.map((user) => ( 
-     List.push(user.name) ,
-     setList(List)
-    ))}
+  //props.value.name 리스트에 저장
+    const data = props.value.map((row) => row.name);
+    setList(data);
 },[props])
 
-console.log({List})
 
-const items = props.value.map(data => {
-return (
-<div>
-  <ul>
-  <li>
-  <span>{data.id}</span>
-  <span>{data.name}</span>
-  <span>{data.website}</span>
-  </li>
-
-  </ul>
-</div>
-
-)
-
-})
-
+console.log((props.value.filter((row) => row.name === "Leanne Graham")))
 
  
     
@@ -198,8 +184,7 @@ return (
 
   </Div> 
   
-  <p id="dd">{items}</p>
-
+   <p>{JSON.stringify(values)}</p>
   </Table>
       
   </div>
