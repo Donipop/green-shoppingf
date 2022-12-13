@@ -1,5 +1,6 @@
 import Header from './Header'
 import logo from '../logo.svg'
+<<<<<<< HEAD
 import { useCookies } from 'react-cookie';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -7,6 +8,9 @@ import { json, Navigate } from 'react-router-dom';
 
 
 
+=======
+import React from 'react';
+>>>>>>> 7e925fd3c019aadf52ed05acfcfbfb9041edf966
 export default Index;
 
 function Index(){

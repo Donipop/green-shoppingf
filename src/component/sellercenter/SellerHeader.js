@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Button } from 'react-bootstrap';
+import React from 'react';
 import styled from "styled-components";
 import logo from '../../logo.svg'
 
