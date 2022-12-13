@@ -1,6 +1,7 @@
 import logo from '../../logo.svg'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/sellersidebar.css';
+import React from 'react';
 
 export default Sidebar;
 

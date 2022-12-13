@@ -1,5 +1,6 @@
 import Header from './Header'
 import logo from '../logo.svg'
+import React from 'react';
 export default Index;
 
 function Index(){
