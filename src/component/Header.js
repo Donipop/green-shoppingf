@@ -4,10 +4,44 @@ import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import searchicon from 'bootstrap-icons/icons/search.svg';
 import '../css/header.css';
+import { useCookies } from 'react-cookie';
+import axios from 'axios';
 
 export default Header;
 
 function Header() {
+    
+    let login_information = sessionStorage.getItem("login")
+    login_information = JSON.parse(login_information);
+    
+    
+    
+    const [text, settext] = useState()
+    const [aaa, setaaa] = useState()
+    
+    
+
+    function rotlqkf() {
+        if( login_information == null ) {
+            settext("로그인")
+            setaaa("login")
+        }
+        else if (login_information != null ) {
+            settext("로그아웃")
+            setaaa("/logout")
+        }
+
+        
+    }
+    
+    useEffect(() => {
+      rotlqkf()  
+        
+    }, )
+    
+
+
+    
     return (
         <div id='header'>
             <div className='row' id='header-searchForm'>
@@ -33,11 +67,14 @@ function Header() {
             </div>
             
             <div id='header-info' className='position-absolute end-0 top-0'>
-                <a href='/login' className='nav-link link-dark'>로그인</a>
+                <a href={(aaa)} className='nav-link link-dark'>{(text)}</a>
                 <div className='grid2'></div>
                 <a href='/signup' className='nav-link'>회원가입</a>
                 <div className='grid2'></div>
                 <a href='/information' className='nav-link'>고객센터</a>
+                <div className='gird2'></div>
+                
+                
             </div>
 
         </div>

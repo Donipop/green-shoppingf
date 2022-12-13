@@ -1,9 +1,49 @@
 import Header from './Header'
 import logo from '../logo.svg'
+<<<<<<< HEAD
+import { useCookies } from 'react-cookie';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { json, Navigate } from 'react-router-dom';
+
+
+
+=======
 import React from 'react';
+>>>>>>> 7e925fd3c019aadf52ed05acfcfbfb9041edf966
 export default Index;
 
 function Index(){
+
+    var user_id = "";
+    
+    let login_information = sessionStorage.getItem("login")
+    login_information = JSON.parse(login_information);
+    
+    function start() {
+
+    if (login_information === null) {
+        user_id = "로그인 된 정보가 없습니다."
+    }
+    else if (login_information != null) {
+        user_id = login_information.user_id
+    }
+
+    return user_id
+}    
+
+    user_id = start()
+
+    const [ cookies, setCookies, removeCookie] = useCookies('vo');
+    
+    
+    
+
+    
+
+    useEffect(() => {
+        
+    }, [])
 
     return(
         <div className='container'>
@@ -11,11 +51,14 @@ function Index(){
                     <img src={logo} className='col-3' style={{width: 82, height:42}}></img>
                 <div  className='col-9'>
                     <Header/>
-                </div>
-                    <h2>ㅎㅇ</h2>
+                </div>  
             </div>
-            
+            <div>
+                <h2>아이디 : {user_id}님 안녕하세요</h2>                    
+            </div>
         </div>
+
+        
         
     );
 
