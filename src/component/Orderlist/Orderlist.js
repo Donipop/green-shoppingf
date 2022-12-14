@@ -48,34 +48,30 @@ const Orderlist = () => {
     <div className="container  mx-auto">
       <Ordersearch value={info}/>
       <div className='text-xl font-bold mt-5 mb-3 text-center'>고객 정보 리스트</div>
-      <Table className="table-auto"  >
-        
-          <tr  >
-            <TTTd  ><input type="checkbox" onChange={(e) => handleSelectAll(e.target.checked)} /></TTTd>
-            <TTTd >Id.</TTTd>
-            <TTd  >Name</TTd>
-            <TTd  >Email</TTd>
-            <TTTTd  >Phone No.</TTTTd>
-            <TTd  >Website</TTd>
+      <Table>
+        <tbody>
+          <tr>
+            <TTTd><input type="checkbox" onChange={(e) => handleSelectAll(e.target.checked)}/></TTTd>
+            <TTTd>Id.</TTTd>
+            <TTd>Name</TTd>
+            <TTd>Email</TTd>
+            <TTTTd>Phone No.</TTTTd>
+            <TTd>Website</TTd>
           </tr>
-
           {info.map((user) => ( 
-          <tr key ={user.id}>
+          <tr key={user.id}>
             <Td><input type="checkbox" value={user.id} checked={ischecked[user.id-1]} onChange={(e) => checkHandler(e)}/></Td>
-            <Td >{user.id}</Td>  
+            <Td>{user.id}</Td>  
             <Td>{user.name}</Td>
             <Td>{user.email}</Td>
             <Td>{user.phone}</Td>
             <Td>{user.website}</Td>
-            
           </tr>
-          
           ))}
-
+        </tbody>
+        </Table>
+        </div>
          
-</Table>
-
-         </div>
   );
   
 };
