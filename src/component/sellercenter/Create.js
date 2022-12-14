@@ -22,12 +22,18 @@ function Create(){
         Title: '',
         Content: '',
         MainImg: '',
-        DetailImg: '',
-        Product: '',
+        DetailImg: [''],
+        Product: [''],
     });
     
     const onClickCreate = () => {
-        axios.post('/api/sellercenter/create',product);
+        axios.post('/api/sellercenter/create',product).then((res) => {
+            if (res.data === 'success'){
+                alert('상품등록이 완료되었습니다.');
+            }else{
+                alert(res.data);
+            }
+        });
         console.log(product);
     }
 

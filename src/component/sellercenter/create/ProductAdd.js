@@ -4,8 +4,8 @@ import styled from "styled-components";
 export default function ProductAdd({getData}) {
     const [price, setPrice] = useState(0);
     const [date, setDate] = useState({
-        start: '',
-        end: ''
+        start: '0000-01-01',
+        end: '9999-12-31'
     });
     const [discount, setDiscount] = useState(0);
     const [productCount, setProductCount] = useState(0);
@@ -34,12 +34,12 @@ export default function ProductAdd({getData}) {
             return;
         }
 
-        if (date.start === '' || date.start === undefined){
-            date.start = "0000-01-01";
+        if (date.start === undefined || date.start === ''){
+            setDate((date) => date = {...date, start: "0000-01-01"});
         }
 
         if (date.end === '' || date.end === undefined){
-            date.end = "9999-12-31";
+            setDate((date) => date = {...date, end: "9999-12-31"});
         }
 
         let product = {
@@ -55,7 +55,10 @@ export default function ProductAdd({getData}) {
         setPrice(0);
         setProductCount(0);
         setDiscount(0);
-        setDate(0);
+        setDate((date) => date = {
+            start: '0000-01-01',
+            end: '9999-12-31'
+        });
         document.getElementById('product-name-add').value = '';
         document.getElementById('product-price-add').value = '';
         document.getElementById('product-count-add').value = '';
