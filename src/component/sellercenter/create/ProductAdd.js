@@ -21,6 +21,7 @@ export default function ProductAdd({getData}) {
     }, [productList])
 
     const onClickAdd = (e) => {
+        console.log(date.start)
         if(productName === ''){
             alert('상품명을 입력해주세요.');
             return;
@@ -139,14 +140,16 @@ export default function ProductAdd({getData}) {
 
         //판매기간 버튼 클릭시
         if(e.target.id === 'date-true-add'){
-            setDate(1);
             //스타일 변경
             buttonEvent(e.target,document.getElementById('date-fasle-add'));
             //콜랩스 열기
             document.getElementById('date-true-add-collapse').classList.add('show');
         }
         if(e.target.id === 'date-fasle-add'){
-            setDate(0);
+            setDate((date) => date = {
+                start: '0000-01-01',
+                end: '9999-12-31'
+                });
             //스타일 변경
             buttonEvent(e.target,document.getElementById('date-true-add'));
             //콜랩스 닫기
