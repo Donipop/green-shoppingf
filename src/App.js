@@ -12,6 +12,9 @@ import Information from './component/Information';
 import Logout from './component/Logout';
 import Ordersearch from './component/Orderlist/Ordersearch'
 import Notice from './component/Notice/Noticelist'
+import NoticeView from './component/Notice/NoticeView';
+import SellerSignup from './component/SellerSignup/Signup';
+import SellerSignup2 from './component/SellerSignup/Signup2';
 
 // function App() {
 //   return (
@@ -24,6 +27,8 @@ import Notice from './component/Notice/Noticelist'
 // export default App;
 
 const Router = () => {
+
+
   return (
     <BrowserRouter>
       <Routes>
@@ -38,6 +43,9 @@ const Router = () => {
         <Route path='/logout' element={<Logout/>} />
         <Route path='/Ordersearch' element={<Ordersearch/>} />
         <Route path='/Notice' element={<Notice/>} />
+        <Route path='/NoticeDetail/:id' element={<NoticeView/>} />
+        <Route path='/SellerSignup' element={<SellerSignup/>} />
+        <Route path='/SellerSignup2' element={<SellerSignup2/>} />
       </Routes>
     </BrowserRouter>
   );
