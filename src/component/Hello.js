@@ -9,6 +9,8 @@ export default function Hello() {
     const [name, setName] = useState('');
     const [ptest, setPtest] = useState('');
     const [check_the_password, setCheck_the_password] = useState('비밀번호를 입력하세요.');
+
+    
     
     const [account, setAccount] = useState({
         username: '',
@@ -24,8 +26,9 @@ export default function Hello() {
         tel: ''
     });
     const onChangeAccount = (e) => {
-        setAccount({...account, [e.target.name]: e.target.value,});
+        setAccount({...account, [e.target.name]: e.target.value,});   
     }
+
 
     useEffect(() => {
     });
@@ -44,6 +47,7 @@ export default function Hello() {
     }
 
     function posttest(){
+        
 
 
         fetch('/api/post', {

@@ -6,18 +6,13 @@ import Hello2 from './component/Hello2';
 import Header from './component/Header';
 import IndexPage from './component/Index'
 import SellerCenter from './component/sellercenter/SellerCenter';
-<<<<<<< HEAD
 import Login from './component/Login';
 import Orderlist from './component/Orderlist/Orderlist';
 import Information from './component/Information';
 import Logout from './component/Logout';
-
-
-=======
-import Login from './component/Login'
-import Orderlist from './component/Orderlist/Orderlist'
-import Ordersearch from './component/Orderlist/Ordersearch'
->>>>>>> 7e925fd3c019aadf52ed05acfcfbfb9041edf966
+import Ordersearch from './component/Orderlist/Ordersearch';
+import Myinformation from './component/Mypage/Myinformation';
+import Mypage from './component/Mypage/Mypage';
 
 // function App() {
 //   return (
@@ -40,12 +35,11 @@ const Router = () => {
         <Route path='/sellercenter/*' element={<SellerCenter />} />
         <Route path='/login' element={<Login/>} />
         <Route path='/Orderlist' element={<Orderlist/>} />
-<<<<<<< HEAD
         <Route path='/information' element={<Information/>} />
         <Route path='/logout' element={<Logout/>} />
-=======
         <Route path='/Ordersearch' element={<Ordersearch/>} />
->>>>>>> 7e925fd3c019aadf52ed05acfcfbfb9041edf966
+        <Route path='/myinformation' element={<Myinformation/>} />
+        <Route path='/mypage' element={<Mypage/>} />
 
       </Routes>
     </BrowserRouter>

@@ -10,7 +10,7 @@ function Logout() {
     const Logout = () => {
         axios({
             method: "post",
-            url: "/api/logout",
+            url: "/api/login/logout",
             data: {
                 login : sessionStorage.getItem("login")
                 
@@ -18,6 +18,7 @@ function Logout() {
         })
         .then(res => res.data)
         .then(sessionStorage.removeItem("login"))
+        .then(localStorage.removeItem("login"))
         .then(removeCookie('vo'))
         .then(res => alert(res))
         .then(Navigate('/'))

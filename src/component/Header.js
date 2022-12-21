@@ -21,7 +21,7 @@ function Header() {
     
     
 
-    function rotlqkf() {
+    function changelogin() {
         if( login_information == null ) {
             settext("로그인")
             setaaa("login")
@@ -35,7 +35,7 @@ function Header() {
     }
     
     useEffect(() => {
-      rotlqkf()  
+      changelogin()  
         
     }, )
     
@@ -73,6 +73,9 @@ function Header() {
                 <div className='grid2'></div>
                 <a href='/information' className='nav-link'>고객센터</a>
                 <div className='gird2'></div>
+                <a href='/mypage' className='nav-link'>나의정보</a>
+                <div className='grid2'></div>
+                
                 
                 
             </div>
