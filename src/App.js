@@ -13,6 +13,10 @@ import Logout from './component/Logout';
 import Ordersearch from './component/Orderlist/Ordersearch';
 import Myinformation from './component/Mypage/Myinformation';
 import Mypage from './component/Mypage/Mypage';
+import Notice from './component/Notice/Noticelist'
+import NoticeView from './component/Notice/NoticeView';
+import SellerSignup from './component/SellerSignup/Signup';
+import SellerSignup2 from './component/SellerSignup/Signup2';
 
 // function App() {
 //   return (
@@ -25,6 +29,8 @@ import Mypage from './component/Mypage/Mypage';
 // export default App;
 
 const Router = () => {
+
+
   return (
     <BrowserRouter>
       <Routes>
@@ -40,7 +46,10 @@ const Router = () => {
         <Route path='/Ordersearch' element={<Ordersearch/>} />
         <Route path='/myinformation' element={<Myinformation/>} />
         <Route path='/mypage' element={<Mypage/>} />
-
+        <Route path='/Notice' element={<Notice/>} />
+        <Route path='/NoticeDetail/:id' element={<NoticeView/>} />
+        <Route path='/SellerSignup' element={<SellerSignup/>} />
+        <Route path='/SellerSignup2' element={<SellerSignup2/>} />
       </Routes>
     </BrowserRouter>
   );

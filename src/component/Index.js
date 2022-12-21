@@ -7,6 +7,7 @@ import { json, Navigate } from 'react-router-dom';
 
 
 
+
 export default Index;
 
 function Index(){
@@ -49,7 +50,8 @@ function Index(){
                 </div>  
             </div>
             <div>
-                <h2>닉네임 : {user_id}</h2>                    
+                <h2>닉네임 : {user_id}</h2>
+                <a href='/notice'>공지사항</a>                    
             </div>
         </div>
 
