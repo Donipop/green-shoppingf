@@ -24,6 +24,8 @@ function Create(){
         MainImg: '',
         DetailImg: [''],
         Product: [''],
+        Market_Name: '0',
+        Event: ''
     });
     
     const onClickCreate = () => {
