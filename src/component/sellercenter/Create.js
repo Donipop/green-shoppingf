@@ -24,8 +24,9 @@ function Create(){
         MainImg: '',
         DetailImg: [''],
         Product: [''],
-        Market_Name: '0',
-        Event: ''
+        Market_Name: '마켓이름',
+        Event: '',
+        UserId: 'admin'
     });
     
     const onClickCreate = () => {

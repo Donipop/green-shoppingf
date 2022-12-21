@@ -4,7 +4,7 @@ import styled from "styled-components";
 export default function ProductAdd({getData}) {
     const [price, setPrice] = useState(0);
     const [date, setDate] = useState({
-        start: '0000-01-01',
+        start: '1000-01-01',
         end: '9999-12-31'
     });
     const [discount, setDiscount] = useState(0);
@@ -21,7 +21,6 @@ export default function ProductAdd({getData}) {
     }, [productList])
 
     const onClickAdd = (e) => {
-        console.log(date.start)
         if(productName === ''){
             alert('상품명을 입력해주세요.');
             return;
@@ -36,10 +35,12 @@ export default function ProductAdd({getData}) {
         }
 
         if (date.start === undefined || date.start === ''){
-            setDate((date) => date = {...date, start: "0000-01-01"});
+            console.log('start :' + date.start)
+            setDate((date) => date = {...date, start: "1000-01-01"});
         }
 
-        if (date.end === '' || date.end === undefined){
+        if (date.end === undefined || date.end === ''){
+            console.log('end :' + date.end)
             setDate((date) => date = {...date, end: "9999-12-31"});
         }
 
@@ -57,7 +58,7 @@ export default function ProductAdd({getData}) {
         setProductCount(0);
         setDiscount(0);
         setDate((date) => date = {
-            start: '0000-01-01',
+            start: '1000-01-01',
             end: '9999-12-31'
         });
         document.getElementById('product-name-add').value = '';
@@ -147,7 +148,7 @@ export default function ProductAdd({getData}) {
         }
         if(e.target.id === 'date-fasle-add'){
             setDate((date) => date = {
-                start: '0000-01-01',
+                start: '1000-01-01',
                 end: '9999-12-31'
                 });
             //스타일 변경
