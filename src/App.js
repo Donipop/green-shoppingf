@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Hello from './component/Hello';
 import Hello2 from './component/Hello2';
@@ -19,7 +19,7 @@ import NoticeView from './component/Notice/NoticeView';
 import SellerSignup from './component/SellerSignup/Signup';
 import SellerSignup2 from './component/SellerSignup/Signup2';
 import Writenotice from './component/Notice/Writenotice';
-
+import View from './component/ProductView/View';
 // function App() {
 //   return (
 //     <div className="App">
@@ -30,9 +30,9 @@ import Writenotice from './component/Notice/Writenotice';
 
 // export default App;
 
-const Router = () => {
 
-
+const Router = (props) => {
+  const [page, setPage] = useState(1);
   return (
     <BrowserRouter>
       <Routes>
@@ -53,6 +53,7 @@ const Router = () => {
         <Route path='/SellerSignup' element={<SellerSignup/>} />
         <Route path='/SellerSignup2' element={<SellerSignup2/>} />
         <Route path='/writenotice' element={<Writenotice/>} />
+        <Route path="/view/:page" element={<View/>} />
       </Routes>
     </BrowserRouter>
   );
