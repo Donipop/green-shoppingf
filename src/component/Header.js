@@ -73,7 +73,7 @@ function Header() {
                 <div className='grid2'></div>
                 <a href='/information' className='nav-link'>고객센터</a>
                 <div className='gird2'></div>
-                <a href='/mypage' className='nav-link'>나의정보</a>
+                <a href='/mypage' className='nav-link'>마이페이지</a>
                 <div className='grid2'></div>
                 
                 

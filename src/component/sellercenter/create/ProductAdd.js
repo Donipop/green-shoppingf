@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 
-export default function ProductAdd() {
+export default function ProductAdd({getData}) {
     const [price, setPrice] = useState(0);
     const [date, setDate] = useState({
-        start: '',
-        end: ''
+        start: '1000-01-01',
+        end: '9999-12-31'
     });
     const [discount, setDiscount] = useState(0);
     const [productCount, setProductCount] = useState(0);
@@ -15,6 +15,10 @@ export default function ProductAdd() {
         buttonEvent(document.getElementById('discount-fasle-add'),null);
         buttonEvent(document.getElementById('date-fasle-add'),null);
     }, []);
+
+    useEffect(() => {
+        getData('product',productList);
+    }, [productList])
 
     const onClickAdd = (e) => {
         if(productName === ''){
@@ -29,6 +33,17 @@ export default function ProductAdd() {
             alert('재고를 입력해주세요.');
             return;
         }
+
+        if (date.start === undefined || date.start === ''){
+            console.log('start :' + date.start)
+            setDate((date) => date = {...date, start: "1000-01-01"});
+        }
+
+        if (date.end === undefined || date.end === ''){
+            console.log('end :' + date.end)
+            setDate((date) => date = {...date, end: "9999-12-31"});
+        }
+
         let product = {
             name: productName,
             price: price,
@@ -42,7 +57,10 @@ export default function ProductAdd() {
         setPrice(0);
         setProductCount(0);
         setDiscount(0);
-        setDate(0);
+        setDate((date) => date = {
+            start: '1000-01-01',
+            end: '9999-12-31'
+        });
         document.getElementById('product-name-add').value = '';
         document.getElementById('product-price-add').value = '';
         document.getElementById('product-count-add').value = '';
@@ -50,12 +68,7 @@ export default function ProductAdd() {
         document.getElementById('product-date-start-add').value = '';
         document.getElementById('product-date-end-add').value = '';
 
-        document.getElementById('discount-fasle-add').classList.add('active');
-        document.getElementById('discount-true-add').classList.remove('active');
-        document.getElementById('discount-true-add-collapse').classList.remove('show');
-        document.getElementById('date-fasle-add').classList.add('active');
-        document.getElementById('date-true-add').classList.remove('active');
-        document.getElementById('date-true-add-collapse').classList.remove('show');
+        
     }
 
     const onClickDelete = (e) =>{
@@ -72,11 +85,11 @@ export default function ProductAdd() {
     const onChangeDate = (e) => {
         if(e.target.id === 'product-date-start-add'){
             setDate((date) => date = {...date, start: e.target.value});
-            console.log("datestart: ",e.target.value)
+            // console.log("datestart: ",e.target.value)
         }
         if(e.target.id === 'product-date-end-add'){
             setDate((date) => date = {...date, end: e.target.value});
-            console.log("dateend: ",date)
+            // console.log("dateend: ",date)
         }
     }
 
@@ -128,14 +141,16 @@ export default function ProductAdd() {
 
         //판매기간 버튼 클릭시
         if(e.target.id === 'date-true-add'){
-            setDate(1);
             //스타일 변경
             buttonEvent(e.target,document.getElementById('date-fasle-add'));
             //콜랩스 열기
             document.getElementById('date-true-add-collapse').classList.add('show');
         }
         if(e.target.id === 'date-fasle-add'){
-            setDate(0);
+            setDate((date) => date = {
+                start: '1000-01-01',
+                end: '9999-12-31'
+                });
             //스타일 변경
             buttonEvent(e.target,document.getElementById('date-true-add'));
             //콜랩스 닫기
@@ -208,6 +223,9 @@ export default function ProductAdd() {
                 </div>
             </div>
 
+            <small>판매기간을 설정하지 않으면 제품이 등록된 순간 바로 올라갑니다</small>
+            <small>시작날짜은 설정하지 않으면 제품이 등록된 순간 바로 올라갑니다</small>
+            <small>종료날짜를 설정하지 않으면 시작날짜 이후부터 제품을 내리기 전까지 등록됩니다</small>
             <Hr/>
 
             <div>

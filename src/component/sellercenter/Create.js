@@ -10,6 +10,7 @@ import ProductName from './create/ProductName';
 import ProductPrice from './create/ProductPrice';
 import ProductContent from './create/ProductContent';
 import ProductAdd from './create/ProductAdd';
+import axios from 'axios';
 
 /**
  * 상품등록 페이지 컴포넌트
@@ -17,27 +18,87 @@ import ProductAdd from './create/ProductAdd';
  */
 function Create(){
     const [product, setProduct] = useState({
-        category: [],
-        name: '',
-        price: '',
-        content: '',
-        img: '',
+        Category: '',
+        Title: '',
+        Content: '',
+        MainImg: '',
+        DetailImg: [''],
+        Product: [''],
+        Market_Name: '마켓이름',
+        Event: '',
+        UserId: 'admin'
     });
-
+    
     const onClickCreate = () => {
+        axios.post('/api/sellercenter/create',product).then((res) => {
+            if (res.data === 'success'){
+                alert('상품등록이 완료되었습니다.');
+            }else{
+                alert(res.data);
+            }
+        });
         console.log(product);
     }
 
     const getData = (dataType,data) => {
-        console.log(data);
         if (dataType === 'category'){
             setProduct((product) => {
                 return {
-                    ...product, category: data
+                    ...product, Category: data
                 }
             })
         }
+
+        if (dataType === 'title'){
+            setProduct((product) => {
+                return {
+                    ...product, Title: data
+                }
+            })
+        }
+
+        if (dataType === 'content'){
+            setProduct((product) => {
+                return {
+                    ...product, Content: data
+                }
+            })
+        }
+
+        if (dataType === 'mainImg'){
+            setProduct((product) => {
+                return {
+                    ...product, MainImg: data
+                }
+            })
+        }
+
+        if (dataType === 'detailImg'){
+            let dImg = [];
+            for(let i=0; i<product.DetailImg.length; i++){
+                dImg.push(product.DetailImg[i]);
+            }
+            dImg.push(data);
+
+            setProduct((product) => {
+                return {
+                    ...product, DetailImg: dImg
+                }
+            })
+        }
+
+        if (dataType === 'product'){
+            
+            setProduct((product) => {
+                return {
+                    ...product, Product: data
+                }
+            })
+        }
+
+        
     }
+
     return(
         <>
         <div className='w-100'>
@@ -55,18 +116,10 @@ function Create(){
                 </div>
 
                 <div className="alert alert-secondary" role={'alert'}>
-                    <h3 className='m-0 d-inline-flex mb-3'>상품명</h3>
+                    <h3 className='m-0 d-inline-flex mb-3'>상품 페이지명</h3>
                     <button className='alert-btn btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed' data-bs-toggle='collapse' data-bs-target='#product-name' aria-expanded='false'></button>
                         <div className='collapse row' id='product-name'>
-                            <ProductName />
-                        </div>
-                </div>
-
-                <div className="alert alert-secondary" role={'alert'}>
-                    <h3 className='m-0 d-inline-flex mb-3'>판매가</h3>
-                    <button className='alert-btn btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed' data-bs-toggle='collapse' data-bs-target='#product-price' aria-expanded='false'></button>
-                        <div className='collapse row' id='product-price'>
-                            <ProductPrice />
+                            <ProductName getData={getData} />
                         </div>
                 </div>
 
@@ -74,7 +127,7 @@ function Create(){
                     <h3 className='m-0 d-inline-flex mb-3'>상품 이미지</h3>
                     <button className='alert-btn btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed' data-bs-toggle='collapse' data-bs-target='#product-img' aria-expanded='false'></button>
                         <div className='collapse row' id='product-img'>
-                            <ProductImg />
+                            <ProductImg getData={getData} />
                         </div>
                 </div>
 
@@ -82,15 +135,23 @@ function Create(){
                     <h3 className='m-0 d-inline-flex mb-3'>상세 설명</h3>
                     <button className='alert-btn btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed' data-bs-toggle='collapse' data-bs-target='#product-content' aria-expanded='false'></button>
                         <div className='collapse row' id='product-content'>
-                            <ProductContent />
+                            <ProductContent getData={getData} />
                         </div>
                 </div>
 
+                {/* <div className="alert alert-secondary" role={'alert'}>
+                    <h3 className='m-0 d-inline-flex mb-3'>판매가</h3>
+                    <button className='alert-btn btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed' data-bs-toggle='collapse' data-bs-target='#product-price' aria-expanded='false'></button>
+                        <div className='collapse row' id='product-price'>
+                            <ProductPrice />
+                        </div>
+                </div> */}
+
                 <div className="alert alert-secondary" role={'alert'}>
-                    <h3 className='m-0 d-inline-flex mb-3'>추가상품</h3>
+                    <h3 className='m-0 d-inline-flex mb-3'>상품추가</h3>
                     <button className='alert-btn btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed' data-bs-toggle='collapse' data-bs-target='#product-add' aria-expanded='false'></button>
                         <div className='collapse row' id='product-add'>
-                            <ProductAdd />
+                            <ProductAdd getData={getData} />
                         </div>
                 </div>
                 {/* 푸터 공간 확보 */}

@@ -1,24 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-export default function ProductName() {
+export default function ProductName({getData}) {
 
     const [text, setText] = useState('');
     const onChangeText = (e) =>{
         if(e.target.value.length > 255){
             alert('100자 이내로 입력해주세요.');
             e.target.value = e.target.value.slice(0,254);
-            setText(e.target.value.length);
+            setText(e.target.value);
             return;
         }else{
-            setText(e.target.value.length);
+            setText(e.target.value);
         }
     }
+    useEffect(() => {
+        getData('title',text);
+    }, [text])
+
     return(
         <>
-            <div className="input-group">
-                <input type='text' className='form-control' placeholder='상품명을 입력해주세요.' onChange={onChangeText}/>
-                <span className="input-group-text">{text}/255</span>
+            <div className="input-group mb-2">
+                <input type='text' className='form-control' placeholder='상품페이지 제목을 입력해주세요' onChange={onChangeText}/>
+                <span className="input-group-text">{text.length}/255</span>
             </div>
+            
             <div className='pt-3'>
                 <Small>판매 상품과 직접 관련이 없는 다른 상품명. 스팸성 키워드 입력 시 관리자에 의해 판매 금지될 수 있습니다.</Small>
                 <br/>

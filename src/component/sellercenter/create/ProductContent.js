@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 //https://github.com/zenoamaro/react-quill
-export default function ProductContent() {
+export default function ProductContent({getData}) {
     const [value, setValue] = useState('');
     const moduless = {
         toolbar: [
@@ -14,6 +14,10 @@ export default function ProductContent() {
             ['clean']
         ],
     }
+    useEffect(() => {
+        getData('content',value);
+    }, [value])
+
     return (
         <>
             {/* 글쓰기 에디터 */}

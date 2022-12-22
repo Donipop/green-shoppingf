@@ -18,7 +18,6 @@ function SellerCenter(){
                 </Routes>
             </div>
         </div>
-        
     );
 
 }

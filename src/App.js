@@ -17,6 +17,7 @@ import SellerSignup2 from './component/SellerSignup/Signup2';
 import Ordersearch from './component/Orderlist/Ordersearch';
 import Myinformation from './component/Mypage/Myinformation';
 import Mypage from './component/Mypage/Mypage';
+import Writenotice from './component/Notice/Writenotice';
 
 // function App() {
 //   return (
@@ -43,14 +44,13 @@ const Router = () => {
         <Route path='/Orderlist' element={<Orderlist/>} />
         <Route path='/information' element={<Information/>} />
         <Route path='/logout' element={<Logout/>} />
-        <Route path='/Ordersearch' element={<Ordersearch/>} />
         <Route path='/Notice' element={<Notice/>} />
         <Route path='/NoticeDetail/:id' element={<NoticeView/>} />
         <Route path='/SellerSignup' element={<SellerSignup/>} />
         <Route path='/SellerSignup2' element={<SellerSignup2/>} />
         <Route path='/myinformation' element={<Myinformation/>} />
         <Route path='/mypage' element={<Mypage/>} />
-
+        <Route path='/writenotice' element={<Writenotice/>} />
       </Routes>
     </BrowserRouter>
   );

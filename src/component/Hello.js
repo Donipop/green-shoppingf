@@ -3,12 +3,13 @@ import {Button, Dropdown} from "react-bootstrap";
 import {input} from "react-bootstrap";
 import React, {useState, useEffect} from "react";
 import Header from './Header'
-
+import { useNavigate } from "react-router-dom";
 
 export default function Hello() {
     const [name, setName] = useState('');
     const [ptest, setPtest] = useState('');
     const [check_the_password, setCheck_the_password] = useState('비밀번호를 입력하세요.');
+    const Navigate = useNavigate()
 
     
     
@@ -50,7 +51,7 @@ export default function Hello() {
         
 
 
-        fetch('/api/post', {
+        fetch('/api/login/post', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -60,9 +61,10 @@ export default function Hello() {
         .then(
             response => response.text()
             ,console.log(account))
-        .then(name => setPtest(name));
+        .then(name => setPtest(name))
+        .then(alert("로그인 화면으로 이동합니다."))
+        .then(Navigate("/"))
         
-        alert(JSON.stringify(account));
     }
 
     

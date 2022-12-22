@@ -1,11 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
-export default function ProductImg() {
-    const [img, setImg] = useState({
-        mainImg: '',
-        detailImg: [],
-    });
-
+export default function ProductImg({getData}) {
+    
     const onClickImgButton = (e) => {
         
         if(e.target.parentElement.id === 'product-mainImg'){
@@ -18,8 +14,11 @@ export default function ProductImg() {
                 let reader = new FileReader();
                 reader.onload = (e) => {
                     document.getElementById('product-mainImg').firstChild.src = e.target.result;
+                    getData('mainImg', e.target.result);
                 }
                 reader.readAsDataURL(e.target.files[0]);
+                
+                
             }
         }
         if(e.target.parentElement.id === 'product-detailImg'){
@@ -37,13 +36,16 @@ export default function ProductImg() {
                 let reader = new FileReader();
                 reader.onload = (e) => {
                     //img 태그 추가
-                    let img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.width = 150;
-                    img.height = 150;
-                    img.style.margin = '0 10px 10px 0';
+                    let cimg = document.createElement('img');
+                    cimg.src = e.target.result;
+                    cimg.width = 150;
+                    cimg.height = 150;
+                    cimg.style.margin = '0 10px 10px 0';
                     
-                    document.getElementById('product-detailImgs').appendChild(img);
+                    document.getElementById('product-detailImgs').appendChild(cimg);
+
+                    getData('detailImg', e.target.result);
+
                 }
                 reader.readAsDataURL(e.target.files[0]);
             }
