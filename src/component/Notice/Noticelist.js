@@ -12,7 +12,7 @@ import { notInitialized } from 'react-redux/es/utils/useSyncExternalStore';
     var user_grade = 0;
     let login_information = sessionStorage.getItem("login")
     login_information = JSON.parse(login_information);
-    const [button_display, setbutton_display] = useState('display:none')
+    
 
     
     const[List, setList] = useState([]); 
@@ -28,15 +28,18 @@ import { notInitialized } from 'react-redux/es/utils/useSyncExternalStore';
             user_grade = login_information.user_grade
         }
 
-        //if( user_grade === 9) {
-          //  setbutton_display('block')
-        //}
+        
 
 
         }, [])
     
     function write() {
-        Navigate("/write_notice")
+        if( user_grade == 9){
+            Navigate("/write_notice")
+        }
+        else if( user_grade != 9) {
+            alert("공지사항은 관리자만 글쓰기를 할 수 있습니다.")
+        }
     }
     
 
@@ -69,7 +72,7 @@ import { notInitialized } from 'react-redux/es/utils/useSyncExternalStore';
         )))} 
         </tbody>
         </table>
-        <button id="write_button" style={{display:'none'}} onClick={write}>버튼</button>
+        <button id="write_button" onClick={write}>버튼</button>
     </div>
     )
 

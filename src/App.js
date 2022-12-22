@@ -17,6 +17,7 @@ import Notice from './component/Notice/Noticelist'
 import NoticeView from './component/Notice/NoticeView';
 import SellerSignup from './component/SellerSignup/Signup';
 import SellerSignup2 from './component/SellerSignup/Signup2';
+import Writenotice from './component/Notice/Writenotice';
 
 // function App() {
 //   return (
@@ -50,6 +51,7 @@ const Router = () => {
         <Route path='/NoticeDetail/:id' element={<NoticeView/>} />
         <Route path='/SellerSignup' element={<SellerSignup/>} />
         <Route path='/SellerSignup2' element={<SellerSignup2/>} />
+        <Route path='/writenotice' element={<Writenotice/>} />
       </Routes>
     </BrowserRouter>
   );

@@ -13,6 +13,7 @@ export default Index;
 function Index(){
 
     var user_id = "";
+    var user_grade = '';
     
     let login_information = sessionStorage.getItem("login")
     login_information = JSON.parse(login_information);
@@ -27,6 +28,7 @@ function Index(){
         }
     else if (login_information != null) {
         user_id = login_information.user_nick + "님 안녕하세요."
+        user_grade = login_information.user_grade
         }
 
     return user_id
@@ -50,7 +52,8 @@ function Index(){
                 </div>  
             </div>
             <div>
-                <h2>닉네임 : {user_id}</h2>
+                <h2>닉네임 : {user_id}</h2><br/>
+                <h2>등급 : {user_grade}</h2>
                 <a href='/notice'>공지사항</a>                    
             </div>
         </div>
