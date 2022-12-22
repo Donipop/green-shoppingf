@@ -1,9 +1,11 @@
 import axios from "axios";
-import React, {Fragment, useRef, useState} from "react";
+import React, {useRef, useEffect , useState} from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Signup2 = () => {
   const{state} = useLocation();
+  const navigate = useNavigate();
   const [filename, setFilename] = useState('');
   const [filenames, setFilenames] = useState('');
   const fileinput = useRef(null );
@@ -16,6 +18,7 @@ const onChangeAccount = (e) => {
     setAccount({...account, [e.target.name]: e.target.value,});
 }
   const selectList = [
+    { value: "0", label: "은행을 선택하세요"},
     { value: "1", label: "신한은행" },
     { value: "2", label: "국민은행" },
     { value: "3", label: "우리은행" },
@@ -61,6 +64,22 @@ const onChangeAccount = (e) => {
     }
     const onSubmitt = (e) => {
         e.preventDefault();
+        if(selected === '은행을 선택하세요') {
+            alert('은행을 선택해주세요')
+            return;
+        }
+        if(!account.bank_account) {
+            alert('계좌번호를 입력해주세요')
+            return;
+        }
+        if(!account.bank_accountowner) {
+            alert('예금주를 입력해주세요')
+            return;
+        }
+        if(!account.description) {
+            alert('회사소개를 입력해주세요')
+            return;
+        }
        axios({
             method: 'post',
             url: 'api/login/sellersignup',
@@ -69,16 +88,21 @@ const onChangeAccount = (e) => {
                 ...account,
                 bank_name: selected,
             }
-        }).then((res) => {
-            console.log(res)
-        }
-        ).catch((err) => {
+        }).then( alert('신청이 완료되었습니다.'))
+          .then(navigate('/mypage'))
+          .catch((err) => {
             console.log(err)
 
-       })
-    }
+       }
+    )}
 
-    console.log(state)
+    useEffect(() => {
+        setSelected(selectList[0].label)
+    }, [])
+    
+
+    
+
     
 
     return (
