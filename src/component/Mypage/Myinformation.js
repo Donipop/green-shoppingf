@@ -52,13 +52,13 @@ function Myinformation() {
         .then(sessionStorage.removeItem("login"))
         .then(localStorage.removeItem("login"))
         .then(removeCookie('vo'))
-        .then(res => {(sessionStorage.setItem("login", JSON.stringify(res.vo)))
-                        (setCookie('vo', res.vo, {
-                            path:'/',
-                            maxAge: 360
-                                }))
+        .then(res => {
+                setCookie('vo', JSON.stringify(res.vo), {
+                    path: '/',
+                    maxAge: 360
+                })
+                sessionStorage.setItem("login", JSON.stringify(res.vo))
         })
-        
         .then(alert("회원정보 업데이트 완료"))
         .then(window.location.reload())
         
