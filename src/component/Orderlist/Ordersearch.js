@@ -1,13 +1,12 @@
 import {useState, useEffect, useLayoutEffect} from 'react';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+// import 'react-datepicker/dist/react-datepicker.css';
+import './DatePicker.css';
 import styled from "styled-components";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Button, Dropdown} from "react-bootstrap";
-import axios from 'axios';
-import { json } from 'react-router-dom';
 
 
+        
 
 
 const Ordersearch = (props) => {
@@ -118,50 +117,57 @@ useEffect(() => {
     const data = props.value.map((row) => row.name);
     setList(data);
 },[props])
-
-
-console.log((props.value.filter((row) => row.name === "Leanne Graham")))
-
- 
-    
+     
   return (
-    <div>  
-        <Table>
-          조회기간
-      
+    <div> 
+      <table>
+        <tbody>
+          <tr>
+        <th>조회기간</th>
+   <div>
   <select className="custom-select" id="inputGroupSelect01">
-    <option selected>Choose...</option>
+    <option value="0">Choose...</option>
     <option value="1">결제일</option>
     <option value="2">Two</option>
     <option value="3">Three</option>
   </select>
-            
-  {DateFilterData.map((el, idx) => (
-  <input 
+  </div>
+  <div style={{width:"300px"}}>
+  {DateFilterData.map((el, idx) => ( // 오늘, 3일, 1주일, 1개월, 3개월 버튼
+  <input  
       className="btn btn-outline-secondary"
       onClick={handleBtnClicked}
       key={idx}
       type="button" 
       value={el.value}/>
     ))}
-  <td><StartDate
+      </div>
+      <div style={{width:"450px"}}>
+  <StartDate
       selected={startDate}
       onChange={(date) => setStartDate(date)}
       selectsStart
       startDate={startDate}
       dateFormat="yyyy-MM-dd"
-      endDate={endDate} /></td>
-  <span>~</span>
-  <td><EndDate
+      endDate={endDate}
+      />
+  <em style={{marginLeft:"10px", marginRight:"10px"}}>~</em>
+  <EndDate
       selected={endDate}
       onChange={(date) => setEndDate(date)}
       selectsEnd
       startDate={startDate}
       dateFormat="yyyy-MM-dd"
       endDate={endDate}
-      minDate={startDate}/></td>
-  <select className="custom-select"  >
-      <option selected>전체</option>
+      minDate={startDate}
+      style={{float:"left", width:"200px"}}
+      />
+      </div>
+      </tr>
+      <tr>
+      <th style={{width:"200px"}}>상세조건</th>
+  <td style={{width:"50px"}}><select className="custom-select">
+      <option value="0">전체</option>
       <option value="1">수취인명</option>
       <option value="Name">구매자명</option>
       <option value="3">구매자연락처</option>
@@ -172,24 +178,19 @@ console.log((props.value.filter((row) => row.name === "Leanne Graham")))
       <option value="8">송장번호</option>
   </select>
   
-
   <Div>
   <form onSubmit={e => onSearch(e)}>
-      
-
-      <td><input className="form-control" type="text" value={search} onChange={onChangeSearch}  /></td>
-      
-      <button type="submit" class="btn btn-success" style={{display:"inline-block"}}>검색</button>
+      <input className="form-control" type="text" value={search} onChange={onChangeSearch} style={{width:"300px"}} />
+      <button type="submit" className="btn btn-success" style={{display:"inline-block"}}>검색</button>
   </form>
-
-  </Div> 
   
-   <p>{JSON.stringify(values)}</p>
-  </Table>
-      
+  </Div>
+  </td>
+  </tr>
+   {JSON.stringify(values)}
+   </tbody>
+   </table>
   </div>
-    
-    
 
   )
 }
@@ -202,17 +203,9 @@ export default Ordersearch;
  
 
 const StartDate = styled(DatePicker)`
-  border: 1px solid #e5e5e5;
-  border-radius: 3px 0 0 3px;
-  text-align: center;
-  line-height: 1.42857143;
-  font-size: 14px;
-  cursor: pointer;
-  &:focus {
-    outline: none;
-    border-color: #999999;
-    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  }
+  float:left;
+  width: 200px;
+
 `;
 
 const EndDate = styled(StartDate)`
@@ -227,4 +220,5 @@ const Table = styled.table`
 
   const Div = styled.div`
   text-align: center;
+  float: left;
   `

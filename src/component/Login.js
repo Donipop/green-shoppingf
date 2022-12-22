@@ -7,13 +7,15 @@ import Header from "./Header";
 
 
 function Login() {
-
-    const [cookies, setCookie, removeCookie] = useCookies();
-
+    
     const Navigate = useNavigate()
-
+    
+    
+    const [cookies, setCookie, removeCookie] = useCookies();
     const [user_name, setuser_name] = useState('')
     const [user_pw, setuser_pw] = useState('')
+    const [checked, setchecked] = useState(false)
+
 
     const on_user_nameHandler = (event) => {
 
@@ -25,15 +27,19 @@ function Login() {
         setuser_pw(event.target.value)
     }
 
+    const check_the_checkedHandler = () => {
+        setchecked(!checked)
+        
+    }
+
+
     const onSubmitHandler = (event) => {
         event.preventDefault();
         
-        console.log('user_name', user_name);
-        console.log('user_pw', user_pw);
 
         axios({
             method: "post",
-            url: "/api/login",
+            url: "/api/login/login",
             data: {
                 user_name : user_name,
                 user_pw : user_pw
@@ -47,8 +53,11 @@ function Login() {
                     maxAge: 360
                 })
                 sessionStorage.setItem("login", res.vo)
-                const TOKEN = sessionStorage.getItem("login");
-                console.log(TOKEN);
+                
+                if(checked === true) {
+                    localStorage.setItem("login", res.vo)
+                }
+                
                 
                 alert("홈으로 이동합니다.");
                 Navigate(res.returnURL)
@@ -67,7 +76,7 @@ function Login() {
             <h2>Login</h2>
             <form onSubmit={onSubmitHandler}>
             <div>
-                <label htmlFor='input_id'>ID : </label>
+                    
                 <input type='text' value={user_name} onChange={on_user_nameHandler} />
             </div>
             <div>
@@ -75,7 +84,11 @@ function Login() {
                 <input type='password' value={user_pw} onChange={on_user_pwHandler} />
             </div>
             <div>
+                <label htmlFor="auto_login_check">자동로그인</label>
+                <input type="checkbox" onChange={check_the_checkedHandler} checked={checked} /><br />
+                <h2>체크 : {JSON.stringify(checked)}</h2>
                 <button type="submit">Login</button>
+                
             </div>
             </form>
 
