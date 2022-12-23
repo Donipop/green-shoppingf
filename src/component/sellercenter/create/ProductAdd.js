@@ -45,12 +45,12 @@ export default function ProductAdd({getData}) {
         }
 
         let product = {
-            name: productName,
-            price: price,
-            count: productCount,
-            discount: discount,
-            datestart: date.start,
-            dateend: date.end
+            product_name: productName,
+            product_price: price,
+            product_count: productCount,
+            product_discount: discount,
+            dateStart: date.start,
+            dateEnd: date.end
         }
         setProductList((productList) => [...productList, product]);
         setProductName('');
@@ -266,11 +266,11 @@ export default function ProductAdd({getData}) {
                         {productList.map((product, index) => {
                             return(
                                 <tr key={index} id={index}>
-                                    <td>{product.name}</td>
-                                    <td>{product.price}</td>
-                                    <td>{product.discount}</td>
+                                    <td>{product.product_name}</td>
+                                    <td>{product.product_price}</td>
+                                    <td>{product.product_discount}</td>
                                     <td>{product.datestart} ~ {product.dateend}</td>
-                                    <td>{product.count}</td>
+                                    <td>{product.product_count}</td>
                                     <td><button type="button" className="btn btn-danger" onClick={onClickDelete}>삭제</button></td>
                                 </tr>
                             )

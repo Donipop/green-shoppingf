@@ -1,7 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 function ProductInfo(){
-
+    const [listItem, setListItem] = useState([]);
+    let item = {
+        id: 0,
+        price: 0,
+        name: '',
+        count: 0,
+    }
+    const onClickAdd = (e) => {
+        console.log(e.target);
+        item.id = 1;
+        item.price = 10000;
+        item.name = '아이템1';
+        item.count = 1;
+        setListItem((listItem) => {
+            return [...listItem, item]
+        });
+    }
+    const onClickDelete = (id) => {
+        setListItem((listItem) => {
+            return listItem.filter((item) => item.id !== id)
+        })
+    }
+    const onChange = (e) => {
+        
+    }
     return(
         <>
             <div className="col-1">
@@ -29,7 +53,7 @@ function ProductInfo(){
             <div className="col-5">
                 <h2>캐시미어 머플러 남자 여자 커플 목도리 TWCM804</h2>
                 <div className="row w-100 text-end">
-                    <div className="col-3">
+                    <div className="col-3 text-start">
                         <H2>56%</H2>
                     </div>
                     <div className="col-5 p-0 m-0">
@@ -55,7 +79,7 @@ function ProductInfo(){
                         제품선택
                     </button>
                     <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
-                    <li><button className="dropdown-item" type="button">아이템1</button></li>
+                    <li><button className="dropdown-item" type="button" onClick={onClickAdd}>아이템1</button></li>
                     <li><button className="dropdown-item" type="button">아이템2</button></li>
                     <li><button className="dropdown-item" type="button">아이템3</button></li>
                     </ul>
@@ -63,35 +87,59 @@ function ProductInfo(){
                 <div>
                     {/* 선택한 물품 리스트 */}
                     <ul className="list-group mt-5">
-                        <li className="d-flex justify-content-between">
-                            <div className="row w-100">
-                                <div className="col-11">
-                                    <h5>아이템1</h5>
-                                </div>
-                                <div className="col-1">
-                                    {/* 닫기버튼 */}
-                                    <button type="button" className="btn-close" aria-label="Close"></button>
-                                </div>
-                                {/* 아이템 추가 제거 */}
-                                <div className="col-4 mt-4">
-                                    <button className="btn btn-outline-secondary" type="button" id="button-addon1">-</button>
-                                    <span className="mx-2">1</span>
-                                    <button className="btn btn-outline-secondary" type="button" id="button-addon1">+</button>
-                                </div>
-                                {/* 가격 */}
-                                <div className="col-8 text-end mt-4">
-                                    <h5>24,900원</h5>
-                                </div>
-                                
-                            </div>
-                            <HR/>
-                        </li>
+                        {listItem.map((item, index) => {
+                            return (
+                                <>
+                                    <li className="d-flex justify-content-between" key={index} id={index}>
+                                        <div className="row w-100">
+                                            <div className="col-11">
+                                                <h5>{listItem.name}</h5>
+                                            </div>
+                                            <div className="col-1">
+                                                {/* 닫기버튼 */}
+                                                <button type="button" className="btn-close" aria-label="Close"></button>
+                                            </div>
+                                            {/* 아이템 추가 제거 */}
+                                            <div className="col-4 mt-4">
+                                                <button className="btn btn-outline-secondary" type="button" id="button-addon1">-</button>
+                                                <span className="mx-2">{listItem.count}</span>
+                                                <button className="btn btn-outline-secondary" type="button" id="button-addon1">+</button>
+                                            </div>
+                                            {/* 가격 */}
+                                            <div className="col-8 text-end mt-4">
+                                                <h5>{listItem.price}원</h5>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <LINE />
+                                </>
+                            )})}
                     </ul>
                 </div>
-                <h5>구매하기</h5>
-                <h5>톡톡문의</h5>
-                <h5>찜하기</h5>
-                <h5>장바구니</h5>
+                <div className="row w-100 mt-5">
+                    <div className="col-6">
+                        <h5>총 상품금액</h5>
+                    </div>
+                    <div className="col-6 text-end">
+                        <h5>24,900원</h5>
+                    </div>
+                </div>
+                <div className="row w-100 mt-5">
+                    <div className="col-12">
+                        <button className="btn btn-outline-secondary w-100">구매하기</button>
+                    </div>
+                </div>
+                <div className="row w-100 mt-2">
+                    <div className="col-4">
+                        <button className="btn btn-outline-secondary w-100">톡톡문의</button>
+                    </div>
+                    <div className="col-4">
+                        <button className="btn btn-outline-secondary w-100">찜하기</button>
+                    </div>
+                    <div className="col-4">
+                        <button className="btn btn-outline-secondary w-100">장바구니</button>
+                    </div>
+                </div>
             </div>
         </>
     )
@@ -127,8 +175,9 @@ const H6 = styled.h6`
     color: green;
 `;
 
-const HR = styled.hr`
-    /* border 가로선 */
-    border: 1px solid red;
-
+const LINE = styled.div`
+    width: 100%;
+    border-bottom: 1px solid #000;
+    margin: 10px 0;
+    display: block;
 `;
