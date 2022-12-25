@@ -32,7 +32,6 @@ import View from './component/ProductView/View';
 
 
 const Router = (props) => {
-  const [page, setPage] = useState(1);
   return (
     <BrowserRouter>
       <Routes>

@@ -1,66 +1,209 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-function ProductInfo(){
+function ProductInfo({product}){
     const [listItem, setListItem] = useState([]);
-    let item = {
-        id: 0,
-        price: 0,
-        name: '',
-        count: 0,
-    }
+    const [detailProduct, setDetailProduct] = useState([])
+    const [title, setTitle] = useState('');
+    const [price, setPrice] = useState({
+        price: '', //원래가격
+        discount: '', //할인 들어간 가격
+        sale: '', //할인율
+    });
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [imgList, setImgList] = useState([]);
+    const [mainImg, setMainImg] = useState('');
+    //제품선택 눌렀을때
     const onClickAdd = (e) => {
-        console.log(e.target);
-        item.id = 1;
-        item.price = 10000;
-        item.name = '아이템1';
-        item.count = 1;
-        setListItem((listItem) => {
-            return [...listItem, item]
-        });
+        let key = parseInt(e.target.attributes.indexid.value);
+        let checkTolistItem = false;
+        listItem.map((item) => {
+            if(item.id === key){
+                checkTolistItem = true;
+            }
+            return null;
+        })
+        if(checkTolistItem){
+            setListItem((listItem) => {
+                return listItem.map((item) => {
+                    if(item.id === key){
+                        item.price = (parseInt(item.price) + (parseInt(product.product[key].product_price) - parseInt(product.product[key].product_discount)));
+                        item.count = item.count + 1;
+                    }
+                    return item;
+                })
+            })
+        }else{
+            setListItem((listItem) => {
+                return [...listItem, {
+                    id: key,
+                    name: product.product[key].product_name,
+                    price: (parseInt(product.product[key].product_price) - parseInt(product.product[key].product_discount)),
+                    count: 1,
+                }]
+            })
+        }
+
     }
-    const onClickDelete = (id) => {
+
+    //제품선택 누른후 X표시 눌렀을때
+    const onClickDelete = (e) => {
+        let key = parseInt(e.target.attributes.indexid.value);
+        //key 랑 id가 같으면 삭제
         setListItem((listItem) => {
-            return listItem.filter((item) => item.id !== id)
+            return listItem.filter((item) => {
+                return item.id !== key;
+            })
         })
     }
-    const onChange = (e) => {
-        
+    //제품선택 누른후 +,- 눌렀을때
+    const onChangeCount = (e) => {
+        let key = parseInt(e.target.attributes.indexid.value);
+        let type = e.target.attributes.btntype.value;
+        let realPrice = (parseInt(product.product[key].product_price) - parseInt(product.product[key].product_discount));
+
+        setListItem((listItem) => {
+            return listItem.map((item) => {
+                if(item.id === key){
+                    if(type === '1'){
+                        item.price = (parseInt(item.price) + realPrice);
+                        item.count = item.count + 1;
+                    }else{
+                        if(item.count === 1){
+                            return item;
+                        }
+                        item.price = (parseInt(item.price) - realPrice);
+                        item.count = item.count - 1;
+                    }
+                }
+                return item;
+            })
+        })
+    }
+    
+    //금액 변동될때 마다 총금액 계산
+    useEffect(() => {
+        //총 상품금액
+        let total = 0;
+        listItem.map((item) => {
+            total = total + parseInt(item.price);
+            return null;
+        })
+        setTotalPrice(total);
+    }, [listItem])
+    
+    useEffect(() => {
+        //제목
+        setTitle(product.title);
+        //상세제품
+        let today = new Date();
+        if(product.product === undefined){
+            return;
+        }
+
+        if(product.product.length > 0){
+            //상세제품 등록
+            for(let i=0; i<product.product.length; i++){
+                let products = {
+                    product_name: '',
+                    product_price: '',
+                    product_discount: '',
+                    product_count: '',
+                    dateStart: '',
+                    dateEnd: '',
+                }
+                if(new Date(product.product[i].dateStart) > today || new Date(product.product[i].dateEnd) < today){
+                    continue;
+                }
+
+                products.product_name = product.product[i].product_name;
+                products.product_price = product.product[i].product_price;
+                products.product_discount = product.product[i].product_discount;
+                products.product_count = product.product[i].product_count;
+                products.dateStart = product.product[i].dateStart;
+                products.dateEnd = product.product[i].dateEnd;
+                setDetailProduct((detailProduct) => {
+                    return [...detailProduct, products]
+                });
+            }
+
+            //메인 제품 가격
+            if(product.product[0].product_discount === 0 || product.product[0].product_discount === null || product.product[0].product_discount === undefined || product.product[0].product_discount === '0' || product.product[0].product_discount === 'null' || product.product[0].product_discount === 'undefined' || product.product[0].product_discount === ''){
+                setPrice({
+                    price: '',
+                    discount: (product.product[0].product_price) + '원',
+                    sale: '',
+                });
+            }else{
+                setPrice({
+                    price: (product.product[0].product_price) + '원',
+                    discount: (product.product[0].product_price - product.product[0].product_discount) + '원',
+                    sale: Math.floor(product.product[0].product_discount / product.product[0].product_price * 100) + '%',
+                });
+            }
+
+            //이미지 등록
+            for(let i=0; i<product.detailImg.length+1; i++){
+                let img = {
+                    id: '',
+                    url: ''
+                }
+
+                if(i === 0){
+                    img.id = i;
+                    img.url = 'http://donipop.com:3333/img/' + product.mainImg;
+                    setMainImg(img.url);
+                }else{
+                    img.id = i;
+                    img.url = 'http://donipop.com:3333/img/' + product.detailImg[i-1];
+                }
+                setImgList((img2) => {
+                    return [...img2, img]
+                })
+            }
+        }
+    }, [product])
+
+    const onMouseOverDetailImg = (e) => {
+        let key = parseInt(e.target.attributes.indexid.value);
+        setMainImg(imgList[key].url);
+    };
+    const onClickBuyBtn = () => {
+        console.log(totalPrice);
+        console.log(listItem);
     }
     return(
         <>
             <div className="col-1">
                 <ul className="list-group">
-                    <Li className="mb-1">
-                        <img src="https://cdnimg.melon.co.kr/cm2/artistcrop/images/002/61/143/261143_20210325180240_500.jpg?61e575e8653e5920470a38d1482d7312/melon/optimize/90" className="card-img">
-                        </img>
-                    </Li>
-                    <Li className="mb-1">
-                        <img src="https://cdnimg.melon.co.kr/cm2/artistcrop/images/002/61/143/261143_20210325180240_500.jpg?61e575e8653e5920470a38d1482d7312/melon/optimize/90" className="card-img">
-                        </img>
-                    </Li>
-                    <Li className="mb-1">
-                        <img src="https://cdnimg.melon.co.kr/cm2/artistcrop/images/002/61/143/261143_20210325180240_500.jpg?61e575e8653e5920470a38d1482d7312/melon/optimize/90" className="card-img">
-                        </img>
-                    </Li>
+                    {imgList.map((item) => {
+                        return(
+                            <Li className="mb-1" key={item.id}>
+                                <img src={item.url} className="card-img" alt="..." indexid={item.id} onMouseOver={onMouseOverDetailImg}></img>
+                            </Li>
+                        )
+                    })}
                 </ul>
             </div>
             <div className="col-6">
                 <div className="card">
-                    <img src="https://cdnimg.melon.co.kr/cm2/artistcrop/images/002/61/143/261143_20210325180240_500.jpg?61e575e8653e5920470a38d1482d7312/melon/optimize/90" className="card-img" alt="..."></img>
+                    <a href={mainImg} target="_blank" rel="noopener noreferrer">
+                        <IMG src={mainImg} className="card-img" alt="..."></IMG>
+                    </a>
                 </div>
+                
             </div>
 
             <div className="col-5">
-                <h2>캐시미어 머플러 남자 여자 커플 목도리 TWCM804</h2>
+                <h2>{title}</h2>
                 <div className="row w-100 text-end">
                     <div className="col-3 text-start">
-                        <H2>56%</H2>
+                        <H2>{price.sale}</H2>
                     </div>
                     <div className="col-5 p-0 m-0">
-                        <H5>59,000원</H5>
+                        <H5>{price.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</H5>
                     </div>
                     <div className="col-4 text-start p-0">
-                        <H2>24,900원</H2>
+                        <H2>{price.discount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</H2>
                     </div>
                     
 
@@ -79,9 +222,13 @@ function ProductInfo(){
                         제품선택
                     </button>
                     <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
-                    <li><button className="dropdown-item" type="button" onClick={onClickAdd}>아이템1</button></li>
-                    <li><button className="dropdown-item" type="button">아이템2</button></li>
-                    <li><button className="dropdown-item" type="button">아이템3</button></li>
+                        {detailProduct.map((item, index) => {
+                            return (
+                                <li key={item.product_name}>
+                                    <button className="dropdown-item" type="button" indexid={index} onClick={onClickAdd}>{item.product_name}</button>
+                                </li>
+                            )
+                        })}
                     </ul>
                 </div>
                 <div>
@@ -89,30 +236,34 @@ function ProductInfo(){
                     <ul className="list-group mt-5">
                         {listItem.map((item, index) => {
                             return (
-                                <>
-                                    <li className="d-flex justify-content-between" key={index} id={index}>
+                                <div key={item.id}>
+                                    <li className="d-flex justify-content-between" >
                                         <div className="row w-100">
                                             <div className="col-11">
-                                                <h5>{listItem.name}</h5>
+                                                <h5>{item.name}</h5>
                                             </div>
+
                                             <div className="col-1">
-                                                {/* 닫기버튼 */}
-                                                <button type="button" className="btn-close" aria-label="Close"></button>
+                                            {/* 닫기버튼 */}
+                                            <button type="button" className="btn-close" aria-label="Close" onClick={onClickDelete} indexid={item.id}></button>
                                             </div>
+
                                             {/* 아이템 추가 제거 */}
                                             <div className="col-4 mt-4">
-                                                <button className="btn btn-outline-secondary" type="button" id="button-addon1">-</button>
-                                                <span className="mx-2">{listItem.count}</span>
-                                                <button className="btn btn-outline-secondary" type="button" id="button-addon1">+</button>
+                                                <button className="btn btn-outline-secondary" type="button" id="button-addon1" indexid={item.id} btntype='0' onClick={onChangeCount}>-</button>
+                                                <span className="mx-2">{item.count}</span>
+                                                <button className="btn btn-outline-secondary" type="button" id="button-addon1" indexid={item.id} btntype='1' onClick={onChangeCount}>+</button>
                                             </div>
+                                            
                                             {/* 가격 */}
                                             <div className="col-8 text-end mt-4">
-                                                <h5>{listItem.price}원</h5>
+                                                <h5>{item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</h5>
                                             </div>
                                         </div>
                                     </li>
-                                    <LINE />
-                                </>
+                                     <LINE />
+                                </div>
+                                    
                             )})}
                     </ul>
                 </div>
@@ -121,12 +272,12 @@ function ProductInfo(){
                         <h5>총 상품금액</h5>
                     </div>
                     <div className="col-6 text-end">
-                        <h5>24,900원</h5>
+                        <h5>{totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</h5>
                     </div>
                 </div>
                 <div className="row w-100 mt-5">
                     <div className="col-12">
-                        <button className="btn btn-outline-secondary w-100">구매하기</button>
+                        <button className="btn btn-outline-secondary w-100" onClick={onClickBuyBtn}>구매하기</button>
                     </div>
                 </div>
                 <div className="row w-100 mt-2">
@@ -180,4 +331,10 @@ const LINE = styled.div`
     border-bottom: 1px solid #000;
     margin: 10px 0;
     display: block;
+`;
+
+const IMG = styled.img`
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 `;
