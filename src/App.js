@@ -18,6 +18,11 @@ import Ordersearch from './component/Orderlist/Ordersearch';
 import Myinformation from './component/Mypage/Myinformation';
 import Mypage from './component/Mypage/Mypage';
 import Writenotice from './component/Notice/Writenotice';
+import Review from './component/ProductView/Review';
+import QnA from './component/ProductView/QnA';
+import QnApopup from './component/ProductView/QnApopup';
+import QnAReply from './component/ProductView/QnAReply';
+
 
 // function App() {
 //   return (
@@ -51,6 +56,10 @@ const Router = () => {
         <Route path='/myinformation' element={<Myinformation/>} />
         <Route path='/mypage' element={<Mypage/>} />
         <Route path='/writenotice' element={<Writenotice/>} />
+        <Route path='/view/Review' element={<Review/>} />
+        <Route path='/view/QnA' element={<QnA/>} />
+        <Route path='/QnA/123' element={<QnApopup/>} />
+        <Route path='/QnA/reply/:id' element={<QnAReply/>} />
       </Routes>
     </BrowserRouter>
   );
