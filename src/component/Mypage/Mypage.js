@@ -1,21 +1,25 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../Header"
+import Login from "../Login";
+import LoginInterceptor from "../LoginInterceptor";
 
 function Mypage() {
     const Navigate = useNavigate();  
+    const login = LoginInterceptor();
 
+    
+
+    
+    
 
     useEffect(() => {
-        if(sessionStorage.getItem("login") == null) {
-            alert("로그인이 되어있지 않습니다.")
-            Navigate("/login")
-        }
-        
-        
-        
-        
-    },[])
+        if (login === null) {
+            alert("로그인이 필요합니다.");
+            Navigate("/login");
+            }
+
+    }, [])
 
     return(
         <div>

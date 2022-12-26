@@ -2,15 +2,14 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import { json, Route, useNavigate, Link } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
+import { useCookies, Cookies } from 'react-cookie';
 import Header from "./Header";
 
 
 function Login() {
     
     const Navigate = useNavigate()
-    
-    
+
     const [cookies, setCookie, removeCookie] = useCookies();
     const [user_name, setuser_name] = useState('')
     const [user_pw, setuser_pw] = useState('')
@@ -48,17 +47,20 @@ function Login() {
         .then(res => res.data)
         .then(res => {
             if(res.returnURL === "/") {
+                const expiredvo = new Date();
+                expiredvo.setTime(expiredvo.getTime() + expiredvo.getSeconds * 60 * 30);
                 setCookie('vo', res.vo, {
                     path: '/',
-                    maxAge: 360
+                    expires: expiredvo
                 })
+                const expiredrefreshToken = new Date();
+                expiredrefreshToken.setTime(expiredrefreshToken.getTime() + expiredrefreshToken.getSeconds * 60 * 60 * 24 * 14);
+                setCookie('refreshToken', res.refreshToken,{
+                    path:'/',
+                    expires: expiredrefreshToken
+                })
+                
                 sessionStorage.setItem("login", res.vo)
-                
-                if(checked === true) {
-                    localStorage.setItem("login", res.vo)
-                }
-                
-                
                 alert("홈으로 이동합니다.");
                 Navigate(res.returnURL)
             }
@@ -76,7 +78,7 @@ function Login() {
             <h2>Login</h2>
             <form onSubmit={onSubmitHandler}>
             <div>
-                    
+                <label htmlFor='input_id'>ID : </label>
                 <input type='text' value={user_name} onChange={on_user_nameHandler} />
             </div>
             <div>
