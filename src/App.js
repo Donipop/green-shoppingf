@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Hello from './component/Hello';
 import Hello2 from './component/Hello2';
@@ -23,7 +23,7 @@ import QnA from './component/ProductView/QnA';
 import QnApopup from './component/ProductView/QnApopup';
 import QnAReply from './component/ProductView/QnAReply';
 
-
+import View from './component/ProductView/View';
 // function App() {
 //   return (
 //     <div className="App">
@@ -34,9 +34,8 @@ import QnAReply from './component/ProductView/QnAReply';
 
 // export default App;
 
-const Router = () => {
 
-
+const Router = (props) => {
   return (
     <BrowserRouter>
       <Routes>
@@ -56,6 +55,7 @@ const Router = () => {
         <Route path='/myinformation' element={<Myinformation/>} />
         <Route path='/mypage' element={<Mypage/>} />
         <Route path='/writenotice' element={<Writenotice/>} />
+        <Route path="/view/:page" element={<View/>} />
         <Route path='/view/Review' element={<Review/>} />
         <Route path='/view/QnA' element={<QnA/>} />
         <Route path='/QnA/123' element={<QnApopup/>} />
