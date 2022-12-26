@@ -57,8 +57,8 @@ const Router = (props) => {
         <Route path='/SellerSignup2' element={<SellerSignup2/>} />
         <Route path='/writenotice' element={<Writenotice/>} />
         <Route path="/view/:page" element={<View/>} />
-        <Route path='/view/Review' element={<Review/>} />
-        <Route path='/view/QnA' element={<QnA/>} />
+        <Route path='/view/:page/Review' element={<Review/>} />
+        <Route path='/QnA' element={<QnA/>} />
         <Route path='/QnA/123' element={<QnApopup/>} />
         <Route path='/QnA/reply/:id' element={<QnAReply/>} />
       </Routes>
