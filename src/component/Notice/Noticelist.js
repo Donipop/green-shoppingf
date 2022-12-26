@@ -5,14 +5,13 @@ import "./Notice.css"
 import { Link, Navigate } from 'react-router-dom';
 import NoticeView from './NoticeView';
 import { notInitialized } from 'react-redux/es/utils/useSyncExternalStore';
+import LoginInterceptor from "../LoginInterceptor";
 
 
     const Notice = () => { 
     
-    var user_grade = 0;
-    let login_information = sessionStorage.getItem("login")
-    login_information = JSON.parse(login_information);
-    
+    const login = LoginInterceptor();
+    var user_grade = login.user_grade;
 
     
     const[List, setList] = useState([]); 
@@ -24,23 +23,19 @@ import { notInitialized } from 'react-redux/es/utils/useSyncExternalStore';
         })
         .then(res => setList(res.data))
         
-        if( login_information != null) {
-            user_grade = login_information.user_grade
-        }
-
-        
-
 
         }, [])
     
-    function write() {
-        if( user_grade == 9){
-            Navigate("/write_notice")
+    const write = () => {
+        if (user_grade === 9) {
+            Navigate("/writenotice")
         }
-        else if( user_grade != 9) {
-            alert("공지사항은 관리자만 글쓰기를 할 수 있습니다.")
+        else if (user_grade !== 9) {
+            alert("관리자만 작성할 수 있습니다.")
         }
+        
     }
+
     
 
 

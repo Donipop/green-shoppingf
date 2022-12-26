@@ -1,9 +1,13 @@
 import Header from './Header'
 import logo from '../logo.svg'
-import { useCookies } from 'react-cookie';
+import { useCookies, Cookies } from 'react-cookie';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { json, Navigate } from 'react-router-dom';
+import { getOverlayDirection } from 'react-bootstrap/esm/helpers';
+
+
+
 
 
 
@@ -11,14 +15,16 @@ import { json, Navigate } from 'react-router-dom';
 export default Index;
 
 function Index(){
-
+    const [cookies, setCookie, removeCookie] = useCookies(['vo', 'refreshToken'])
+    
+    
     var user_id = "";
     var user_grade = '';
+    
     
     let login_information = sessionStorage.getItem("login")
     login_information = JSON.parse(login_information);
 
-    
     
     
     function start() {
@@ -36,8 +42,22 @@ function Index(){
 
     user_id = start()
 
+    function test123() {
+        const refreshToken = cookies.refreshToken;
+        console.log()
+        console.log()
+        axios({
+            method:'post',
+            url:'/api/login/viewmap',
+            data: {
+                refreshToken: refreshToken
+            },
+        })
+        .then(res => res.data)
+    }
+
     
-    
+
 
     useEffect(() => {
        
@@ -53,8 +73,10 @@ function Index(){
             </div>
             <div>
                 <h2>닉네임 : {user_id}</h2><br/>
-                <h2>등급 : {user_grade}</h2>
-                <a href='/notice'>공지사항</a>                    
+                <h2>등급 : {user_grade}</h2><br/>
+                <h2>만료일 : {}</h2><br/>
+                <a href='/notice'>공지사항</a><br/>
+                <button onClick={test123}>보튼</button>                    
             </div>
         </div>
 
