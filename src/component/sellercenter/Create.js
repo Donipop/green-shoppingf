@@ -18,15 +18,15 @@ import axios from 'axios';
  */
 function Create(){
     const [product, setProduct] = useState({
-        Category: '',
-        Title: '',
-        Content: '',
-        MainImg: '',
-        DetailImg: [''],
-        Product: [''],
-        Market_Name: '마켓이름',
-        Event: '',
-        UserId: 'admin'
+        category: '',
+        title: '',
+        cont: '',
+        mainImg: '',
+        detailImg: [''],
+        product: [''],
+        market_name: '마켓이름',
+        event: '',
+        userId: 'admin'
     });
     
     const onClickCreate = () => {
@@ -44,7 +44,7 @@ function Create(){
         if (dataType === 'category'){
             setProduct((product) => {
                 return {
-                    ...product, Category: data
+                    ...product, category: data
                 }
             })
         }
@@ -52,7 +52,7 @@ function Create(){
         if (dataType === 'title'){
             setProduct((product) => {
                 return {
-                    ...product, Title: data
+                    ...product, title: data
                 }
             })
         }
@@ -60,7 +60,7 @@ function Create(){
         if (dataType === 'content'){
             setProduct((product) => {
                 return {
-                    ...product, Content: data
+                    ...product, cont: data
                 }
             })
         }
@@ -68,21 +68,21 @@ function Create(){
         if (dataType === 'mainImg'){
             setProduct((product) => {
                 return {
-                    ...product, MainImg: data
+                    ...product, mainImg: data
                 }
             })
         }
 
         if (dataType === 'detailImg'){
             let dImg = [];
-            for(let i=0; i<product.DetailImg.length; i++){
-                dImg.push(product.DetailImg[i]);
+            for(let i=0; i<product.detailImg.length; i++){
+                dImg.push(product.detailImg[i]);
             }
             dImg.push(data);
 
             setProduct((product) => {
                 return {
-                    ...product, DetailImg: dImg
+                    ...product, detailImg: dImg
                 }
             })
         }
@@ -91,7 +91,7 @@ function Create(){
             
             setProduct((product) => {
                 return {
-                    ...product, Product: data
+                    ...product, product: data
                 }
             })
         }
