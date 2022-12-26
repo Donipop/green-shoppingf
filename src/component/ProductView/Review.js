@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import { FaStar } from 'react-icons/fa'
+import { useParams } from "react-router-dom";
 import styled from 'styled-components';
 import './Reviewcss.css';
 const Review = () => {
-
+    const {page} = useParams();
+    console.log(page)
     const [clicked, setClicked] = useState([false, false, false, false, false]);
     const Array = [0, 1, 2, 3, 4];
     const [evaluation, setevaluation] = useState('')
@@ -67,7 +69,7 @@ const Review = () => {
                 ...account,
                 star: star,
                 id: 1,
-                product_num: 100,   
+                product_num: {page},   
                 user_id: "admin"
 
         }

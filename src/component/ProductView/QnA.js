@@ -70,7 +70,6 @@ const QnA = () => {
 
     const onsubmit = (e) => {
         e.preventDefault();
-        console.log(e.target.id.value)
         setId(e.target.id.value)
         window.open(`http://localhost:3000/QnA/reply/${id}`,"_blank","width=650, height=730");    
     }
