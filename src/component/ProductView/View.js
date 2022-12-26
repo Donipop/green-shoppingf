@@ -5,7 +5,7 @@ import Header from "../Header";
 import ProductInfo from "./ProductInfo";
 import styled from "styled-components";
 import Review from "./Review";
-import QnA from "./QnA";
+import QnA from "./QnAList";
 
 function View(){
     const {page} = useParams();

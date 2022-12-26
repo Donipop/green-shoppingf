@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import './Reviewcss.css';
 const Review = () => {
     const {page} = useParams();
-    console.log(page)
     const [clicked, setClicked] = useState([false, false, false, false, false]);
     const Array = [0, 1, 2, 3, 4];
     const [evaluation, setevaluation] = useState('')

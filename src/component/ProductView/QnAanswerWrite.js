@@ -5,23 +5,27 @@ import axios from 'axios';
 const QnAReply = () => {
     const [List, setList] = useState([]);
     const{id} = useParams();
+    const{page} = useParams();
 
     const [account, setAccount] = useState({
         cont: '',
-        product_num: '1234',
+        product_num: page,
         user_id: "admin",
-        id: 8,
+        id: 3,
         product_name: "아이패드",
         child_id: id
     })
 
-
+     
+    
 
      useEffect(() => {
          axios({
              method: 'get',
-             url: `/api/QnA/reply/${id}`,
-             data: {id:id}
+             url: `/api/QnA/reply/${page}/${id}`,
+             params:{id: id, 
+                   page:page
+            },
          })
          .then(res => setList(res.data))
      }, [])
@@ -32,7 +36,7 @@ const QnAReply = () => {
     }
 
     const addadd = (e) => {
-        alert("답변이 등록되었습니다..");
+        alert("답변이 등록되었습니다.");
         axios({
             method: 'post',
             url: '/api/view/Qna/write',

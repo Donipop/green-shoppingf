@@ -1,19 +1,21 @@
 import axios from "axios";
 import React,{useState} from "react";
 import './Reviewcss.css';
+import {useParams} from "react-router-dom";
 
 const QnApopup = () => {
+    const {page} = useParams();
     const [letter, setletter] = useState(0);
     const [aria, setaria] = useState(false);
     const [account, setAccount] = useState({
         cont: '',
-        product_num: '1234',
+        product_num: page,
         user_id: "admin",
-        id: 10,
+        id: 14,
         product_name: "아이패드"
     })
         
-    
+    console.log(page)
     const ariacheck = () => {
         setaria(!aria);
         if(aria === true){
@@ -37,7 +39,7 @@ const QnApopup = () => {
         alert("문의가 접수되었습니다.");
         axios({
             method: 'post',
-            url: '/api/view/qna/1234',
+            url: `/api/view/QnA/write/${page}`,
             data: {
                 ...account
             } 

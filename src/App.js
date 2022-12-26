@@ -19,9 +19,9 @@ import Myinformation from './component/Mypage/Myinformation';
 import Mypage from './component/Mypage/Mypage';
 import Writenotice from './component/Notice/Writenotice';
 import Review from './component/ProductView/Review';
-import QnA from './component/ProductView/QnA';
-import QnApopup from './component/ProductView/QnApopup';
-import QnAReply from './component/ProductView/QnAReply';
+import QnAList from './component/ProductView/QnAList';
+import QnAQuestionWrite from './component/ProductView/QnAQuestionWrite';
+import QnAanswerWrite from './component/ProductView/QnAanswerWrite';
 
 import View from './component/ProductView/View';
 // function App() {
@@ -57,9 +57,9 @@ const Router = (props) => {
         <Route path='/writenotice' element={<Writenotice/>} />
         <Route path="/view/:page" element={<View/>} />
         <Route path='/view/:page/Review' element={<Review/>} />
-        <Route path='/QnA' element={<QnA/>} />
-        <Route path='/QnA/123' element={<QnApopup/>} />
-        <Route path='/QnA/reply/:id' element={<QnAReply/>} />
+        <Route path='/QnA:page' element={<QnAList/>} />
+        <Route path='/QnA/write/:page' element={<QnAQuestionWrite/>} />
+        <Route path='/QnA/reply/:page/:id' element={<QnAanswerWrite/>} />
       </Routes>
     </BrowserRouter>
   );

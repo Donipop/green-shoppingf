@@ -1,18 +1,20 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 
 
 
 const QnAreplyList =  (props) => {
     const [reply, setReply] = useState([]);
-
+    
     useEffect(() => {
         axios({
         method: 'get',
-        url: '/api/view/QnA',
+        url: `/api/view/QnA/${props.page}`,
         })
         .then((res) => {
+            
 
             for(var i=0; i<res.data.length; i++){
                 let products = {
@@ -43,12 +45,10 @@ const QnAreplyList =  (props) => {
         
     }, [])
      
-    
-
     const adad = (e) => {
-            
-
+        
        
+            
         for(var i=0; i<reply.length; i++){
             if(reply[i].child_id === props.props){   
        return (

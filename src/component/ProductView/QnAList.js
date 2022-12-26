@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import QnAreplyList from "./QnAreplyList";
+import QnAReplyList from "./QnAReplyList";
 
 
 const QnA = ({page}) => {
-    const[QnA, setQnA] = useState([]);
     const[List, setList] = useState([]);
     const[reply, setReply] = useState([]);
     const[id, setId] = useState(0);
     useEffect(() => {
         axios({
         method: 'get',
-        url: '/api/view/QnA?page=' + page,
+        url: `/api/view/QnA/${page}`,
         })
         .then((res) => {
 
@@ -55,21 +54,37 @@ const QnA = ({page}) => {
         })
     }, [])
 
-
    
+   
+    // 질문하기
     const QnASite = () => {
-        window.open(`http://localhost:3000/QnA/${page}`,"_blank","width=650, height=730");
+        window.open(`http://localhost:3000/QnA/write/${page}`,"_blank","width=650, height=730");
     }
 
     const onchange = (e) => {
         e.preventDefault();
     }
 
+
+    //답변하기 
     const onsubmit = (e) => {
         e.preventDefault();
         setId(e.target.id.value)
-        window.open(`http://localhost:3000/QnA/reply/${page}`,"_blank","width=650, height=730");    
+        console.log(e.target.id.value)
+        window.open(`http://localhost:3000/QnA/reply/${page}/${id}`,"_blank","width=650, height=730");    
     }
+
+    const Noexsits = () => {
+        if(List.length === 0){
+           return(
+            <div style={{padding:"30px", textAlign:"center"}}>
+                등록된 문의가 없습니다.
+            </div>
+           )
+           
+        }
+    }
+    
 
    
 
@@ -88,7 +103,7 @@ const QnA = ({page}) => {
              <div>
                 <div className="QnABox" >
                     <button className="btn btn-dark" onClick={QnASite}>상품 Q&A 작성하기</button>
-                    <div className="answer">
+                     <div className="answer">
                     {List.map((List => (
                         <form key={List.id} onSubmit={onsubmit} name = "rr" value="rr" >
                         <div className="answerM" >
@@ -111,7 +126,7 @@ const QnA = ({page}) => {
                                         </div>
                                     </div>
                              </div>
-                             <QnAreplyList props={List.id}/>
+                             <QnAReplyList props={List.id} page={page}/>
 
                                  
 
@@ -119,6 +134,8 @@ const QnA = ({page}) => {
                         </form>
 
                     )))}  
+                             {Noexsits()}
+
                     
                     
                     </div>
