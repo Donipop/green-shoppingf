@@ -5,9 +5,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { json, Navigate } from 'react-router-dom';
 
-
-
-
 export default Index;
 
 function Index(){

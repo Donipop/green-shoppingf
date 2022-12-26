@@ -25,12 +25,16 @@ const  Signup = () => {
             return;
         }
         if(account.market_name === ''){
+            alert('마켓이름을 입력하세요');
+            return;
+        }
+
             alert('상호명을 입력하세요');
             return;
         }
         
         navigate('/SellerSignup2', {state: account});
-    }
+    
 
     
 
@@ -53,28 +57,23 @@ const  Signup = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="tel">상호명</label>
+                            <label htmlFor="tel">마켓이름</label>
                             <input
                                 type="text"
                                 className="form-control"
                                 name="market_name"
-                                placeholder="상호명을 입력하세요"
+                                placeholder="마켓이름을 입력하세요"
                                 onChange={onChangeAccount}
                             />
                         </div>
                         <button type="submit" className="btn btn-lg btn-primary btn-block">다음</button>
                         </form>
                         </div>
-                        </div>
-                        </div>
-
-
-
-
-
+                    </div>
+                </div>
 
     );
+    
     }
-
 
 export default Signup;

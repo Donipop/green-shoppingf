@@ -1,9 +1,11 @@
 import axios from "axios";
-import React, {Fragment, useRef, useEffect , useState} from "react";
+import React, {useRef, useEffect , useState} from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Signup2 = () => {
   const{state} = useLocation();
+  const navigate = useNavigate();
   const [filename, setFilename] = useState('');
   const [filenames, setFilenames] = useState('');
   const fileinput = useRef(null );
@@ -86,23 +88,20 @@ const onChangeAccount = (e) => {
                 ...account,
                 bank_name: selected,
             }
-        }).then((res) => {
-            console.log(res)
-        }
-        ).catch((err) => {
+        }).then( alert('신청이 완료되었습니다.'))
+          .then(navigate('/mypage'))
+          .catch((err) => {
             console.log(err)
 
-       })
-    }
+       }
+    )}
 
     useEffect(() => {
         setSelected(selectList[0].label)
     }, [])
     
 
-    
 
-    
 
     return (
         <div className="container">
