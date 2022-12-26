@@ -4,11 +4,13 @@ import { useParams } from "react-router-dom";
 import Header from "../Header";
 import ProductInfo from "./ProductInfo";
 import styled from "styled-components";
+import Review from "./Review";
+import QnA from "./QnA";
 
 function View(){
     const {page} = useParams();
     const [productinfo, setProductinfo] = useState([]);
-    const [divNaviState, setDivNaviState] = useState(['상품정보', '상품후기', '상품문의', '배송/교환/반품']);
+    const [divNaviState, setDivNaviState] = useState(['상품정보', '상품후기', '상품문의', '배송/교환/반품','#info','#review','#qna','#delivery']);
     const [divNaviStateClass, setDivNaviStateClass] = useState(['', '', '', '']);
     useEffect(() => {
         //page가 숫자가 아닐때
@@ -54,16 +56,27 @@ function View(){
                     <div className="pt-5"></div>
                 </div>
                 <UL className="d-block m-0 p-0" style={{borderLeft: `1px solid #000`}}>
-                    {divNaviState.map((item, index) => {
-                        return (
-                            <DIVNAVI onClick={onClickDivnavi} key={index} className={divNaviStateClass[index]}>{item}</DIVNAVI>
-                        )
+                    {divNaviState.map((item, index) => {      
+                            if(index < 4){
+                                return (
+                                    <a href={divNaviState[index+4]} key={index+4}>
+                                        <DIVNAVI onClick={onClickDivnavi} key={index} className={divNaviStateClass[index]}>{item}</DIVNAVI>
+                                    </a>
+                                )
+                            }else{
+                                return null;
+                            }
                     })}
                 </UL>
-                <div className="pt-5">
-                    
-                </div>
+                <div className="pt-5"></div>
                 <div dangerouslySetInnerHTML={{__html: productinfo.cont }}>
+                </div>
+
+                <div>
+                    <Review />
+                </div>
+                <div>
+                    <QnA page={page} />
                 </div>
             </div>
         </>
@@ -100,4 +113,7 @@ const UL = styled.ul`
         color: #fff;
         border-bottom: 0;
     }
+    a:link {text-decoration:none; color:#000;}
+    a:visited {text-decoration:none; color:#000;}
+    a:hover {text-decoration:none; color:#000;}
 `;

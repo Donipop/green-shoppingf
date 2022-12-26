@@ -3,7 +3,7 @@ import axios from "axios";
 import QnAreplyList from "./QnAreplyList";
 
 
-const QnA = () => {
+const QnA = ({page}) => {
     const[QnA, setQnA] = useState([]);
     const[List, setList] = useState([]);
     const[reply, setReply] = useState([]);
@@ -11,7 +11,7 @@ const QnA = () => {
     useEffect(() => {
         axios({
         method: 'get',
-        url: '/api/view/QnA',
+        url: '/api/view/QnA?page=' + page,
         })
         .then((res) => {
 
@@ -53,15 +53,12 @@ const QnA = () => {
                 }
             }
         })
-
-        
     }, [])
 
 
    
-  
     const QnASite = () => {
-        window.open("http://localhost:3000/QnA/123","_blank","width=650, height=730");
+        window.open(`http://localhost:3000/QnA/${page}`,"_blank","width=650, height=730");
     }
 
     const onchange = (e) => {
@@ -71,7 +68,7 @@ const QnA = () => {
     const onsubmit = (e) => {
         e.preventDefault();
         setId(e.target.id.value)
-        window.open(`http://localhost:3000/QnA/reply/${id}`,"_blank","width=650, height=730");    
+        window.open(`http://localhost:3000/QnA/reply/${page}`,"_blank","width=650, height=730");    
     }
 
    

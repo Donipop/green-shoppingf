@@ -24,32 +24,32 @@ const Review = () => {
     clickStates[i] = i <= index ? true : false;
         }
         setClicked(clickStates);
-      };
-    
-      useEffect(() => {
-        sendReview();
-      }, [clicked]); 
+      }; 
     
       const sendReview = () => {
         let score = clicked.filter(Boolean).length;
         setStar(clicked.filter(Boolean).length);
-        if(score == 1){
+        if(score === 1){
             setevaluation('나쁨')
         }
-        if(score == 2){
+        if(score === 2){
             setevaluation('별로')
         }
-        if(score == 3){
+        if(score === 3){
             setevaluation('보통')
         }
-        if(score == 4){
+        if(score === 4){
             setevaluation('좋음')
         }
-        if(score == 5){
+        if(score === 5){
             setevaluation('최고')
         }
 
       };
+
+      useEffect(() => {
+        sendReview();
+      }, [clicked]);
 
       const lettersee = (e) => {
         setletter(e.target.value.replace(/<br\s*\/?>/gm, "\n").length)      
@@ -60,8 +60,8 @@ const Review = () => {
         setMaintext(e.target.value.replace(/<br\s*\/?>/gm, "\n").length)
         setAccount({...account, [e.target.name]: e.target.value})
         }
-      const ReviewSubmit = () =>{
-        alert('리뷰가 등록되었습니다.')
+      const ReviewSubmit = (e) =>{
+        
         axios({
             method: 'post',
             url: 'api/view/review',
@@ -74,24 +74,19 @@ const Review = () => {
 
         }
         }).then((res) => {
-            console.log(res)
+          alert('후기가 등록되었습니다.')
         }
         ).catch((err) => {
-            console.log(err)
+            console.log('후기 보내기 에러', err)
     })
       }
-
-      console.log(star)
-    
-
-
     return (
         //review page
-        <div className="review">
+        <div className="review" id="review">
             <div className="review__title">
                 <div className="rere">
                 <img src="https://image6.coupangcdn.com/image/productreview/badge/review/write/product/product_icon-xxhdpi.png" style={{height:"26px"}}></img>
-                <h2>상품리뷰</h2>
+                <h2>상품후기</h2>
                 </div>
             <div><p style={{fontSize:"15px", fontWeight:"400",color:"#111111"}}>이 상품의 품질에 대해서 얼마나 만족하시나요?</p></div>
             </div>
@@ -119,7 +114,7 @@ const Review = () => {
                     </div>    
                     <form onSubmit={ReviewSubmit}>
             <div className="review__content">
-                <div className="review_review">상세리뷰</div>
+                <div className="review_review">상세후기</div>
                      <div className="review__content__form">
                              <div className="review__content__form__content">
                                   <textarea className="textarea" name="cont" rows="5" maxLength={500} onChange={contChange} ></textarea>
