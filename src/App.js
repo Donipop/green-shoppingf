@@ -5,7 +5,7 @@ import Hello from './component/Hello';
 import Hello2 from './component/Hello2';
 import Header from './component/Header';
 import IndexPage from './component/Index'
-import SellerCenter from './component/sellercenter/SellerCenter';
+import SellerCenter from './component/Sellercenter/SellerCenter';
 import Login from './component/Login';
 import Orderlist from './component/Orderlist/Orderlist';
 import Information from './component/Information';
@@ -24,6 +24,7 @@ import QnApopup from './component/ProductView/QnApopup';
 import QnAReply from './component/ProductView/QnAReply';
 
 import View from './component/ProductView/View';
+import PaymentPage from './component/Payment/PaymentPage';
 // function App() {
 //   return (
 //     <div className="App">
@@ -60,6 +61,7 @@ const Router = (props) => {
         <Route path='/QnA' element={<QnA/>} />
         <Route path='/QnA/123' element={<QnApopup/>} />
         <Route path='/QnA/reply/:id' element={<QnAReply/>} />
+        <Route path='/Payment' element={<PaymentPage/>} />
       </Routes>
     </BrowserRouter>
   );
