@@ -16,9 +16,9 @@ function PaymentPage(){
         totalPaymentPrice: 0, //총결제금액
     });
     useEffect(() => {
-        // console.log(state);
+        console.log(state);
         for(let i=0; i<state.length; i++){
-            for(let j=0; j<state[i].data.listItem.length; j++){
+            for(let j=0; j<state[i].listItem.length; j++){
                 let products = {
                     name: '', //상품명
                     marketName: '', //마켓이름
@@ -27,25 +27,27 @@ function PaymentPage(){
                     sale: 0, //할인금액
                     delivery: 0, //배송비
                     totalPrice: 0, //총결제금액
-                    productDetailId: 0, //상품아이디
+                    productDetailId: 0, //상품상세아이디
+                    productId: 0, //상품아이디
                 }
-
-                products.name = state[i].data.listItem[j].name;
-                products.marketName = state[i].market_name;
-                products.count = state[i].data.listItem[j].count;
-                products.price = parseInt(state[i].data.listItem[j].price)/parseInt(state[i].data.listItem[j].count);
+                products.name = state[i].listItem[j].name;
+                products.marketName = state[i].marketName;
+                products.count = state[i].listItem[j].count;
+                products.price = state[i].listItem[j].price;
+                products.sale = 0;
                 if(j===0){
-                    products.delivery = state[i].data.delivery;
+                    products.delivery = state[i].delivery;
                 }else{
                     products.delivery = 0;
                 }
-                products.totalPrice = parseInt(products.count) * parseInt(products.price) + parseInt(products.delivery) + parseInt(products.sale);
-                products.productDetailId = state[i].data.listItem[j].productDetailId;
-
+                products.totalPrice = parseInt(products.count) * parseInt(products.price) + parseInt(products.delivery);
+                products.productDetailId = state[i].listItem[j].productDetailId;
+                products.productId = state[i].productId;
+                
                 setProductList((productList) => {
                     return [...productList, products];
                 });
-                
+
                 setPayInfo((payInfo) => {
                     return {
                         ...payInfo,

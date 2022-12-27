@@ -44,7 +44,7 @@ const Router = (props) => {
         <Route path="/signup" element={<Hello />} />
         <Route path="/hello2" element={<Hello2 />} />
         <Route path='/header' element={<Header />} />
-        <Route path='/sellercenter/*' element={<SellerCenter />} />
+        <Route path='/Sellercenter/*' element={<SellerCenter />} />
         <Route path='/login' element={<Login/>} />
         <Route path='/Orderlist' element={<Orderlist/>} />
         <Route path='/information' element={<Information/>} />

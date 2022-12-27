@@ -43,6 +43,7 @@ function ProductInfo({product}){
                     name: product.product[key].product_name,
                     price: (parseInt(product.product[key].product_price) - parseInt(product.product[key].product_discount)),
                     count: 1,
+                    productId: product.productId,
                 }]
             })
         }
@@ -176,11 +177,29 @@ function ProductInfo({product}){
             alert('상품을 선택해주세요.');
             return;
         }
-        let data ={
-            listItem: listItem,
-            delivery: delivery
+        let changeListItem = [];
+
+        for(let i=0; i<listItem.length; i++){
+            let Item = {
+                name: '',
+                price: '',
+                count: '',
+                productDetailId: '',
+            }
+            Item.name = listItem[i].name;
+            Item.price = listItem[i].price;
+            Item.count = listItem[i].count;
+            Item.productDetailId = listItem[i].productDetailId;
+            changeListItem.push(Item);
         }
-        naviGate('/Payment', {state:[{market_name: product.market_name, data: data}]});
+        
+        let data ={
+            marketName: product.market_name,
+            delivery: delivery,
+            productId: product.productId,
+            listItem: changeListItem,
+        }
+        naviGate('/Payment', {state:[data]});
     }
     return(
         <>
