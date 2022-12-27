@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import QnAReplyList from "./QnAReplyList";
+import Pagination from "./Pagination";
 
 
 const QnA = ({page}) => {
     const[List, setList] = useState([]);
     const[reply, setReply] = useState([]);
     const[id, setId] = useState(0);
+    const [limit, setLimit] = useState(10);
+    const [paging, setPaging] = useState(1);
+    const offset = (paging - 1) * limit;
     useEffect(() => {
         axios({
         method: 'get',
@@ -103,8 +107,15 @@ const QnA = ({page}) => {
              <div>
                 <div className="QnABox" >
                     <button className="btn btn-dark" onClick={QnASite}>상품 Q&A 작성하기</button>
+                    <select type="number" value={limit} onChange={({target: {value} }) => setLimit(Number(value))}>
+                        <option value="10">10개</option>
+                        <option value="12">12개</option>
+                        <option value="20">20개</option>
+                        <option value="50">50개</option>
+                        <option value="100">100개</option>
+                    </select> 
                      <div className="answer">
-                    {List.map((List => (
+                    {List.slice(offset, offset+limit).map((List => (
                         <form key={List.id} onSubmit={onsubmit} name = "rr" value="rr" >
                         <div className="answerM" >
                              <div className="answerList" style={{position:"relative"}}>
@@ -127,17 +138,19 @@ const QnA = ({page}) => {
                                     </div>
                              </div>
                              <QnAReplyList props={List.id} page={page}/>
-
-                                 
-
                         </div>
                         </form>
 
                     )))}  
+                    <div>
+                    <Pagination 
+                    total={List.length}
+                    limit={limit}
+                    page={paging}
+                    setPage={setPaging}
+                      />
+                    </div>
                              {Noexsits()}
-
-                    
-                    
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React,{useState} from "react";
+import React,{useState, useHistory, useEffect} from "react";
 import './Reviewcss.css';
 import {useParams} from "react-router-dom";
 
@@ -31,34 +31,29 @@ const QnApopup = () => {
     }
 
     const ContSend = (e) => {
-        e.preventDefault();
-       
-    }
-
-    const addadd = (e) => {
-        alert("문의가 접수되었습니다.");
+        
         axios({
             method: 'post',
             url: `/api/view/QnA/write/${page}`,
             data: {
                 ...account
-            } 
+            }
         })
-        // .then(window.close())
-        // document.getElementById("Subm").submit();
-        e.preventDefault();
-
-
+         .then(alert("문의가 접수되었습니다."), window.close(), window.opener.location.reload())
+         
     }
 
-    console.log(account)
+    
+
+   
+
     return(
         <div>
+                <form id= "Subm"onSubmit={ContSend}>
             <div className="QnAWrite">
                 <h1 className="QnAHeader">상품 Q&A 작성하기</h1>
             </div>
             <div className="QnAWrite2">
-                <form id= "Subm"onSubmit={ContSend}>
                     <div className="QnAContBox">
                         <textarea id = "asd" className="QnAcont" placeholder="문의하실 내용을 입력하세요." onChange={QnaCont} name="cont"></textarea>
                             <div className="letterNum">
@@ -66,14 +61,13 @@ const QnApopup = () => {
                                 <span>/1000</span>
                             </div>
                     </div>
-                </form>
             </div>
                           <p className="QnACheck">
                         문의하신 내용에 대한 답변은 해당 상품의 상세페이지에서 확인하실 수 있습니다.
                           </p>
             <div className="QnAButton">
-                <a className="cancle" role="button" onClick={close}>취소</a>
-                <a className="add" role="button" onClick={addadd}>등록</a>
+                <button className="cancle"  onClick={close}>취소</button>
+                <button className="add"  type="submit" >등록</button>
             </div>
             <div className="Toggle">
                 <h2 className="HH2"><a role="button" className="danger" onClick={ariacheck}aria-expanded={aria}>상품 Q&A작성 유의사항</a></h2>
@@ -93,7 +87,7 @@ const QnApopup = () => {
                 </ul>
                
             </div>
-            
+            </form>
         </div>
     )
 

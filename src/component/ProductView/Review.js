@@ -4,6 +4,7 @@ import { FaStar } from 'react-icons/fa'
 import { useParams } from "react-router-dom";
 import styled from 'styled-components';
 import './Reviewcss.css';
+import ReviewList  from "./ReviewList";
 const Review = () => {
     const {page} = useParams();
     const [clicked, setClicked] = useState([false, false, false, false, false]);
@@ -12,6 +13,7 @@ const Review = () => {
     const [letter , setletter] = useState(0);
     const [maintext, setMaintext] = useState(0);
     const [star, setStar] = useState(0);
+    
     const [account, setAccount] = useState({
         cont: '',
         title: ''
@@ -60,15 +62,14 @@ const Review = () => {
         setAccount({...account, [e.target.name]: e.target.value})
         }
       const ReviewSubmit = (e) =>{
-        
         axios({
             method: 'post',
-            url: 'api/view/review',
+            url: `/api/view/reviewWrite/{page}`,
             data: {
                 ...account,
                 star: star,
                 id: 1,
-                product_num: {page},   
+                product_num: page,   
                 user_id: "admin"
 
         }
@@ -120,7 +121,7 @@ const Review = () => {
                                     <div className="letter">{maintext}/500</div>
                              </div>
                      </div>
-                </div>
+            </div>
                 <div className="one_line_summary">
                     <div className="one_line">한줄요약</div>
                         <div className="one_line__content"> 
@@ -131,11 +132,9 @@ const Review = () => {
                 <div className="review__button">
                 <button type="submit" className="btn btn-lg btn-primary btn-block">등록하기</button>
                 </div>
-
                     </form>
+                    <ReviewList page={page} />
          </div>
-
-
     );
     }
 

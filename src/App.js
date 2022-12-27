@@ -22,6 +22,7 @@ import Review from './component/ProductView/Review';
 import QnAList from './component/ProductView/QnAList';
 import QnAQuestionWrite from './component/ProductView/QnAQuestionWrite';
 import QnAanswerWrite from './component/ProductView/QnAanswerWrite';
+import ReviewList from './component/ProductView/ReviewList';
 
 import View from './component/ProductView/View';
 // function App() {
