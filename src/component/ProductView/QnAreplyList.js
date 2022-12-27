@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 
 
 
@@ -26,7 +25,7 @@ const QnAreplyList =  (props) => {
                     product_name: '',
                     product_num: ''
                 }
-             if(res.data[i].child_id != 0){
+             if(res.data[i].child_id !== 0){
                     products.cont = res.data[i].cont
                     products.id = res.data[i].id
                     products.qnatype = res.data[i].qnatype
@@ -43,7 +42,7 @@ const QnAreplyList =  (props) => {
         })
 
         
-    }, [])
+    }, [props.page])
      
     const adad = (e) => {
         

@@ -6,7 +6,6 @@ import Pagination from "./Pagination";
 
 const QnA = ({page}) => {
     const[List, setList] = useState([]);
-    const[reply, setReply] = useState([]);
     const[id, setId] = useState(0);
     const [limit, setLimit] = useState(10);
     const [paging, setPaging] = useState(1);
@@ -41,22 +40,11 @@ const QnA = ({page}) => {
                         return [...item, products]
                     })
                     
-                } else {
-                    products.cont = res.data[i].cont
-                    products.id = res.data[i].id
-                    products.qnatype = res.data[i].qnatype
-                    products.user_id = res.data[i].user_id
-                    products.regdate = res.data[i].regdate
-                    products.product_name = res.data[i].product_name
-                    products.product_num = res.data[i].product_num
-                    products.child_id = res.data[i].child_id
-                    setReply((item) => {
-                        return [...item, products]
-                    })
-                }
+                } 
+                
             }
         })
-    }, [])
+    }, [page])
 
    
    

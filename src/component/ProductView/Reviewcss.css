@@ -392,3 +392,47 @@ color:#5f5f5f;
 .btn btn-success{
     width: 14px;
 }
+
+.StarEvaluation{
+    height: 47px;
+    border-bottom: 1px solid #ddd;
+    display:flex;
+
+}
+
+.Startitle{
+    height: 47px;
+    padding-left: 20px;
+    padding-top: 15px;
+    width: 126px;
+    background-color: #fafafa;
+    font-size: 12px;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+}
+.zzz{
+    display: flex;
+}
+.ContEdit{
+    padding-left: 20px;
+    width: 126px;
+    height: 251px;
+    background-color: #fafafa;
+    font-size: 12px;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+}
+
+
+.congBox{
+    padding: 10px;
+    width: 440px;
+    height: 205px;
+    outline: 0;
+    font-size: 12px;
+    border: 1px solid #bbb;
+    line-height: 20px;
+    resize: none;
+    margin-top: 30px;
+    margin-left: 10px;
+}

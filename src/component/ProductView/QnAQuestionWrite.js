@@ -1,5 +1,5 @@
 import axios from "axios";
-import React,{useState, useHistory, useEffect} from "react";
+import React,{useState} from "react";
 import './Reviewcss.css';
 import {useParams} from "react-router-dom";
 
@@ -70,7 +70,7 @@ const QnApopup = () => {
                 <button className="add"  type="submit" >등록</button>
             </div>
             <div className="Toggle">
-                <h2 className="HH2"><a role="button" className="danger" onClick={ariacheck}aria-expanded={aria}>상품 Q&A작성 유의사항</a></h2>
+                <h2 className="HH2"><a href="#!" role="button" className="danger" onClick={ariacheck}aria-expanded={aria}>상품 Q&A작성 유의사항</a></h2>
                 <ul className={aria ? "Before":"after"} >
                     <li className="li1">
                         상품 Q&A는 상품 및 상품 구매 과정(배송, 반품/취소, 교환/변경)에 대해 판매자에게 문의하는 게시판 입니다.

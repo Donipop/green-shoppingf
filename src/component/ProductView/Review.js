@@ -13,7 +13,6 @@ const Review = () => {
     const [letter , setletter] = useState(0);
     const [maintext, setMaintext] = useState(0);
     const [star, setStar] = useState(0);
-    
     const [account, setAccount] = useState({
         cont: '',
         title: ''
@@ -27,31 +26,9 @@ const Review = () => {
         setClicked(clickStates);
       }; 
     
-      const sendReview = () => {
-        let score = clicked.filter(Boolean).length;
-        setStar(clicked.filter(Boolean).length);
-        if(score === 1){
-            setevaluation('나쁨')
-        }
-        if(score === 2){
-            setevaluation('별로')
-        }
-        if(score === 3){
-            setevaluation('보통')
-        }
-        if(score === 4){
-            setevaluation('좋음')
-        }
-        if(score === 5){
-            setevaluation('최고')
-        }
+     
 
-      };
-
-      useEffect(() => {
-        sendReview();
-      }, [clicked]);
-
+      
       const lettersee = (e) => {
         setletter(e.target.value.replace(/<br\s*\/?>/gm, "\n").length)      
         setAccount({...account, [e.target.name]: e.target.value})
@@ -80,12 +57,43 @@ const Review = () => {
             console.log('후기 보내기 에러', err)
     })
       }
+
+      useEffect(() => {
+        const sendReview = () =>{
+          let score = clicked.filter(Boolean).length;
+          setStar(clicked.filter(Boolean).length);
+          if(score === 1){
+              setevaluation('나쁨')
+          }
+          if(score === 2){
+              setevaluation('별로')
+          }
+          if(score === 3){
+              setevaluation('보통')
+          }
+          if(score === 4){
+              setevaluation('좋음')
+          }
+          if(score === 5){
+              setevaluation('최고')
+          }
+  
+        };
+        sendReview();
+      }, [clicked]);
+
+      useEffect(() => {
+        return(
+        <ReviewList page={page} />
+        )
+      }, [page])
+
     return (
         //review page
         <div className="review" id="review">
             <div className="review__title">
                 <div className="rere">
-                <img src="https://image6.coupangcdn.com/image/productreview/badge/review/write/product/product_icon-xxhdpi.png" style={{height:"26px"}}></img>
+                <img src="https://image6.coupangcdn.com/image/productreview/badge/review/write/product/product_icon-xxhdpi.png" alt ="free"style={{height:"26px"}}></img>
                 <h2>상품후기</h2>
                 </div>
             <div><p style={{fontSize:"15px", fontWeight:"400",color:"#111111"}}>이 상품의 품질에 대해서 얼마나 만족하시나요?</p></div>

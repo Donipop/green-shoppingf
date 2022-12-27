@@ -28,7 +28,7 @@ const QnAReply = () => {
             },
          })
          .then(res => setList(res.data))
-     }, [])
+     }, [id, page])
 
      const QnaCont = (e) => {
         setAccount({...account, [e.target.name]: e.target.value,});
@@ -72,7 +72,7 @@ const QnAReply = () => {
                         <textarea id = "asd" className="QnAcont" placeholder="답변을 입력하세요." onChange={QnaCont} name="cont"></textarea>
                         
                     </div>
-                    <a className="add" role="button" onClick={addadd}>등록</a>
+                    <a href="#!"className="add" role="button" onClick={addadd}>등록</a>
                 </form>
             </div>
         </div>
