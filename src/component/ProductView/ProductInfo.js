@@ -199,6 +199,7 @@ function ProductInfo({product}){
             productId: product.productId,
             listItem: changeListItem,
         }
+        
         naviGate('/Payment', {state:[data]});
     }
     return(

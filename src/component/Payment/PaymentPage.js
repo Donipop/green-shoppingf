@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
@@ -8,7 +9,12 @@ function PaymentPage(){
     const [productList, setProductList] = useState([]);
     const [isChecked, setIsChecked] = useState([true,false,false]);
     const [payType, setPayType] = useState('신용카드');
-
+    const [purchase, setPurchase] = useState({
+        delivery: '',
+        marketName: '',
+        productId:'',
+        listItem: [],
+    });
     const [payInfo, setPayInfo] = useState({
         totalProductPrice: 0, //상품금액
         totalCuponPrice: 0, //쿠폰금액
@@ -16,7 +22,7 @@ function PaymentPage(){
         totalPaymentPrice: 0, //총결제금액
     });
     useEffect(() => {
-        console.log(state);
+        // console.log(state);
         for(let i=0; i<state.length; i++){
             for(let j=0; j<state[i].listItem.length; j++){
                 let products = {
@@ -57,7 +63,26 @@ function PaymentPage(){
                     }
                 });
             }
+
+            let data = {
+                delivery: state[i].delivery,
+                marketName: state[i].marketName,
+                productId: state[i].productId,
+                listItem: state[i].listItem,
+            }
+            
+            setPurchase((purchase) => {
+                return {
+                    ...purchase,
+                    delivery: parseInt(data.delivery),
+                    marketName: data.marketName,
+                    productId: data.productId,
+                    listItem: data.listItem,
+                }
+            })
         }
+        
+
         
     }, [state])
 
@@ -71,9 +96,16 @@ function PaymentPage(){
     }
 
     const onClickBuy = () => {
-        console.log(payType);
-        console.log(productList);
-        console.log("총 결제금액: " + payInfo.totalPaymentPrice);
+        axios.post('/api/payment/purchase',purchase)
+        .then((res) => {
+            if(res.data === 'success'){
+                alert('구매가 완료되었습니다.');
+                window.location.href = '/';
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+
     }
     return (
         <DOV className="container">
