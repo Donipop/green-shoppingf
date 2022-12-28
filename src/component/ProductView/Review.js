@@ -82,11 +82,7 @@ const Review = () => {
         sendReview();
       }, [clicked]);
 
-      useEffect(() => {
-        return(
-        <ReviewList page={page} />
-        )
-      }, [page])
+      
 
     return (
         //review page

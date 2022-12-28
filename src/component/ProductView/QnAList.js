@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import QnAReplyList from "./QnAReplyList";
+import QnAreplyList from "./QnAreplyList";
 import Pagination from "./Pagination";
 
 
 const QnA = ({page}) => {
     const[List, setList] = useState([]);
+    const[Reply, setReply] = useState([]);
     const[id, setId] = useState(0);
     const [limit, setLimit] = useState(10);
     const [paging, setPaging] = useState(1);
@@ -15,8 +16,8 @@ const QnA = ({page}) => {
         method: 'get',
         url: `/api/view/QnA/${page}`,
         })
-        .then((res) => {
-
+        .then((res) => {setList(res.data)
+          
             for(var i=0; i<res.data.length; i++){
                 let products = {
                     id: '',
@@ -27,7 +28,7 @@ const QnA = ({page}) => {
                     product_name: '',
                     product_num: ''
                 }
-                if(res.data[i].child_id === 0){
+             if(res.data[i].qnatype === "1"){
                     products.cont = res.data[i].cont
                     products.id = res.data[i].id
                     products.qnatype = res.data[i].qnatype
@@ -36,17 +37,13 @@ const QnA = ({page}) => {
                     products.product_name = res.data[i].product_name
                     products.product_num = res.data[i].product_num
                     products.child_id = res.data[i].child_id
-                    setList((item) => {
+                    setReply((item) => {
                         return [...item, products]
                     })
-                    
-                } 
-                
+                }
             }
         })
-    }, [page])
-
-   
+        }, [page])
    
     // 질문하기
     const QnASite = () => {
@@ -76,14 +73,9 @@ const QnA = ({page}) => {
            
         }
     }
-    
 
-   
-
-  
-    
- 
-        
+  console.log(List)
+  console.log(Reply)
 
 
     return (
@@ -104,7 +96,9 @@ const QnA = ({page}) => {
                     </select> 
                      <div className="answer">
                     {List.slice(offset, offset+limit).map((List => (
-                        <form key={List.id} onSubmit={onsubmit} name = "rr" value="rr" >
+                        <div key={List.id}>
+                            {List.qnatype === "0"  ? (
+                        <form  onSubmit={onsubmit} name = "rr" value="rr" >
                         <div className="answerM" >
                              <div className="answerList" style={{position:"relative"}}>
                                 <em className="answerState">질문</em>
@@ -124,13 +118,18 @@ const QnA = ({page}) => {
                                          <button className="btn btn-success btn-sm" value={List.user_id} onChange={onchange} >답변하기</button>   
                                         </div>
                                     </div>
-                             </div>
-                             <QnAReplyList props={List.id} page={page}/>
+                               </div>
+                         </div>
+                         </form>
+                         
+                            ):null}
                         </div>
-                        </form>
-
                     )))}  
                     <div>
+
+                    </div>
+                    <div>
+
                     <Pagination 
                     total={List.length}
                     limit={limit}

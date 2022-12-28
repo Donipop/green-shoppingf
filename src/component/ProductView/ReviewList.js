@@ -43,6 +43,9 @@ import ReviewUpdate from './ReviewUpdate';
     
      }, [props.page])
 
+
+
+
      useEffect(() => {
         const starScore = (index) => {
             const star = [...score];
@@ -56,6 +59,7 @@ import ReviewUpdate from './ReviewUpdate';
                 starScore(List[i].star);
             }
         }
+
      }, [List,props.props, score])
 
      const StarList = (props) => {
@@ -119,7 +123,7 @@ import ReviewUpdate from './ReviewUpdate';
                                  <Modal close={closeModal} header="상품평 수정하기" check={checked.Select[index]}>
                                 <ReviewUpdate id={item.id} page={item.product_num}/>
                                  </Modal>
-                                <a href="#!"role="button" id={item.id} onClick={Delete} style={{fontSize:"14px",paddingLeft:"4px"}}> 삭제</a>
+                                <a href="#!" role="button" id={item.id} onClick={Delete} style={{fontSize:"14px",paddingLeft:"4px"}}> 삭제</a>
                         </div>
                         <div>
                                 <strong style={{paddingRight:"10px"}}>한줄평</strong>

@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Hello from './component/Hello';
@@ -14,7 +13,6 @@ import Notice from './component/Notice/Noticelist'
 import NoticeView from './component/Notice/NoticeView';
 import SellerSignup from './component/SellerSignup/Signup';
 import SellerSignup2 from './component/SellerSignup/Signup2';
-import Ordersearch from './component/Orderlist/Ordersearch';
 import Myinformation from './component/Mypage/Myinformation';
 import Mypage from './component/Mypage/Mypage';
 import Writenotice from './component/Notice/Writenotice';
@@ -23,6 +21,7 @@ import QnAList from './component/ProductView/QnAList';
 import QnAQuestionWrite from './component/ProductView/QnAQuestionWrite';
 import QnAanswerWrite from './component/ProductView/QnAanswerWrite';
 import View from './component/ProductView/View';
+import QnAreplyList from './component/ProductView/QnAreplyList';
 import ReviewUpdate from './component/ProductView/ReviewUpdate';
 // function App() {
 //   return (
@@ -60,6 +59,7 @@ const Router = (props) => {
         <Route path='/QnA:page' element={<QnAList/>} />
         <Route path='/QnA/write/:page' element={<QnAQuestionWrite/>} />
         <Route path='/QnA/reply/:page/:id' element={<QnAanswerWrite/>} />
+        <Route path='/QnA/replyList/:page/' element={<QnAreplyList/>} />
       </Routes>
     </BrowserRouter>
   );

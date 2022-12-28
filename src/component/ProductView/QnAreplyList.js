@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import axios from "axios";
 
 
@@ -6,11 +6,14 @@ import axios from "axios";
 
 const QnAreplyList =  (props) => {
     const [reply, setReply] = useState([]);
-    
     useEffect(() => {
         axios({
         method: 'get',
-        url: `/api/view/QnA/${props.page}`,
+        url: `/api/QnA/replyList/${props.page}/`,
+        params:{
+            id: props.id,
+            product_num: props.page
+        }   
         })
         .then((res) => {
             
@@ -43,16 +46,22 @@ const QnAreplyList =  (props) => {
 
         
     }, [props.page])
+
+    const replyList = useMemo(() => {
+        return reply.filter((item) => {
+            return item.child_id === props.props
+        })
+    }, [reply, props.props])
+
      
     const adad = (e) => {
         
        
             
-        for(var i=0; i<reply.length; i++){
-            if(reply[i].child_id === props.props){   
-       return (
-    
-<div className="reply">
+       for(var i=0; i<reply.length; i++){
+           if(reply[i].child_id === props.props){   
+      return (
+        <div  className="reply">
        <i className="icon-reply"></i>
        <em className="replyicon">답변</em>
    <div className="reply_wrap">
@@ -63,22 +72,23 @@ const QnAreplyList =  (props) => {
        <div className="replydate">
            {reply[i].regdate}
            </div>
-   </div>
-</div>
-       )
+     </div>
+    </div>
+      )
 
-      }
+     }
        
-    }
-}
+   }
+ }
 
     
 
 
-
     return (
         <div>
-              {adad()}
+            
+           {adad()}
+            
               </div>
     )
 }

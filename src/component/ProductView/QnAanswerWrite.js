@@ -13,7 +13,8 @@ const QnAReply = () => {
         user_id: "admin",
         id: 3,
         product_name: "아이패드",
-        child_id: id
+        child_id: id,
+        qnatype: "1"
     })
 
      
