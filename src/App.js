@@ -21,8 +21,6 @@ import QnAList from './component/ProductView/QnAList';
 import QnAQuestionWrite from './component/ProductView/QnAQuestionWrite';
 import QnAanswerWrite from './component/ProductView/QnAanswerWrite';
 import View from './component/ProductView/View';
-import QnAreplyList from './component/ProductView/QnAreplyList';
-import ReviewUpdate from './component/ProductView/ReviewUpdate';
 // function App() {
 //   return (
 //     <div className="App">
@@ -59,7 +57,6 @@ const Router = (props) => {
         <Route path='/QnA:page' element={<QnAList/>} />
         <Route path='/QnA/write/:page' element={<QnAQuestionWrite/>} />
         <Route path='/QnA/reply/:page/:id' element={<QnAanswerWrite/>} />
-        <Route path='/QnA/replyList/:page/' element={<QnAreplyList/>} />
       </Routes>
     </BrowserRouter>
   );

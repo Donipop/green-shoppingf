@@ -1,4 +1,5 @@
 import axios from "axios"
+import { useMemo } from "react";
 import { useEffect,useState } from "react"
 import { FaStar } from 'react-icons/fa';
 import styled from 'styled-components';
@@ -14,6 +15,7 @@ const ReviewUpdate = (props) => {
     const [evaluation, setevaluation] = useState('')
     const [starcolor, setStarcolor] = useState(0);
     const [reviewcont, setReviewcont] = useState('');
+    const [reviewcont2, setReviewcont2] = useState('')
     const Array = [0, 1, 2, 3, 4];
 
 
@@ -31,6 +33,7 @@ const ReviewUpdate = (props) => {
         setList(res.data)
         setStarcolor(res.data.star)
         setReviewcont(res.data.cont)
+        setReviewcont2(res.data.title)
 
     })
     .catch((err) => {
@@ -78,44 +81,73 @@ const ReviewUpdate = (props) => {
         setReviewcont(e.target.value)
         }
 
-      console.log(reviewcont)
-
+      const ContChange2 = (e) => {
+        setReviewcont2(e.target.value)
+        }
+      
+        const onsubmit = (e) => {
+            e.preventDefault();
+            axios({
+                method: 'post',
+                url: `/api/view/reviewUpdate/${page}/${id}`,
+                data: {
+                    id: id,
+                    page: page,
+                    star: starcolor,
+                    cont: reviewcont,
+                    title: reviewcont2
+                }
+            })
+            .then(alert("수정되었습니다."), window.location.reload())
+            .catch((err) => {
+                console.log('후기 수정 에러', err)
+            })
+        }
+       
+         
     return (
-        <div>
+      <div>
+          <form onSubmit={onsubmit}>
+        <div className="ReviewUpdateMain">
             <div className="StarEvaluation">
                <div className="Startitle">별점평가</div>
-                <div>
-                <Stars>
-                            {Array.map((el, idx) => {
-                                 return (
-                                       
-                                        <FaStar
-                                            key={idx}
-                                            size="30"
-                                            onClick={() => handleStarClick(el)}
-                                            className={clicked[el] && "yellowStar"}
-                                            color={starcolor>el ? "#fcc419" : "gray"}                                            
-                                        />
-                                   )
-                            })}
-                            {evaluation}
-                            </Stars>
-                </div>
+                  <div>
+                    <Stars>
+                          {Array.map((el, idx) => {
+                            return (             
+                              <FaStar
+                                  key={idx}
+                                  size="30"
+                                  onClick={() => handleStarClick(el)}
+                                  className={clicked[el] && "yellowStar"}
+                                  color={starcolor>el ? "#fcc419" : "gray"}                                            
+                              />
+                            )
+                          })}
+                                {evaluation}
+                                </Stars>
+                   </div>
             </div>
             <div className="zzz" >
-                <div  className="ContEdit" >
-                    <div className="ReviewcontTitle" style={{paddingTop:"100px"}}> 상세후기</div>
+                <div className="ContEdit" >
+                    <div className="ReviewcontTitle" style={{paddingTop:"120px"}}> 상세후기</div>
                 </div>
-                <textarea className="congBox" value={reviewcont} onChange={e => ContChange(e)}>  </textarea>
+                <div>
+                <textarea className="congBox" value={reviewcont} onChange={e => ContChange(e)}></textarea>        
+                     <div style={{textAlign:"center", marginBottom:"30px"}} >
+                       <input type="text" value={reviewcont2} onChange={e => ContChange2(e)} style={{width:"440px" ,marginLeft:"9px", fontSize:"12px"}}  ></input>
+                     </div>
+                </div>
+            </div>    
+        </div>          
 
-            
-         
-            </div>
-           
-            
-            
-        </div>
+                 <div style={{textAlign:"center"}}>
+                    <button type="submit"className="btn btn-primary" style={{width:"100px", height:"40px", marginLeft:"10px", marginTop:"10px"}}>수정</button>
+                 </div>
+       </form>
+    </div>            
     )
+   
 
 
 }

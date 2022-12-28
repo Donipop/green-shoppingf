@@ -1,7 +1,6 @@
 import {useState, useEffect, useLayoutEffect} from 'react';
 import DatePicker from 'react-datepicker';
 // import 'react-datepicker/dist/react-datepicker.css';
-import './DatePicker.css';
 import styled from "styled-components";
 import 'bootstrap/dist/css/bootstrap.min.css';
 

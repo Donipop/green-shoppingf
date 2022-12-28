@@ -8,14 +8,15 @@ import ReviewUpdate from './ReviewUpdate';
     const [List, setList] = useState([]);
     const array = [0,1,2,3,4];
     const [score, setscore] = useState([false, false, false, false, false ]);
-    const [id, setid] = useState(0);
     const [limit, setLimit] = useState(10);
     const [paging, setPaging] = useState(1);
     const offset = (paging - 1) * limit;
     const refref = useRef();
+    const [ischecked, setIschecked] = useState([]);
     const [checked, setChecked] = useState({
         Select: Array(List.length).fill(false)
     });
+    
 
      const openModal = (e,index) => {
         const newArr = Array(List.length).fill(false)
@@ -36,13 +37,14 @@ import ReviewUpdate from './ReviewUpdate';
         })
         .then((res) => {
             setList(res.data);
+            setIschecked(new Array(res.data.length).fill(false));
         }
         ).catch((err) => {
             console.log('후기 보내기 에러', err)
     })
+
     
      }, [props.page])
-
 
 
 
@@ -73,15 +75,17 @@ import ReviewUpdate from './ReviewUpdate';
         }
     
         const truecheck = (e) => {
-            console.log(refref.current.href)
-            setid(e.target.id);
-            if(id === e.target.id){
-              //  document.getElementById("ad" + e.target.id).href=`#collapseExample${id}`;
-              refref.current.href=`#collapseExample${id}`;
-                
+            const {checked} = e.target;
+            let key = e.target.attributes.indexid.value;
+            console.log(checked)
+            if(!checked){
+                setIschecked({...ischecked, [key]: true})
+             document.getElementById(`collapseExample${e.target.id}`).style="display:block";
+         }  else{
+            setIschecked({...ischecked, [key]: false})
+                document.getElementById(`collapseExample${e.target.id}`).style="display:none";
+         }
         }
-    }
-    
     const Delete = (e) => {
         axios({
             method: 'post',
@@ -98,8 +102,11 @@ import ReviewUpdate from './ReviewUpdate';
               }
         })
             
-    }
-
+         }
+    
+    
+    
+    
     return (
         <div>
             <select type="number" value={limit} onChange={({target: {value} }) => setLimit(Number(value))}>
@@ -132,11 +139,11 @@ import ReviewUpdate from './ReviewUpdate';
                   
                         <div className="review_wrap_cont" >
                              <p>
-                                <a ref={refref} href="{() => false}" className="btn btn-light" id={item.id} onClick={truecheck} data-bs-toggle="collapse"  role="button" aria-expanded="false"aria-controls="collapseExample">
+                                <a ref={refref} href="#collapseExample" indexid= {index} checked={ischecked[index]} onClick={truecheck}className="btn btn-light" id={item.id}  data-bs-toggle="collapse"  role="button" aria-expanded="false"aria-controls="collapseExample">
                                    상세후기
                                 </a>
                              </p>
-                            <div className="collapse" id={`collapseExample${item.id}` }>
+                            <div className="collapse" id={`collapseExample${item.id}`} style={{display:"none"}}>
                                  <div className="card card-body" >
                                     <div >{item.cont}</div>
                                 </div>

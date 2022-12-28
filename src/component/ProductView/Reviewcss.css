@@ -416,7 +416,7 @@ color:#5f5f5f;
 .ContEdit{
     padding-left: 20px;
     width: 126px;
-    height: 251px;
+    height: 271px;
     background-color: #fafafa;
     font-size: 12px;
     font-weight: bold;
@@ -435,4 +435,8 @@ color:#5f5f5f;
     resize: none;
     margin-top: 30px;
     margin-left: 10px;
+}
+
+.ReviewUpdateMain{
+    border-bottom: 1px solid #dee2e6;
 }
