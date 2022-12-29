@@ -7,6 +7,7 @@ function ViewDetailProductInfo({ productInfo }) {
         productInfo: []
     });
     const [orderState, setOrderState] = useState();
+    const [orderStateNum, setOrderStateNum] = useState();
     useEffect(() => {
         if(productInfo.postAddressId === undefined) return;
 
@@ -15,7 +16,7 @@ function ViewDetailProductInfo({ productInfo }) {
             productInfo: []
         }
         let Istate = "";
-        switch(productInfo.orderState){
+        switch(String(productInfo.orderState)){
             case "0":
                 Istate = "주문접수";
                 break;
@@ -41,7 +42,9 @@ function ViewDetailProductInfo({ productInfo }) {
                 Istate = "주문접수";
                 break;
         }
+        setOrderStateNum(productInfo.orderState);
         setOrderState(Istate);
+        
 
         //상세상품 받아오기
         axios.get("/api/sellercenter/getorderdetail", {
@@ -95,7 +98,23 @@ function ViewDetailProductInfo({ productInfo }) {
                 Istate = "주문접수";
                 break;
         }
-        setOrderState(Istate);
+        setOrderStateNum(num);
+        setOrderState(Istate + '로 변경');
+    }
+
+    const onClickConfirm = () => {
+        console.log(productInfo.orderId);
+        console.log(orderStateNum);
+
+        axios.post("/api/sellercenter/updateorderstatus", {
+            Id: parseInt(productInfo.orderId),
+            status: parseInt(orderStateNum)
+        }).then((res) => {
+            alert("주문상태가 변경되었습니다.");
+        }).catch((err) => { 
+            console.log(err);
+        }
+        )
     }
     return(
         
@@ -153,7 +172,6 @@ function ViewDetailProductInfo({ productInfo }) {
                 <span className="position-absolute start-0">주문상태 : {orderState}</span>
 
                 <div className="dropdown">
-                    
                     <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         주문상태 변경
                     </button>
@@ -169,7 +187,7 @@ function ViewDetailProductInfo({ productInfo }) {
                 </div>
                 
                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                <button type="button" className="btn btn-primary">확인</button>
+                <button type="button" className="btn btn-primary" onClick={onClickConfirm}>확인</button>
             </div>
           </div>
         </div>

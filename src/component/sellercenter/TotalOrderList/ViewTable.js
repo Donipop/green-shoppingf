@@ -73,7 +73,7 @@ function ViewTable(){
                     <tbody>
                         {list.map((item,index) => {
                             let Istate = "";
-                            switch(item["STATE"]){
+                            switch(String(item["STATE"])){
                                 case "0":
                                     Istate = "주문접수";
                                     break;
