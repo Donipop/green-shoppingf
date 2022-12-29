@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import ViewDate from './ViewDate';
+import ViewDetailProductInfo from "./ViewDetailProductInfo";
 import ViewTable from "./ViewTable";
 
 function TotalOrderList(){
@@ -18,6 +19,10 @@ function TotalOrderList(){
 
                     <div className="alert alert-secondary">
                         <ViewTable />
+                    </div>
+
+                    <div className="alert alert-secondary">
+                
                     </div>
 
                 </div>
