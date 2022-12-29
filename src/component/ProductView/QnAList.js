@@ -10,13 +10,14 @@ const QnA = ({page}) => {
     const offset = (paging - 1) * limit;
     const [idnumber, setIdnumber] = useState(new Map());
     const [test, setTest] = useState([]);
+    const [reply, setReply] = useState([]);
 
     useEffect(() => {
         axios({
         method: 'get',
         url: `/api/view/QnA/${page}`,
         })
-        .then((res) => {setList(res.data)
+        .then((res) => {
             for(let i=0; i<res.data.length; i++){
                 let products = {
                     id: '',
@@ -39,33 +40,30 @@ const QnA = ({page}) => {
                     setTest((item) => {
                         return [...item, products]
                     })
+            } else{
+                products.cont = res.data[i].cont
+                products.id = res.data[i].id
+                products.qnatype = res.data[i].qnatype
+                products.user_id = res.data[i].user_id
+                products.regdate = res.data[i].regdate
+                products.product_name = res.data[i].product_name
+                products.product_num = res.data[i].product_num
+                products.child_id = res.data[i].child_id
+                setReply((item) => {
+                    return [...item, products]
+                })
             }
         }
           
-            for(var i=0; i<res.data.length; i++){
-                let products = {
-                    id: '',
-                    cont: '',
-                    qnatype : '',
-                    user_id: '',
-                    regdate: '',
-                    product_name: '',
-                    product_num: ''
-                }
-             if(res.data[i].qnatype === "1"){
-                    idnumber.set(res.data[i].child_id)
-                    setIdnumber(idnumber)
-                }
-            }
+           
         })
-
         }, [page])
    
     // 질문하기
     const QnASite = () => {
         window.open(`http://localhost:3000/QnA/write/${page}`,"_blank","width=650, height=730");
     }
-
+    
     
     //답변하기 
     const onsubmit = (e) => {
@@ -75,7 +73,7 @@ const QnA = ({page}) => {
     }
 
     const Noexsits = () => {
-        if(List.length === 0){
+        if(test.length === 0){
            return(
             <div style={{padding:"30px", textAlign:"center"}}>
                 등록된 문의가 없습니다.
@@ -85,13 +83,87 @@ const QnA = ({page}) => {
         }
     }
 
-    
+       const roqnfkf = (props) => {
+           for(let i=0; i<reply.length; i++){
+            if(props === reply[i].child_id ){
+                return (
+              <div  className="reply">
+                <i className="icon-reply"></i> 
+                <em className="replyicon">답변</em>
+                <div className="reply_wrap">
+                <strong className="Strong">[{reply[i].user_id}]</strong>
+                <a href="#!" role="button" id={reply[i].id}  style={{paddingLeft:"2px",fontSize:"12px"}}>수정</a>
+                 <span style={{fontSize:"14px", marginLeft:"2px", marginRight:"2px"}}>|</span>
+                 <a href="#!" role="button" id={reply[i].id} onClick={answerDelete} style={{fontSize:"12px"}}>삭제</a>
+                <div className="replycont">
+                    {reply[i].cont}
+                </div>
+                    <div className="replydate">
+                    {reply[i].regdate}
+                    </div>
+                </div>
+                </div>
+                )
+
+            }
+        }
+    }
+       const QuestionDelete = (e) => {
+        {test.map ((item) => {
+            if(item.id === Number(e.target.id)){
+                axios({
+                    method: 'post',
+                    url: `/api/view/QnA/QuestionDelete/${page}/${e.target.id}`,
+                    data: {
+                        id: e.target.id,
+                        product_num : page
+                    }
+                })
+                .then(() => {if(window.confirm("정말 삭제하시겠습니까?")) {
+                    alert("삭제되었습니다.");
+                    window.location.reload();
+                  } else {
+                    alert("취소합니다.");
+                  }
+                })
+                     }
+                 }
+             )}
+        }
+
+        const answerDelete = (e) => {
+
+            {reply.map ((item) => {
+                if(item.id === Number(e.target.id)){
+                    axios({
+                        method: 'post',
+                        url: `/api/view/QnA/answerDelete/${page}/${e.target.id}`,
+                        data: {
+                            id: e.target.id,
+                            product_num : page
+                        }
+                    })
+                    .then(() => {if(window.confirm("정말 삭제하시겠습니까?")) {
+                        alert("삭제되었습니다.");
+                        window.location.reload();
+                        } else {
+                        alert("취소합니다.");
+                        }
+                    })
+
+                }
+            }
+        )}
+        }
+
+        const QuestionUpdate = (e) => {
+            window.open(`http://localhost:3000/QnA/update/${page}/${e.target.id}`,"_blank","width=650, height=730");
+        }
+
+            
 
 
- 
-
-
-    return (
+      return (
         <div>
              <div>
                  <h3>QnA</h3>
@@ -108,56 +180,40 @@ const QnA = ({page}) => {
                         <option value="100">100개</option>
                     </select> 
                      <div className="answer">
-                    {test.slice(offset, offset+limit).map((List => (
-                        <div key={List.id}>
-                            {List.qnatype === "0"  && (
-                        <form id={List.id} onSubmit={onsubmit} name = "rr" value="rr" >
-                        <div className="answerM" >
+                    {test.slice(offset, offset+limit).map((item => (
+                        <div key={item.id}>
+                        {item.qnatype === "0" && ( 
+                        <div>
+                        <form id={item.id} onSubmit={onsubmit} name = "rr" value="rr" >
+                        <div className="answerM" >                             
                              <div className="answerList" style={{position:"relative"}}>
                                 <em className="answerState">질문</em>
                                     <div className="answerCont">
-                                        <strong className="author">{List.user_id}</strong>
+                                        <strong className="author">{item.user_id}</strong>
+                                        <a href="#!" role="button" id={item.id} onClick={QuestionUpdate}  style={{paddingLeft:"2px",fontSize:"12px"}}>수정</a>
+                                        <span style={{fontSize:"14px", marginLeft:"2px", marginRight:"2px"}}>|</span>
+                                        <a href="#!" role="button" id={item.id} onClick={QuestionDelete} style={{fontSize:"12px"}}>삭제</a>
                                         <div className="Productname">
-                                        {List.product_name}
+                                        {item.product_name}
                                         </div>
                                         <div className="answercont">
-                                        {List.cont}
+                                        {item.cont}
                                         </div>
                                         <div className="regdate">
-                                        {List.regdate}
+                                        {item.regdate}
                                         </div>
                                         <div className="Do_answer">
-                                         <input type="hidden" id="id" value={List.id} />
-                                         <button type="sumbit"className="btn btn-success btn-sm" value={List.user_id} onChange={onchange} >답변하기</button>   
+                                         <input type="hidden" id="id" value={item.id} />
+                                         <button type="sumbit"className="btn btn-success btn-sm" value={item.user_id} onChange={onchange} >답변하기</button>   
                                         </div>
                                     </div>
                                </div>
-                            
-                              
-                         </div>
-                         </form>              
-                                ) }
-                                  <div>
-                                {idnumber.has(List.id) && (
-                                      <div  className="reply">
-                                      <i className="icon-reply"></i>
-                                      <em className="replyicon">답변</em>
-                                  <div className="reply_wrap">
-                                      <strong className="Strong">[{List.user_id}]</strong>
-                                      <div className="replycont">
-                                        {List.cont}
-                                      </div>
-                                      <div className="replydate">
-                                          {List.regdate}
-                                          </div>
-                                    </div>
-                                   </div>
-                                )
-                                    }
-                                    </div>
-                                
-                                
-                        </div> 
+                               {roqnfkf(item.id)}                              
+                            </div>
+                            </form>  
+                                </div>                     
+                        )}
+                        </div>
                     )))}  
                     <div>
 

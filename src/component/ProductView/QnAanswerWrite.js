@@ -39,7 +39,7 @@ const QnAReply = () => {
     const addadd = (e) => {
         axios({
             method: 'post',
-            url: '/api/view/Qna/write',
+            url: '/api/view/AnswerWrite/',
             data: {
                 ...account
             } 
