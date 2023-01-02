@@ -26,10 +26,6 @@ import QnAQuestionUpdate from './component/ProductView/QnAQuestionUpdate';
 import QnAanswerUpdate from './component/ProductView/QnAanswerUpdate';
 import Coupon from './component/Mypage/Coupon';
 
-import QnA from './component/ProductView/QnA';
-import QnApopup from './component/ProductView/QnApopup';
-import QnAReply from './component/ProductView/QnAReply';
-
 import Shopping_basket from './component/Mypage/Shopping_basket';
 import PaymentPage from './component/Payment/PaymentPage';
 // function App() {
@@ -71,8 +67,6 @@ const Router = (props) => {
         <Route path='/QnA/update/:page/:id' element={<QnAQuestionUpdate/>} />
         <Route path='/QnA/answerUpdate/:page/:id/:child_id/:cont' element={<QnAanswerUpdate/>} />
         <Route path='/Mypage/coupon' element={<Coupon/>} />
-        <Route path='/QnA' element={<QnA/>} />
-        <Route path='/QnA/reply/:id' element={<QnAReply/>} />
         <Route path='/mypage/Shopping_basket' element={<Shopping_basket/>} />
         <Route path='/Payment' element={<PaymentPage/>} />
       </Routes>
