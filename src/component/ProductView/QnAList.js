@@ -14,7 +14,6 @@ const QnA = ({page}) => {
     const [test, setTest] = useState([]);
     const [reply, setReply] = useState([]);
     const Navigate = useNavigate();
-    console.log([page])
 
     useEffect(() => {
         axios({
