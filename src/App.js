@@ -17,6 +17,7 @@ import Myinformation from './component/Mypage/Myinformation';
 import Mypage from './component/Mypage/Mypage';
 import Writenotice from './component/Notice/Writenotice';
 import Review from './component/ProductView/Review';
+
 import QnAList from './component/ProductView/QnAList';
 import QnAQuestionWrite from './component/ProductView/QnAQuestionWrite';
 import QnAanswerWrite from './component/ProductView/QnAanswerWrite';
@@ -24,6 +25,12 @@ import View from './component/ProductView/View';
 import QnAQuestionUpdate from './component/ProductView/QnAQuestionUpdate';
 import QnAanswerUpdate from './component/ProductView/QnAanswerUpdate';
 import Coupon from './component/Mypage/Coupon';
+
+import QnA from './component/ProductView/QnA';
+import QnApopup from './component/ProductView/QnApopup';
+import QnAReply from './component/ProductView/QnAReply';
+
+import Shopping_basket from './component/Mypage/Shopping_basket';
 // function App() {
 //   return (
 //     <div className="App">
@@ -63,6 +70,9 @@ const Router = (props) => {
         <Route path='/QnA/update/:page/:id' element={<QnAQuestionUpdate/>} />
         <Route path='/QnA/answerUpdate/:page/:id/:child_id/:cont' element={<QnAanswerUpdate/>} />
         <Route path='/Mypage/coupon' element={<Coupon/>} />
+        <Route path='/QnA' element={<QnA/>} />
+        <Route path='/QnA/reply/:id' element={<QnAReply/>} />
+        <Route path='/mypage/Shopping_basket' element={<Shopping_basket/>} />
       </Routes>
     </BrowserRouter>
   );
