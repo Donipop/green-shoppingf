@@ -31,7 +31,7 @@ function Sidebar(){
                                         <a href='/sellercenter/orderpost' className='link-white d-inline-flex text-decoration-none rounded'>발주관리</a>
                                     </li>
                                     <li>
-                                        <a href='/' className='link-white d-inline-flex text-decoration-none rounded'>구매확정 내역</a>
+                                        <a href='/sellercenter/orderconfirm' className='link-white d-inline-flex text-decoration-none rounded'>구매확정 내역</a>
                                     </li>
                                 </ul>
                             </div>
