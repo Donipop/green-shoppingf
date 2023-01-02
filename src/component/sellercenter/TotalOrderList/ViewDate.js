@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-function ViewDate(){
+function ViewDate({getDate}){
     
     const [dateInfo, setDateInfo] = useState({
             start: "",
@@ -39,7 +39,7 @@ function ViewDate(){
                 // console.log("1개월");
                 setDateInfo({
                     ...dateInfo,
-                    start: month1.getFullYear() + '-' + (month1.getMonth() + 1) + '-' + month1.getDate(),
+                    start: month1.getFullYear() + '-' + ((month1.getMonth() + 1) <= 9 ? "0" + (month1.getMonth() + 1) : (month1.getMonth() + 1)) + '-' + (month1.getDate() <= 9 ? "0" + month1.getDate() : month1.getDate()),
                     end: year + '-' + (month <= 9 ? "0" + month : month) + '-' + (date <= 9 ? "0" + date : date)
                 })
 
@@ -70,6 +70,10 @@ function ViewDate(){
             [e.target.name]: e.target.value
         })
     }
+    useEffect(() => {
+        getDate(dateInfo);
+    }, [dateInfo])
+    
     return (
         <div className="row">
             <div className="col-2">

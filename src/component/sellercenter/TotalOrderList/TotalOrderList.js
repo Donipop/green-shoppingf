@@ -2,9 +2,13 @@ import styled from "styled-components";
 import ViewDate from './ViewDate';
 import ViewDetailProductInfo from "./ViewDetailProductInfo";
 import ViewTable from "./ViewTable";
+import { useState } from "react";
 
 function TotalOrderList(){
-
+    const [dateInfo, setDateInfo] = useState({
+            start: "",
+            end: ""
+        });
     return (
         <div className="w-100">
             <div className="row m-2">
@@ -14,11 +18,11 @@ function TotalOrderList(){
                     </div>
 
                     <div className="alert alert-secondary">
-                        <ViewDate />
+                        <ViewDate getDate={setDateInfo} />
                     </div>
 
                     <div className="alert alert-secondary">
-                        <ViewTable />
+                        <ViewTable getDate={dateInfo}/>
                     </div>
 
                     <div className="alert alert-secondary">

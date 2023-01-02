@@ -177,10 +177,10 @@ function ProductInfo({product}){
         logininformation = JSON.parse(logininformation);
         let user_id = logininformation?.user_id;
 
-        if(user_id === undefined || user_id === null || user_id === ''){
-            alert('로그인이 필요합니다.');
-            return;
-        }
+        // if(user_id === undefined || user_id === null || user_id === ''){
+        //     alert('로그인이 필요합니다.');
+        //     return;
+        // }
         if(totalPrice === 0){
             alert('상품을 선택해주세요.');
             return;
@@ -207,8 +207,8 @@ function ProductInfo({product}){
             productId: product.productId,
             listItem: changeListItem,
         }
-        
-        naviGate('/Payment', {state:[data]});
+        console.log([data]);
+        // naviGate('/Payment', {state:[data]});
     }
     return(
         <>
