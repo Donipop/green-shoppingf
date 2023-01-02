@@ -22,6 +22,8 @@ import QnAQuestionWrite from './component/ProductView/QnAQuestionWrite';
 import QnAanswerWrite from './component/ProductView/QnAanswerWrite';
 import View from './component/ProductView/View';
 import QnAQuestionUpdate from './component/ProductView/QnAQuestionUpdate';
+import QnAanswerUpdate from './component/ProductView/QnAanswerUpdate';
+import Coupon from './component/Mypage/Coupon';
 // function App() {
 //   return (
 //     <div className="App">
@@ -59,6 +61,8 @@ const Router = (props) => {
         <Route path='/QnA/write/:page' element={<QnAQuestionWrite/>} />
         <Route path='/QnA/reply/:page/:id' element={<QnAanswerWrite/>} />
         <Route path='/QnA/update/:page/:id' element={<QnAQuestionUpdate/>} />
+        <Route path='/QnA/answerUpdate/:page/:id/:child_id/:cont' element={<QnAanswerUpdate/>} />
+        <Route path='/Mypage/coupon' element={<Coupon/>} />
       </Routes>
     </BrowserRouter>
   );

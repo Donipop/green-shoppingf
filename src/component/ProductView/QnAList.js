@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Pagination from "./Pagination";
+import { useNavigate } from "react-router-dom";
 
 
 const QnA = ({page}) => {
@@ -11,6 +12,7 @@ const QnA = ({page}) => {
     const [idnumber, setIdnumber] = useState(new Map());
     const [test, setTest] = useState([]);
     const [reply, setReply] = useState([]);
+    const Navigate = useNavigate();
 
     useEffect(() => {
         axios({
@@ -92,7 +94,7 @@ const QnA = ({page}) => {
                 <em className="replyicon">답변</em>
                 <div className="reply_wrap">
                 <strong className="Strong">[{reply[i].user_id}]</strong>
-                <a href="#!" role="button" id={reply[i].id}  style={{paddingLeft:"2px",fontSize:"12px"}}>수정</a>
+                <a href="#!" role="button" onClick={AnswerUpdate} indexid={i} id={reply[i].id}  style={{paddingLeft:"2px",fontSize:"12px"}}>수정</a>
                  <span style={{fontSize:"14px", marginLeft:"2px", marginRight:"2px"}}>|</span>
                  <a href="#!" role="button" id={reply[i].id} onClick={answerDelete} style={{fontSize:"12px"}}>삭제</a>
                 <div className="replycont">
@@ -158,6 +160,12 @@ const QnA = ({page}) => {
 
         const QuestionUpdate = (e) => {
             window.open(`http://localhost:3000/QnA/update/${page}/${e.target.id}`,"_blank","width=650, height=730");
+        }
+
+        const AnswerUpdate = (e) => {
+            let cont = reply[e.target.attributes.indexid.value].cont
+            let child_id = reply[e.target.attributes.indexid.value].child_id
+            window.open(`http://localhost:3000/QnA/answerUpdate/${page}/${e.target.id}/${child_id}/${cont}`,"_blank","width=650, height=730");
         }
 
             

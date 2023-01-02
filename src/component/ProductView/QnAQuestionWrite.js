@@ -22,9 +22,7 @@ const QnApopup = () => {
 
         }
     }
-    const close = () => {
-        window.close();
-    }
+    
     const QnaCont = (e) => {
         setAccount({...account, [e.target.name]: e.target.value,});
         setletter(e.target.value.replace(/<br\s*\/?>/gm, "\n").length)
@@ -66,7 +64,7 @@ const QnApopup = () => {
                         문의하신 내용에 대한 답변은 해당 상품의 상세페이지에서 확인하실 수 있습니다.
                           </p>
             <div className="QnAButton">
-                <button className="cancle"  onClick={close}>취소</button>
+                <a href="#!" className="cancle"  onClick={() => window.close()}>취소</a>
                 <button className="add"  type="submit" >등록</button>
             </div>
             <div className="Toggle">

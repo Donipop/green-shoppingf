@@ -23,10 +23,12 @@ function Mypage() {
 
     return(
         <div>
+            <LoginInterceptor>
             <Header/>
             <h2>ㅎㅇ</h2>
             <a href="/myinformation">회원정보수정</a><br/>
             <a href="/sellersignup">사업자 등록 ㄱㄱ</a>
+            </LoginInterceptor>
         </div>
     )
 }
