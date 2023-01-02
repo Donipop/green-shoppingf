@@ -75,9 +75,9 @@ function View(){
                 <div>
                     <Review />
                 </div>
-                <div>
+                {/* <div>
                     <QnA page={page} />
-                </div>
+                </div> */}
             </div>
         </>
     )

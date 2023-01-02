@@ -22,16 +22,16 @@ function Sidebar(){
                             <div className='collapse' id='sell-collapse'>
                                 <ul className='btn-toggle-nav list-unstyled fw-normal pb-1 small'>
                                     <li>
-                                        <a href='/' className='link-white d-inline-flex text-decoration-none rounded'>1번</a>
+                                        <a href='/sellercenter/create' className='link-white d-inline-flex text-decoration-none rounded'>판매등록</a>
                                     </li>
                                     <li>
-                                        <a href='/' className='link-white d-inline-flex text-decoration-none rounded'>2번</a>
+                                        <a href='/sellercenter/totalorderlist' className='link-white d-inline-flex text-decoration-none rounded'>주문통합검색</a>
                                     </li>
                                     <li>
-                                        <a href='/' className='link-white d-inline-flex text-decoration-none rounded'>3번</a>
+                                        <a href='/sellercenter/orderpost' className='link-white d-inline-flex text-decoration-none rounded'>발주관리</a>
                                     </li>
                                     <li>
-                                        <a href='/' className='link-white d-inline-flex text-decoration-none rounded'>4번</a>
+                                        <a href='/' className='link-white d-inline-flex text-decoration-none rounded'>구매확정 내역</a>
                                     </li>
                                 </ul>
                             </div>

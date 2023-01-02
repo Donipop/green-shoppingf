@@ -4,7 +4,7 @@ import Hello from './component/Hello';
 import Hello2 from './component/Hello2';
 import Header from './component/Header';
 import IndexPage from './component/Index'
-import SellerCenter from './component/sellercenter/SellerCenter';
+import SellerCenter from './component/Sellercenter/SellerCenter';
 import Login from './component/Login';
 import Orderlist from './component/Orderlist/Orderlist';
 import Information from './component/Information';
@@ -31,6 +31,7 @@ import QnApopup from './component/ProductView/QnApopup';
 import QnAReply from './component/ProductView/QnAReply';
 
 import Shopping_basket from './component/Mypage/Shopping_basket';
+import PaymentPage from './component/Payment/PaymentPage';
 // function App() {
 //   return (
 //     <div className="App">
@@ -50,7 +51,7 @@ const Router = (props) => {
         <Route path="/signup" element={<Hello />} />
         <Route path="/hello2" element={<Hello2 />} />
         <Route path='/header' element={<Header />} />
-        <Route path='/sellercenter/*' element={<SellerCenter />} />
+        <Route path='/Sellercenter/*' element={<SellerCenter />} />
         <Route path='/login' element={<Login/>} />
         <Route path='/Orderlist' element={<Orderlist/>} />
         <Route path='/information' element={<Information/>} />
@@ -73,6 +74,7 @@ const Router = (props) => {
         <Route path='/QnA' element={<QnA/>} />
         <Route path='/QnA/reply/:id' element={<QnAReply/>} />
         <Route path='/mypage/Shopping_basket' element={<Shopping_basket/>} />
+        <Route path='/Payment' element={<PaymentPage/>} />
       </Routes>
     </BrowserRouter>
   );

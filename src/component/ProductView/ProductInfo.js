@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 function ProductInfo({product}){
     const [listItem, setListItem] = useState([]);
@@ -12,6 +13,8 @@ function ProductInfo({product}){
     const [totalPrice, setTotalPrice] = useState(0);
     const [imgList, setImgList] = useState([]);
     const [mainImg, setMainImg] = useState('');
+    const [delivery, setDelivery] = useState('2500');
+    const naviGate = useNavigate();
     //제품선택 눌렀을때
     const onClickAdd = (e) => {
         let key = parseInt(e.target.attributes.indexid.value);
@@ -36,9 +39,11 @@ function ProductInfo({product}){
             setListItem((listItem) => {
                 return [...listItem, {
                     id: key,
+                    productDetailId: product.product[key].id,
                     name: product.product[key].product_name,
                     price: (parseInt(product.product[key].product_price) - parseInt(product.product[key].product_discount)),
                     count: 1,
+                    productId: product.productId,
                 }]
             })
         }
@@ -168,8 +173,42 @@ function ProductInfo({product}){
         setMainImg(imgList[key].url);
     };
     const onClickBuyBtn = () => {
-        console.log(totalPrice);
-        console.log(listItem);
+        let logininformation = sessionStorage.getItem("login");
+        logininformation = JSON.parse(logininformation);
+        let user_id = logininformation?.user_id;
+
+        // if(user_id === undefined || user_id === null || user_id === ''){
+        //     alert('로그인이 필요합니다.');
+        //     return;
+        // }
+        if(totalPrice === 0){
+            alert('상품을 선택해주세요.');
+            return;
+        }
+        let changeListItem = [];
+
+        for(let i=0; i<listItem.length; i++){
+            let Item = {
+                name: '',
+                price: '',
+                count: '',
+                productDetailId: '',
+            }
+            Item.name = listItem[i].name;
+            Item.price = listItem[i].price;
+            Item.count = listItem[i].count;
+            Item.productDetailId = listItem[i].productDetailId;
+            changeListItem.push(Item);
+        }
+        
+        let data ={
+            marketName: product.market_name,
+            delivery: delivery,
+            productId: product.productId,
+            listItem: changeListItem,
+        }
+        console.log([data]);
+        // naviGate('/Payment', {state:[data]});
     }
     return(
         <>
@@ -211,7 +250,7 @@ function ProductInfo({product}){
                         <h5>택배배송</h5>
                     </div>
                     <div className="col-6 w-100 d-flex">
-                        <h6>2,500원</h6>
+                        <h6>{delivery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</h6>
                         <H6>(주문시 결제)</H6>
                     </div>
                    

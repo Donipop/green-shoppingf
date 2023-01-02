@@ -4,6 +4,8 @@ import SellerHeader from './SellerHeader';
 import SellerSidebar from './SellerSidebar';
 import { Container } from 'react-bootstrap';
 import Create from './Create';
+import TotalOrderList from './TotalOrderList/TotalOrderList';
+import OrderPost from './OrderPost/OrderPost';
 export default SellerCenter;
 
 function SellerCenter(){
@@ -15,6 +17,8 @@ function SellerCenter(){
                 <SellerSidebar />
                 <Routes>
                     <Route path='/create' element={<Create />}></Route>
+                    <Route path='/totalorderlist' element={<TotalOrderList />}></Route>
+                    <Route path='/orderpost' element={<OrderPost />}></Route>
                 </Routes>
             </div>
         </div>
