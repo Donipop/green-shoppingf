@@ -1,0 +1,35 @@
+.th1{
+    width: 120px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 13px;
+}
+
+.th2{
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 13px;
+}
+
+.th3{
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 13px;
+    width: 120px;    
+}
+
+.th4{
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 13px;
+}
+
+.table1{
+    width: 100%;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 40px;
+}
+    
