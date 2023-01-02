@@ -5,7 +5,7 @@ import Header from "../Header";
 import ProductInfo from "./ProductInfo";
 import styled from "styled-components";
 import Review from "./Review";
-import QnA from "./QnAList";
+import QnAList from "./QnAList";
 
 function View(){
     const {page} = useParams();
@@ -75,9 +75,9 @@ function View(){
                 <div>
                     <Review />
                 </div>
-                {/* <div>
-                    <QnA page={page} />
-                </div> */}
+                { <div>
+                    <QnAList page={page} />
+                </div> }
             </div>
         </>
     )
