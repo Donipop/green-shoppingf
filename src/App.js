@@ -22,8 +22,9 @@ import Review from './component/ProductView/Review';
 import QnA from './component/ProductView/QnA';
 import QnApopup from './component/ProductView/QnApopup';
 import QnAReply from './component/ProductView/QnAReply';
-
+import LoginInterceptor from './component/LoginInterceptor';
 import View from './component/ProductView/View';
+import Shopping_basket from './component/Mypage/Shopping_basket';
 // function App() {
 //   return (
 //     <div className="App">
@@ -60,6 +61,8 @@ const Router = (props) => {
         <Route path='/QnA' element={<QnA/>} />
         <Route path='/QnA/123' element={<QnApopup/>} />
         <Route path='/QnA/reply/:id' element={<QnAReply/>} />
+        <Route path='/LoginInterceptor' element={<LoginInterceptor/>} />
+        <Route path='/mypage/Shopping_basket' element={<Shopping_basket/>} />
       </Routes>
     </BrowserRouter>
   );

@@ -9,11 +9,7 @@ import LoginInterceptor from "../LoginInterceptor";
 
 
     const Notice = () => { 
-    
-    const login = LoginInterceptor();
-    var user_grade = login.user_grade;
 
-    
     const[List, setList] = useState([]); 
 
     useEffect(() => {
@@ -27,12 +23,7 @@ import LoginInterceptor from "../LoginInterceptor";
         }, [])
     
     const write = () => {
-        if (user_grade === 9) {
-            Navigate("/writenotice")
-        }
-        else if (user_grade !== 9) {
-            alert("관리자만 작성할 수 있습니다.")
-        }
+        
         
     }
 
@@ -58,7 +49,7 @@ import LoginInterceptor from "../LoginInterceptor";
     {List.map((List => (
     <tr key={List.id}>
             <td style={{width:"100px", paddingLeft:"10px", borderBottom:"1px solid #e9ecef", paddingBottom:"10px", paddingTop:"10px"}} >{List.id}</td>
-            <td style={ {width:"500px", borderBottom:"1px solid #e9ecef"}} ><Link to={"/NoticeDetail/"+ List.id}>{List.title}</Link></td>
+            <td style={ {width:"500px", borderBottom:"1px solid #e9ecef"}}><Link to={"/NoticeDetail/"+ List.id}>{List.title}</Link></td>
             <td style={{borderBottom:"1px solid #e9ecef"}} >{List.user_nick}</td>
             <td style={{borderBottom:"1px solid #e9ecef",  paddingLeft:"80px"}} >{List.indate}</td>
 

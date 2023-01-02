@@ -47,17 +47,9 @@ function Login() {
         .then(res => res.data)
         .then(res => {
             if(res.returnURL === "/") {
-                const expiredvo = new Date();
-                expiredvo.setTime(expiredvo.getTime() + expiredvo.getSeconds * 60 * 30);
-                setCookie('vo', res.vo, {
-                    path: '/',
-                    expires: expiredvo
-                })
-                const expiredrefreshToken = new Date();
-                expiredrefreshToken.setTime(expiredrefreshToken.getTime() + expiredrefreshToken.getSeconds * 60 * 60 * 24 * 14);
                 setCookie('refreshToken', res.refreshToken,{
                     path:'/',
-                    expires: expiredrefreshToken
+                    
                 })
                 
                 sessionStorage.setItem("login", res.vo)
