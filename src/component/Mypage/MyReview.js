@@ -33,7 +33,7 @@ import styled from 'styled-components';
         <div>
       <h2>구매후기</h2>
         </div>
-        <div style={{display:"flex", borderTop:"4px solid black",borderBottom:"1px solid black", width:"1000px"}}>
+        <div style={{display:"flex", borderTop:"4px solid black",borderBottom:"1px solid black", width:"1270px"}}>
             <div style={{width:"309px",textAlign:"center",lineHeight:"53px"}}>
                 상품정보
             </div>
@@ -45,7 +45,7 @@ import styled from 'styled-components';
             <div key= {item.id}>
                 {item.product_num === 79 && (
                     <div style={{display:"flex"}}>
-                        <div style={{borderBottom:"1px solid #f5f5f5",width:"200px", textAlign:"center"}}>
+                        <div style={{borderBottom:"1px solid #f5f5f5",width:"300px", textAlign:"center"}}>
                              아이유가 입을뻔한 후드티 
                         </div>
                     <div>
@@ -71,7 +71,7 @@ import styled from 'styled-components';
                             </strong>    
                             {item.title}
                         </div>
-                        <div style={{width:"700px",marginTop:"15px"}}>
+                        <div style={{width:"1000px",marginTop:"15px"}}>
                              <em style={{fontStyle:"normal",fontWeight:"bold"}}>상세후기</em>
                              <div> {item.cont}</div>
                         </div>

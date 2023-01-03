@@ -32,4 +32,7 @@
     text-align: center;
     line-height: 40px;
 }
-    
+
+.modal-backdrop{
+    z-index: auto;
+}

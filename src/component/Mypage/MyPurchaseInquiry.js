@@ -23,8 +23,8 @@ import MypageModal from './Mypagemodal';
             })
             }, [user_id])
 
-            const state = (item) => {
-                if(item === 0){
+            const state = (item,id) => {
+                if(item=== 0){
                    return "주문접수"
                 }
                 else if(item === 1){
@@ -42,7 +42,7 @@ import MypageModal from './Mypagemodal';
                                     <th style={{paddingLeft:"19px"}} >배송중</th>
                                 </tr>
                                 <tr>
-                                    <th><MypageModal/></th>
+                                    <th><MypageModal props={id}/></th>
                                 </tr> 
                             </thead>
                         </table>
@@ -97,11 +97,10 @@ import MypageModal from './Mypagemodal';
                      <div style={{fontSize:"14px", width:"180px", textAlign:"center"}}>
                        {item.totalprice}원
                      </div>   
-                       {state(item.state)}                    
+                       {state(item.state, item.id)}                    
                 </div>    
                 ))}    
             </div>   
-
     </div>
     )
 

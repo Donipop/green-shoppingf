@@ -1,9 +1,35 @@
 
+import axios from 'axios';
+import { useEffect,useState } from 'react';
 import './mypagemodalcss.css';
-const MypageModal = () => {
+
+
+
+
+
+
+
+const MypageModal = (props) => {
+   const [invoicenumber, setInvoiceNumber] = useState('');
+
+   const asd = () => {
+   const id = props.props;
+        axios({
+           method: 'get',
+           url: `/api/mypage/MyPurchaseInquiry/${id}`,
+  })
+   .then((res) => {
+       console.log(res.data)
+       setInvoiceNumber(res.data)
+   })
+   }
+   
+
+
+    
     return (
         <div style={{all:"initial",width:"160px",marginTop:"15px"}}>
-           <button type="button" className="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" style={{border:"1px solid #e5e5e5", fontSize:"14px", fontWeight:"bold",borderRadius:"0px"}}>
+           <button type="button" onClick={asd}className="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" style={{border:"1px solid #e5e5e5", fontSize:"14px", fontWeight:"bold",borderRadius:"0px"}}>
              배송조회
             </button>
 
