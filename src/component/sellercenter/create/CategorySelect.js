@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function CategorySelect({getData}){
+function CategorySelect({getData, UpdateData}){
     const [categorylist, setCategorylist] = useState({
         category1: [],
         category2: [],
@@ -19,6 +19,10 @@ function CategorySelect({getData}){
             });
         })
     },[]);
+
+    useEffect(() => {
+        console.log(UpdateData);
+    },[UpdateData]);
     
     
     
@@ -64,6 +68,7 @@ function CategorySelect({getData}){
                     setcurrent_Category((current_Categoy) => category.num);
                     //선택한 카테고리의 하위 카테고리 목록을 가져옴
                     get_CategoryList(category.num).then(res =>{
+                        console.log(categorylist);
                         setCategorylist(categorylist => {
                             return {
                                 ...categorylist, ['category' + num]: res, ['category' + (num + 1)]: [], ['category' + (num + 2)]: []
