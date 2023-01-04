@@ -1,7 +1,11 @@
 import React, {useEffect, useState} from 'react';
+import { useRef } from 'react';
 import styled from 'styled-components';
-export default function ProductImg({getData}) {
+export default function ProductImg({getData, UpdateData}) {
     
+    const mainImgRef = useRef();
+    const detailImgRef = useRef();
+
     const onClickImgButton = (e) => {
         
         if(e.target.parentElement.id === 'product-mainImg'){
@@ -51,6 +55,20 @@ export default function ProductImg({getData}) {
             }
         }
     }
+
+    useEffect(() => {
+        if(UpdateData === undefined || UpdateData.length === 0) return;
+        mainImgRef.current.src = 'http://donipop.com:3333/img/' + UpdateData[0].PRODUCTIMG[0].FILE_NAME;
+        for(let i = 1; i < UpdateData[0].PRODUCTIMG.length; i++){
+            let cimg = document.createElement('img');
+            cimg.src = 'http://donipop.com:3333/img/' + UpdateData[0].PRODUCTIMG[i].FILE_NAME;
+            cimg.width = 150;
+            cimg.height = 150;
+            cimg.style.margin = '0 10px 10px 0';
+            detailImgRef.current.appendChild(cimg);
+        }
+
+    }, [UpdateData])
     return(
         <>
             <div className="product-img">
@@ -63,7 +81,7 @@ export default function ProductImg({getData}) {
                         <div className="product-img_upload_content_img">
                             <Input type={'file'} id='product-mainImg-input'></Input>
                             <Button type='file' id='product-mainImg' onClick={onClickImgButton}>
-                                <img src="https://via.placeholder.com/150?text=Add" alt="상품 이미지" />
+                                <img src="https://via.placeholder.com/150?text=Add" alt="상품 이미지" ref={mainImgRef} />
                             </Button>
                             
                         </div>
@@ -80,7 +98,7 @@ export default function ProductImg({getData}) {
                             <Button id='product-detailImg' onClick={onClickImgButton}>
                                 <img src="https://via.placeholder.com/150?text=Add" alt="상품 이미지" />
                             </Button>
-                            <div id='product-detailImgs'>
+                            <div id='product-detailImgs' ref={detailImgRef}>
                                 <p>상세 이미지는 최대 5개까지 등록 가능합니다.</p>
                             </div>
                         </div>
