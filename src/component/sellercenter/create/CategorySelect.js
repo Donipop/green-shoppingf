@@ -8,6 +8,18 @@ function CategorySelect({getData, UpdateData}){
         category3: [],
         category4: []
     });
+        
+    const [category, setCategory] = useState({
+        category1: '',
+        category2: '',
+        category3: '',
+        category4: '',
+        category_num1: '',
+        category_num2: '',
+        category_num3: '',
+        category_num4: ''
+    });
+
     const [current_Categoy,setcurrent_Category] = useState("");
     //렌더후 대분류 카테고리 목록을 가져옴
     useEffect(() => {
@@ -20,23 +32,63 @@ function CategorySelect({getData, UpdateData}){
         })
     },[]);
 
+    
+
+    const [UpdateProductData, setUpdateProductData] = useState({
+        categoryNum: '',
+        categoryName: '',
+    });
     useEffect(() => {
-        console.log(UpdateData);
+        if(UpdateData === undefined || UpdateData?.length === 0) return ;
+
+        axios.get("/api/sellercenter/getcategoryroot",{
+            params:{
+                num: UpdateData.category
+            }
+        }).then((res)=>{
+            setUpdateProductData((data) => {
+                return {
+                    ...data, categoryNum: res.data.NUM, categoryName: res.data.NAME
+                }});
+        }).catch((err)=>{
+            console.log(err);
+        })
+
     },[UpdateData]);
     
+    useEffect(() => {
+        if(UpdateProductData.categoryNum === '') return;
+
+        let splitCategoryNum = UpdateProductData.categoryNum.split(">");
+        let splitCategoryName = UpdateProductData.categoryName.split(">");
+        
+        //for문 돌려서 숫자 자동입력 하게
+        for(let i = 0; i < splitCategoryNum.length; i++){
+            setCategory(category => {
+                
+                    if(i > 0){
+                        return {
+                            ...category, ['category' + (i+1)]: ' > ' + splitCategoryName[i], ['category_num' + (i+1)]: splitCategoryNum[i]
+                        }
+                    }else{
+                        return {
+                            ...category, ['category' + (i+1)]: splitCategoryName[i], ['category_num' + (i+1)]: splitCategoryNum[i]
+                        }
+                    }
+            });
     
+            if (i === 3) break;
+            get_CategoryList(splitCategoryNum[i]).then(res =>{
+                setCategorylist(categorylist => {
+                    return {
+                        ...categorylist, ['category' + (i+2)]: res
+                    }
+                });
+            });
+        }
+        setcurrent_Category(splitCategoryNum[splitCategoryNum.length-1]);
+    },[UpdateProductData]);
     
-    
-    const [category, setCategory] = useState({
-        category1: '',
-        category2: '',
-        category3: '',
-        category4: '',
-        category_num1: '',
-        category_num2: '',
-        category_num3: '',
-        category_num4: ''
-    });
 
     useEffect(() => {
         //getData("category",category);
@@ -68,7 +120,7 @@ function CategorySelect({getData, UpdateData}){
                     setcurrent_Category((current_Categoy) => category.num);
                     //선택한 카테고리의 하위 카테고리 목록을 가져옴
                     get_CategoryList(category.num).then(res =>{
-                        console.log(categorylist);
+                        //console.log(categorylist);
                         setCategorylist(categorylist => {
                             return {
                                 ...categorylist, ['category' + num]: res, ['category' + (num + 1)]: [], ['category' + (num + 2)]: []
