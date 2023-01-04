@@ -28,6 +28,7 @@ import Shopping_basket from './component/Mypage/Shopping_basket';
 import PaymentPage from './component/Payment/PaymentPage';
 import MyReview from './component/Mypage/MyReview';
 import MyPurchaseInquiry from './component/Mypage/MyPurchaseInquiry';
+import SellerReview from './component/sellercenter/reviewmanagement/SellerReview';
 // function App() {
 //   return (
 //     <div className="App">
@@ -71,6 +72,7 @@ const Router = (props) => {
         <Route path='/Payment' element={<PaymentPage/>} />
         <Route path='/Mypage/MyReview' element={<MyReview/>} />
         <Route path='/Mypage/MyPurchaseInquiry' element={<MyPurchaseInquiry/>} />
+        <Route path='/Sellercenter/reviewmanagement' element={<SellerReview/>} />
       </Routes>
     </BrowserRouter>
   );

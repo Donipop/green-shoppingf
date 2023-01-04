@@ -17,9 +17,6 @@ import MypageModal from './Mypagemodal';
         const openModal = (e,index) => {
             setChecked({id: index})
         }
-        
-
-
        
         useEffect(() => {
             axios({
@@ -33,47 +30,6 @@ import MypageModal from './Mypagemodal';
                 setPurchaseList(res.data)
             })
             }, [user_id])
-
-
-
-
-
-            // const state = (item,id) => {
-            //     if(item=== 0){
-            //        return "주문접수"
-            //     }
-            //     else if(item === 1){
-            //         return "결제완료"
-            //     }
-            //     else if(item === 2){
-            //         return "배송준비중"
-            //     }
-            //     else if(item=== 3){
-            //         return(   
-            //           <div>
-            //             <table style={{fontSize:"14px",textAlign:"center", height:"50px",all:"initial",marginLeft:"45px"}}>
-            //                 <thead>
-            //                     <tr>
-            //                         <th style={{paddingLeft:"19px"}} >배송중</th>
-            //                     </tr>
-            //                     <tr>
-            //                         <th><MypageModal props={id}/></th>
-            //                     </tr> 
-            //                 </thead>
-            //             </table>
-            //           </div>                  
-            //         )
-            //     }
-            //     else if(item=== 4){
-            //         return "배송완료"
-            //     }
-            //     else if(item=== 5){
-            //         return "구매확정"
-            //     }
-            //     else if(item === 6){
-            //         return "구매취소"
-            //     }
-            // }
     return(
     <div >
         <div>
