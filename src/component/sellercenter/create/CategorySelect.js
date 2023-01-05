@@ -40,7 +40,6 @@ function CategorySelect({getData, UpdateData}){
     });
     useEffect(() => {
         if(UpdateData === undefined || UpdateData?.length === 0) return ;
-
         axios.get("/api/sellercenter/getcategoryroot",{
             params:{
                 num: UpdateData.category

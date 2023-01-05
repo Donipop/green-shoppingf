@@ -49,7 +49,7 @@ function Sidebar(){
                                         <a href='/' className='link-white d-inline-flex text-decoration-none rounded'>매출관리</a>
                                     </li>
                                     <li>
-                                        <a href='/' className='link-white d-inline-flex text-decoration-none rounded'>2번</a>
+                                        <a href='/' className='link-white d-inline-flex text-decoration-none rounded'>정산하기</a>
                                     </li>
                                     <li>
                                         <a href='/' className='link-white d-inline-flex text-decoration-none rounded'>3번</a>
