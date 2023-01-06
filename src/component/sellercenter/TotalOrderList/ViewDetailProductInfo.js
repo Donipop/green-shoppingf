@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 
 function ViewDetailProductInfo({ productInfo }) {
     const [detailInfo, setDetailInfo] = useState({
@@ -118,7 +119,7 @@ function ViewDetailProductInfo({ productInfo }) {
     }
     return(
         
-    <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <DOV className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
@@ -191,8 +192,12 @@ function ViewDetailProductInfo({ productInfo }) {
             </div>
           </div>
         </div>
-    </div>
+    </DOV>
         
     );
 }
 export default ViewDetailProductInfo
+
+const DOV = styled.div`
+z-index: 9999999999;
+`

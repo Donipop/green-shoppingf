@@ -4,6 +4,10 @@ import Header from "../Header"
 import Login from "../Login";
 import Logininformation from "../Logininformation";
 import LoginInterceptor from "../LoginInterceptor";
+import MypurChaseInquiry from "./MyPurchaseInquiry";
+import Shopping_basket from "./Shopping_basket";
+import Coupon from "./Coupon";
+import MyReview from "./MyReview";
 
 function Mypage() {
     const Navigate = useNavigate();
@@ -17,8 +21,10 @@ function Mypage() {
         <div>
             <LoginInterceptor/>
             <Header/>
-            <h2>{user_id}</h2>
-            <h2>ㅎㅇ</h2>
+            <MypurChaseInquiry/>
+            <Shopping_basket/>
+            <Coupon />
+            <MyReview />
             <a href="/myinformation">회원정보수정</a><br/>
             <a href="/sellersignup">사업자 등록 ㄱㄱ</a><br/>   
             <a href="/mypage/shopping_basket">장바구니</a><br/>

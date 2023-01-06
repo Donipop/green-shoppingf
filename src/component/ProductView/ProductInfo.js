@@ -208,7 +208,7 @@ function ProductInfo({product}){
             listItem: changeListItem,
         }
         console.log([data]);
-        // naviGate('/Payment', {state:[data]});
+        naviGate('/Payment', {state:[data]});
     }
     return(
         <>

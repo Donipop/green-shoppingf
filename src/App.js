@@ -4,7 +4,7 @@ import Hello from './component/Hello';
 import Hello2 from './component/Hello2';
 import Header from './component/Header';
 import IndexPage from './component/Index'
-import SellerCenter from './component/Sellercenter/SellerCenter';
+import SellerCenter from './component/sellercenter/SellerCenter';
 import Login from './component/Login';
 import Orderlist from './component/Orderlist/Orderlist';
 import Information from './component/Information';
@@ -26,6 +26,10 @@ import QnAanswerUpdate from './component/ProductView/QnAanswerUpdate';
 import Coupon from './component/Mypage/Coupon';
 import Shopping_basket from './component/Mypage/Shopping_basket';
 import PaymentPage from './component/Payment/PaymentPage';
+import MyReview from './component/Mypage/MyReview';
+import MyPurchaseInquiry from './component/Mypage/MyPurchaseInquiry';
+import SellerReview from './component/sellercenter/reviewmanagement/SellerReview';
+import Header2  from './component/Header2';
 
 // function App() {
 //   return (
@@ -68,9 +72,10 @@ const Router = (props) => {
         <Route path='/Mypage/coupon' element={<Coupon/>} />
         <Route path='/mypage/Shopping_basket' element={<Shopping_basket/>} />
         <Route path='/Payment' element={<PaymentPage/>} />
-        
-
-        
+        <Route path='/Mypage/MyReview' element={<MyReview/>} />
+        <Route path='/Mypage/MyPurchaseInquiry' element={<MyPurchaseInquiry/>} />
+        <Route path='/Sellercenter/reviewmanagement' element={<SellerReview/>} />
+        <Route path='/header2' element={<Header2/>} />
       </Routes>
     </BrowserRouter>
   );

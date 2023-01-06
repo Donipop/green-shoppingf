@@ -98,7 +98,7 @@ function Myinformation() {
                 <form onSubmit={update_user_info}>
                <div>
                     <label htmlFor="update_password">아이디 : </label>
-                    <input type="text" id="user_id" name="user_id" value={account.user_id} onChange={onChangeAccount} readOnly/>
+                   {account.user_id}    
                 </div>
                 <div>
                     <label htmlFor="update_password">이메일 : </label>

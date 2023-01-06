@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-export default function ProductName({getData}) {
+export default function ProductName({getData, UpdateData}) {
 
     const [text, setText] = useState('');
     const onChangeText = (e) =>{
@@ -13,14 +13,21 @@ export default function ProductName({getData}) {
             setText(e.target.value);
         }
     }
+    const titleInput = useRef();
     useEffect(() => {
         getData('title',text);
     }, [text])
 
+    useEffect(() => {
+        if(UpdateData === undefined || UpdateData?.length === 0) return ;
+        setText(UpdateData.title);
+        titleInput.current.value = UpdateData.title;
+    },[UpdateData]);
+
     return(
         <>
             <div className="input-group mb-2">
-                <input type='text' className='form-control' placeholder='상품페이지 제목을 입력해주세요' onChange={onChangeText}/>
+                <input type='text' className='form-control' placeholder='상품페이지 제목을 입력해주세요' onChange={onChangeText} ref={titleInput} />
                 <span className="input-group-text">{text.length}/255</span>
             </div>
             

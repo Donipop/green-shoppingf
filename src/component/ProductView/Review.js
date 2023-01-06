@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import styled from 'styled-components';
 import './Reviewcss.css';
 import ReviewList  from "./ReviewList";
+import Logininformation from "../Logininformation";
+
 const Review = () => {
     const {page} = useParams();
     const [clicked, setClicked] = useState([false, false, false, false, false]);
@@ -16,7 +18,8 @@ const Review = () => {
     const [account, setAccount] = useState({
         cont: '',
         title: ''
-})
+    })
+    let user_id = Logininformation();
 
     const handleStarClick = index => {
         let clickStates = [...clicked];
@@ -26,7 +29,6 @@ const Review = () => {
         setClicked(clickStates);
       }; 
     
-     
 
       
       const lettersee = (e) => {
@@ -39,6 +41,17 @@ const Review = () => {
         setAccount({...account, [e.target.name]: e.target.value})
         }
       const ReviewSubmit = (e) =>{
+
+        if(user_id === "로그인 된 정보가 없습니다."){
+          alert("로그인이 필요한 서비스입니다.")
+          return false;
+        } 
+
+        if(star === 0){
+          alert("별점을 입력해주세요")
+          return false;
+        }
+        
         axios({
             method: 'post',
             url: `/api/view/reviewWrite/{page}`,
@@ -47,7 +60,7 @@ const Review = () => {
                 star: star,
                 id: 1,
                 product_num: page,   
-                user_id: "admin"
+                user_id: user_id
 
         }
         }).then((res) => {

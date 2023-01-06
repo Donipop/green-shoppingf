@@ -3,7 +3,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 //https://github.com/zenoamaro/react-quill
-export default function ProductContent({getData}) {
+export default function ProductContent({getData, UpdateData}) {
     const [value, setValue] = useState('');
     const moduless = {
         toolbar: [
@@ -18,6 +18,11 @@ export default function ProductContent({getData}) {
         getData('content',value);
     }, [value])
 
+    useEffect(() => {
+        if(UpdateData === undefined) return;
+
+        setValue(UpdateData.cont);
+    }, [UpdateData])
     return (
         <>
             {/* 글쓰기 에디터 */}

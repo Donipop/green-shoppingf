@@ -72,21 +72,13 @@ function Create(){
                 }
             })
         }
-
         if (dataType === 'detailImg'){
-            let dImg = [];
-            for(let i=0; i<product.detailImg.length; i++){
-                dImg.push(product.detailImg[i]);
-            }
-            dImg.push(data);
-
             setProduct((product) => {
                 return {
-                    ...product, detailImg: dImg
+                    ...product, detailImg: [...product.detailImg, data]
                 }
             })
         }
-
         if (dataType === 'product'){
             
             setProduct((product) => {
@@ -95,8 +87,16 @@ function Create(){
                 }
             })
         }
-
-        
+        if(dataType === 'mainImgDelete'){
+            setProduct((product) => {
+                return {
+                    ...product, mainImg: ''
+                }})}
+        if(dataType === 'detailImgDelete'){
+            setProduct((product) => {
+                return {
+                    ...product, detailImg: product.detailImg.filter((item) => item !== data)
+                }})}
     }
 
     return(

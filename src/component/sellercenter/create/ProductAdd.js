@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 
-export default function ProductAdd({getData}) {
+export default function ProductAdd({getData, UpdateData}) {
     const [price, setPrice] = useState(0);
     const [date, setDate] = useState({
         start: '1000-01-01',
@@ -20,6 +20,32 @@ export default function ProductAdd({getData}) {
         getData('product',productList);
     }, [productList])
 
+    useEffect(() => {
+        if(UpdateData === undefined || UpdateData?.length === 0) return ;
+
+        for(let i=0; i < UpdateData?.length; i++){
+            let product = {
+                product_name: UpdateData[i].PRODUCT_NAME,
+                product_price: UpdateData[i].PRODUCT_PRICE,
+                product_count: UpdateData[i].PRODUCT_COUNT,
+                product_discount: UpdateData[i].PRODUCT_DISCOUNT,
+                dateStart: UpdateData[i].DATESTART,
+                dateEnd: UpdateData[i].DATEEND
+            }
+            
+            setProductList((productList) => [...productList, product]);
+            setProductName('');
+            setPrice(0);
+            setProductCount(0);
+            setDiscount(0);
+            setDate((date) => date = {
+                start: '1000-01-01',
+                end: '9999-12-31'
+            });
+        }
+        
+
+    },[UpdateData]);
     const onClickAdd = (e) => {
         if(productName === ''){
             alert('상품명을 입력해주세요.');
@@ -269,7 +295,7 @@ export default function ProductAdd({getData}) {
                                     <td>{product.product_name}</td>
                                     <td>{product.product_price}</td>
                                     <td>{product.product_discount}</td>
-                                    <td>{product.datestart} ~ {product.dateend}</td>
+                                    <td>{product.dateStart} ~ {product.dateEnd}</td>
                                     <td>{product.product_count}</td>
                                     <td><button type="button" className="btn btn-danger" onClick={onClickDelete}>삭제</button></td>
                                 </tr>
