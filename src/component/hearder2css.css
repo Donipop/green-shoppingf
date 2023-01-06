@@ -1,0 +1,50 @@
+.dd{
+    background: url(//img1a.coupangcdn.com/image/coupang/common/pc_header_img_sprite_180104.png) 6px -165px no-repeat;
+    display: block;
+    height: 30px;
+    outline: 0;
+    position: absolute;
+    right: 10px;
+    left: 105px;
+    top: 3px;
+    width: 30px;
+}
+
+.ff{
+    display: block;
+    height: 38px;
+    left: 0;
+    line-height: 38px;
+    outline: 0;
+    overflow: hidden;
+    position: absolute;
+    text-indent: 10px;
+    top: 0;
+    width: 110px;
+    color: #555;
+    text-decoration: none;
+    font-size: 13px;
+    
+}
+.gg{
+    top: 38px;
+    max-height: 702px;
+    display: block;
+    width: 125px;
+    padding: 10px 0 10px 10px;
+    border: 1px solid #ddd;
+    left: -2px;
+    box-shadow: 0 4px 5px rgb(0 0 0 / 30%);
+    background-color: #fff;
+    border: solid 1px #aaa;
+    list-style: none;
+    left: -1px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 30px;
+    width: 138px;
+    z-index: 1;
+    overflow-y: auto;
+    margin-top: -1px;
+}

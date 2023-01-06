@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Pagination from "./Pagination";
 import { useNavigate } from "react-router-dom";
+import { FaAngellist } from "react-icons/fa";
 
 
 const QnA = ({page}) => {
