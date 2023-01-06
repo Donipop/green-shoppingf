@@ -4,7 +4,7 @@ import Hello from './component/Hello';
 import Hello2 from './component/Hello2';
 import Header from './component/Header';
 import IndexPage from './component/Index'
-import SellerCenter from './component/sellercenter/SellerCenter';
+import SellerCenter from './component/SellerCenter/SellerCenter';
 import Login from './component/Login';
 import Orderlist from './component/Orderlist/Orderlist';
 import Information from './component/Information';
@@ -28,7 +28,7 @@ import Shopping_basket from './component/Mypage/Shopping_basket';
 import PaymentPage from './component/Payment/PaymentPage';
 import MyReview from './component/Mypage/MyReview';
 import MyPurchaseInquiry from './component/Mypage/MyPurchaseInquiry';
-import SellerReview from './component/sellercenter/reviewmanagement/SellerReview';
+import SellerReview from './component/SellerCenter/reviewmanagement/SellerReview';
 import Header2  from './component/Header2';
 
 // function App() {
