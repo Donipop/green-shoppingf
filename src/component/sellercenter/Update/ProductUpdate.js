@@ -11,6 +11,10 @@ import axios from "axios";
 function ProductUpdate() {
     const [updateproduct, setUpdateProduct] = useState([]);
     const [productDetail, setProductDetail] = useState([]);
+    const [exsitingProduct,setExsitingProduct] = useState({
+        img:[]
+    });
+
     const [product, setProduct] = useState({
         category: '',
         title: '',
@@ -37,6 +41,7 @@ function ProductUpdate() {
             }
         }).then((res) => {
             setProductDetail(res.data)
+            setExsitingProduct({...exsitingProduct, img: res.data[0].PRODUCTIMG});
         }).catch((err) => {
             console.log(err)
         })
@@ -93,7 +98,10 @@ function ProductUpdate() {
             return;
         }
 
-        axios.post('/api/sellercenter/updateproduct', product).then((res) => {
+        axios.post('/api/sellercenter/updateproduct',{
+            sellerCenterCreateVo: product,
+            productImg: exsitingProduct
+        }).then((res) => {
             // alert('수정되었습니다.');
             console.log("수정되었습니다.")
         }).catch((err) => {
