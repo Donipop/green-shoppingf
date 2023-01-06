@@ -26,6 +26,8 @@ function Index(){
     function start() {
     let login_information = sessionStorage.getItem("login")
     login_information = JSON.parse(login_information);
+    
+    
 
 
     if (login_information === null) {
@@ -73,9 +75,15 @@ function Index(){
                 <h2>등급 : {user_grade}</h2><br/>
                 <h2>아이디 : {user_id}</h2>
                 <a href='/notice'>공지사항</a><br/>
-                <button onClick={test123}>보튼</button>                    
+                <button onClick={test123}>보튼</button>         
+                
+            </div>
+
+            <div style={{width:"1000px", height:"800px"}}>
+                
             </div>
         </div>
+        
 
         
         

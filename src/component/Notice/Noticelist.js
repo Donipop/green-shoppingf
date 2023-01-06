@@ -5,7 +5,8 @@ import "./Notice.css"
 import { Link, Navigate } from 'react-router-dom';
 import NoticeView from './NoticeView';
 import { notInitialized } from 'react-redux/es/utils/useSyncExternalStore';
-import LoginInterceptor from "../LoginInterceptor";
+import Logininformation from '../Logininformation';
+import { Cookies } from 'react-cookie';
 
 
     const Notice = () => { 
@@ -24,6 +25,8 @@ import LoginInterceptor from "../LoginInterceptor";
     
     const write = () => {
         
+        
+
         
     }
 

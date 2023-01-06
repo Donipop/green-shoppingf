@@ -43,7 +43,7 @@ function Sidebar(){
                             <div className='collapse' id='sell-collapse2'>
                                 <ul className='btn-toggle-nav list-unstyled fw-normal pb-1 small'>
                                     <li>
-                                        <a href='/' className='link-white d-inline-flex text-decoration-none rounded'>1번</a>
+                                        <a href='/sellercenter/salesmanegement' className='link-white d-inline-flex text-decoration-none rounded'>매출관리 및 조회</a>
                                     </li>
                                     <li>
                                         <a href='/' className='link-white d-inline-flex text-decoration-none rounded'>2번</a>

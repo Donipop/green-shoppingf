@@ -22,7 +22,7 @@ function PaymentPage(){
         totalPaymentPrice: 0, //총결제금액
     });
     useEffect(() => {
-        // console.log(state);
+        //console.log(state)
         for(let i=0; i<state.length; i++){
             for(let j=0; j<state[i].listItem.length; j++){
                 let products = {

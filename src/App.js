@@ -26,6 +26,7 @@ import QnAanswerUpdate from './component/ProductView/QnAanswerUpdate';
 import Coupon from './component/Mypage/Coupon';
 import Shopping_basket from './component/Mypage/Shopping_basket';
 import PaymentPage from './component/Payment/PaymentPage';
+
 // function App() {
 //   return (
 //     <div className="App">
@@ -67,6 +68,9 @@ const Router = (props) => {
         <Route path='/Mypage/coupon' element={<Coupon/>} />
         <Route path='/mypage/Shopping_basket' element={<Shopping_basket/>} />
         <Route path='/Payment' element={<PaymentPage/>} />
+        
+
+        
       </Routes>
     </BrowserRouter>
   );
