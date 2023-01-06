@@ -47,6 +47,7 @@ function Sidebar(){
                                 <ul className='btn-toggle-nav list-unstyled fw-normal pb-1 small'>
                                     <li>
                                         <a href='/' className='link-white d-inline-flex text-decoration-none rounded'>매출관리</a>
+                                        <a href='/sellercenter/salesmanegement' className='link-white d-inline-flex text-decoration-none rounded'>매출관리 및 조회</a>
                                     </li>
                                     <li>
                                         <a href='/' className='link-white d-inline-flex text-decoration-none rounded'>정산하기</a>

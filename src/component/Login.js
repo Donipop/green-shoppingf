@@ -51,8 +51,8 @@ function Login() {
                     path:'/',
                     
                 })
-                
                 sessionStorage.setItem("login", res.vo)
+                
                 alert("홈으로 이동합니다.");
                 Navigate(res.returnURL)
             }

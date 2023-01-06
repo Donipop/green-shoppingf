@@ -5,6 +5,8 @@ import { useState } from "react"
 import { Link, Navigate } from 'react-router-dom';
 import Logininformation from "../Logininformation";
 import { Prev } from "react-bootstrap/esm/PageItem";
+import ProductInfo from "../ProductView/ProductInfo";
+import { useNavigate } from "react-router-dom";
 
 function Shopping_basket() {
 
@@ -17,10 +19,11 @@ function Shopping_basket() {
     const[finalprice, set_finalprice] = useState(0); // 총 결제 금액
     const [allChecked, setAllChecked] = useState(true); // 전체 체크박스
     const [isChecked, setIsChecked] = useState([]); // 개별 체크박스
+    const Navigate = useNavigate();
 
     //////////////////////////////////////////// 장바구니 정보를 가져온다. 초기설정 ////////////////////////////////////////////
     useEffect(() => {
-        console.log("장바구니 정보를 가져온다.");
+        
         axios({
             method: 'post',
             url: '/api/mypage/user_shopping_basket',
@@ -44,8 +47,10 @@ function Shopping_basket() {
     useEffect(() => {
         calculateOrderPrice();
         set_finalprice_calculator();
+        
         }, [shoppingBasket, isChecked]);
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
 
     // 전체 체크박스를 눌렀을 때
     function allcheckedHandler() {
@@ -61,19 +66,13 @@ function Shopping_basket() {
         setIsChecked(checked);
         setAllChecked(checked.every((e) => e === true));
     }
-
+    
         
 
     // 주문하기 버튼을 눌렀을 때
     function order_shopping_basket() {
-        let finalorderlist = [];
-
-        let changeListItem = [];
-
-
+        let FinalOrderList = [];
         let marketNamelist = new Set();
-        
-
         for( let i = 0; i < shoppingBasket.length; i++) {
             if(isChecked[i] === true) {
                 marketNamelist.add(shoppingBasket[i].marketName)
@@ -81,10 +80,10 @@ function Shopping_basket() {
         }
 
         let list1 = Array.from(marketNamelist);
-        console.log(list1)
 
-        
         for( let j = 0; j < list1.length; j++) {
+        
+        let changeListItem = [];
         let data = {
             marketName: '',
             delivery : 2500,
@@ -96,18 +95,36 @@ function Shopping_basket() {
             if(isChecked[i] === true) {
                 if(shoppingBasket[i].marketName === list1[j]) {
                     
+                    
                     data.marketName = shoppingBasket[i].marketName;
-                    data.productId = shoppingBasket[i].productId;
-                    data.listItem.push(shoppingBasket[i]);
+                    data.productId = parseInt(shoppingBasket[i].productId);
+                    
+                    let Item = {
+                        name: '',
+                        price: 0,
+                        count: 0,
+                        productDetailId: 0,
+                    }
+
+                    Item.name = shoppingBasket[i].name;
+                    Item.price = shoppingBasket[i].price;
+                    Item.count = shoppingBasket[i].count;
+                    Item.productDetailId = shoppingBasket[i].productDetailId;
+
+                    changeListItem.push(Item);
+
+
                 }
             }
         }
 
-        finalorderlist.push(data);
+        FinalOrderList.push(data);
 
     }
-
-        console.log(finalorderlist)
+    
+    Navigate('/Payment', {state:FinalOrderList});
+    
+    
     }
 
     // 체크 여부에 따른 주문금액 계산
@@ -152,39 +169,92 @@ function Shopping_basket() {
 
     // 장바구니에서 삭제
     function delete_shopping_basket(e) {
+        if(window.confirm("선택한 상품을 삭제하시겠습니까?")) {
+
+        
         let shoppingBasket_deleteList = [];
         
         
         for(let i = 0; i < isChecked.length; i++) {
             if(isChecked[i] === true) {
-                console.log(shoppingBasket[i].productDetailId);
                 shoppingBasket_deleteList.push(shoppingBasket[i].productDetailId);
             }
             
         }
-        console.log(typeof shoppingBasket_deleteList)
-        console.log(shoppingBasket_deleteList)
-        console.log(JSON.stringify(shoppingBasket_deleteList))
-        console.log(typeof JSON.stringify(shoppingBasket_deleteList))
-        
+
         axios({
             method: 'post',
             url: '/api/mypage/delete_shopping_basket',
             params : {
                 user_id: user_id,
-                shoppingBasket_deleteList: JSON.stringify(shoppingBasket_deleteList)
+                shoppingBasket_deleteList: shoppingBasket_deleteList.toString(),
             }
         })
         .then(res => {
+            alert("삭제되었습니다.");
             window.location.reload();
         })
         .catch(err => {
             console.log(err);
         })
-        
+    }
 
     }
 
+    
+
+    // 장바구니에서 수량 변경
+    function count_up(e) {
+
+        let index = e.target.getAttribute("indexid");
+        if(shoppingBasket[index].count < 99) {
+            shoppingBasket[index].count += 1;
+            
+        }
+                
+        console.log(shoppingBasket[index].count);
+        
+        
+
+
+        // axios({
+        //     method: 'post',
+        //     url: '/api/mypage/update_shopping_basket',
+        //     params : {
+        //         user_id: user_id,
+        //         productDetailId: shoppingBasket[index].productDetailId,
+        //         count: shoppingBasket[index].count,
+        //     }
+        // })
+        // .then(res => {
+            
+        // })
+        
+
+        
+
+        
+
+        
+
+
+    }
+
+    function count_down(e) {
+        let index = e.target.getAttribute("indexid");
+        if(shoppingBasket[index].count > 1) {
+            shoppingBasket[index].count -= 1;
+        }
+        console.log(shoppingBasket[index].count);
+        
+    }
+
+    function test123(){
+        
+      
+        };
+      
+    
 
 
     
@@ -200,10 +270,10 @@ function Shopping_basket() {
             <h1>장바구니 / 로그인된 유저 : {user_id}</h1>
             <table>
                 <tbody>
-                <tr>
-                    <th style={{width:"300px", fontWeight:"normal", borderTop:"3px solid black", borderBottom:"2px solid black", paddingBottom:"15px", paddingTop:"15px", paddingLeft:"10px"}}><input type="checkbox" onChange={allcheckedHandler} checked={allChecked}/></th>
-                    <th style={{width:"300px", fontWeight:"normal", borderTop:"3px solid black", borderBottom:"2px solid black"}}>상품명</th>
-                    <th style={{width:"70px", fontWeight:"normal", borderTop:"3px solid black", borderBottom:"2px solid black"}}>판매가</th>
+                <tr style={{width:"1270px", }}>
+                    <th style={{width:"100px", fontWeight:"normal", borderTop:"3px solid black", borderBottom:"2px solid black", paddingBottom:"15px", paddingTop:"15px", paddingLeft:"10px"}}><input type="checkbox" onChange={allcheckedHandler} checked={allChecked}/></th>
+                    <th style={{width:"500px", fontWeight:"normal", borderTop:"3px solid black", borderBottom:"2px solid black", textAlign:"center"}}>상품명</th>
+                    <th style={{width:"120px", fontWeight:"normal", borderTop:"3px solid black", borderBottom:"2px solid black"}}>판매가</th>
                     <th style={{width:"70px", fontWeight:"normal", borderTop:"3px solid black", borderBottom:"2px solid black"}}>마켓이름</th>
                     <th style={{width:"150px", fontWeight:"normal", borderTop:"3px solid black", borderBottom:"2px solid black", paddingLeft:"80px"}}>수량</th>
                     <th style={{width:"150px", fontWeight:"normal", borderTop:"3px solid black", borderBottom:"2px solid black", paddingLeft:"80px"}}>주문금액</th>
@@ -216,9 +286,9 @@ function Shopping_basket() {
                 <tr key={List.productDetailId}>
                     <td style={{width:"100px", paddingLeft:"10px", borderBottom:"1px solid #e9ecef", paddingBottom:"10px", paddingTop:"10px"}}><input type="checkbox" indexid={index} onChange={checkedHandler} checked={isChecked[index]}/></td>   
                     <td style={{width:"500px", borderBottom:"1px solid #e9ecef"}} >{List.name}</td>
-                    <td style={{borderBottom:"1px solid #e9ecef"}} >{List.price}원</td> 
+                    <td style={{borderBottom:"1px solid #e9ecef", width:"120px"}} >{List.price}원</td> 
                     <td style={{borderBottom:"1px solid #e9ecef",  paddingLeft:"80px"}} >{List.marketName}</td>
-                    <td style={{borderBottom:"1px solid #e9ecef",  paddingLeft:"80px"}} >{List.count}</td>
+                    <td style={{borderBottom:"1px solid #e9ecef",  paddingLeft:"80px"}} ><button indexid={index} onClick={count_down}>-</button>{List.count}<button indexid={index}onClick={count_up}>+</button></td>
                     <td style={{borderBottom:"1px solid #e9ecef",  paddingLeft:"80px"}} >{List.count * List.price}원</td>
                     
                 </tr>
@@ -232,6 +302,7 @@ function Shopping_basket() {
                 <div>
                     <button onClick={order_shopping_basket}>주문하기</button>
                     <button onClick={delete_shopping_basket}>삭제하기</button>
+                    <button onClick={test123}>테스트</button>
                 </div>
             </div>
         </div>

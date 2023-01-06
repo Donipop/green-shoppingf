@@ -8,6 +8,7 @@ import TotalOrderList from './TotalOrderList/TotalOrderList';
 import OrderPost from './OrderPost/OrderPost';
 import OrderConfirm from './OrderConfirm/OrderConfirm';
 import ProductUpdate from './Update/ProductUpdate';
+import SalesManageMent from './SalesManegement/SalesMenegement';
 export default SellerCenter;
 
 function SellerCenter(){
@@ -24,6 +25,7 @@ function SellerCenter(){
                     <Route path='/orderpost' element={<OrderPost />}></Route>
                     <Route path='/orderconfirm' element={<OrderConfirm />}></Route>
                     <Route path='/update' element={<ProductUpdate />}></Route>
+                    <Route path='/salesmanegement' element={<SalesManageMent />}></Route>
                 </Routes>
             </div>
         </div>
