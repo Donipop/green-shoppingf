@@ -29,6 +29,7 @@ import PaymentPage from './component/Payment/PaymentPage';
 import MyReview from './component/Mypage/MyReview';
 import MyPurchaseInquiry from './component/Mypage/MyPurchaseInquiry';
 import SellerReview from './component/sellercenter/reviewmanagement/SellerReview';
+import Header2  from './component/Header2';
 // function App() {
 //   return (
 //     <div className="App">
@@ -73,6 +74,7 @@ const Router = (props) => {
         <Route path='/Mypage/MyReview' element={<MyReview/>} />
         <Route path='/Mypage/MyPurchaseInquiry' element={<MyPurchaseInquiry/>} />
         <Route path='/Sellercenter/reviewmanagement' element={<SellerReview/>} />
+        <Route path='/header2' element={<Header2/>} />
       </Routes>
     </BrowserRouter>
   );

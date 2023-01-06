@@ -15,6 +15,7 @@ const MypageModal = (props) => {
    const [invoicenumberr, setInvoiceNumber] = useState([]);
    const {purchaselist,num} = props
    const [postlist, setPostlist] = useState([]);
+   
 
 
    useEffect(() => {

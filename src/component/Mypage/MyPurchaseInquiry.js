@@ -85,7 +85,7 @@ import MypageModal from './Mypagemodal';
                                         <td>
                                         <button role="button" onClick={e => {openModal(e,index)}} className="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" style={{border:"1px solid #e5e5e5", fontSize:"14px", fontWeight:"bold",borderRadius:"0px"}}>
                                         배송조회
-                                    </button>
+                                      </button>
                                         </td>
                                     
                                     </tr> 
