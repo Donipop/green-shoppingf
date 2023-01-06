@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import SalesViewDetailInfo from './SalesViewDetailInfo';
+import Pagination from "./Pagination";
 
 function SalesViewTable({getDate}) {
     let getstartdate = getDate[0].start;
@@ -9,6 +10,10 @@ function SalesViewTable({getDate}) {
     const [purchaseconfirm, setpurchaseconfirm] = useState([]);
     const [month_of_sales, setmonth_of_sales] = useState(0);
     const [modalInfo, setModalInfo] = useState([]);
+    
+    const [limit, setLimit] = useState(10);
+    const [page, setPage] = useState(1);
+    const offset = (page - 1) * limit;
 
     const showProductModal = (index) => {
         let data = {
@@ -53,6 +58,16 @@ function SalesViewTable({getDate}) {
                 <span>총 매출액 : </span>
                 <COUNTGREEN>{month_of_sales}</COUNTGREEN>
                 <span>원</span>
+                <label>
+                    페이지 당 표시할 게시물 수:&nbsp;
+                    <select type="number" value={limit} onChange={({ target: { value } }) => setLimit(Number(value))}>
+                    <option value="10">10</option>
+                    <option value="12">12</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    </select>
+                </label>
                 
             <div className="col-12">
                 <table>
@@ -67,7 +82,7 @@ function SalesViewTable({getDate}) {
                         </tr>
                     </thead>
                     <tbody>
-                        {purchaseconfirm.map((item, index) => {
+                        {purchaseconfirm.slice((offset, offset + limit)).map((item, index) => {
                             return (
                                 <tr key={index} data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={(e) => showProductModal(index)}>
                                     <td style={{display:'none'}}>{item.id}</td>
@@ -82,6 +97,14 @@ function SalesViewTable({getDate}) {
                         })}
                     </tbody>
                 </table>
+                <footer>
+                    <Pagination
+                    total={purchaseconfirm.length}
+                    limit={limit}
+                    page={page}
+                    setPage={setPage}
+                    />
+                </footer>
             </div>
             <SalesViewDetailInfo DetailInfo={modalInfo}/>
         </DOV>
