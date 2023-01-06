@@ -26,11 +26,11 @@ import QnAanswerUpdate from './component/ProductView/QnAanswerUpdate';
 import Coupon from './component/Mypage/Coupon';
 import Shopping_basket from './component/Mypage/Shopping_basket';
 import PaymentPage from './component/Payment/PaymentPage';
-<<<<<<< HEAD
 import MyReview from './component/Mypage/MyReview';
 import MyPurchaseInquiry from './component/Mypage/MyPurchaseInquiry';
 import SellerReview from './component/sellercenter/reviewmanagement/SellerReview';
 import Header2  from './component/Header2';
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 =======
@@ -38,6 +38,8 @@ import Header2  from './component/Header2';
 
 >>>>>>> d80d4eac1d2844121a164543617b8eb69718d428
 >>>>>>> parent of 8153b71 (21323)
+=======
+>>>>>>> 8153b71c8b5ba94a96d1fb59765d112d7d3ee167
 // function App() {
 //   return (
 //     <div className="App">
