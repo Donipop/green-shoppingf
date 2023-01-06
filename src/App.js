@@ -28,7 +28,7 @@ import Shopping_basket from './component/Mypage/Shopping_basket';
 import PaymentPage from './component/Payment/PaymentPage';
 import MyReview from './component/Mypage/MyReview';
 import MyPurchaseInquiry from './component/Mypage/MyPurchaseInquiry';
-import SellerReview from './component/sellercenter/reviewmanagement/SellerReview';
+import SellerReview from './component/SellerCenter/reviewmanagement/SellerReview';
 import Header2  from './component/Header2';
 // function App() {
 //   return (
