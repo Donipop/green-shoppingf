@@ -154,7 +154,7 @@ function ProductUpdate() {
                     </div>
 
                     <div className="alert alert-secondary" role={'alert'}>
-                    <h3 className='m-0 d-inline-flex mb-3'>상품추가</h3>
+                    <h3 className='m-0 d-inline-flex mb-3'>상품추가2</h3>
                     <button className='alert-btn btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed' data-bs-toggle='collapse' data-bs-target='#product-add' aria-expanded='false'></button>
                         <div className='collapse row' id='product-add'>
                             <ProductAdd getData={getData} UpdateData={productDetail} />
