@@ -1,12 +1,30 @@
 import styled  from "styled-components"
 import { FaStar } from "react-icons/fa";
-import Header2 from "../Header2";
+import { useEffect,useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 
 const SearchViewData = () => {
     let iu = "https://w.namu.la/s/59bbf73b123d0f9f693be3c3de9506b24a1f2a3067b4ffd0207a3a08eee32d750ebf1ca3e33084aa3bbcd6916bd0a8a187cc4556b87fa269c25f1a7ff3ea279f9808bcff5cd75221317e48e817290c6b7e7900c07b3e649379dc7a57a7653a886e08ae6b2df44d7d347e8c801f2b9f15"
     const Array = [0, 1, 2, 3, 4];
     const Test = [0,1,2,3,4,5,6]
+    const [searchviewList, setSearchviewList] = useState([])
+    const searchcont = new URLSearchParams(window.location.search).get('searchcont')
+    const name = new URLSearchParams(window.location.search).get('name')
+    useEffect(() => {
+        axios({
+            method: 'get',
+            url: `/api/searchview?searchcont=${searchcont}&name=${name}`,
+        })
+        .then((res) => {
+            setSearchviewList(res.data)
+        }
+        )
+
+    }, [])
+
+
 
 
     return (
@@ -14,12 +32,12 @@ const SearchViewData = () => {
         <div style={{paddingTop:"50px"}} >
             <UL>
             {Test.map((item) => (
-                <LI>
+                <LI key={item}>
                     <A>
-                        <dl>
-                            <dt>
+                        <Dl>
+                            <Dt>
                                 <img src={iu} width='212' height='212'></img>
-                            </dt>
+                            </Dt>
                             <DD>
                                 <DDdiv></DDdiv>
                                 <DDDdiv className="product-title">
@@ -61,7 +79,7 @@ const SearchViewData = () => {
 
                                     </StarDiv>
                             </DD>
-                        </dl>
+                        </Dl>
                     </A>
                 </LI>
             ))}

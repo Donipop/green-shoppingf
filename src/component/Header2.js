@@ -26,14 +26,8 @@ const Header2 = () => {
 
     const submit = (e) => {
         e.preventDefault()
-        axios({
-            method: 'get',
-            url: `/api/search?searchcont=${searchcont}&name=${name}`,
-            
-        }).then((res) => {
-            Navigate(`?searchcont=${searchcont}&name=${name}`)
 
-        })
+            window.location.href = `/searchview?searchcont=${searchcont}&name=${name}`
     }
 
 
@@ -45,8 +39,8 @@ const Header2 = () => {
         <div style={{width:"518px",border:"2px solid #4285f4", height:"41px", marginRight:"22px",display:"flex",position:"absolute",right:"550px"}}>
             <form style={{display:"flex",width:"100%"}} onSubmit={submit}>
                 <div style={{width:"134px",borderRight:"1px solid #ddd",height:"33px"}}>
-                    <a className="dd" onClick={nonecheck}></a>
-                    <a className="ff" onClick={nonecheck}>{name}</a>
+                    <a href="#!"className="dd" onClick={nonecheck}></a>
+                    <a href="#!"className="ff" onClick={nonecheck}>{name}</a>
                         <Ul ref={UlRef} style={{display:"none"}} >
                             <LI><A onClick={test}>전체</A></LI>
                             <LI><A onClick={test}href="#255"rel='255'>남성패션</A></LI>
