@@ -257,10 +257,10 @@ function ProductInfo({product}){
                 </div>
                 
                 <div className="dropdown">
-                    <button className="btn btn-outline-primary dropdown-toggle w-100 mt-5" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button className="btn btn-outline-primary dropdown-toggle w-100 mt-5" type="button" id="dropdownMenuButton5" data-bs-toggle="dropdown" aria-expanded="false">
                         제품선택
                     </button>
-                    <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
+                    <ul className="dropdown-menu w-100" aria-labelledby="dropdownMenuButton5">
                         {detailProduct.map((item, index) => {
                             return (
                                 <li key={item.product_name}>
@@ -268,6 +268,9 @@ function ProductInfo({product}){
                                 </li>
                             )
                         })}
+                        <li>
+                            <button className="dropdown-item" type="button" indexid='50' onClick={onClickAdd}>테스트</button>
+                        </li>
                     </ul>
                 </div>
                 <div>
