@@ -11,9 +11,7 @@ import axios from "axios";
 function ProductUpdate() {
     const [updateproduct, setUpdateProduct] = useState([]);
     const [productDetail, setProductDetail] = useState([]);
-    const [exsitingProduct,setExsitingProduct] = useState({
-        img:[]
-    });
+    const [exsitingProduct,setExsitingProduct] = useState([]);
 
     const [product, setProduct] = useState({
         category: '',
@@ -41,7 +39,7 @@ function ProductUpdate() {
             }
         }).then((res) => {
             setProductDetail(res.data)
-            setExsitingProduct({...exsitingProduct, img: res.data[0].PRODUCTIMG});
+            setExsitingProduct(res.data[0].PRODUCTIMG);
         }).catch((err) => {
             console.log(err)
         })
