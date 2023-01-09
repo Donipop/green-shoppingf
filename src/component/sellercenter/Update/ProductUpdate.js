@@ -12,7 +12,7 @@ function ProductUpdate() {
     const [updateproduct, setUpdateProduct] = useState([]);
     const [productDetail, setProductDetail] = useState([]);
     const [exsitingProduct,setExsitingProduct] = useState([]);
-
+    const [deleteProductId, setDeleteProductId] = useState([]);
     const [product, setProduct] = useState({
         category: '',
         title: '',
@@ -87,6 +87,12 @@ function ProductUpdate() {
                 return {
                     ...product, detailImg: product.detailImg.filter((item) => item !== data)
                 }})}
+        if(dataType === 'deleteProductId'){
+            
+            setDeleteProductId(() => {
+                return [data]
+            })
+        }
     }
 
     const onClickUpdate = () => {
@@ -95,10 +101,16 @@ function ProductUpdate() {
             alert('수정할 내용이 없습니다.');
             return;
         }
-
+        let da = {
+            sellerCenterCreateVo: product,
+            productImg: exsitingProduct,
+            deleteProductId: deleteProductId
+        }
+        console.log(da);
         axios.post('/api/sellercenter/updateproduct',{
             sellerCenterCreateVo: product,
-            productImg: exsitingProduct
+            productImg: exsitingProduct,
+            deleteProductId: deleteProductId
         }).then((res) => {
             // alert('수정되었습니다.');
             console.log("수정되었습니다.")

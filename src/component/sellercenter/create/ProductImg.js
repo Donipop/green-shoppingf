@@ -32,7 +32,9 @@ export default function ProductImg({getData, UpdateData}) {
                         e.target.remove();
                         getData("mainImgDelete", e.target.currentSrc);
                     }
-                    getData('mainImg', e.target.result);
+                    let data = e.target.result + '___1'
+
+                    getData('mainImg', data);
                     }
                     reader.readAsDataURL(e.target.files[0]);
                 }catch{
@@ -64,7 +66,8 @@ export default function ProductImg({getData, UpdateData}) {
                             e.target.remove();
                             getData("detailImgDelete", e.target.currentSrc);
                         }
-                        getData('detailImg', e.target.result);
+                        let data = e.target.result + '___0'
+                        getData('detailImg', data);
 
                     }
                     reader.readAsDataURL(e.target.files[0]);
@@ -78,31 +81,35 @@ export default function ProductImg({getData, UpdateData}) {
     useEffect(() => {
         if(UpdateData === undefined || UpdateData.length === 0) return;
         
-        let mimg = document.createElement('img');
-        mimg.src = 'http://donipop.com:3333/img/' + UpdateData[0].PRODUCTIMG[0].FILE_NAME;
-        mimg.width = 150;
-        mimg.height = 150;
-        mimg.style.margin = '0 10px 10px 0';
-        mainImgRef.current.appendChild(mimg);
-        getData('mainImg', mimg.src);
-        // 이미지 클릭시 삭제
-        mimg.onclick = (e) => {
-            e.target.remove();
-            getData("mainImgDelete", e.target.currentSrc);
-        }
-        for(let i = 1; i < UpdateData[0].PRODUCTIMG.length; i++){
+        for(let i = 0; i < UpdateData[0].PRODUCTIMG.length; i++){
             let cimg = document.createElement('img');
-            cimg.src = 'http://donipop.com:3333/img/' + UpdateData[0].PRODUCTIMG[i].FILE_NAME;
-            cimg.width = 150;
-            cimg.height = 150;
-            cimg.style.margin = '0 10px 10px 0';
-            getData('detailImg', cimg.src);
-            detailImgRef.current.appendChild(cimg);
-            
-            // 이미지 클릭시 삭제
-            cimg.onclick = (e) => {
-                getData("detailImgDelete", e.target.currentSrc);
-                e.target.remove();
+            let mimg = document.createElement('img');
+
+            if(UpdateData[0].PRODUCTIMG[i].ISMAIN === '1'){
+                mimg.src = 'http://donipop.com:3333/img/' + UpdateData[0].PRODUCTIMG[i].FILE_NAME;
+                mimg.width = 150;
+                mimg.height = 150;
+                mimg.style.margin = '0 10px 10px 0';
+                mainImgRef.current.appendChild(mimg);
+                getData('mainImg', mimg.src);
+                // 이미지 클릭시 삭제
+                mimg.onclick = (e) => {
+                    e.target.remove();
+                    getData("mainImgDelete", e.target.currentSrc);
+                }
+            }else{
+                cimg.src = 'http://donipop.com:3333/img/' + UpdateData[0].PRODUCTIMG[i].FILE_NAME;
+                cimg.width = 150;
+                cimg.height = 150;
+                cimg.style.margin = '0 10px 10px 0';
+                getData('detailImg', cimg.src);
+                detailImgRef.current.appendChild(cimg);
+                
+                // 이미지 클릭시 삭제
+                cimg.onclick = (e) => {
+                    getData("detailImgDelete", e.target.currentSrc);
+                    e.target.remove();
+                }
             }
         }
 
