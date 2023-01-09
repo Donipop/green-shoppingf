@@ -1,0 +1,73 @@
+.OrderDeliveryPage{
+    max-width: 50%;
+    padding: 5px;
+    height: 239px;
+}
+
+.PannelHeader{
+    height: 100%;
+    position: relative;
+    border: 1px solid #dbdde2;
+    box-shadow: none;
+}
+
+.pannel-title{
+    font-size: 15px;
+    font-weight: 600;
+    color: #303236;
+    line-height: 52px;
+}
+
+.ordercontainer{
+    position: relative;
+    padding: 15px 0;
+    display: flex;
+    height: 134px;
+
+}
+
+
+.seller-icon{
+background: url(https://sell.smartstore.naver.com/images/kr/sp_icon_pc.png?29352b8c2d5a5b969559df3820a3275c) no-repeat;
+display: inline-block;
+margin: -1px 0 1px;
+vertical-align: middle;
+}
+        
+
+.icon-order {
+width: 27px;
+height: 28px;
+background-position: -295px -300px;
+}
+
+.spangun{
+    padding-left: 4px;
+    color: #767a83;
+    font-size: 13px;
+    vertical-align: top;
+}
+
+.deliverycontainer{
+    padding-left: 25px;
+    border-left: 1px solid #e2e6ee;
+    width: 48%;
+}
+
+.icon-delivery{
+    width: 34px;
+    height: 24px;
+    background-position: -330px -300px;
+}
+
+.icon-return{
+    width: 23px;
+    height: 24px;
+    background-position: -370px -300px;
+}
+
+.icon-cost{
+    width: 29px;
+    height: 29px;
+    background-position: -340px -360px;
+}

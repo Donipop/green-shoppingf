@@ -23,7 +23,6 @@ const SearchViewData = () => {
 
     }, [searchcont,name])
 
-    console.log(searchviewList)
     
     const searchviewListzero = () => {
     if(searchviewList.length === 0){

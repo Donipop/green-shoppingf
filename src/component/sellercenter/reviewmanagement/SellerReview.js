@@ -42,7 +42,6 @@ const SellerReview = () => {
 
     }, [dateinfo])
      
-    console.log(avgstar)
 
     useEffect(() => {
         if(starnum.length === 0){

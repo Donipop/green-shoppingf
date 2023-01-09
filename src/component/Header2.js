@@ -2,16 +2,16 @@ import './hearder2css.css'
 import React, { useRef,useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
 const Header2 = () => {
-    const [name, setName] = useState('전체')
+    const name1 = new URLSearchParams(window.location.search).get('name')
+    const [name, setName] = useState(
+        name1 === null ? "전체" : name1
+    )
     const [searchcont, setSearchcont] = useState('')
     const UlRef = useRef()
-    const Navigate = useNavigate()
-   
 
 
-    const nonecheck = () => {
+    const noneCheck = () => {
         if(UlRef.current.style.display === "none"){
             UlRef.current.style.display = "block"
         } else {
@@ -19,16 +19,30 @@ const Header2 = () => {
         }
     }
 
-    const test = (e) => {
+    const ValueSelect = (e) => {
         setName(e.target.innerHTML)
         UlRef.current.style.display = "none"
+        
     }
 
-    const submit = (e) => {
+    const Submit = (e) => {
         e.preventDefault()
-            window.location.href = `/searchview?searchcont=${searchcont}&name=${name}`
-            setName(e.target.innerHTML)
+         window.location.href = `/searchview?searchcont=${searchcont}&name=${name}`
+         
     }
+
+   
+
+
+
+   
+
+    
+
+  
+        
+        
+    
 
 
     
@@ -37,25 +51,25 @@ const Header2 = () => {
     return (
     <div style={{width:"520px"}}>    
         <div style={{width:"518px",border:"2px solid #4285f4", height:"41px", marginRight:"22px",display:"flex",position:"absolute",right:"550px"}}>
-            <form style={{display:"flex",width:"100%"}} onSubmit={submit}>
+            <form style={{display:"flex",width:"100%"}} onSubmit={Submit}>
                 <div style={{width:"134px",borderRight:"1px solid #ddd",height:"33px"}}>
-                    <a href="#!"className="dd" onClick={nonecheck}></a>
-                    <a href="#!"className="ff" onClick={nonecheck}>{name}</a>
+                    <a href="#!"className="dd" onClick={noneCheck}></a>
+                    <a href="#!"className="ff" onClick={noneCheck}>{name}</a>
                         <Ul ref={UlRef} style={{display:"none"}} >
-                            <LI><A onClick={test}>전체</A></LI>
-                            <LI><A onClick={test}href="#255"rel='255'>남성</A></LI>
-                            <LI><A onClick={test}>여성</A></LI>
-                            <LI><A onClick={test}>남녀공용패션</A></LI>
-                            <LI><A onClick={test}>유아동패션</A></LI>
-                            <LI><A onClick={test}>출산/유아동</A></LI>
-                            <LI><A onClick={test}>뷰티</A></LI>
-                            <LI><A onClick={test}>식품</A></LI>
-                            <LI><A onClick={test}>주방용퓸</A></LI>
-                            <LI><A onClick={test}>생활용품</A></LI>
+                            <LI><A onClick={ValueSelect}>전체</A></LI>
+                            <LI><A onClick={ValueSelect}href="#255"rel='255'>남성</A></LI>
+                            <LI><A onClick={ValueSelect}>여성</A></LI>
+                            <LI><A onClick={ValueSelect}>남녀공용패션</A></LI>
+                            <LI><A onClick={ValueSelect}>유아동패션</A></LI>
+                            <LI><A onClick={ValueSelect}>출산/유아동</A></LI>
+                            <LI><A onClick={ValueSelect}>뷰티</A></LI>
+                            <LI><A onClick={ValueSelect}>식품</A></LI>
+                            <LI><A onClick={ValueSelect}>주방용퓸</A></LI>
+                            <LI><A onClick={ValueSelect}>생활용품</A></LI>
                         </Ul>
                 </div>
                         <input type="text" onChange={(e) => setSearchcont(e.target.value)}style={{width:"310px",height:"33px",border:"none",outline:"none",marginLeft:"10px",fontSize:"14px"}}placeholder="찾고 싶은 상품을 검색해보세요!"></input>
-                        <AImage onClick={submit}></AImage>
+                        <AImage onClick={Submit}></AImage>
             </form>                        
         </div>
     </div>
