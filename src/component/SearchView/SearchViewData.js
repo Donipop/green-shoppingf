@@ -8,7 +8,6 @@ import { useParams } from "react-router-dom";
 const SearchViewData = () => {
     let iu = "https://w.namu.la/s/59bbf73b123d0f9f693be3c3de9506b24a1f2a3067b4ffd0207a3a08eee32d750ebf1ca3e33084aa3bbcd6916bd0a8a187cc4556b87fa269c25f1a7ff3ea279f9808bcff5cd75221317e48e817290c6b7e7900c07b3e649379dc7a57a7653a886e08ae6b2df44d7d347e8c801f2b9f15"
     const Array = [0, 1, 2, 3, 4];
-    const Test = [0,1,2,3,4,5,6]
     const [searchviewList, setSearchviewList] = useState([])
     const searchcont = new URLSearchParams(window.location.search).get('searchcont')
     const name = new URLSearchParams(window.location.search).get('name')
@@ -22,44 +21,56 @@ const SearchViewData = () => {
         }
         )
 
-    }, [])
+    }, [searchcont,name])
 
-
+    console.log(searchviewList)
+    
+    const searchviewListzero = () => {
+    if(searchviewList.length === 0){
+        return(
+            <div style={{margin:"20px 20px 20px 20px"}}>
+                검색된 결과가 없스비다.
+            </div>
+        )
+    }
+}
 
 
     return (
         
         <div style={{paddingTop:"50px"}} >
             <UL>
-            {Test.map((item) => (
-                <LI key={item}>
-                    <A>
+            {searchviewList.map((item) => (
+                <LI key={item.id}>
+                    <A href={`view/${item.id}`}>
                         <Dl>
                             <Dt>
-                                <img src={iu} width='212' height='212'></img>
+                                {item.FILE_NAME === undefined ? <img src={iu} width='212' height='212'></img> 
+                                : <img src={`http://donipop.com:3333/img/${item.FILE_NAME}`} width='212' height='212'>
+                                </img>}
                             </Dt>
                             <DD>
                                 <DDdiv></DDdiv>
                                 <DDDdiv className="product-title">
-                                  아이유가 입을뻔한 후드티
+                                  {item.title}
                                 </DDDdiv>
                                 <div style={{paddingTop:"3px"}}>
                                     <div style={{paddingTop:"5px"}}>
                                         <div>
                                             <span>
-                                                <span>1%</span>
-                                                <del style={{color:"#888",textDecoration:"line-through"}}>28,030</del>
+                                                <span>{Math.round(item.product_discount / item.product_price * 100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}%</span>
+                                                <del style={{color:"#888",textDecoration:"line-through"}}>{item.product_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</del>
                                             </span>
                                             <Em>
                                                 <strong style={{fontStyle:"normal"}}>
-                                                    27,510
+                                                    {(item.product_price - item.product_discount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
                                                 </strong>
                                             </Em>
                                         </div>
                                     </div>
                                 </div>
                                     <StarDiv>
-                                        <div>
+                                        <div style={{display:"flex"}}>
                                             <StarSpan>
                                             <Stars>
                                         {Array.map((el, idx) => {
@@ -67,14 +78,13 @@ const SearchViewData = () => {
                                                 <FaStar
                                                 key={idx}
                                                 size="15"
-                                                color={"#fcc419"}                                            
+                                                color={(item.star / 5)>el ? "#fcc419" : "gray"}                                            
                                              />
                                              )
                             })}
                                     </Stars>
-
                                             </StarSpan>
-                                            <span style={{color:"#888"}}>(435)</span>
+                                            <span style={{color:"#888"}}>({item.starcount})</span>
                                         </div>
 
                                     </StarDiv>
@@ -83,6 +93,7 @@ const SearchViewData = () => {
                     </A>
                 </LI>
             ))}
+            {searchviewListzero()}
             </UL>
         </div>
     )
@@ -110,7 +121,13 @@ const A = styled.a`
   border: 1px solid transparent;
   box-sizing: border-box;
   text-decoration: none;
-  width:232px
+  width:232px;
+  cursor: pointer;
+    transition: box-shadow .2s ease;
+    &:hover {
+        box-shadow: 0 0 10px rgba(0,0,0,.2);
+    }
+
    `
 
 const Dl = styled.dl`
@@ -154,7 +171,7 @@ display: -webkit-box;
     width: 100%;
     max-height: 48px;
     line-height: 16px;
-    font-size: 12px;
+    font-size: 13px;
     color: #111;
     -webkit-line-clamp: 3;
     text-overflow: ellipsis;
@@ -164,7 +181,7 @@ display: -webkit-box;
 
 const Stars = styled.div`
 display: flex;
-padding-top: 5px;
+padding-top: 2px;
 
 
 .yellowStar {
@@ -184,7 +201,7 @@ display: block;
 `
 
 const StarDiv = styled.div`
-clear: both;
+    clear: both;
     display: block;
     margin-top: 6px;
    height: 17px;

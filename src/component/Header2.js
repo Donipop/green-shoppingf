@@ -26,8 +26,8 @@ const Header2 = () => {
 
     const submit = (e) => {
         e.preventDefault()
-
             window.location.href = `/searchview?searchcont=${searchcont}&name=${name}`
+            setName(e.target.innerHTML)
     }
 
 
@@ -43,8 +43,8 @@ const Header2 = () => {
                     <a href="#!"className="ff" onClick={nonecheck}>{name}</a>
                         <Ul ref={UlRef} style={{display:"none"}} >
                             <LI><A onClick={test}>전체</A></LI>
-                            <LI><A onClick={test}href="#255"rel='255'>남성패션</A></LI>
-                            <LI><A onClick={test}>여성패션</A></LI>
+                            <LI><A onClick={test}href="#255"rel='255'>남성</A></LI>
+                            <LI><A onClick={test}>여성</A></LI>
                             <LI><A onClick={test}>남녀공용패션</A></LI>
                             <LI><A onClick={test}>유아동패션</A></LI>
                             <LI><A onClick={test}>출산/유아동</A></LI>
