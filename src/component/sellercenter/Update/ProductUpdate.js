@@ -88,10 +88,7 @@ function ProductUpdate() {
                     ...product, detailImg: product.detailImg.filter((item) => item !== data)
                 }})}
         if(dataType === 'deleteProductId'){
-            
-            setDeleteProductId(() => {
-                return [data]
-            })
+            setDeleteProductId(data)
         }
     }
 

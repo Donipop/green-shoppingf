@@ -105,8 +105,8 @@ export default function ProductAdd({getData, UpdateData}) {
         let index = e.target.id;
         let list = productList;
         list.splice(index,1);
-        setProductList((productList) => [...list]);
-        setDeleteProductId((deleteProductId) => [...deleteProductId, id]);
+        setProductList(() => [...list]);
+        setDeleteProductId([...deleteProductId, id]);
     }
 
     const oncChangeName = (e) => {
