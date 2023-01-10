@@ -169,6 +169,16 @@ const QnA = ({page}) => {
             window.open(`http://localhost:3000/QnA/answerUpdate/${page}/${e.target.id}/${child_id}/${cont}`,"_blank","width=650, height=730");
         }
 
+        //user nickname 마지막 2자리 *로 변경
+        const nickname = (props) => {
+            let nick = props
+            let nick2 = nick.slice(0,2)
+            let nick3 = nick.slice(2)
+            let nick4 = nick2 + "*".repeat(nick3.length)
+            return nick4
+        }
+
+
             
 
 
@@ -198,7 +208,7 @@ const QnA = ({page}) => {
                              <div className="answerList" style={{position:"relative"}}>
                                 <em className="answerState">질문</em>
                                     <div className="answerCont">
-                                        <strong className="author">{item.user_id}</strong>
+                                        <strong className="author">{nickname(item.user_id)}</strong>
                                         <a href="#!" role="button" id={item.id} onClick={QuestionUpdate}  style={{paddingLeft:"2px",fontSize:"12px"}}>수정</a>
                                         <span style={{fontSize:"14px", marginLeft:"2px", marginRight:"2px"}}>|</span>
                                         <a href="#!" role="button" id={item.id} onClick={QuestionDelete} style={{fontSize:"12px"}}>삭제</a>

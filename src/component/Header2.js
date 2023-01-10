@@ -1,7 +1,6 @@
 import './hearder2css.css'
 import React, { useRef,useState } from 'react'
 import styled from 'styled-components'
-import axios from 'axios'
 const Header2 = () => {
     const name1 = new URLSearchParams(window.location.search).get('name')
     const [name, setName] = useState(
@@ -9,6 +8,7 @@ const Header2 = () => {
     )
     const [searchcont, setSearchcont] = useState('')
     const UlRef = useRef()
+   
 
 
     const noneCheck = () => {
@@ -22,27 +22,13 @@ const Header2 = () => {
     const ValueSelect = (e) => {
         setName(e.target.innerHTML)
         UlRef.current.style.display = "none"
-        
     }
 
-    const Submit = (e) => {
+    const submit = (e) => {
         e.preventDefault()
-         window.location.href = `/searchview?searchcont=${searchcont}&name=${name}`
-         
+            window.location.href = `/searchview?searchcont=${searchcont}&name=${name}`
+        
     }
-
-   
-
-
-
-   
-
-    
-
-  
-        
-        
-    
 
 
     
@@ -51,7 +37,7 @@ const Header2 = () => {
     return (
     <div style={{width:"520px"}}>    
         <div style={{width:"518px",border:"2px solid #4285f4", height:"41px", marginRight:"22px",display:"flex",position:"absolute",right:"550px"}}>
-            <form style={{display:"flex",width:"100%"}} onSubmit={Submit}>
+            <form style={{display:"flex",width:"100%"}} onSubmit={submit}>
                 <div style={{width:"134px",borderRight:"1px solid #ddd",height:"33px"}}>
                     <a href="#!"className="dd" onClick={noneCheck}></a>
                     <a href="#!"className="ff" onClick={noneCheck}>{name}</a>
@@ -69,7 +55,7 @@ const Header2 = () => {
                         </Ul>
                 </div>
                         <input type="text" onChange={(e) => setSearchcont(e.target.value)}style={{width:"310px",height:"33px",border:"none",outline:"none",marginLeft:"10px",fontSize:"14px"}}placeholder="찾고 싶은 상품을 검색해보세요!"></input>
-                        <AImage onClick={Submit}></AImage>
+                        <AImage onClick={submit}></AImage>
             </form>                        
         </div>
     </div>

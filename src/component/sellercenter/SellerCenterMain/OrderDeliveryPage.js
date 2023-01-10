@@ -4,7 +4,7 @@ import "./SellerCenterMaincss.css"
 
 const OrderDeliveryPage = () => {
     return(
-        <div className="OrderDeliveryPage">
+        <div className="OrderDeliveryPage" style={{width:"1200px"}}>
             <div className="PannelHeader">
                 <div style={{padding:"0 25px", borderBottom:"1px solid #e2e6ee"}}>
                     <h3 className="pannel-title">주문/배송</h3>

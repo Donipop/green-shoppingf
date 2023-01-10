@@ -230,7 +230,7 @@ const SellerReview = () => {
   
 
     return(
-        <div style={{padding:"5px",width:"1163px", height:"224px"}}>
+        <div style={{width:"823px", height:"224px",paddingLeft:"30px"}}>
             <div style={{border:"1px solid #dbdde2",width:"99%",height:"100%"}}>
                 <div style={{padding:"0 25px",borderBottom:"1px solid #e2e6ee"}}>
                     <h3 style={{fontSize:"15px",lineHeight:"52px",color:"#303236",fontWeight:"600"}}>리뷰</h3>

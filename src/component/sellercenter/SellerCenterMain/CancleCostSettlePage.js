@@ -4,7 +4,7 @@ import "./SellerCenterMaincss.css"
 
 const CancleCostSettlePage = () => {
     return(
-        <div className="OrderDeliveryPage" style={{width:"700px",top:"10px",right:"470px",position:"absolute"}}>
+        <div className="OrderDeliveryPage" style={{width:"1200px"}}>
             <div className="PannelHeader">
                 <div style={{padding:"0 25px", borderBottom:"1px solid #e2e6ee"}}>
                     <h3 className="pannel-title">클레임/정산</h3>
