@@ -103,8 +103,24 @@ import ReviewUpdate from './ReviewUpdate';
         })
             
          }
-    
-    
+
+         const Noexsits = () => {
+            if(List.length === 0){
+               return(
+                <div style={{padding:"30px", textAlign:"center"}}>
+                    등록된 리뷰가 없습니다.
+                </div>
+               )
+               
+            }
+        }
+
+        const SecretUser_id = (props) => {
+            let str = props;
+            let first = str.substr(0, str.length-3);
+            let result = first + "***";
+            return result;
+        }
     
     
     return (
@@ -121,16 +137,16 @@ import ReviewUpdate from './ReviewUpdate';
                 <div key = {item.id} className="review_wrap" style={{borderBottom:"1px solid #ccc"}}>
                     <div className="review_wrap_title">
                         <div>
-                             <strong className="Strong">{item.user_id}</strong>
+                             <strong className="Strong">{SecretUser_id(item.user_id)}</strong>
                         </div>
                         <div style={{display:"flex"}}>
                                 {StarList(item.star)}
                                 <div style={{fontSize:"12px", paddingTop:"3px"}}>{item.regdate}</div>
-                                <a href="#!"role="button"  onClick={e => openModal(e,index)} style={{paddingLeft:"4px",fontSize:"14px"}}>수정</a>
+                                <a href="#!"role="button"  onClick={e => openModal(e,index)} style={{paddingLeft:"4px",fontSize:"14px",textDecoration:"none"}}>수정</a>
                                  <Modal close={closeModal} header="상품평 수정하기" check={checked.Select[index]}>
                                 <ReviewUpdate id={item.id} page={item.product_num}/>
                                  </Modal>
-                                <a href="#!" role="button" id={item.id} onClick={Delete} style={{fontSize:"14px",paddingLeft:"4px"}}> 삭제</a>
+                                <a href="#!" role="button" id={item.id} onClick={Delete} style={{fontSize:"14px",paddingLeft:"4px",textDecoration:"none"}}> 삭제</a>
                         </div>
                         <div>
                                 <strong style={{paddingRight:"10px"}}>한줄평</strong>
@@ -155,7 +171,9 @@ import ReviewUpdate from './ReviewUpdate';
             )
         })
 
+
         }
+        {Noexsits()}
         <Pagination 
         total={List.length}
         limit={limit}

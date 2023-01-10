@@ -6,7 +6,7 @@
  padding-bottom: 40px;
 }
 .review_review{
-    width: 90px;
+    width: 100px;
     padding: 30px 20px;
     font-size: 14px;
     font-weight: bold;
@@ -54,7 +54,7 @@ display: flex;
 
 }
 .one_line{
-    width: 100px;
+    width: 110px;
     padding: 30px 20px;
     font-size: 14px;
     font-weight: bold;

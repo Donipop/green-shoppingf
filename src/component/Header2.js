@@ -36,7 +36,7 @@ const Header2 = () => {
 
     return (
     <div style={{width:"520px"}}>    
-        <div style={{width:"518px",border:"2px solid #4285f4", height:"41px", marginRight:"22px",display:"flex",position:"absolute",right:"550px"}}>
+        <div style={{width:"518px",border:"2px solid #4285f4", height:"41px", marginRight:"22px",display:"flex",position:"absolute"}}>
             <form style={{display:"flex",width:"100%"}} onSubmit={submit}>
                 <div style={{width:"134px",borderRight:"1px solid #ddd",height:"33px"}}>
                     <a href="#!"className="dd" onClick={noneCheck}></a>
@@ -56,8 +56,9 @@ const Header2 = () => {
                 </div>
                         <input type="text" onChange={(e) => setSearchcont(e.target.value)}style={{width:"310px",height:"33px",border:"none",outline:"none",marginLeft:"10px",fontSize:"14px"}}placeholder="찾고 싶은 상품을 검색해보세요!"></input>
                         <AImage onClick={submit}></AImage>
-            </form>                        
-        </div>
+
+            </form>       
+        </div>        
     </div>
     )
 }
