@@ -1,8 +1,34 @@
+import axios from "axios"
 import styled from "styled-components"
 import "./SellerCenterMaincss.css"
-
+import {useEffect, useState} from "react"
 
 const CancleCostSettlePage = () => {
+    const [List, setList] = useState({
+        count : 0,
+        beforeSettleSum: 0,
+        afterSettleSum: 0,
+    });
+
+    useEffect(() => {
+        axios({
+            method: 'get',
+            url: '/api/sellercenter/canclecostsettle',
+            params: {
+                id: 'admin'
+            },
+            })
+            .then(res => setList({...List,
+                 conut: res.data[0].count,
+                 beforeSettleSum: res.data[0].beforeSettleSum,
+                 afterSettleSum: res.data[0].afterSettleSum
+            }))
+    }, [])
+
+
+
+
+
     return(
         <div className="OrderDeliveryPage" style={{width:"1200px"}}>
             <div className="PannelHeader">
@@ -43,7 +69,7 @@ const CancleCostSettlePage = () => {
                                     구매확정
                                 </SPan>
                                 <span style={{float: "right"}}>
-                                    <A style={{color:"#628ca6"}}>0</A>
+                                    <A style={{color:"#628ca6"}}>{List.conut}</A>
                                     <span className="spangun">건</span>   
                                 </span>
                             </Li>
@@ -52,7 +78,7 @@ const CancleCostSettlePage = () => {
                                     정산예정
                                 </SPan>
                                 <span style={{float: "right"}}>
-                                    <A style={{color:"#628ca6"}}>0</A>
+                                    <A style={{color:"#628ca6"}}>{(List.beforeSettleSum).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</A>
                                     <span className="spangun">원</span>   
                                 </span>
                             </Li>
@@ -61,7 +87,7 @@ const CancleCostSettlePage = () => {
                                     정산금액
                                 </SPan>
                                 <span style={{float: "right"}}>
-                                    <A style={{color:"#628ca6"}}>0</A>
+                                    <A style={{color:"#628ca6"}}>{(List.afterSettleSum).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</A>
                                     <span className="spangun">원</span>   
                                 </span>
                             </Li>

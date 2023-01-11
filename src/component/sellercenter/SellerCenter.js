@@ -21,9 +21,9 @@ function SellerCenter(){
             <SellerHeader />
             <div className='d-flex'>
                 <SellerSidebar />
-                <SellerCenterMain />               
                 <Routes>
                     {/* <Route path = '*' element={<h1>404 Not Found</h1>}></Route> */}
+                    <Route path ='/' element={<SellerCenterMain />}></Route>
                     <Route path='/create' element={<Create />}></Route>
                     <Route path='/totalorderlist' element={<TotalOrderList />}></Route>
                     <Route path='/orderpost' element={<OrderPost />}></Route>
