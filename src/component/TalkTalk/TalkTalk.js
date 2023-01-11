@@ -13,8 +13,10 @@ import {
 } from "mdb-react-ui-kit";
 import TalkMyMessage from "./TalkMyMessage";
 import "./TalkTalk.css";
+import useWebSocket from 'react-use-websocket';
+
 function TalkTalk(){
-    const {uuid} = useParams();
+    const {ch} = useParams();
     const params = new URLSearchParams(window.location.search);
     const chatBody = useRef();
     // console.log(params.get('frm'));
@@ -29,7 +31,15 @@ function TalkTalk(){
                     e.target.value = '';
                     return;
                 }
-                setChat([...chat, TalkMyMessage(e.target.value,1)]);
+
+                let msgData = {
+                    'msg' : e.target.value.trim(),
+                    'ch' : ch,
+                    'frm' : params.get('frm'),
+                    'id': params.get('id')
+                }
+                sendJsonMessage(msgData);
+                setChat([...chat, TalkMyMessage(msgData.msg.toString(),0)]);
                 e.target.value = '';
             }
         }
@@ -38,6 +48,32 @@ function TalkTalk(){
     useEffect(() =>{
         chatBody.current.scrollTop = chatBody.current.scrollHeight;
     },[chat])
+
+
+    const socketUrl = 'ws://localhost:8080/api/ws/chat';
+
+const {
+  sendMessage,
+  sendJsonMessage,
+  lastMessage,
+  lastJsonMessage,
+  readyState,
+  getWebSocket,
+} = useWebSocket(socketUrl, {
+  onOpen: () => console.log('opened'),
+  //Will attempt to reconnect on all close events, such as server shutting down
+  shouldReconnect: (closeEvent) => true,
+});
+
+useEffect(() => {
+    console.log(lastJsonMessage);
+    if(lastJsonMessage === null) return;
+    if(lastJsonMessage.ch !== ch) return;
+    if(lastJsonMessage.id === null) return;
+    if(lastJsonMessage.id === params.get('id')) return;
+    setChat([...chat, TalkMyMessage(lastJsonMessage.msg.toString(),1)]);
+}, [lastJsonMessage])
+
     return (
         <MDBContainer className="py-5">
         <MDBRow className="d-flex justify-content-center">

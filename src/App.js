@@ -31,6 +31,7 @@ import MyPurchaseInquiry from './component/Mypage/MyPurchaseInquiry';
 import SellerReview from './component/SellerCenter/reviewmanagement/SellerReview';
 import Header2  from './component/Header2';
 import TalkTalk from './component/TalkTalk/TalkTalk';
+
 // function App() {
 //   return (
 //     <div className="App">
@@ -76,7 +77,7 @@ const Router = (props) => {
         <Route path='/Mypage/MyPurchaseInquiry' element={<MyPurchaseInquiry/>} />
         <Route path='/Sellercenter/reviewmanagement' element={<SellerReview/>} />
         <Route path='/header2' element={<Header2/>} />
-        <Route path='/ct/:uuid' element={<TalkTalk />} />
+        <Route path='/ct/:ch' element={<TalkTalk />} />
       </Routes>
     </BrowserRouter>
   );

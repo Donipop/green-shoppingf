@@ -2,10 +2,6 @@ import React from "react";
 
 function TalkMyMessage(message,type){
     let randomKey = Math.random();
-    if(message.contain("\n")){
-    console.log('message is empty');
-    }
-
     if(type === 0){
         return(
             <div className="d-flex flex-row justify-content-end mb-4" key={randomKey}>
@@ -13,9 +9,9 @@ function TalkMyMessage(message,type){
                     className="p-3 me-3 border"
                     style={{ borderRadius: "15px", backgroundColor: "#fbfbfb" }}
                 >
-                    <p className="small mb-0">
+                    <pre className="small mb-0">
                    {message}
-                    </p>
+                    </pre>
                 </div>
                 <img
                     src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
@@ -39,9 +35,9 @@ function TalkMyMessage(message,type){
                         backgroundColor: "rgba(57, 192, 237,.2)",
                     }}
                     >
-                    <p className="small mb-0">
+                    <pre className="small mb-0">
                         {message}
-                    </p>
+                    </pre>
                     </div>
                 </div>
         )
