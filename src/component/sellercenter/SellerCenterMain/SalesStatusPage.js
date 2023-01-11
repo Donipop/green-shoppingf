@@ -1,16 +1,44 @@
+import { useEffect,useState } from "react";
 import ReactApexChart from "react-apexcharts"; 
-import styled from "styled-components";
+import axios from "axios";
+import { ListGroup } from "react-bootstrap";
 
 
 const SalesStauts = () => {
     const today = new Date();
     let day = today.getDate();
-    let month = today.getMonth() + 1;
+    let month = today.getMonth() + 1
+    let year = today.getFullYear();
+    const [list, setList] = useState({
+        data: [0],
+    });
+
+
+    useEffect( () => {
+        axios({
+            method: 'get',
+            url: '/api/sellercenter/salesstatus',
+            params: {
+                id: 'admin',
+                start: year + "-" + month + "-" + (day-8),
+                end: year + "-" + month + "-" + (day),
+            },
+            })
+
+            .then(res => setList({...list,
+                data: res.data
+                }))
+    }, [])
+   
+
+    
+        
+
 
 
     const linedata = {
         series: [{
-            data: [30, 40, 35, 50, 49, 60, 70, 91, 125]
+            data: [list.data[0],list.data[1],list.data[2],list.data[3],list.data[4],list.data[5],list.data[6],list.data[7]]
             }],
             options: {
                 chart: {
@@ -20,6 +48,13 @@ const SalesStauts = () => {
                         enabled: false
                     }
                 },
+                markers: {
+                    size: 5,
+                    hover: {
+                        sizeOffset: 6
+                    }
+                },
+
                 dataLabels: {
                     enabled: false
                 },
@@ -35,7 +70,7 @@ const SalesStauts = () => {
                 },
                 xaxis: {
                     categories: [(month + "." + (day - 8) ), (month + "." + (day - 7) ), (month + "." + (day - 6) ),(month + "." + (day - 5) ), 
-                    (month + "." + (day - 4) ), (month + "." + (day - 3 ) ), (month + "." + (day - 2) ), (month + "." + (day - 1) ), (month + "." + (day) )],
+                    (month + "." + (day - 4) ), (month + "." + (day - 3 ) ), (month + "." + (day - 2) ), (month + "." + (day - 1) )],
                 }
             },
         }
@@ -62,44 +97,5 @@ const SalesStauts = () => {
 export default SalesStauts  
 
 
-const Span = styled.span`
-background-color: #4dc089;
-top: 0;
-left: 0;
-width: 42px;
-height: 42px;
-font-size: 24px;
-display: inline-block;
-line-height: 40px;
-vertical-align: middle;
-text-align: center;
-color: #fff;
-`
 
-const Ul = styled.ul`
-min-height: 99px;
-padding: 3px 0 0 57px;
-list-style:none;
-`
-const Li = styled.li`
-margin-bottom: 9px;
-line-height:18px;
-height:21px;
-`
-
-const SPan = styled.span`
-float: left;
-color: #303236;
-vertical-align: middle;
-font-size: 15px;
-`
-
-const A = styled.a`
-position: relative;
-top: -1px;
-font-size: 20px;
-color: #4dc089;
-text-decoration: none;
-
-`
 

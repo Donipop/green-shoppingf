@@ -10,6 +10,8 @@ const CancleCostSettlePage = () => {
         afterSettleSum: 0,
     });
 
+    
+
     useEffect(() => {
         axios({
             method: 'get',
@@ -19,7 +21,7 @@ const CancleCostSettlePage = () => {
             },
             })
             .then(res => setList({...List,
-                 conut: res.data[0].count,
+                 count: res.data[0].count,
                  beforeSettleSum: res.data[0].beforeSettleSum,
                  afterSettleSum: res.data[0].afterSettleSum
             }))
@@ -69,7 +71,7 @@ const CancleCostSettlePage = () => {
                                     구매확정
                                 </SPan>
                                 <span style={{float: "right"}}>
-                                    <A style={{color:"#628ca6"}}>{List.conut}</A>
+                                    <A style={{color:"#628ca6"}}>{List.count}</A>
                                     <span className="spangun">건</span>   
                                 </span>
                             </Li>
