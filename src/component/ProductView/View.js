@@ -45,7 +45,7 @@ function View(){
     }
 
     return(
-        <>
+        
             <div className="container">
                 <div className="row">
                     <div className="col-12">
@@ -68,7 +68,7 @@ function View(){
                             }
                     })}
                 </UL>
-                <div className="pt-5"></div>
+                {/* <div className="pt-5"></div>
                 <div dangerouslySetInnerHTML={{__html: productinfo.cont }}>
                 </div>
 
@@ -77,9 +77,9 @@ function View(){
                 </div>
                 { <div>
                     <QnAList page={page} />
-                </div> }
+                </div> } */}
             </div>
-        </>
+        
     )
 }
 export default View;

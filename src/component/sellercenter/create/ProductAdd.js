@@ -11,6 +11,7 @@ export default function ProductAdd({getData, UpdateData}) {
     const [productCount, setProductCount] = useState(0);
     const [productName, setProductName] = useState('');
     const [productList, setProductList] = useState([]);
+    const [deleteProductId, setDeleteProductId] = useState([]);
     useEffect(() => {
         buttonEvent(document.getElementById('discount-fasle-add'),null);
         buttonEvent(document.getElementById('date-fasle-add'),null);
@@ -19,7 +20,9 @@ export default function ProductAdd({getData, UpdateData}) {
     useEffect(() => {
         getData('product',productList);
     }, [productList])
-
+    useEffect(() => {
+        getData('deleteProductId', deleteProductId);
+    }, [deleteProductId])
     useEffect(() => {
         if(UpdateData === undefined || UpdateData?.length === 0) return ;
 
@@ -30,7 +33,8 @@ export default function ProductAdd({getData, UpdateData}) {
                 product_count: UpdateData[i].PRODUCT_COUNT,
                 product_discount: UpdateData[i].PRODUCT_DISCOUNT,
                 dateStart: UpdateData[i].DATESTART,
-                dateEnd: UpdateData[i].DATEEND
+                dateEnd: UpdateData[i].DATEEND,
+                id: UpdateData[i].ID
             }
             
             setProductList((productList) => [...productList, product]);
@@ -97,11 +101,12 @@ export default function ProductAdd({getData, UpdateData}) {
         
     }
 
-    const onClickDelete = (e) =>{
+    const onClickDelete = (e, id) =>{
         let index = e.target.id;
         let list = productList;
         list.splice(index,1);
-        setProductList((productList) => [...list]);
+        setProductList(() => [...list]);
+        setDeleteProductId([...deleteProductId, id]);
     }
 
     const oncChangeName = (e) => {
@@ -297,7 +302,7 @@ export default function ProductAdd({getData, UpdateData}) {
                                     <td>{product.product_discount}</td>
                                     <td>{product.dateStart} ~ {product.dateEnd}</td>
                                     <td>{product.product_count}</td>
-                                    <td><button type="button" className="btn btn-danger" onClick={onClickDelete}>삭제</button></td>
+                                    <td><button type="button" className="btn btn-danger" onClick={(e) => onClickDelete(e, product.id)}>삭제</button></td>
                                 </tr>
                             )
                         })}

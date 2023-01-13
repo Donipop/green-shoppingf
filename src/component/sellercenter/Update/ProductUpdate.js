@@ -11,6 +11,8 @@ import axios from "axios";
 function ProductUpdate() {
     const [updateproduct, setUpdateProduct] = useState([]);
     const [productDetail, setProductDetail] = useState([]);
+    const [exsitingProduct,setExsitingProduct] = useState([]);
+    const [deleteProductId, setDeleteProductId] = useState([]);
     const [product, setProduct] = useState({
         category: '',
         title: '',
@@ -37,6 +39,7 @@ function ProductUpdate() {
             }
         }).then((res) => {
             setProductDetail(res.data)
+            setExsitingProduct(res.data[0].PRODUCTIMG);
         }).catch((err) => {
             console.log(err)
         })
@@ -84,6 +87,9 @@ function ProductUpdate() {
                 return {
                     ...product, detailImg: product.detailImg.filter((item) => item !== data)
                 }})}
+        if(dataType === 'deleteProductId'){
+            setDeleteProductId(data)
+        }
     }
 
     const onClickUpdate = () => {
@@ -92,8 +98,17 @@ function ProductUpdate() {
             alert('수정할 내용이 없습니다.');
             return;
         }
-
-        axios.post('/api/sellercenter/updateproduct', product).then((res) => {
+        let da = {
+            sellerCenterCreateVo: product,
+            productImg: exsitingProduct,
+            deleteProductId: deleteProductId
+        }
+        console.log(da);
+        axios.post('/api/sellercenter/updateproduct',{
+            sellerCenterCreateVo: product,
+            productImg: exsitingProduct,
+            deleteProductId: deleteProductId
+        }).then((res) => {
             // alert('수정되었습니다.');
             console.log("수정되었습니다.")
         }).catch((err) => {
@@ -148,7 +163,7 @@ function ProductUpdate() {
                     </div>
 
                     <div className="alert alert-secondary" role={'alert'}>
-                    <h3 className='m-0 d-inline-flex mb-3'>상품추가</h3>
+                    <h3 className='m-0 d-inline-flex mb-3'>상품추가2</h3>
                     <button className='alert-btn btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed' data-bs-toggle='collapse' data-bs-target='#product-add' aria-expanded='false'></button>
                         <div className='collapse row' id='product-add'>
                             <ProductAdd getData={getData} UpdateData={productDetail} />
