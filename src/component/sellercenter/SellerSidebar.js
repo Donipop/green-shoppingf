@@ -50,7 +50,7 @@ function Sidebar(){
                                         <a href='/sellercenter/salesmanegement' className='link-white d-inline-flex text-decoration-none rounded'>매출관리 및 조회</a>
                                     </li>
                                     <li>
-                                        <a href='/' className='link-white d-inline-flex text-decoration-none rounded'>정산하기</a>
+                                        <a href='/sellercenter/sellersettlement' className='link-white d-inline-flex text-decoration-none rounded'>정산하기</a>
                                     </li>
                                     <li>
                                         <a href='/' className='link-white d-inline-flex text-decoration-none rounded'>3번</a>

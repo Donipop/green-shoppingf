@@ -10,7 +10,7 @@ function SalesViewTable({getDate}) {
     const [purchaseconfirm, setpurchaseconfirm] = useState([]);
     const [month_of_sales, setmonth_of_sales] = useState(0);
     const [modalInfo, setModalInfo] = useState([]);
-    
+
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     const offset = (page - 1) * limit;
@@ -44,6 +44,7 @@ function SalesViewTable({getDate}) {
             for (let i = 0; i < res.length; i++) {
                 result += res[i].totalprice;
             }
+            
             setmonth_of_sales(result);
             
         })
@@ -82,7 +83,7 @@ function SalesViewTable({getDate}) {
                         </tr>
                     </thead>
                     <tbody>
-                        {purchaseconfirm.slice((offset, offset + limit)).map((item, index) => {
+                        {purchaseconfirm.slice(offset, offset + limit).map((item, index) => {
                             return (
                                 <tr key={index} data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={(e) => showProductModal(index)}>
                                     <td style={{display:'none'}}>{item.id}</td>

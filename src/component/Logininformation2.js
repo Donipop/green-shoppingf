@@ -4,7 +4,8 @@ import { useCookies } from 'react-cookie';
 import axios from "axios";
 
 
-const LoginInterceptor= () => {
+
+const Logininformation2 = ({getuserData}) => {
     const [cookies, setCookie, removeCookie] = useCookies(['refreshToken'])
     
     let refreshToken = cookies.refreshToken;
@@ -61,11 +62,14 @@ const LoginInterceptor= () => {
             }
         })
         
+        
     }, [refreshToken, userinformation.user_email])
 
-   
+   useEffect(() => {
+        getuserData(userinformation);
+   }, [userinformation])
 
     
 }  
   
-export default LoginInterceptor;
+export default Logininformation2;
