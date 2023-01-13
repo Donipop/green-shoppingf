@@ -77,7 +77,7 @@ const Router = (props) => {
         <Route path='/Mypage/MyPurchaseInquiry' element={<MyPurchaseInquiry/>} />
         <Route path='/Sellercenter/reviewmanagement' element={<SellerReview/>} />
         <Route path='/header2' element={<Header2/>} />
-        <Route path='/ct/:ch' element={<TalkTalk />} />
+        <Route path='/ct/:uuid' element={<TalkTalk />} />
       </Routes>
     </BrowserRouter>
   );

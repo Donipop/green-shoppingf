@@ -9,14 +9,13 @@ import {
   MDBCardBody,
   MDBIcon,
   MDBTextArea,
-  MDBScrollbar,
 } from "mdb-react-ui-kit";
 import TalkMyMessage from "./TalkMyMessage";
 import "./TalkTalk.css";
 import useWebSocket from 'react-use-websocket';
 
 function TalkTalk(){
-    const {ch} = useParams();
+    const {uuid} = useParams();
     const params = new URLSearchParams(window.location.search);
     const chatBody = useRef();
     // console.log(params.get('frm'));
@@ -33,13 +32,13 @@ function TalkTalk(){
                 }
 
                 let msgData = {
-                    'msg' : e.target.value.trim(),
-                    'ch' : ch,
-                    'frm' : params.get('frm'),
-                    'id': params.get('id')
+                    'message' : e.target.value.trim(),
+                    'uuid' : uuid,
+                    'userId': params.get('id'),
+                    'marketOwner': params.get('frm'),
                 }
                 sendJsonMessage(msgData);
-                setChat([...chat, TalkMyMessage(msgData.msg.toString(),0)]);
+                setChat([...chat, TalkMyMessage(msgData.message.toString(),0)]);
                 e.target.value = '';
             }
         }
@@ -68,10 +67,10 @@ const {
 useEffect(() => {
     console.log(lastJsonMessage);
     if(lastJsonMessage === null) return;
-    if(lastJsonMessage.ch !== ch) return;
-    if(lastJsonMessage.id === null) return;
-    if(lastJsonMessage.id === params.get('id')) return;
-    setChat([...chat, TalkMyMessage(lastJsonMessage.msg.toString(),1)]);
+    if(lastJsonMessage.uuid !== uuid) return;
+    if(lastJsonMessage.userId === null) return;
+    if(lastJsonMessage.userId === params.get('id')) return;
+    setChat([...chat, TalkMyMessage(lastJsonMessage.message.toString(),1)]);
 }, [lastJsonMessage])
 
     return (
