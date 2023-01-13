@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { json, Navigate } from 'react-router-dom';
 import { getOverlayDirection } from 'react-bootstrap/esm/helpers';
+import Header2 from './Header2';
 
 
 
@@ -66,9 +67,7 @@ function Index(){
         <div className='container'>
             <div className='row justify-content-center mt-3'>
                     <img src={logo} className='col-3' style={{width: 82, height:42}}></img>
-                <div  className='col-9'>
-                    <Header/>
-                </div>  
+                    <Header2/>
             </div>
             <div>
                 <h2>닉네임 : {user_nick}</h2><br/>

@@ -32,6 +32,8 @@ import SellerReview from './component/SellerCenter/reviewmanagement/SellerReview
 import Header2  from './component/Header2';
 import TalkTalk from './component/TalkTalk/TalkTalk';
 
+import SearchView  from './component/SearchView/SearchView';
+import SellerCenterMain from './component/SellerCenter/SellerCenterMain/SellerCenterMain';
 // function App() {
 //   return (
 //     <div className="App">
@@ -78,6 +80,8 @@ const Router = (props) => {
         <Route path='/Sellercenter/reviewmanagement' element={<SellerReview/>} />
         <Route path='/header2' element={<Header2/>} />
         <Route path='/ct/:uuid' element={<TalkTalk />} />
+        <Route path='/searchview' element={<SearchView/>} />
+        <Route path='/SellercenterMainpage' element={<SellerCenterMain/>} />
       </Routes>
     </BrowserRouter>
   );

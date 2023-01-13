@@ -2,21 +2,16 @@ import './hearder2css.css'
 import React, { useRef,useState } from 'react'
 import styled from 'styled-components'
 const Header2 = () => {
-    const [name, setName] = useState('전체')
+    const name1 = new URLSearchParams(window.location.search).get('name')
+    const [name, setName] = useState(
+        name1 === null ? "전체" : name1
+    )
+    const [searchcont, setSearchcont] = useState('')
     const UlRef = useRef()
-    const ARef = useRef()
-    const ARef1 = useRef()
-    const ARef2 = useRef()
-    const ARef3 = useRef()
-    const ARef4 = useRef()
-    const ARef5 = useRef()
-    const ARef6 = useRef()
-    const ARef7 = useRef()
-    const ARef8 = useRef()
+   
 
 
-    const nonecheck = () => {
-        console.log(ARef.current.innerHTML)
+    const noneCheck = () => {
         if(UlRef.current.style.display === "none"){
             UlRef.current.style.display = "block"
         } else {
@@ -24,37 +19,46 @@ const Header2 = () => {
         }
     }
 
-    const test = (e) => {
+    const ValueSelect = (e) => {
         setName(e.target.innerHTML)
         UlRef.current.style.display = "none"
     }
 
+    const submit = (e) => {
+        e.preventDefault()
+            window.location.href = `/searchview?searchcont=${searchcont}&name=${name}`
+        
+    }
 
-   
 
     
 
 
     return (
-    <div>    
-        <div style={{width:"518px",border:"2px solid #4285f4", height:"37px", marginRight:"22px"}}>
+    <div style={{width:"520px"}}>    
+        <div style={{width:"518px",border:"2px solid #4285f4", height:"41px", marginRight:"22px",display:"flex",position:"absolute"}}>
+            <form style={{display:"flex",width:"100%"}} onSubmit={submit}>
                 <div style={{width:"134px",borderRight:"1px solid #ddd",height:"33px"}}>
-                    <a className="dd" ></a>
-                    <a className="ff" onClick={nonecheck}>{name}</a>
+                    <a href="#!"className="dd" onClick={noneCheck}></a>
+                    <a href="#!"className="ff" onClick={noneCheck}>{name}</a>
                         <Ul ref={UlRef} style={{display:"none"}} >
-                            <LI><A href='#!'>전체</A></LI>
-                            <LI><A ref={ARef} onClick={test}href="#255"rel='255'>남성패션</A></LI>
-                            <LI><A onClick={test}>여성패션</A></LI>
-                            <LI><A onClick={test}>남녀공용패션</A></LI>
-                            <LI><A onClick={test}>유아동패션</A></LI>
-                            <LI><A onClick={test}>출산/유아동</A></LI>
-                            <LI><A onClick={test}>뷰티</A></LI>
-                            <LI><A onClick={test}>식품</A></LI>
-                            <LI><A onClick={test}>주방용퓸</A></LI>
-                            <LI><A onClick={test}>생활용품</A></LI>
-                            </Ul>
+                            <LI><A onClick={ValueSelect}>전체</A></LI>
+                            <LI><A onClick={ValueSelect}href="#255"rel='255'>남성</A></LI>
+                            <LI><A onClick={ValueSelect}>여성</A></LI>
+                            <LI><A onClick={ValueSelect}>남녀공용패션</A></LI>
+                            <LI><A onClick={ValueSelect}>유아동패션</A></LI>
+                            <LI><A onClick={ValueSelect}>출산/유아동</A></LI>
+                            <LI><A onClick={ValueSelect}>뷰티</A></LI>
+                            <LI><A onClick={ValueSelect}>식품</A></LI>
+                            <LI><A onClick={ValueSelect}>주방용퓸</A></LI>
+                            <LI><A onClick={ValueSelect}>생활용품</A></LI>
+                        </Ul>
                 </div>
-        </div>
+                        <input type="text" onChange={(e) => setSearchcont(e.target.value)}style={{width:"310px",height:"33px",border:"none",outline:"none",marginLeft:"10px",fontSize:"14px"}}placeholder="찾고 싶은 상품을 검색해보세요!"></input>
+                        <AImage onClick={submit}></AImage>
+
+            </form>       
+        </div>        
     </div>
     )
 }
@@ -80,15 +84,24 @@ const Ul = styled.ul`
     max-height: 200px;
     padding: 10px 0 10px 10px;
     border: 1px solid #ddd;
-    left: -2px;
     box-shadow: 0 4px 5px rgb(0 0 0 / 30%);
     background-color: #fff;
     border: solid 1px #aaa;
     list-style: none;
-    left: -1px;
     position: absolute;
     z-index: 1;
     overflow-y: auto;
     margin-top: -1px;
     display: none;
     `
+const AImage = styled.a`
+    overflow: hidden;
+    position: absolute;
+    width: 50px;
+    height: 39px;
+    background-position: -112px -71px;
+    text-indent: -9em;
+    background-image: url(//static.coupangcdn.com/image/coupang/common/pc_header_img_sprite_180104.png);
+    background-repeat: no-repeat;
+    left: 468px;
+`

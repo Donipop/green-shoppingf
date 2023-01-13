@@ -1,19 +1,15 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Pagination from "./Pagination";
-import { useNavigate } from "react-router-dom";
-import { FaAngellist } from "react-icons/fa";
 
 
 const QnA = ({page}) => {
-    const[List, setList] = useState([]);
     const [limit, setLimit] = useState(10);
     const [paging, setPaging] = useState(1);
     const offset = (paging - 1) * limit;
-    const [idnumber, setIdnumber] = useState(new Map());
     const [test, setTest] = useState([]);
     const [reply, setReply] = useState([]);
-    const Navigate = useNavigate();
+   
 
     useEffect(() => {
         axios({
@@ -95,9 +91,9 @@ const QnA = ({page}) => {
                 <em className="replyicon">답변</em>
                 <div className="reply_wrap">
                 <strong className="Strong">[{reply[i].user_id}]</strong>
-                <a href="#!" role="button" onClick={AnswerUpdate} indexid={i} id={reply[i].id}  style={{paddingLeft:"2px",fontSize:"12px"}}>수정</a>
+                <a href="#!" role="button" onClick={AnswerUpdate} indexid={i} id={reply[i].id}  style={{paddingLeft:"2px",fontSize:"12px",textDecoration:"none"}}>수정</a>
                  <span style={{fontSize:"14px", marginLeft:"2px", marginRight:"2px"}}>|</span>
-                 <a href="#!" role="button" id={reply[i].id} onClick={answerDelete} style={{fontSize:"12px"}}>삭제</a>
+                 <a href="#!" role="button" id={reply[i].id} onClick={answerDelete} style={{fontSize:"12px",textDecoration:"none"}}>삭제</a>
                 <div className="replycont">
                     {reply[i].cont}
                 </div>
@@ -111,9 +107,18 @@ const QnA = ({page}) => {
             }
         }
     }
+    
        const QuestionDelete = (e) => {
-        {test.map ((item) => {
-            if(item.id === Number(e.target.id)){
+
+            //답변이 있는지 없는지 확인
+            let check = false;
+            for(let i=0; i<reply.length; i++){
+                if(Number(e.target.id) === reply[i].child_id){
+                    check = true;
+                }
+            }
+            //답변 있을 때 Delete시 "삭제된 문의입니다." 로 Update됨.
+            if(check === true){
                 axios({
                     method: 'post',
                     url: `/api/view/QnA/QuestionDelete/${page}/${e.target.id}`,
@@ -122,21 +127,37 @@ const QnA = ({page}) => {
                         product_num : page
                     }
                 })
-                .then(() => {if(window.confirm("정말 삭제하시겠습니까?")) {
-                    alert("삭제되었습니다.");
-                    window.location.reload();
-                  } else {
-                    alert("취소합니다.");
-                  }
+                .then((res) => {
+                    if(window.confirm("삭제하시겠습니까?")){
+                        alert("삭제되었습니다.")
+                        window.location.reload();
+                    } 
                 })
-                     }
-                 }
-             )}
+                //답변 없을 때 Delete시 바로 삭제 됨.
+            } else{
+                axios({
+                    method: 'post',
+                    url: `/api/view/QnA/QuestionHardDelete/${page}/${e.target.id}`,
+                    data: {
+                        id: e.target.id,
+                        product_num : page
+                    }
+                })
+                .then((res) => {
+                    if(window.confirm("삭제하시겠습니까?")){
+                        alert("삭제되었습니다.")
+                        window.location.reload();
+                    } 
+                })
+            }
+        
         }
 
+           
+       
         const answerDelete = (e) => {
-
             {reply.map ((item) => {
+               
                 if(item.id === Number(e.target.id)){
                     axios({
                         method: 'post',
@@ -146,12 +167,11 @@ const QnA = ({page}) => {
                             product_num : page
                         }
                     })
-                    .then(() => {if(window.confirm("정말 삭제하시겠습니까?")) {
+                    .then(() => {
+                        if(window.confirm("정말 삭제하시겠습니까?")) {
                         alert("삭제되었습니다.");
                         window.location.reload();
-                        } else {
-                        alert("취소합니다.");
-                        }
+                        } 
                     })
 
                 }
@@ -168,6 +188,15 @@ const QnA = ({page}) => {
             let child_id = reply[e.target.attributes.indexid.value].child_id
             window.open(`http://localhost:3000/QnA/answerUpdate/${page}/${e.target.id}/${child_id}/${cont}`,"_blank","width=650, height=730");
         }
+       
+        //마지막 3개 ***로 바꿈.
+        const SecretUser_id = (props) => {
+            let str = props;
+            let first = str.substr(0, str.length-3);
+            let result = first + "***";
+            return result;
+        }
+
 
             
 
@@ -189,7 +218,7 @@ const QnA = ({page}) => {
                         <option value="100">100개</option>
                     </select> 
                      <div className="answer">
-                    {test.slice(offset, offset+limit).map((item => (
+                    {test.slice(offset, offset+limit).map((item,index) => (
                         <div key={item.id}>
                         {item.qnatype === "0" && ( 
                         <div>
@@ -198,22 +227,26 @@ const QnA = ({page}) => {
                              <div className="answerList" style={{position:"relative"}}>
                                 <em className="answerState">질문</em>
                                     <div className="answerCont">
-                                        <strong className="author">{item.user_id}</strong>
-                                        <a href="#!" role="button" id={item.id} onClick={QuestionUpdate}  style={{paddingLeft:"2px",fontSize:"12px"}}>수정</a>
+                                        {item.cont !== '삭제된 문의입니다.' ? (
+                                            <div>
+                                        <strong className="author">{SecretUser_id(item.user_id)}</strong>
+                                        <a href="#!" role="button" id={item.id} onClick={QuestionUpdate}  style={{paddingLeft:"2px",fontSize:"12px",textDecoration:"none"}}>수정</a>
                                         <span style={{fontSize:"14px", marginLeft:"2px", marginRight:"2px"}}>|</span>
-                                        <a href="#!" role="button" id={item.id} onClick={QuestionDelete} style={{fontSize:"12px"}}>삭제</a>
+                                        <a href="#!" role="button" id={item.id} onClick={QuestionDelete} style={{fontSize:"12px",textDecoration:"none"}}>삭제</a> 
+                                        </div>
+                                        ) : null}
                                         <div className="Productname">
-                                        {item.product_name}
+                                             {item.product_name}
                                         </div>
                                         <div className="answercont">
-                                        {item.cont}
+                                             {item.cont}
                                         </div>
                                         <div className="regdate">
-                                        {item.regdate}
+                                             {item.regdate}
                                         </div>
                                         <div className="Do_answer">
-                                         <input type="hidden" id="id" value={item.id} />
-                                         <button type="sumbit"className="btn btn-success btn-sm" value={item.user_id} onChange={onchange} >답변하기</button>   
+                                            <input type="hidden" id="id" value={item.id} />
+                                            <button type="sumbit"className="btn btn-success btn-sm" value={item.user_id} onChange={onchange} >답변하기</button>   
                                         </div>
                                     </div>
                                </div>
@@ -221,9 +254,10 @@ const QnA = ({page}) => {
                             </div>
                             </form>  
                                 </div>                     
+                                
                         )}
                         </div>
-                    )))}  
+                    ))}  
                     <div>
 
                     <Pagination 

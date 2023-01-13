@@ -1,5 +1,5 @@
 import axios from "axios";
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import './Reviewcss.css';
 import {useParams} from "react-router-dom";
 
@@ -10,12 +10,19 @@ const QnApopup = () => {
     const [account, setAccount] = useState({
         cont: '',
         product_num: page,
-        user_id: "admin",
-        id: 14,
-        product_name: "아이패드"
+        user_id: "dlrjsxptmxm",
+        product_name: ""
     })
         
-    console.log(page)
+    useEffect(() => {
+        axios.get(`/api/view/QnA/write/getproductname/${page}`)
+        .then((res) => {        
+             setAccount({...account,
+                product_name: res.data
+             })  
+        })
+    }
+    ,[page])
     const ariacheck = () => {
         setaria(!aria);
         if(aria === true){
