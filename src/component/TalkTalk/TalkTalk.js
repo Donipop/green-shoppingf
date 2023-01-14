@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { json, useParams } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
 import {
   MDBContainer,
@@ -12,7 +12,8 @@ import {
 } from "mdb-react-ui-kit";
 import TalkMyMessage from "./TalkMyMessage";
 import "./TalkTalk.css";
-import useWebSocket from 'react-use-websocket';
+import * as StompJs from "@stomp/stompjs";
+import * as SockJS from "sockjs-client";
 
 function TalkTalk(){
     const {uuid} = useParams();
@@ -21,6 +22,9 @@ function TalkTalk(){
     // console.log(params.get('frm'));
     // console.log(uuid);
     const [chat, setChat] = useState([]);
+    const client = useRef({});
+    const [chatMessages, setChatMessages] = useState([]);
+    const [message, setMessage] = useState("");
 
     const onKeyUpInput = (e) => {
         //shift + enter는 가능하게
@@ -37,7 +41,11 @@ function TalkTalk(){
                     'userId': params.get('id'),
                     'marketOwner': params.get('frm'),
                 }
-                sendJsonMessage(msgData);
+                // sendJsonMessage(msgData);
+                client.current.publish({
+                    destination: "/api/topic",
+                    body: JSON.stringify(msgData)
+                })
                 setChat([...chat, TalkMyMessage(msgData.message.toString(),0)]);
                 e.target.value = '';
             }
@@ -49,29 +57,77 @@ function TalkTalk(){
     },[chat])
 
 
-    const socketUrl = 'ws://localhost:8080/api/ws/chat';
+    useEffect(() => {
+        connect();
+        return () => disconnect();
+    }, []);
 
-const {
-  sendMessage,
-  sendJsonMessage,
-  lastMessage,
-  lastJsonMessage,
-  readyState,
-  getWebSocket,
-} = useWebSocket(socketUrl, {
-  onOpen: () => console.log('opened'),
-  //Will attempt to reconnect on all close events, such as server shutting down
-  shouldReconnect: (closeEvent) => true,
-});
+    const disconnect = () => {
+        client.current.deactivate();
+    };
 
-useEffect(() => {
-    console.log(lastJsonMessage);
-    if(lastJsonMessage === null) return;
-    if(lastJsonMessage.uuid !== uuid) return;
-    if(lastJsonMessage.userId === null) return;
-    if(lastJsonMessage.userId === params.get('id')) return;
-    setChat([...chat, TalkMyMessage(lastJsonMessage.message.toString(),1)]);
-}, [lastJsonMessage])
+    const connect = () => {
+        client.current = new StompJs.Client({
+          brokerURL: "ws://localhost:8080/api/ws", // 웹소켓 서버로 직접 접속
+        //   webSocketFactory: () => new SockJS("/api/ws"), // proxy를 통한 접속
+          connectHeaders: {
+            "auth-token": "spring-chat-auth-token",
+          },
+          debug: function (str) {
+            console.log(str);
+          },
+          reconnectDelay: 5000,
+          heartbeatIncoming: 4000,
+          heartbeatOutgoing: 4000,
+          onConnect: () => {
+            subscribe();
+          },
+          onStompError: (frame) => {
+            console.error(frame);
+          },
+        });
+    
+        client.current.activate();
+      };
+
+
+    const subscribe = () => {
+        let msgData = {
+            'message' : '안녕',
+            'uuid' : uuid,
+            'userId': params.get('id'),
+            'marketOwner': params.get('frm'),
+        }
+
+        client.current.subscribe(`/topic/user`, ({ body }) => {
+          setChatMessages((_chatMessages) => [..._chatMessages, msgData]);
+        });
+      };
+    
+    const publish = (message) => {
+    if (!client.current.connected) {
+        return;
+    }
+
+    client.current.publish({
+        destination: "/queue/chat",
+        body: 'hello'
+        // body: JSON.stringify({ roomSeq: 1, message }),
+    });
+
+    setMessage("");
+    };
+
+
+
+// useEffect(() => {
+//     console.log(lastJsonMessage);
+//     if(lastJsonMessage === null) return;
+//     if(lastJsonMessage.uuid !== uuid) return;
+//     if(lastJsonMessage.userId === null) return;
+//     if(lastJsonMessage.userId === params.get('id')) return;
+//     setChat([...chat, TalkMyMessage(lastJsonMessage.message.toString(),1)]);
+// }, [lastJsonMessage])
 
     return (
         <MDBContainer className="py-5">
