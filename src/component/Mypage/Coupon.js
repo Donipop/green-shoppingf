@@ -23,7 +23,7 @@ import LoginInterceptor from "../LoginInterceptor";
 
 
     return(
-        <div >
+        <div style={{marginTop:"40px"}}>
             <div style={{display:"flex"}}>
     <h2 id= "TEST" style={{marginBottom:"25px",fontSize:"27px"}}>쿠폰 
     <em style={{marginLeft:"8px",color:"#14aaff",fontStyle:"normal"}}>{couponlist.length}장</em></h2>

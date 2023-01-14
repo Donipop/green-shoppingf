@@ -68,16 +68,16 @@ function View(){
                             }
                     })}
                 </UL>
-                {/* <div className="pt-5"></div>
+                <div className="pt-5"></div>
                 <div dangerouslySetInnerHTML={{__html: productinfo.cont }}>
                 </div>
 
                 <div>
                     <Review />
                 </div>
-                { <div>
+                 <div>
                     <QnAList page={page} />
-                </div> } */}
+                </div> 
             </div>
         
     )

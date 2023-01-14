@@ -43,7 +43,6 @@ const MypageModal = (props) => {
     }, [invoicenumberr])
 
     useEffect(() => {
-        console.log(postlist)
     }, [postlist])
 
 

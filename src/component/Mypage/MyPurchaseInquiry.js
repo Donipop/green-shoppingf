@@ -30,6 +30,18 @@ import MypageModal from './Mypagemodal';
                 setPurchaseList(res.data)
             })
             }, [user_id])
+
+        const nullcheck = () => {
+            if(purchaselist.length === 0){
+                return (
+                    <div style={{textAlign:"center",marginTop:"20px",marginBottom:"20px",width:"1270px"}}>
+                        <h2 style={{fontWeight:400}}>구매내역이 업읍니다</h2>
+                    </div>
+                ) 
+            }
+        }
+
+
     return(
     <div >
         <div>
@@ -53,8 +65,10 @@ import MypageModal from './Mypagemodal';
             </div>
         </div>
             <div>      
-                {purchaselist.map((item,index) => (     
+                {purchaselist.map((item,index) => (
+                    
                 <div key ={item.id} style={{display:"flex",borderBottom:"1px solid #f5f5f5",width:"1270px",lineHeight:"100px",fontWeight:"700"}}>
+                    
                     <div style={{padding:"10px"}}><img src={iu} width='80' height='80'></img></div>
                      <div style={{width:"355px"}}>
                              아이유가 입을뻔한 후드티 
@@ -99,9 +113,10 @@ import MypageModal from './Mypagemodal';
                         ):(item.state === 6 ? (
                         "구매취소"
                         ):(null)))))))}
+                </div>
 
-                </div>    
                 ))}    
+            {nullcheck()}
             </div>   
             <MypageModal  purchaselist={purchaselist} num={checked.id}/>
     </div>

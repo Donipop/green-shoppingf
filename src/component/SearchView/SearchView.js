@@ -1,14 +1,15 @@
 import SearchViewData from "./SearchViewData";
 import Header2 from "../Header2";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
+import styled from "styled-components";
 
 
 const SearchView  = () => {
     
     return(
-        <div >
-        <Header2/>
+        <div>
+            <Div>
+                <Header2/>
+            </Div>
        <SearchViewData/>
        </div>
 
@@ -18,3 +19,9 @@ const SearchView  = () => {
 }
 
 export default SearchView;
+
+const Div = styled.div`
+width:1477px;
+height:148px;
+text-align:center;
+`

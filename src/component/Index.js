@@ -3,9 +3,8 @@ import logo from '../logo.svg'
 import { useCookies, Cookies } from 'react-cookie';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { json, Navigate } from 'react-router-dom';
-import { getOverlayDirection } from 'react-bootstrap/esm/helpers';
 import Header2 from './Header2';
+import styled from 'styled-components';
 
 
 
@@ -65,8 +64,14 @@ function Index(){
 
     return(
         <div className='container'>
-            <div className='row justify-content-center mt-3'>
-                    <img src={logo} className='col-3' style={{width: 82, height:42}}></img>
+            <div style={{width:"1477px",height:"148px",textAlign:"center" }}>
+            <img src={logo} className='col-3' style={{width: 82, height:42}}></img>
+
+                <Div>
+                <a href="/signup" style={{float:"right",textDecoration:"none",color:"black",fontSize:"13px",paddingRight:"400px"}}>회원가입</a>
+        <em style={{float:"right",fontStyle:"normal",paddingRight:"5px",paddingLeft:"5px",color:"#ddd"}}>|</em>
+        <a href="/login" style={{float:"right",textDecoration:"none",color:"black",fontSize:"13px"}}>로그인</a>
+                </Div>
                     <Header2/>
             </div>
             <div>
@@ -90,3 +95,14 @@ function Index(){
     );
 
 }
+
+const Div = styled.div`
+position: absolute;
+    height: 32px;
+    top: 0;
+    right: 0;
+    left: 0;
+    background: #f0f0f0;
+    z-index: 3;
+
+`

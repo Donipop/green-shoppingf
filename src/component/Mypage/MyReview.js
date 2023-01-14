@@ -29,7 +29,7 @@ import styled from 'styled-components';
         }, [user_id])
 
     return(
-    <div>
+    <div style={{marginTop:"40px"}}>
         <div>
       <h2>구매후기</h2>
         </div>
