@@ -64,16 +64,7 @@ function Index(){
 
     return(
         <div className='container'>
-            <div style={{width:"1477px",height:"148px",textAlign:"center" }}>
-            <img src={logo} className='col-3' style={{width: 82, height:42}}></img>
-
-                <Div>
-                <a href="/signup" style={{float:"right",textDecoration:"none",color:"black",fontSize:"13px",paddingRight:"400px"}}>회원가입</a>
-        <em style={{float:"right",fontStyle:"normal",paddingRight:"5px",paddingLeft:"5px",color:"#ddd"}}>|</em>
-        <a href="/login" style={{float:"right",textDecoration:"none",color:"black",fontSize:"13px"}}>로그인</a>
-                </Div>
                     <Header2/>
-            </div>
             <div>
                 <h2>닉네임 : {user_nick}</h2><br/>
                 <h2>등급 : {user_grade}</h2><br/>
@@ -104,5 +95,5 @@ position: absolute;
     left: 0;
     background: #f0f0f0;
     z-index: 3;
-
 `
+

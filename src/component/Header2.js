@@ -51,38 +51,88 @@ const Header2 = () => {
 
 
     return (
-    <div style={{width:"800px",position:"relative"}}>    
-            <img src={logo} className='col-3' style={{width: 82, height:42}}></img>
-        <div style={{width:"518px",border:"2px solid #4285f4", height:"41px", marginRight:"22px",display:"flex",position:"absolute"}}>
-            <form style={{display:"flex",width:"100%"}} onSubmit={submit}>
-                <div style={{width:"134px",borderRight:"1px solid #ddd",height:"33px"}}>
-                    <a href="#!"className="dd" onClick={noneCheck}></a>
-                    <a href="#!"className="ff" onClick={noneCheck} style={{textAlign:"left  "}}>{name}</a>
-                        <Ul ref={UlRef} style={{display:"none"}} >
-                            <LI><A onClick={ValueSelect}>전체</A></LI>
-                            <LI><A onClick={ValueSelect}href="#255"rel='255'>남성</A></LI>
-                            <LI><A onClick={ValueSelect}>여성</A></LI>
-                            <LI><A onClick={ValueSelect}>남녀공용패션</A></LI>
-                            <LI><A onClick={ValueSelect}>유아동패션</A></LI>
-                            <LI><A onClick={ValueSelect}>출산/유아동</A></LI>
-                            <LI><A onClick={ValueSelect}>뷰티</A></LI>
-                            <LI><A onClick={ValueSelect}>식품</A></LI>
-                            <LI><A onClick={ValueSelect}>주방용퓸</A></LI>
-                            <LI><A onClick={ValueSelect}>생활용품</A></LI>
-                        </Ul>
-                </div>
-                        <input type="text" onChange={(e) => setSearchcont(e.target.value)}style={{width:"310px",height:"33px",border:"none",outline:"none",marginLeft:"10px",fontSize:"14px"}}placeholder="찾고 싶은 상품을 검색해보세요!"></input>
-                        <AImage onClick={submit}></AImage>
-            </form>       
-        </div>
-        <div style={{float:"right"}}>
-        <AA href="/mypage">
-        <Span></Span>
-        <SPan>장바구니</SPan>
-        <Em>{count}</Em>
-        </AA>
-        </div>
-    </div>
+    <Div>   
+        <Header>        
+            <Section>
+                <DDiv>
+                    <H1>
+                    <a style={{height:"41px"}}>
+                    <img src="//image7.coupangcdn.com/image/coupang/common/logo_coupang_w350.png" width="174" height="41" alt="쿠팡로고" style={{verticalAlign:"top"}}></img>
+                    </a>
+                    </H1>
+                <DDDiv>
+                <form onSubmit={submit}>
+                    <fieldset>
+                        <legend style={{display:"none"}}>상품검색</legend>
+                        <DIv >
+                            <DDIv >
+                            <a href="#!"className="dd" onClick={noneCheck}></a>
+                                <a href="#!"className="ff" onClick={noneCheck} style={{textAlign:"left"}}>{name}</a>
+                            </DDIv >
+                
+                                <Ul ref={UlRef} style={{display:"none"}} >
+                                    <LI><A onClick={ValueSelect}>전체</A></LI>
+                                    <LI><A onClick={ValueSelect}href="#255"rel='255'>남성</A></LI>
+                                    <LI><A onClick={ValueSelect}>여성</A></LI>
+                                    <LI><A onClick={ValueSelect}>남녀공용패션</A></LI>
+                                    <LI><A onClick={ValueSelect}>유아동패션</A></LI>
+                                    <LI><A onClick={ValueSelect}>출산/유아동</A></LI>
+                                    <LI><A onClick={ValueSelect}>뷰티</A></LI>
+                                    <LI><A onClick={ValueSelect}>식품</A></LI>
+                                    <LI><A onClick={ValueSelect}>주방용퓸</A></LI>
+                                    <LI><A onClick={ValueSelect}>생활용품</A></LI>
+                                </Ul>
+                        </DIv>
+                            <Input type="text" onChange={(e) => setSearchcont(e.target.value)} placeholder="찾고 싶은 상품을 검색해보세요!"></Input>
+                            <AImage onClick={submit}></AImage>
+                    </fieldset>
+                </form>       
+                </DDDiv>
+                        <ul style={{marginTop:"3px",fontSize:"12px",listStyle:"none",}}>
+                            <LLI>
+                                <a href='/mypage' style={{textDecoration:"none"}}>
+                                    <MypageSpan>
+
+                                    </MypageSpan>
+                                    <span style={{width:"50px", paddingTop:"7px", textAlign:"center", color:"#333"}}>
+                                        마이짭팡
+                                    </span>
+
+                                </a>
+
+                            </LLI>
+                            <LLI>
+                                 <AA href="/mypage">
+                                    <Span></Span>
+                                    <span style={{width:"50px", paddingTop:"7px", textAlign:"center", color:"#333"}} >장바구니</span>
+                                    <Em>{count}</Em>
+                                </AA>
+                            </LLI>
+            
+                        </ul>
+                </DDiv>
+            </Section>
+        </Header>
+                        <Article>
+                            <section style={{width:"1020px",margin:"0 auto",fontSize:"11px"}}>
+                                <Menu>
+                                    <LII>
+                                        <a>로그인</a>
+                                    </LII>
+
+                                    <LII>
+                                        <a>회원가입</a>
+                                    </LII>
+
+                                    <LII>
+                                        <a>고객센터</a>
+                                    </LII>
+
+                                </Menu>
+                            </section>
+
+                        </Article>
+    </Div>    
     )
 }
 
@@ -105,7 +155,7 @@ const A = styled.a`
     text-align: left;
     `
 const Ul = styled.ul`
-    top: 35px;
+    top: 38px;
     width: 138px;
     max-height: 200px;
     padding: 10px 0 10px 10px;
@@ -120,6 +170,7 @@ const Ul = styled.ul`
     margin-top: -1px;
     display: none;
     text-align: left;
+    left: -2px;
     `
 const AImage = styled.a`
     overflow: hidden;
@@ -136,14 +187,13 @@ const AImage = styled.a`
 const AA= styled.a`
 width: 50px;
     height: 60px;
-    margin-top: -4px;
+    margin-top: -10px;
     display: inline-block;
     position: relative;
     text-decoration: none;
     
 
 `
-
 const Span = styled.span`
 width: 40px;
     height: 41px;
@@ -178,3 +228,129 @@ position: absolute;
     font: bold 10px Tahoma;
 `
 
+const Div = styled.div`
+
+`
+
+const Header = styled.header`
+width:1020px;
+position:relative;
+height:147px;
+margin:0 auto;
+padding: 32px;
+z-index: 3;
+`
+const Section = styled.section`
+width:880px;
+position:relative;
+height:91px;
+margin: 25px 0 0 140px;
+`
+
+const DDiv = styled.div`
+position: relative;
+z-index: 3;
+height: 56px;
+`
+
+const H1 = styled.h1`
+width: 174px;
+height: 41px;
+margin : 2px 20px 0 0;
+float: left;
+`
+
+const DDDiv = styled.div`
+width: 518px;
+position: relative;
+    z-index: 3;
+    float: left;
+    margin-left: 0;
+    height: 41px;
+    margin-right: 22px;
+    border: 2px solid #4285f4;
+    background-position: 0 -207px
+`
+
+const DIv = styled.div`
+position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+`
+
+const DDIv = styled.div`
+z-index: 20;
+position: absolute;
+top: 0;
+left: 0;
+background-color: #fff;
+border: 0;
+font-size: 12px;
+font-weight: normal;
+height: 37px;
+width: 134px;
+border-right: 1px solid #ddd;
+`
+
+const Input = styled.input`
+    width: 310px;
+    line-height: normal;
+    padding-right: 23px;
+    left: 135px;
+    color: #333;
+    position: absolute;
+    top: 0;
+    height: 37px;
+    margin: 0;
+    border: 0;
+    background: #fff;
+    text-indent: 10px;
+    font-size: 14px;
+    outline: 0;
+`
+
+const Article = styled.article`
+    position: absolute;
+    height: 32px;
+    top: 0;
+    right: 0;
+    left: 0;
+    background: #f0f0f0;
+    z-index: 3;
+`
+
+const Menu = styled.menu`
+    float: right;
+    position: relative;
+    z-index: 10;
+    list-style: none;
+`
+
+const LII = styled.li`
+    height: 26px;
+    position: relative;
+    float: left;
+    padding-right: 12px;
+    list-style: none;
+`
+
+const LLI = styled.li`
+    position: relative;
+    margin-right: 20px;
+    width: 50px;
+    height: 52px;
+    float: left;
+    list-style: none;
+`
+
+const MypageSpan = styled.span`
+    width: 29px;
+    height: 31px;
+    display: block;
+    margin: 0 auto;
+    background-position: -112px -42px;
+    background-image: url(//static.coupangcdn.com/image/coupang/common/pc_header_img_sprite_180104.png);
+    background-repeat: no-repeat;
+`
