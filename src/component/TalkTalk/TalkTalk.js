@@ -21,7 +21,6 @@ function TalkTalk(){
     // console.log(params.get('frm'));
     // console.log(uuid);
     const [chat, setChat] = useState([]);
-    const client = useRef({});
 
     const onKeyUpInput = (e) => {
         //shift + enter는 가능하게
@@ -31,16 +30,17 @@ function TalkTalk(){
                     e.target.value = '';
                     return;
                 }
-
                 let msgData = {
                     'message' : e.target.value.trim(),
                     'uuid' : uuid,
                     'userId': params.get('id'),
                     'marketOwner': params.get('frm'),
                 }
-                client.current.publish({
+                client.publish({
                     destination: "/api/queue",
                     body: JSON.stringify(msgData)
+                    // binaryBody: binaryData,
+                    // headers: { 'content-type': 'application/octet-stream' },
                 })
                 setChat([...chat, TalkMyMessage(msgData.message.toString(),0)]);
                 e.target.value = '';
@@ -53,76 +53,53 @@ function TalkTalk(){
     },[chat])
 
 
-    useEffect(() => {
-        connect();
-        return () => disconnect();
-    }, []);
+    // useEffect(() => {
+    //     connect();
+    //     return () => disconnect();
+    // }, []);
+
+    const client = new StompJs.Client({
+        brokerURL: "ws://localhost:8080/api/ws", // 웹소켓 서버로 직접 접속
+        connectHeaders: {
+            "userId" : 'admin',
+            "marketOwner": params.get("id"),
+            "uuid": uuid
+        },
+        debug: function (str) {
+            // console.log(str);
+        },
+        reconnectDelay: 5000,
+        heartbeatIncoming: 4000,
+        heartbeatOutgoing: 4000,
+    });
+    
+    client.onConnect = function (frame) {
+        subscription();
+    };
+    
+    client.onStompError = function (frame) {
+      console.log('Broker reported error: ' + frame.headers['message']);
+      console.log('Additional details: ' + frame.body);
+    };
+
+    client.activate();
 
     const disconnect = () => {
-        client.current.deactivate();
+        client.deactivate();
     };
 
-    const connect = () => {
-        client.current = new StompJs.Client({
-            brokerURL: "ws://localhost:8080/api/ws", // 웹소켓 서버로 직접 접속
-            connectHeaders: {
-                "userId" : 'admin',
-                "marketOwner": params.get("id"),
-                "uuid": uuid
-            },
-            debug: function (str) {
-                // console.log(str);
-            },
-            reconnectDelay: 5000,
-            heartbeatIncoming: 4000,
-            heartbeatOutgoing: 4000,
-            onConnect: () => {
-                subscribe();
-            },
-            onStompError: (frame) => {
-                console.error(frame);
-            },
-        });
-        client.current.activate();
-    };
-
-    const subscribe = () => {
-        client.current.subscribe(`/queue/user/${uuid}`, ({ body }) => {
-            if(JSON.parse(body).userId !== params.get("id")){
-                addChat(JSON.parse(body).message.toString());
-            }
-        });
-    };
-
-function addChat(m,t){
-    console.log(m);
-    console.log(chat)
-    setChat(['123', ...chat]);
-}
-    
-    const publish = (message) => {
-    if (!client.current.connected) {
-        return;
+    let callback = function (message){
+        if(message.body){
+            let data = JSON.parse(message.body);
+            console.log(data);
+            setChat([...chat, TalkMyMessage(data.message.toString(),1)]);
+        }else{
+            console.log('message is null');
+        }
     }
 
-    client.current.publish({
-        destination: "/queue/chat",
-        body: 'hello'
-        // body: JSON.stringify({ roomSeq: 1, message }),
-    });
+    const subscription = client.subscribe(`/queue/user/${uuid}`, callback);
 
-    };
-
-
-
-// useEffect(() => {
-//     console.log(lastJsonMessage);
-//     if(lastJsonMessage === null) return;
-//     if(lastJsonMessage.uuid !== uuid) return;
-//     if(lastJsonMessage.userId === null) return;
-//     if(lastJsonMessage.userId === params.get('id')) return;
-//     setChat([...chat, TalkMyMessage(lastJsonMessage.message.toString(),1)]);
-// }, [lastJsonMessage])
 
     return (
         <MDBContainer className="py-5">
