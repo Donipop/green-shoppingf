@@ -13,7 +13,6 @@ import {
 import TalkMyMessage from "./TalkMyMessage";
 import "./TalkTalk.css";
 import * as StompJs from "@stomp/stompjs";
-import * as SockJS from "sockjs-client";
 
 function TalkTalk(){
     const {uuid} = useParams();
@@ -23,8 +22,6 @@ function TalkTalk(){
     // console.log(uuid);
     const [chat, setChat] = useState([]);
     const client = useRef({});
-    const [chatMessages, setChatMessages] = useState([]);
-    const [message, setMessage] = useState("");
 
     const onKeyUpInput = (e) => {
         //shift + enter는 가능하게
@@ -41,9 +38,8 @@ function TalkTalk(){
                     'userId': params.get('id'),
                     'marketOwner': params.get('frm'),
                 }
-                // sendJsonMessage(msgData);
                 client.current.publish({
-                    destination: "/api/topic",
+                    destination: "/api/queue",
                     body: JSON.stringify(msgData)
                 })
                 setChat([...chat, TalkMyMessage(msgData.message.toString(),0)]);
@@ -68,41 +64,41 @@ function TalkTalk(){
 
     const connect = () => {
         client.current = new StompJs.Client({
-          brokerURL: "ws://localhost:8080/api/ws", // 웹소켓 서버로 직접 접속
-        //   webSocketFactory: () => new SockJS("/api/ws"), // proxy를 통한 접속
-          connectHeaders: {
-            "auth-token": "spring-chat-auth-token",
-          },
-          debug: function (str) {
-            console.log(str);
-          },
-          reconnectDelay: 5000,
-          heartbeatIncoming: 4000,
-          heartbeatOutgoing: 4000,
-          onConnect: () => {
-            subscribe();
-          },
-          onStompError: (frame) => {
-            console.error(frame);
-          },
+            brokerURL: "ws://localhost:8080/api/ws", // 웹소켓 서버로 직접 접속
+            connectHeaders: {
+                "userId" : 'admin',
+                "marketOwner": params.get("id"),
+                "uuid": uuid
+            },
+            debug: function (str) {
+                // console.log(str);
+            },
+            reconnectDelay: 5000,
+            heartbeatIncoming: 4000,
+            heartbeatOutgoing: 4000,
+            onConnect: () => {
+                subscribe();
+            },
+            onStompError: (frame) => {
+                console.error(frame);
+            },
         });
-    
         client.current.activate();
-      };
-
+    };
 
     const subscribe = () => {
-        let msgData = {
-            'message' : '안녕',
-            'uuid' : uuid,
-            'userId': params.get('id'),
-            'marketOwner': params.get('frm'),
-        }
-
-        client.current.subscribe(`/topic/user`, ({ body }) => {
-          setChatMessages((_chatMessages) => [..._chatMessages, msgData]);
+        client.current.subscribe(`/queue/user/${uuid}`, ({ body }) => {
+            if(JSON.parse(body).userId !== params.get("id")){
+                addChat(JSON.parse(body).message.toString());
+            }
         });
-      };
+    };
+
+function addChat(m,t){
+    console.log(m);
+    console.log(chat)
+    setChat(['123', ...chat]);
+}
     
     const publish = (message) => {
     if (!client.current.connected) {
@@ -115,7 +111,6 @@ function TalkTalk(){
         // body: JSON.stringify({ roomSeq: 1, message }),
     });
 
-    setMessage("");
     };
 
 
