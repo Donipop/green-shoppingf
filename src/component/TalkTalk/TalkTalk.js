@@ -18,9 +18,52 @@ function TalkTalk(){
     const {uuid} = useParams();
     const params = new URLSearchParams(window.location.search);
     const chatBody = useRef();
-    // console.log(params.get('frm'));
-    // console.log(uuid);
     const [chat, setChat] = useState([]);
+    const client = useRef({});
+
+    useEffect(() => {
+        connect();
+        return () => disconnect();
+    }, []);
+
+    const connect = () => {
+        client.current = new StompJs.Client({
+            brokerURL: "ws://localhost:8080/api/ws", // 웹소켓 서버로 직접 접속
+            connectHeaders: {
+                "userId" : 'admin',
+                "marketOwner": params.get("id"),
+                "uuid": uuid
+            },
+            onConnect: () =>{
+                subscription();
+            },
+            debug: function (str) {
+                // console.log(str);
+            },
+            reconnectDelay: 5000,
+            heartbeatIncoming: 4000,
+            heartbeatOutgoing: 4000,
+        });
+        client.current.activate();
+    }
+    
+    client.current.onStompError = function (frame) {
+    //   console.log('Broker reported error: ' + frame.headers['message']);
+    //   console.log('Additional details: ' + frame.body);
+    };
+
+    const disconnect = () => {
+        client.current.deactivate();
+    };
+    
+    const subscription = () => {
+            client.current.subscribe(`/queue/user/${uuid}`, (msg) => {
+                let data = JSON.parse(msg.body);
+                if(data.userId !== params.get('id')){
+                    setChat((chat) => [...chat, TalkMyMessage(data.message.toString(),1)]);
+                }
+            });
+    }
 
     const onKeyUpInput = (e) => {
         //shift + enter는 가능하게
@@ -36,7 +79,7 @@ function TalkTalk(){
                     'userId': params.get('id'),
                     'marketOwner': params.get('frm'),
                 }
-                client.publish({
+                client.current.publish({
                     destination: "/api/queue",
                     body: JSON.stringify(msgData)
                     // binaryBody: binaryData,
@@ -52,54 +95,9 @@ function TalkTalk(){
         chatBody.current.scrollTop = chatBody.current.scrollHeight;
     },[chat])
 
-
-    // useEffect(() => {
-    //     connect();
-    //     return () => disconnect();
-    // }, []);
-
-    const client = new StompJs.Client({
-        brokerURL: "ws://localhost:8080/api/ws", // 웹소켓 서버로 직접 접속
-        connectHeaders: {
-            "userId" : 'admin',
-            "marketOwner": params.get("id"),
-            "uuid": uuid
-        },
-        debug: function (str) {
-            // console.log(str);
-        },
-        reconnectDelay: 5000,
-        heartbeatIncoming: 4000,
-        heartbeatOutgoing: 4000,
-    });
-    
-    client.onConnect = function (frame) {
-        subscription();
-    };
-    
-    client.onStompError = function (frame) {
-      console.log('Broker reported error: ' + frame.headers['message']);
-      console.log('Additional details: ' + frame.body);
-    };
-
-    client.activate();
-
-    const disconnect = () => {
-        client.deactivate();
-    };
-
-    let callback = function (message){
-        if(message.body){
-            let data = JSON.parse(message.body);
-            console.log(data);
-            setChat([...chat, TalkMyMessage(data.message.toString(),1)]);
-        }else{
-            console.log('message is null');
-        }
-    }
-
-    const subscription = client.subscribe(`/queue/user/${uuid}`, callback);
-
+    useEffect(() => {
+        console.log(chat);
+    }, [chat])
 
     return (
         <MDBContainer className="py-5">
