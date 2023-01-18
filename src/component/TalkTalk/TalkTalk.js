@@ -20,7 +20,7 @@ function TalkTalk(){
     const chatBody = useRef();
     const [chat, setChat] = useState([]);
     const client = useRef({});
-
+    
     useEffect(() => {
         connect();
         return () => disconnect();
@@ -57,12 +57,34 @@ function TalkTalk(){
     };
     
     const subscription = () => {
-            client.current.subscribe(`/queue/user/${uuid}`, (msg) => {
-                let data = JSON.parse(msg.body);
-                if(data.userId !== params.get('id')){
-                    setChat((chat) => [...chat, TalkMyMessage(data.message.toString(),1)]);
-                }
-            });
+        //채팅방 내역 구독
+        client.current.subscribe(`/queue/user/${uuid}`, (msg) => {
+            let data = JSON.parse(msg.body);
+            // console.log(data);
+            // console.log(data.length);
+            if(data.length >= 0){return;}
+            if(data.userId !== params.get('id')){
+                setChat((chat) => [...chat, TalkMyMessage(data.message.toString(),1)]);
+            }
+        });
+        //다이렉트 메시지 구독
+        client.current.subscribe('/user/queue/message', (msg) => {
+            let data = JSON.parse(msg.body);
+            // setChat([]);
+            //     data.map((item, index) => {
+            //         // console.log(item);
+            //         setChat((chat) => [...chat, TalkMyMessage(item.message.toString(),item.sender === params.get('id') ? 0 : 1)]);
+            //     })
+        })
+
+        let msgData = {
+            'type': 'connect',
+            'uuid' : uuid,
+        }
+        client.current.publish({
+            destination: "/api/user",
+            body: JSON.stringify(msgData)
+        })
     }
 
     const onKeyUpInput = (e) => {
@@ -94,10 +116,6 @@ function TalkTalk(){
     useEffect(() =>{
         chatBody.current.scrollTop = chatBody.current.scrollHeight;
     },[chat])
-
-    useEffect(() => {
-        console.log(chat);
-    }, [chat])
 
     return (
         <MDBContainer className="py-5">
