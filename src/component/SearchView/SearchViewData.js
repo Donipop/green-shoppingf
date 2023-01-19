@@ -33,6 +33,7 @@ const SearchViewData = () => {
         )
     }
 }
+    console.log(searchviewList)
 
 
     return (
@@ -44,7 +45,7 @@ const SearchViewData = () => {
                     <A href={`view/${item.id}`}>
                         <Dl>
                             <Dt>
-                                {item.FILE_NAME === undefined ? <img src={iu} width='212' height='212'></img> 
+                                {item.FILE_NAME === undefined ? <img src={item.mainimage} width='212' height='212'></img> 
                                 : <img src={`http://donipop.com:3333/img/${item.FILE_NAME}`} width='212' height='212'>
                                 </img>}
                             </Dt>
@@ -81,7 +82,7 @@ const SearchViewData = () => {
                                              />
                                              )
                             })}
-                                    </Stars>
+                                            </Stars>
                                             </StarSpan>
                                             <span style={{color:"#888"}}>({item.starcount})</span>
                                         </div>

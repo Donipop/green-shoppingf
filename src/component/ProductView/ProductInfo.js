@@ -147,6 +147,7 @@ function ProductInfo({product}){
             }
 
             //이미지 등록
+            if(product.detailImg !== null){
             for(let i=0; i<product.detailImg.length+1; i++){
                 let img = {
                     id: '',
@@ -165,6 +166,7 @@ function ProductInfo({product}){
                     return [...img2, img]
                 })
             }
+        }
         }
     }, [product])
 
@@ -210,10 +212,12 @@ function ProductInfo({product}){
         console.log([data]);
         naviGate('/Payment', {state:[data]});
     }
+
     return(
         <>
             <div className="col-1">
                 <ul className="list-group">
+                    <div>
                     {imgList.map((item) => {
                         return(
                             <Li className="mb-1" key={item.id}>
@@ -221,14 +225,23 @@ function ProductInfo({product}){
                             </Li>
                         )
                     })}
+                    </div>
+                    
                 </ul>
             </div>
             <div className="col-6">
+            {product.mainImg !== null ?( 
                 <div className="card">
                     <a href={mainImg} target="_blank" rel="noopener noreferrer">
-                        <IMG src={mainImg} className="card-img" alt="..."></IMG>
+                        <img src={mainImg} className="card-img-top" alt="..."></img>
                     </a>
                 </div>
+            ) : ( <div className="card">
+            <a href={product.mainimage} target="_blank" rel="noopener noreferrer">
+            <img src={product.mainimage} className="card-img-top" alt="..."></img>
+            </a>
+        </div>
+    )}
                 
             </div>
 

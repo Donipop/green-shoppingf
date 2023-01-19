@@ -9,7 +9,7 @@ import QnAList from "./QnAList";
 
 function View(){
     const {page} = useParams();
-    const [productinfo, setProductinfo] = useState([]);
+    const [productinfo, setProductinfo] = useState({cont: '<p>'});
     const [divNaviState, setDivNaviState] = useState(['상품정보', '상품후기', '상품문의', '배송/교환/반품','#info','#review','#qna','#delivery']);
     const [divNaviStateClass, setDivNaviStateClass] = useState(['', '', '', '']);
     useEffect(() => {
@@ -17,7 +17,8 @@ function View(){
         axios.get(`/api/view/product?product_num=${page}`)
         .then((res) => {
             setProductinfo(res.data);
-        })
+            }
+        )
         .catch((err) => {
             console.log(err);
             return (
@@ -44,6 +45,21 @@ function View(){
         setDivNaviStateClass(arr);
     }
 
+    const aaa = () => {
+     //productinfo.cont에 <p>태그가 들어가있으면 그대로 출력하고, 아니면 img태그로 바꿔서 출력
+     //productinfo.cont가 undefined일때는 에러가 나기때문에, undefined일때는 빈문자열을 리턴
+        if(productinfo.cont === undefined){
+            return '';
+        }
+
+        if(productinfo.cont.includes('<p>')){
+            return productinfo.cont;
+        }else{
+            return <img src={productinfo.cont} alt="상품이미지" />
+        }
+    }
+    console.log(productinfo)
+
     return(
         
             <div className="container">
@@ -68,16 +84,18 @@ function View(){
                             }
                     })}
                 </UL>
-                <div className="pt-5"></div>
-                <div dangerouslySetInnerHTML={{__html: productinfo.cont }}>
+                <div className="pt-5">
+                {aaa()}
                 </div>
+            
+                
 
                 <div>
                     <Review />
                 </div>
-                { <div>
+                 <div>
                     <QnAList page={page} />
-                </div> }
+                </div>
             </div>
         
     )

@@ -1,8 +1,32 @@
+import axios from "axios"
+import { useEffect,useState } from "react"
 import styled from "styled-components"
 import "./SellerCenterMaincss.css"
 
 
 const OrderDeliveryPage = () => {
+    const [list, setList] = useState({
+        data: [0],
+    });
+    useEffect(() => {
+         axios({
+            method: 'get',
+            url: '/api/sellercenter/deliverystate',
+            params: {
+                id: 'admin',
+            },
+            })
+            .then(res => setList({...list,
+                data: res.data
+                }))
+    }, [])
+     //list의 값이 0,2,3,4인것만 따로 빼서 배열에 넣기
+    const list0 = list.data.filter((item) => item === 0)
+    const list2 = list.data.filter((item) => item === 2)
+    const list3 = list.data.filter((item) => item === 3)
+    const list4 = list.data.filter((item) => item === 4)
+    
+    console.log(list3.length)
     return(
         <div className="OrderDeliveryPage" style={{width:"1200px"}}>
             <div className="PannelHeader">
@@ -20,10 +44,10 @@ const OrderDeliveryPage = () => {
                             <Ul>
                                 <Li>
                                     <SPan>
-                                        결제대기
+                                        주문접수
                                     </SPan>
                                     <span style={{float: "right"}}>
-                                     <A>0</A>
+                                     <A>{list0.length}</A>
                                      <span className="spangun">건</span>   
                                     </span>
                                 </Li>
@@ -43,7 +67,7 @@ const OrderDeliveryPage = () => {
                                     배송준비
                                 </SPan>
                                 <span style={{float: "right"}}>
-                                    <A style={{color:"#d390e6"}}>0</A>
+                                    <A style={{color:"#d390e6"}}>{list2.length}</A>
                                     <span className="spangun">건</span>   
                                 </span>
                             </Li>
@@ -52,7 +76,7 @@ const OrderDeliveryPage = () => {
                                     배송중
                                 </SPan>
                                 <span style={{float: "right"}}>
-                                    <A style={{color:"#d390e6"}}>0</A>
+                                    <A style={{color:"#d390e6"}}>{list3.length}</A>
                                     <span className="spangun">건</span>   
                                 </span>
                             </Li>
@@ -61,7 +85,7 @@ const OrderDeliveryPage = () => {
                                     배송완료
                                 </SPan>
                                 <span style={{float: "right"}}>
-                                    <A style={{color:"#d390e6"}}>0</A>
+                                    <A style={{color:"#d390e6"}}>{list4.length}</A>
                                     <span className="spangun">건</span>   
                                 </span>
                             </Li>

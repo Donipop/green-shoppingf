@@ -30,6 +30,18 @@ import MypageModal from './Mypagemodal';
                 setPurchaseList(res.data)
             })
             }, [user_id])
+
+        const nullcheck = () => {
+            if(purchaselist.length === 0){
+                return (
+                    <div style={{textAlign:"center",marginTop:"20px",marginBottom:"20px",width:"1270px"}}>
+                        <h2 style={{fontWeight:400}}>구매내역이 업읍니다</h2>
+                    </div>
+                ) 
+            }
+        }
+
+
     return(
     <div >
         <div>
@@ -53,8 +65,10 @@ import MypageModal from './Mypagemodal';
             </div>
         </div>
             <div>      
-                {purchaselist.map((item,index) => (     
+                {purchaselist.map((item,index) => (
+                    
                 <div key ={item.id} style={{display:"flex",borderBottom:"1px solid #f5f5f5",width:"1270px",lineHeight:"100px",fontWeight:"700"}}>
+                    
                     <div style={{padding:"10px"}}><img src={iu} width='80' height='80'></img></div>
                      <div style={{width:"355px"}}>
                              아이유가 입을뻔한 후드티 
@@ -66,14 +80,30 @@ import MypageModal from './Mypagemodal';
                        {item.id}
                      </div>
                      <div style={{fontSize:"14px", width:"180px", textAlign:"center"}}>
-                       {item.totalprice}원
+                       {(item.totalprice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
                      </div>
                      {item.state === 0 ? (
-                        "주문접수"
+                         <div>
+                         <table style={{fontSize:"14px",textAlign:"center", height:"50px",all:"initial",marginLeft:"45px"}}>
+                             <thead>
+                                 <tr>
+                                     <th style={{paddingLeft:"19px"}} >주문접수</th>
+                                 </tr>
+                             </thead>
+                         </table>
+                       </div>       
                         ):(item.state === 1 ? (
                         "결제완료"
                         ):(item.state === 2 ? (
-                        "배송준비중"
+                            <div>
+                            <table style={{fontSize:"14px",textAlign:"center", height:"50px",all:"initial",marginLeft:"45px"}}>
+                                <thead>
+                                    <tr>
+                                        <th style={{paddingLeft:"19px"}} >배송준비중</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                          </div>       
                         ):(item.state === 3 ? (                        
                             <div>
                             <table style={{fontSize:"14px",textAlign:"center", height:"50px",all:"initial",marginLeft:"45px"}}>
@@ -93,15 +123,32 @@ import MypageModal from './Mypagemodal';
                             </table>
                           </div>        
                         ):(item.state === 4 ? (
-                        "배송완료"
+                            <div>
+                            <table style={{fontSize:"14px",textAlign:"center", height:"50px",all:"initial",marginLeft:"45px"}}>
+                                <thead>
+                                    <tr>
+                                        <th style={{paddingLeft:"19px"}} >배송완료</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                          </div>       
                         ):(item.state === 5 ? (
-                        "구매확정"
+                            <div>
+                            <table style={{fontSize:"14px",textAlign:"center", height:"50px",all:"initial",marginLeft:"45px"}}>
+                                <thead>
+                                    <tr>
+                                        <th style={{paddingLeft:"19px"}} >구매확정</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                          </div>       
                         ):(item.state === 6 ? (
                         "구매취소"
                         ):(null)))))))}
+                </div>
 
-                </div>    
                 ))}    
+            {nullcheck()}
             </div>   
             <MypageModal  purchaselist={purchaselist} num={checked.id}/>
     </div>

@@ -264,7 +264,7 @@ function Shopping_basket() {
 
 
     return (
-        <div>
+        <div style={{marginTop:"40px"}}>
         <LoginInterceptor/>
         <div>
             <h1>장바구니 / 로그인된 유저 : {user_id}</h1>

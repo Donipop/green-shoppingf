@@ -28,13 +28,14 @@ function OrderPost(){
                 marketName: "아이유당근마켓"
             }
         }).then((res) => {
+            console.log(res.data)
             setList(res.data);
             setIsChecked(new Array(res.data.length).fill(false));
         }).catch((err) => {
             console.log(err);
         })
     }, [])
-
+    
 
     const onClickPost = () => {
         let postList = [];
