@@ -80,14 +80,30 @@ import MypageModal from './Mypagemodal';
                        {item.id}
                      </div>
                      <div style={{fontSize:"14px", width:"180px", textAlign:"center"}}>
-                       {item.totalprice}원
+                       {(item.totalprice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
                      </div>
                      {item.state === 0 ? (
-                        "주문접수"
+                         <div>
+                         <table style={{fontSize:"14px",textAlign:"center", height:"50px",all:"initial",marginLeft:"45px"}}>
+                             <thead>
+                                 <tr>
+                                     <th style={{paddingLeft:"19px"}} >주문접수</th>
+                                 </tr>
+                             </thead>
+                         </table>
+                       </div>       
                         ):(item.state === 1 ? (
                         "결제완료"
                         ):(item.state === 2 ? (
-                        "배송준비중"
+                            <div>
+                            <table style={{fontSize:"14px",textAlign:"center", height:"50px",all:"initial",marginLeft:"45px"}}>
+                                <thead>
+                                    <tr>
+                                        <th style={{paddingLeft:"19px"}} >배송준비중</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                          </div>       
                         ):(item.state === 3 ? (                        
                             <div>
                             <table style={{fontSize:"14px",textAlign:"center", height:"50px",all:"initial",marginLeft:"45px"}}>
@@ -107,9 +123,25 @@ import MypageModal from './Mypagemodal';
                             </table>
                           </div>        
                         ):(item.state === 4 ? (
-                        "배송완료"
+                            <div>
+                            <table style={{fontSize:"14px",textAlign:"center", height:"50px",all:"initial",marginLeft:"45px"}}>
+                                <thead>
+                                    <tr>
+                                        <th style={{paddingLeft:"19px"}} >배송완료</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                          </div>       
                         ):(item.state === 5 ? (
-                        "구매확정"
+                            <div>
+                            <table style={{fontSize:"14px",textAlign:"center", height:"50px",all:"initial",marginLeft:"45px"}}>
+                                <thead>
+                                    <tr>
+                                        <th style={{paddingLeft:"19px"}} >구매확정</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                          </div>       
                         ):(item.state === 6 ? (
                         "구매취소"
                         ):(null)))))))}

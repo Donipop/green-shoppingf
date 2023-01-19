@@ -1,6 +1,3 @@
-import Header from './Header'
-import logo from '../logo.svg'
-import { useCookies, Cookies } from 'react-cookie';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header2 from './Header2';
@@ -12,72 +9,111 @@ import styled from 'styled-components';
 export default Index;
 
 function Index(){
-    const [cookies, setCookie, removeCookie] = useCookies(['refreshToken'])
-    const refreshToken = cookies.refreshToken;
+    //매일 9시에 새로고침
     
-    let user_id = "";
-    let user_grade = '';
-    let user_nick = '';
-    
-    
-    
-    
-    
-    function start() {
-    let login_information = sessionStorage.getItem("login")
-    login_information = JSON.parse(login_information);
-    
-    
-
-
-    if (login_information === null) {
-        user_id = "로그인 된 정보가 없습니다."
-        }
-    else if (login_information != null) {
-        user_nick = login_information.user_nick + "님 안녕하세요."
-        user_grade = login_information.user_grade
-        user_id = login_information.user_id
-        }
-    }    
-    
-    start()
-
-    function test123() {
-        const refreshToken = cookies.refreshToken;
-        
-        axios({
-            method:'post',
-            url:'/api/login/viewmap',
-            data: {
-                refreshToken: refreshToken
-            },
-        })
-        .then(res => res.data)
-    }
-
-    
-
-
     useEffect(() => {
-       
-    }, );
+        axios.get('/api/randomitemlist')
+        .then((res) => {
+            console.log(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }, [])
+    
+
+   
 
     return(
-        <div className='container'>
-                    <Header2/>
-            <div>
-                <h2>닉네임 : {user_nick}</h2><br/>
-                <h2>등급 : {user_grade}</h2><br/>
-                <h2>아이디 : {user_id}</h2>
-                <a href='/notice'>공지사항</a><br/>
-                <button onClick={test123}>보튼</button>      
-                
-                
-            </div>
+        <div className=''>
+            <Header2/>
+                <Section>
+                    <img src="https://static.coupangcdn.com/da/cmg_paperboy/image/1673938680547/230118_C1_%ED%99%88-%EC%8B%9C%EC%A6%8C%EC%98%A4%ED%94%84_SMD-24729_PC.jpg" width="1920" height="450" ></img>
+                <Div>
+                </Div>
+                <Ull>
+                    <Li>
+                        <Image src="https://static.coupangcdn.com/la/cmg_paperboy/image/1673516292563/item.jpg" width="180" height="60" alt="">
+                        </Image>    
+                        <Span></Span>
+                    </Li>
+                    <Li>
+                        <Image src="https://image9.coupangcdn.com/image/ccm/banner/d6995211240a96926ca80b5a6a28a336.jpg" width="180" height="60" alt=""></Image>
+                        <Span></Span>
+                    </Li>
+                    <Li>
+                    <Image src="https://static.coupangcdn.com/ea/cmg_paperboy/image/1673938685046/230118_C1_%ED%99%88-%EC%8B%9C%EC%A6%8C%EC%98%A4%ED%94%84_SMD-24729_BOX.png" width="180" height="60" alt=""></Image>
+                    </Li>
+                    <Li>
+                        <Image src="https://image8.coupangcdn.com/image/ccm/banner/2a71e969976ffc181fc7d924df24984f.png" width="180" height="60" alt=""></Image>
+                        <Span></Span>
+                    </Li>
+                    <Li>
+                        <Image src="https://static.coupangcdn.com/la/cmg_paperboy/image/1673516292563/item.jpg" width="180" height="60" alt=""></Image>
+                        <Span></Span>
+                    </Li>
+                </Ull>
+                </Section>
+            <SEction>
+                <Divv>
+                    <Divvv>
+                        <H2>오늘의 발견 
+                            <span style={{marginRight:"5px",marginLeft:"5px",fontWeight:"100",fontSize:"20px"}}>|</span> 
+                            <EM>오늘 짭팡이 엄선한 가장 HOT한 상품!</EM></H2>
+                    </Divvv>
+                    <Divtodaylist>
+                        <ul style={{listStyle:"none"}}>
+                            <LIitem>
+                                <img src="https://static.coupangcdn.com/qa/cmg_paperboy/image/1673423587384/C2-B1.jpg" width="468" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
+                                 ></img>
+                                 <SPan></SPan>
+                            </LIitem>
+                            <LIitem>
+                            <img src="https://static.coupangcdn.com/qa/cmg_paperboy/image/1673423587384/C2-B1.jpg" width="468" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
+                                 ></img>
+                                 <SPan></SPan>
+                            </LIitem>
+                            <LIitem>
+                            <img src="https://static.coupangcdn.com/qa/cmg_paperboy/image/1673423587384/C2-B1.jpg" width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
+                                 ></img>
+                                 <SPan></SPan>
+                            </LIitem>
+                        <LIitem>
+                            <img src="https://static.coupangcdn.com/ja/cmg_paperboy/image/1673423540161/C2-B4.jpg" width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
+                                 ></img>
+                                 <SPan></SPan>
+                            </LIitem>
+                            <LIitem>
+                            <img src="https://static.coupangcdn.com/qa/cmg_paperboy/image/1673423587384/C2-B1.jpg" width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
+                                 ></img>
+                                 <SPan></SPan>
+                            </LIitem>
+                            <LIitem>
+                            <img src="https://static.coupangcdn.com/qa/cmg_paperboy/image/1673423587384/C2-B1.jpg" width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
+                                 ></img>
+                                 <SPan></SPan>
+                            </LIitem>
+                            <LIitem>
+                                <img src="https://static.coupangcdn.com/qa/cmg_paperboy/image/1673423587384/C2-B1.jpg" width="468" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
+                                 ></img>
+                                 <SPan></SPan>
+                            </LIitem>
+                            <LIitem>
+                            <img src="https://static.coupangcdn.com/qa/cmg_paperboy/image/1673423587384/C2-B1.jpg" width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
+                                 ></img>
+                                 <SPan></SPan>
+                            </LIitem>   <LIitem>
+                            <img src="https://static.coupangcdn.com/qa/cmg_paperboy/image/1673423587384/C2-B1.jpg" width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
+                                 ></img>
+                                 <SPan></SPan>
+                            </LIitem>
+                            </ul>
+                    </Divtodaylist>
+                </Divv>
 
-            <div style={{width:"1000px", height:"800px"}}>
-                
-            </div>
+            </SEction>
+
+         
         </div>
         
 
@@ -87,13 +123,102 @@ function Index(){
 
 }
 
+const Section = styled.section`
+    position: relative;
+    height: 450px;
+    background: #fafafa;
+`
 const Div = styled.div`
-position: absolute;
-    height: 32px;
-    top: 0;
-    right: 0;
-    left: 0;
-    background: #f0f0f0;
-    z-index: 3;
+position: relative;
+    width: 1020px;
+    height: 450px;
+    margin: 0 auto;
+    overflow: hidden;
+`
+const Ull = styled.ul`
+    position: absolute;
+    width: 180px;
+    right: 450px;
+    top: 45px;
+    box-shadow: 0 4px 5px rgb(0 0 0 / 30%);
+    list-style: none;
+    padding-left: 0px;
 `
 
+const Li = styled.li`
+    position: relative;
+    list-style: none;
+`
+
+const Span = styled.span`
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-top: 1px solid #eee;
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #eee;
+    border-left: 1px solid #fff;
+`
+
+const Image = styled.img`
+    vertical-align: top;
+`
+
+const SEction = styled.section`
+width: 100%;
+min-width: 1020px;
+margin: 0 auto;
+z-index: 1;
+position: relative;
+padding: 0 0 40px;
+`
+
+const Divv = styled.div`
+position: relative;
+width: 1020px;
+margin: 0 auto;
+`
+const Divvv = styled.div`
+margin-right: 40px;
+position: relative;
+padding: 40px 40px 0 0;
+margin : 0 auto;
+`
+
+const H2 = styled.h2`
+height: 33px;
+margin-bottom: 15px;
+font-weight: 400;
+font-size: 26px;
+`
+
+const EM = styled.em`
+font-size: 15px;
+font-style: normal;
+`
+const Divtodaylist = styled.div`
+    position: relative;
+    padding: 3px 0 13px 4px;
+    background: #fff;
+    border: 1px solid #d6d6d6;
+    overflow: hidden;
+`
+
+const LIitem = styled.li`
+    height: 300px;
+    float: left;
+    position: relative;
+    margin: 10px 2px 0 10px;
+    background: #fff;
+    list-style: none;
+`
+const SPan = styled.span`
+position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 1px;
+    left: 0;
+    border: 1px solid #d6d6d6;
+`

@@ -117,15 +117,15 @@ const Header2 = () => {
                             <section style={{width:"1020px",margin:"0 auto",fontSize:"11px"}}>
                                 <Menu>
                                     <LII>
-                                        <a>로그인</a>
+                                        <AAA href='/login'>로그인</AAA>
                                     </LII>
 
                                     <LII>
-                                        <a>회원가입</a>
+                                        <AAA href='/signup'>회원가입</AAA>
                                     </LII>
 
                                     <LII>
-                                        <a>고객센터</a>
+                                        <AAA>고객센터</AAA>
                                     </LII>
 
                                 </Menu>
@@ -353,4 +353,9 @@ const MypageSpan = styled.span`
     background-position: -112px -42px;
     background-image: url(//static.coupangcdn.com/image/coupang/common/pc_header_img_sprite_180104.png);
     background-repeat: no-repeat;
+`
+
+const AAA = styled.a`
+ text-decoration: none;
+ color: black;
 `

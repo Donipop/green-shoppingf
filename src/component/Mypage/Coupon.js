@@ -46,8 +46,8 @@ import LoginInterceptor from "../LoginInterceptor";
             <td style={{width:"13%", paddingLeft:"10px", borderBottom:"1px solid #e9ecef", paddingBottom:"10px", paddingTop:"10px", textAlign:"center"}} >{couponlist.id}</td>
             <td style={{borderBottom:"1px solid #e9ecef"}} >{couponlist.name}</td>
             <td style={{width:"13%",  borderBottom:"1px solid #e9ecef"}} >{couponlist.discountrate}%</td>
-            <td style={{width:"13%",  borderBottom:"1px solid #e9ecef"}} >{couponlist.condition}원 ~</td>
-            <td style={{width:"15%", borderBottom:"1px solid #e9ecef"}} >{couponlist.discount}</td>
+            <td style={{width:"13%",  borderBottom:"1px solid #e9ecef"}} >{(couponlist.condition).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원 ~</td>
+            <td style={{width:"15%", borderBottom:"1px solid #e9ecef"}} >{(couponlist.discount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
         </tr>
         ))}
         </tbody>
