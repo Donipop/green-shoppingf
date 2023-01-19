@@ -5,13 +5,56 @@ import ReactApexChart from "react-apexcharts";
 
 
 const TokTokQnaPage = () => {
+    const [chatList, setChatList] = useState([])
+    useEffect(() => {
+        axios.get("/api/chat/getChatList",
+        {
+            params: {
+                marketOwner: "admin2"
+            }
+        })
+        .then(res => {
+            console.log(res.data)
+            for(let i = 0; i < res.data.length; i++){
+                let leng = res.data[i].chatList.length;
+                let data = {
+                    id: res.data[i].chatList[leng-1].sender,
+                    lastMessage: res.data[i].chatList[leng-1].message,
+                    uuid: res.data[i].uuid
+                }
+                setChatList((chatList) => [...chatList, data]);
+            }
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }, [])
+
     return(
         <div className="OrderDeliveryPage" style={{width:"400px",height:"340px"}}>
             <div style={{border:"1px solid #dbdde2",width:"99%",height:"100%"}}>
                 <div style={{padding:"0 25px",borderBottom:"1px solid #e2e6ee"}}>
                     <h3 style={{fontSize:"15px",lineHeight:"52px",color:"#303236",fontWeight:"600"}}>톡톡문의</h3>
                 </div>
-               
+                <div style={{height:"270px",overflow: "auto"}}>
+                <ol className="list-group list-group-numbered">
+                    {chatList.map((item,index) =>{
+                        return (
+                            <a href={`/ct/${item.uuid}?id=admin2`} key={index} style={{textDecoration: "none"}} target="_blank">
+                                <li className="list-group-item d-flex justify-content-between align-items-start" >
+                                    <div className="ms-2 me-auto">
+                                        <div className="fw-bold">{item.id}</div>
+                                        {item.lastMessage}
+                                    </div>
+                                    <span className="badge bg-primary rounded-pill">999</span>
+                                </li>
+                            </a>
+                        )
+                    })}
+                    
+                </ol>
+                </div>
+                
             </div>
         </div>
     )
