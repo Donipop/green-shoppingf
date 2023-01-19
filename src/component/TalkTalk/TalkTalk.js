@@ -1,4 +1,4 @@
-import { json, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
 import {
   MDBContainer,
@@ -70,16 +70,45 @@ function TalkTalk(){
         //다이렉트 메시지 구독
         client.current.subscribe('/user/queue/message', (msg) => {
             let data = JSON.parse(msg.body);
-            // setChat([]);
-            //     data.map((item, index) => {
-            //         // console.log(item);
-            //         setChat((chat) => [...chat, TalkMyMessage(item.message.toString(),item.sender === params.get('id') ? 0 : 1)]);
-            //     })
+            console.log(data)
+            if(data.type === 'error'){
+                switch(data.code){
+                    case "1":
+                        console.log('정상적인 접근이 아닙니다.')
+                        break;
+                    case "2":
+                        console.log('uuid틀림')
+                        window.location.href = `/ct/${data.uuid}?id=${params.get('id')}`;
+                        break;
+                    case "3":
+                        console.log('채팅방이 존재하지 않습니다. [채팅방 생성]')
+                        break;
+                    case "4":
+                        console.log('마켓오너 잘못된 접속')
+                        break;
+                    default:
+                        console.log('알수없는 에러')
+                        break;
+                }
+            }
+            if(data.type !== 'connect'){
+                return ;
+            }
+            if(data.chatList === null){
+                return;
+            }
+            setChat([]);
+                data.chatList.map((item, index) => {
+                    // console.log(item);
+                    setChat((chat) => [...chat, TalkMyMessage(item.message.toString(),item.sender === params.get('id') ? 0 : 1)]);
+                })
         })
 
         let msgData = {
             'type': 'connect',
             'uuid' : uuid,
+            'userId': params.get('id'),
+            'marketOwner': 'admin2',
         }
         client.current.publish({
             destination: "/api/user",
