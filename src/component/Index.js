@@ -6,6 +6,9 @@ import axios from 'axios';
 import { json, Navigate } from 'react-router-dom';
 import { getOverlayDirection } from 'react-bootstrap/esm/helpers';
 import Header2 from './Header2';
+import Categories from './Categories';
+import Test from './test';
+
 
 
 
@@ -68,13 +71,17 @@ function Index(){
             <div className='row justify-content-center mt-3'>
                     <img src={logo} className='col-3' style={{width: 82, height:42}}></img>
                     <Header2/>
+                    <Categories/>
             </div>
             <div>
                 <h2>닉네임 : {user_nick}</h2><br/>
                 <h2>등급 : {user_grade}</h2><br/>
                 <h2>아이디 : {user_id}</h2>
                 <a href='/notice'>공지사항</a><br/>
-                <button onClick={test123}>보튼</button>      
+                <button onClick={test123}>보튼</button>   
+                <a href='/mypage'>마이페이지</a><br/>
+                <a href='/login'>로그인</a>
+                <a href='/logout'>로그아웃</a>
                 
                 
             </div>
