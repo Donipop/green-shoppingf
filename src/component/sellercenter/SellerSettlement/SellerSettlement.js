@@ -28,7 +28,6 @@ function SellerSettlement() {
     today.setHours(today.getHours() + 9);
     let format_today = today.toISOString().replace('T', ' ').substring(0, 19) // 날짜 yyyy-mm-dd hh:mm:ss
 
-    
 
     
 
@@ -38,7 +37,7 @@ function SellerSettlement() {
         axios({
             method:'post',
             url:'/api/login/refreshTokenToAccessToken',
-            params: {
+            data: {
                 refreshToken : refreshToken
             }
             

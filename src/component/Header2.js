@@ -56,7 +56,7 @@ const Header2 = () => {
             <Section>
                 <DDiv>
                     <H1>
-                    <a style={{height:"41px"}}>
+                    <a href ='/'style={{height:"41px"}}>
                     <img src="//image7.coupangcdn.com/image/coupang/common/logo_coupang_w350.png" width="174" height="41" alt="쿠팡로고" style={{verticalAlign:"top"}}></img>
                     </a>
                     </H1>

@@ -5,8 +5,12 @@ import { useState } from 'react';
 
 function SalesViewDetailInfo(DetailInfo) {
     const[purchaseDetailInfo, setpurchaseDetailInfo] = useState([]);
+
     
     useEffect(() => {
+        if(DetailInfo.DetailInfo.buyerid === undefined){
+            return;
+        }
         axios({
             method:'post',
             url:'/api/sellercenter/getpurchasedetailinfo',
@@ -21,7 +25,10 @@ function SalesViewDetailInfo(DetailInfo) {
             
             
         })
-    }, [DetailInfo.DetailInfo.id])
+
+    }, [DetailInfo.DetailInfo.buyerid, DetailInfo.DetailInfo.id])
+
+
 
     return (
         <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

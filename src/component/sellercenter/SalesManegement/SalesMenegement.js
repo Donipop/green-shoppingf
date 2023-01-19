@@ -26,7 +26,7 @@ function SalesManageMent() {
         axios({
             method:'post',
             url:'/api/login/refreshTokenToAccessToken',
-            params: {
+            data: {
                 refreshToken : refreshToken
             }
             

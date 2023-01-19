@@ -58,8 +58,6 @@ function View(){
             return <img src={productinfo.cont} alt="상품이미지" />
         }
     }
-    console.log(productinfo)
-
     return(
         
             <div className="container">
