@@ -39,11 +39,6 @@ function Myinformation() {
         check : true,
         message : "변경하실 비밀번호를 입력해주세요"
     });
-
-    
-
-    
-    
     
     const onChangeMyinfo = (e) => {
         const {id, value} = e.target;
@@ -58,13 +53,16 @@ function Myinformation() {
             method: 'post',
             url: '/api/mypage/myinfoUpdate',
             data: {
-                myinfo : myinfo
+                myinfo : myinfo,
+                refreshToken : refreshToken
             }
         })
         .then(res => res.data)
         .then(res => {
             if (res === 1) {
                 alert("회원정보가 수정되었습니다.")
+                window.location.reload();
+                
             }
             else {
                 alert("회원정보 수정에 실패하였습니다.")

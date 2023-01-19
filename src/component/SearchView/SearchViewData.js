@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 
 const SearchViewData = () => {
-    let iu = "https://w.namu.la/s/59bbf73b123d0f9f693be3c3de9506b24a1f2a3067b4ffd0207a3a08eee32d750ebf1ca3e33084aa3bbcd6916bd0a8a187cc4556b87fa269c25f1a7ff3ea279f9808bcff5cd75221317e48e817290c6b7e7900c07b3e649379dc7a57a7653a886e08ae6b2df44d7d347e8c801f2b9f15"
+    let iu = "https://live.staticflickr.com/65535/51980732828_bb89552608_o.jpg"
     const Array = [0, 1, 2, 3, 4];
     const [searchviewList, setSearchviewList] = useState([])
     const searchcont = new URLSearchParams(window.location.search).get('searchcont')
