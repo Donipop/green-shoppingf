@@ -40,7 +40,7 @@ function Sidebar(){
                             </div>
                         </li>
                         <li className='mb-1'>
-                        <button className='btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed'   data-bs-target='#sell-collapse2' aria-expanded='false'>
+                        <button className='btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed'  data-bs-toggle='collapse' data-bs-target='#sell-collapse2' aria-expanded='false'>
                                 마켓관리
                             </button>
                             <div className='collapse' id='sell-collapse2'>
