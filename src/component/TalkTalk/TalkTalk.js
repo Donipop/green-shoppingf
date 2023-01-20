@@ -30,8 +30,8 @@ function TalkTalk(){
         client.current = new StompJs.Client({
             brokerURL: "ws://localhost:8080/api/ws", // 웹소켓 서버로 직접 접속
             connectHeaders: {
-                "userId" : 'admin',
-                "marketOwner": params.get("id"),
+                "userId" : params.get("id"),
+                "marketOwner": 'admin2',
                 "uuid": uuid
             },
             onConnect: () =>{
@@ -128,7 +128,7 @@ function TalkTalk(){
                     'message' : e.target.value.trim(),
                     'uuid' : uuid,
                     'userId': params.get('id'),
-                    'marketOwner': params.get('frm'),
+                    'marketOwner': 'admin2',
                 }
                 client.current.publish({
                     destination: "/api/queue",

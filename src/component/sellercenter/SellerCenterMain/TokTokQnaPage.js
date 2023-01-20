@@ -16,10 +16,10 @@ const TokTokQnaPage = () => {
         .then(res => {
             console.log(res.data)
             for(let i = 0; i < res.data.length; i++){
-                let leng = res.data[i].chatList.length;
                 let data = {
-                    id: res.data[i].chatList[leng-1].sender,
-                    lastMessage: res.data[i].chatList[leng-1].message,
+                    id: res.data[i].chatList.sender,
+                    lastMessage: res.data[i].chatList.message,
+                    count: res.data[i].count,
                     uuid: res.data[i].uuid
                 }
                 setChatList((chatList) => [...chatList, data]);
@@ -40,13 +40,15 @@ const TokTokQnaPage = () => {
                 <ol className="list-group list-group-numbered">
                     {chatList.map((item,index) =>{
                         return (
-                            <a href={`/ct/${item.uuid}?id=admin2`} key={index} style={{textDecoration: "none"}} target="_blank">
+                            <a href={`/ct/${item.uuid}?id=admin2`} key={index} style={{textDecoration: "none"}} target="_blank" rel="noreferrer" role="button" onClick={() =>{
+                                window.open(`/ct/${item.uuid}?id=admin2`, "톡톡문의", "width=400, height=600, left=100, top=100, location=no, status=no, menubar=no, toolbar=no, scrollbars=no, resizable=no")
+                            }} >
                                 <li className="list-group-item d-flex justify-content-between align-items-start" >
                                     <div className="ms-2 me-auto">
                                         <div className="fw-bold">{item.id}</div>
                                         {item.lastMessage}
                                     </div>
-                                    <span className="badge bg-primary rounded-pill">999</span>
+                                    {item.count === 0 ? <span className="badge bg-primary rounded-pill"  style={{display:"none"}}>0</span> : <span className="badge bg-primary rounded-pill">{item.count}</span>}
                                 </li>
                             </a>
                         )

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ViewDetailProductInfo from "./ViewDetailProductInfo";
+import { ListGroup } from "react-bootstrap";
 
 function ViewTable({getDate}){
     const [allChecked, setAllChecked] = useState(false);
@@ -9,7 +10,8 @@ function ViewTable({getDate}){
     const [list, setList] = useState([]);
     const [modalInfo, setModalInfo] = useState([]);
     const [OrderState, setOrderState] = useState(0);
-
+    const [listCount, setListCount] = useState(0);
+    //render링 방식을 getdate 바뀔때 하는걸로 바꿔야함 확인하고 백엔드 소스도 좀 변경해서 프로덕드 79도 있/는데 옆에 마켓이름 컬럼도 하나 추가해서 DB에서 받아오는 속도를 올려보자.
     const checkHandler = (e) =>{
         const { checked } = e.target;
         let key = e.target.attributes.indexid.value;
@@ -155,7 +157,9 @@ function ViewTable({getDate}){
                                     Istate = "주문접수";
                                     break;
                             }
-                            
+                            if(index === 1){
+                               
+                            }
                             if(getDate.start === "" && getDate.end === ""){
                                 return (
                                     <tr key={index}>
@@ -210,6 +214,7 @@ function ViewTable({getDate}){
 
     )
 }
+
 export default ViewTable;
 
 const COUNTGREEN = styled.span`

@@ -31,7 +31,7 @@ function ViewDate({getDate}){
                 // console.log("일주일");
                 setDateInfo({
                     ...dateInfo,
-                    start: week.getFullYear() + '-' + (week.getMonth() + 1) + '-' + (week.getDate() <= 9 ? "0" + week.getDate() : week.getDate()),
+                    start: week.getFullYear() + '-' + ((week.getMonth() + 1) <= 9 ? "0" + (week.getMonth() + 1) : (week.getMonth() + 1)) + '-' + (week.getDate() <= 9 ? "0" + week.getDate() : week.getDate()),
                     end: year + '-' + (month <= 9 ? "0" + month : month) + '-' + (date <= 9 ? "0" + date : date)
                 })
                 break;
