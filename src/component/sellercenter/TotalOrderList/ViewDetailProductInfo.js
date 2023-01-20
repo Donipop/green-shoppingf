@@ -10,6 +10,7 @@ function ViewDetailProductInfo({ productInfo }) {
     const [orderState, setOrderState] = useState();
     const [orderStateNum, setOrderStateNum] = useState();
     useEffect(() => {
+        // console.log(productInfo);
         if(productInfo.postAddressId === undefined) return;
 
         let data = {

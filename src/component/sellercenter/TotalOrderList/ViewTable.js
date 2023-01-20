@@ -2,12 +2,12 @@ import styled from "styled-components";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ViewDetailProductInfo from "./ViewDetailProductInfo";
-import { ListGroup } from "react-bootstrap";
 
 function ViewTable({getDate}){
     const [allChecked, setAllChecked] = useState(false);
     const [isChecked, setIsChecked] = useState();
     const [list, setList] = useState([]);
+    const [tableList, setTableList] = useState([]);
     const [modalInfo, setModalInfo] = useState([]);
     const [OrderState, setOrderState] = useState(0);
     const [listCount, setListCount] = useState(0);
@@ -25,7 +25,15 @@ function ViewTable({getDate}){
     useEffect(() => {
         setIsChecked(new Array(list.length).fill(allChecked));
     }, [list, allChecked])
-
+    useEffect(() => {
+        setTableList(list.filter((item) =>{
+            if(getDate.start === '' && getDate.end === ''){
+                return item;
+            }else if(item["TIME"] >= getDate.start && item["TIME"] <= getDate.end){
+                return item;
+            }
+        }))
+    }, [getDate,list])
     useEffect(() => {
         axios.get("/api/sellercenter/getorderlist", {
             params: {
@@ -101,13 +109,12 @@ function ViewTable({getDate}){
         }
     }
 
-
     return (
         <DOV className="row">
             <div className="col-12">
                 <span>목록</span>
                 <span>(총 </span>
-                <COUNTGREEN>2</COUNTGREEN>
+                <COUNTGREEN>{tableList.length}</COUNTGREEN>
                 <span> 개)</span>
             </div>
 
@@ -129,7 +136,7 @@ function ViewTable({getDate}){
                         </tr>
                     </thead>
                     <tbody>
-                        {list.map((item,index) => {
+                        {tableList.map((item, index) => {
                             let Istate = "";
                             switch(String(item["STATE"])){
                                 case "0":
@@ -157,39 +164,18 @@ function ViewTable({getDate}){
                                     Istate = "주문접수";
                                     break;
                             }
-                            if(index === 1){
-                               
-                            }
-                            if(getDate.start === "" && getDate.end === ""){
-                                return (
-                                    <tr key={index}>
-                                        <td>
-                                            <input type="checkbox" checked={isChecked[index]} indexid={index} onChange={(e) => checkHandler(e)} />
-                                        </td>
-                                        <CLICKTD data-bs-toggle="modal" data-bs-target="#staticBackdrop" onClick={(e) => showProductModal(e,index)}>{item["PRODUCTID"]}</CLICKTD>
-                                        <td>{item["ID"]}</td>
-                                        <td>{item["TIME"]}</td>
-                                        <td>{Istate}</td>
-                                        <td>{item["product_Title"]}</td>
-                                    </tr>
-                                )
-                                
-                            }else if(item["TIME"] >= getDate.start && item["TIME"] <= getDate.end){
-                                return (
-                                    <tr key={index}>
-                                        <td>
-                                            <input type="checkbox" checked={isChecked[index]} indexid={index} onChange={(e) => checkHandler(e)} />
-                                        </td>
-                                        <CLICKTD data-bs-toggle="modal" data-bs-target="#staticBackdrop" onClick={(e) => showProductModal(e,index)}>{item["PRODUCTID"]}</CLICKTD>
-                                        <td>{item["ID"]}</td>
-                                        <td>{item["TIME"]}</td>
-                                        <td>{Istate}</td>
-                                        <td>{item["product_Title"]}</td>
-                                    </tr>
-                                )
-
-                            }
-
+                            return (
+                                <tr key={index}>
+                                    <td>
+                                        <input type="checkbox" checked={isChecked[index]} indexid={index} onChange={(e) => checkHandler(e)} />
+                                    </td>
+                                    <CLICKTD data-bs-toggle="modal" data-bs-target="#staticBackdrop" onClick={(e) => showProductModal(e,index)}>{item["PRODUCTID"]}</CLICKTD>
+                                    <td>{item["ID"]}</td>
+                                    <td>{item["TIME"]}</td>
+                                    <td>{Istate}</td>
+                                    <td>{item["product_Title"]}</td>
+                                </tr>
+                            )
                         })}
                     </tbody>
                 </table>
