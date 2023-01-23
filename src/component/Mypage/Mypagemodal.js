@@ -1,8 +1,5 @@
-
-import { type } from '@testing-library/user-event/dist/type';
 import axios from 'axios';
 import { useEffect,useState } from 'react';
-import { ListGroup } from 'react-bootstrap';
 import './mypagemodalcss.css';
 
 

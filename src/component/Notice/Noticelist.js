@@ -1,13 +1,7 @@
 import axios from 'axios';
 import {useState, useEffect} from 'react';
-import react from 'react';
 import "./Notice.css"
-import { Link, Navigate } from 'react-router-dom';
-import NoticeView from './NoticeView';
-import { notInitialized } from 'react-redux/es/utils/useSyncExternalStore';
-import Logininformation from '../Logininformation';
-import { Cookies } from 'react-cookie';
-
+import { Link} from 'react-router-dom';
 
     const Notice = () => { 
 

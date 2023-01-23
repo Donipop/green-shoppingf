@@ -1,7 +1,5 @@
 import axios from 'axios';
 import {useState, useEffect} from 'react';
-import { Link, Navigate } from 'react-router-dom';
-import LoginInterceptor from "../LoginInterceptor";
 
 
     const Coupon = () => { 

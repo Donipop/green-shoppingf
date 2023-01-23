@@ -4,6 +4,9 @@ import { FaStar } from 'react-icons/fa';
 import Pagination from './Pagination';
 import Modal from './Modal';
 import ReviewUpdate from './ReviewUpdate';
+import { useCookies } from 'react-cookie';
+import Logininformation2 from '../Logininformation2';
+
     const ReviewList = (props) => {
     const [List, setList] = useState([]);
     const array = [0,1,2,3,4];
@@ -16,9 +19,32 @@ import ReviewUpdate from './ReviewUpdate';
     const [checked, setChecked] = useState({
         Select: Array(List.length).fill(false)
     });
+    const [cookies, setCookie, removeCookie] = useCookies(['refreshToken'])
+    
+    let refreshToken = cookies.refreshToken;
+    const [userinformation, setuserinformation] = useState({
+        user_address : "",
+        user_brith : "",
+        user_email : "",
+        user_grade : "",
+        user_id : "",
+        user_money : "",
+        user_name : "",
+        user_nick : "",
+        user_password : "",
+        user_role : "",
+        user_sex : "",
+        user_signdate : "",
+        user_state : "", 
+        user_tel : ""
+    });
     
 
      const openModal = (e,index) => {
+        if(userinformation.user_id !== List[index].user_id){
+            alert('본인이 작성한 글만 수정 가능합니다.')
+            return false;
+        }
         const newArr = Array(List.length).fill(false)
         newArr[index] = true
          setChecked({
@@ -86,7 +112,11 @@ import ReviewUpdate from './ReviewUpdate';
                 document.getElementById(`collapseExample${e.target.id}`).style="display:none";
          }
         }
-    const Delete = (e) => {
+    const Delete = (e,index) => {
+        if(userinformation.user_id !== List[index].user_id){
+            alert('본인이 작성한 글만 삭제 가능합니다.')
+            return false;
+        }
         axios({
             method: 'post',
             url: `/api/view/review/delete/${e.target.id}/${props.page}`,
@@ -97,9 +127,7 @@ import ReviewUpdate from './ReviewUpdate';
             if(window.confirm("정말 삭제하시겠습니까?")) {
                 alert("삭제되었습니다.");
                 window.location.reload();
-              } else {
-                alert("취소합니다.");
-              }
+              } 
         })
             
          }
@@ -121,10 +149,12 @@ import ReviewUpdate from './ReviewUpdate';
             let result = first + "***";
             return result;
         }
-    
+
+            
     
     return (
         <div>
+            <Logininformation2 getuserData={setuserinformation}/>
             <select type="number" value={limit} onChange={({target: {value} }) => setLimit(Number(value))}>
                         <option value="10">10개</option>
                         <option value="12">12개</option>
@@ -146,7 +176,7 @@ import ReviewUpdate from './ReviewUpdate';
                                  <Modal close={closeModal} header="상품평 수정하기" check={checked.Select[index]}>
                                 <ReviewUpdate id={item.id} page={item.product_num}/>
                                  </Modal>
-                                <a href="#!" role="button" id={item.id} onClick={Delete} style={{fontSize:"14px",paddingLeft:"4px",textDecoration:"none"}}> 삭제</a>
+                                <a href="#!" role="button" id={item.id} onClick={e => Delete(e,index)} style={{fontSize:"14px",paddingLeft:"4px",textDecoration:"none"}}> 삭제</a>
                         </div>
                         <div>
                                 <strong style={{paddingRight:"10px"}}>한줄평</strong>

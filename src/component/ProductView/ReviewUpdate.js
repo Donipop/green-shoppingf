@@ -1,5 +1,4 @@
 import axios from "axios"
-import { useMemo } from "react";
 import { useEffect,useState } from "react"
 import { FaStar } from 'react-icons/fa';
 import styled from 'styled-components';

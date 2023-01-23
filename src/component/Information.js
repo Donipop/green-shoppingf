@@ -1,7 +1,6 @@
 import axios from "axios"
 import { useEffect } from "react"
-import { Navigate, redirect, useNavigate } from "react-router-dom"
-import Header from "./Header"
+import { useNavigate } from "react-router-dom"
 
 
 function Information() {
@@ -36,7 +35,6 @@ function Information() {
     return (
         <div>
             <div>
-                <Header/>
             </div>
             <h2>ㅎㅇ</h2>
             <h3>{user_id}</h3>

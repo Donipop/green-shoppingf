@@ -2,7 +2,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Dropdown} from "react-bootstrap";
 import {input} from "react-bootstrap";
 import React, {useState, useEffect} from "react";
-import Header from './Header'
 import { useNavigate } from "react-router-dom";
 
 export default function Hello() {
@@ -72,7 +71,6 @@ export default function Hello() {
   return (
     
     <div className='container'>
-        <Header/>
       <h1>회원가입</h1>
       <div className='list-group w-auto'>
 

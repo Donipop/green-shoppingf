@@ -38,11 +38,8 @@ const Logininformation2 = ({getuserData}) => {
         })
         .then(res => res.data)
         .then(res => {
-            if (res.length === 0) {                
-                alert("로그인이 필요한 서비스입니다.");
-                Navigate("/login");
-            }
-            else {
+            if (res.length !== 0) {                
+               
                 setuserinformation({
                     user_address : res.user_address,
                     user_brith : res.user_brith,

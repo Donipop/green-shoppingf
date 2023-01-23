@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Pagination from "./Pagination";
+import Logininformation2 from '../Logininformation2';
+import { useCookies } from "react-cookie";
 
 
 const QnA = ({page}) => {
@@ -9,6 +11,26 @@ const QnA = ({page}) => {
     const offset = (paging - 1) * limit;
     const [test, setTest] = useState([]);
     const [reply, setReply] = useState([]);
+    const [cookies, setCookie, removeCookie] = useCookies(['refreshToken'])
+    const [marketNamecheck, setmarketNamecheck] = useState(false);
+    
+    let refreshToken = cookies.refreshToken;
+    const [userinformation, setuserinformation] = useState({
+        user_address : "",
+        user_brith : "",
+        user_email : "",
+        user_grade : "",
+        user_id : "",
+        user_money : "",
+        user_name : "",
+        user_nick : "",
+        user_password : "",
+        user_role : "",
+        user_sex : "",
+        user_signdate : "",
+        user_state : "", 
+        user_tel : ""
+    });
    
 
     useEffect(() => {
@@ -52,12 +74,31 @@ const QnA = ({page}) => {
                     return [...item, products]
                 })
             }
-        }
-          
-           
+        } 
         })
+       
         }, [page])
-   
+     
+    useEffect(() => {
+        if(userinformation.user_id === ""){
+            return;
+        }
+          axios({
+            method: 'get',
+            url: `/api/view/marketcheck`,
+            params:{
+                page: page,
+                user_id : userinformation.user_id
+            }
+        })
+            .then((res) => {
+                setmarketNamecheck(res.data)
+            
+        })
+
+    }, [userinformation.user_id])
+
+
     // 질문하기
     const QnASite = () => {
         window.open(`http://localhost:3000/QnA/write/${page}`,"_blank","width=650, height=730");
@@ -81,7 +122,6 @@ const QnA = ({page}) => {
            
         }
     }
-
        const roqnfkf = (props) => {
            for(let i=0; i<reply.length; i++){
             if(props === reply[i].child_id ){
@@ -91,9 +131,9 @@ const QnA = ({page}) => {
                 <em className="replyicon">답변</em>
                 <div className="reply_wrap">
                 <strong className="Strong">[{reply[i].user_id}]</strong>
-                <a href="#!" role="button" onClick={AnswerUpdate} indexid={i} id={reply[i].id}  style={{paddingLeft:"2px",fontSize:"12px",textDecoration:"none"}}>수정</a>
-                 <span style={{fontSize:"14px", marginLeft:"2px", marginRight:"2px"}}>|</span>
-                 <a href="#!" role="button" id={reply[i].id} onClick={answerDelete} style={{fontSize:"12px",textDecoration:"none"}}>삭제</a>
+                <a href="#!" role="button" onClick={AnswerUpdate} indexid={i} id={reply[i].id}  style={{paddingLeft:"2px",fontSize:"12px",textDecoration:"none"}}>{marketNamecheck === true && '수정'}</a>
+                 <span style={{fontSize:"14px", marginLeft:"2px", marginRight:"2px"}}>{marketNamecheck === true && '|'}</span>
+                 <a href="#!" role="button" id={reply[i].id} onClick={answerDelete} style={{fontSize:"12px",textDecoration:"none"}}>{marketNamecheck === true && '삭제'}</a>
                 <div className="replycont">
                     {reply[i].cont}
                 </div>
@@ -108,8 +148,11 @@ const QnA = ({page}) => {
         }
     }
     
-       const QuestionDelete = (e) => {
-
+       const QuestionDelete = (e,index) => {
+        if(userinformation.user_id !== test[index].user_id){
+            alert("본인이 작성한 글만 삭제할 수 있습니다.")
+            return;
+        }
             //답변이 있는지 없는지 확인
             let check = false;
             for(let i=0; i<reply.length; i++){
@@ -179,7 +222,11 @@ const QnA = ({page}) => {
         )}
         }
 
-        const QuestionUpdate = (e) => {
+        const QuestionUpdate = (e,index) => {
+            if(userinformation.user_id !== test[index].user_id){
+                alert("본인이 작성한 글만 수정할 수 있습니다.")
+                return;
+            }
             window.open(`http://localhost:3000/QnA/update/${page}/${e.target.id}`,"_blank","width=650, height=730");
         }
 
@@ -203,6 +250,7 @@ const QnA = ({page}) => {
 
       return (
         <div>
+             <Logininformation2 getuserData={setuserinformation}/>
              <div>
                  <h3>QnA</h3>
                  <p className="QnAtext">구매하시려는 상품에 대해 궁금한 점이 있으신 경우 문의해주세요.</p>
@@ -230,9 +278,9 @@ const QnA = ({page}) => {
                                         {item.cont !== '삭제된 문의입니다.' ? (
                                             <div>
                                         <strong className="author">{SecretUser_id(item.user_id)}</strong>
-                                        <a href="#!" role="button" id={item.id} onClick={QuestionUpdate}  style={{paddingLeft:"2px",fontSize:"12px",textDecoration:"none"}}>수정</a>
+                                        <a href="#!" role="button" id={item.id} onClick={e => QuestionUpdate(e,index)}  style={{paddingLeft:"2px",fontSize:"12px",textDecoration:"none"}}>수정</a>
                                         <span style={{fontSize:"14px", marginLeft:"2px", marginRight:"2px"}}>|</span>
-                                        <a href="#!" role="button" id={item.id} onClick={QuestionDelete} style={{fontSize:"12px",textDecoration:"none"}}>삭제</a> 
+                                        <a href="#!" role="button" id={item.id} onClick={e => QuestionDelete(e,index)} style={{fontSize:"12px",textDecoration:"none"}}>삭제</a> 
                                         </div>
                                         ) : null}
                                         <div className="Productname">
@@ -246,7 +294,7 @@ const QnA = ({page}) => {
                                         </div>
                                         <div className="Do_answer">
                                             <input type="hidden" id="id" value={item.id} />
-                                            <button type="sumbit"className="btn btn-success btn-sm" value={item.user_id} onChange={onchange} >답변하기</button>   
+                                           {marketNamecheck === true ? <button type="sumbit"className="btn btn-success btn-sm" value={item.user_id} onChange={onchange} >답변하기</button>  : null}
                                         </div>
                                     </div>
                                </div>

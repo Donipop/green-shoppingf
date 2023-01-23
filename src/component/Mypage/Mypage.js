@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../Header"
-import Login from "../Login";
+import Header2 from "../Header2"
 import Logininformation from "../Logininformation";
 import LoginInterceptor from "../LoginInterceptor";
 import MypurChaseInquiry from "./MyPurchaseInquiry";
@@ -20,7 +19,7 @@ function Mypage() {
     return(
         <div>
             <LoginInterceptor/>
-            <Header/>
+            <Header2/>
             <MypurChaseInquiry/>
             <Shopping_basket/>
             <Coupon />

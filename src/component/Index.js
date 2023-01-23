@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header2 from './Header2';
-import Categories from './Categories';
-import Test from './test';
 import styled from 'styled-components';
+import ItemRecommend from './ItemRecommend';
 
 
 
@@ -13,7 +12,7 @@ export default Index;
 function Index(){
     const [list, setList] = useState([
         {
-        MAINIMAGE: 'z',
+        MAINIMAGE: '',
         ID: 0 },
         {MAINIMAGE: '',
         ID: 0 },
@@ -43,7 +42,6 @@ function Index(){
         })
     }, [])
 
-    console.log(list[0].MAINIMAGE)
 
 
 
@@ -134,8 +132,9 @@ function Index(){
                             </LIitem>
                             </ul>
                     </Divtodaylist>
-                </Divv>
+                <ItemRecommend />
 
+                </Divv>
             </SEction>
 
          

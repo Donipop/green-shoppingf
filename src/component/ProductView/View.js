@@ -6,12 +6,13 @@ import ProductInfo from "./ProductInfo";
 import styled from "styled-components";
 import Review from "./Review";
 import QnAList from "./QnAList";
-
 function View(){
     const {page} = useParams();
     const [productinfo, setProductinfo] = useState({cont: '<p>'});
     const [divNaviState, setDivNaviState] = useState(['상품정보', '상품후기', '상품문의', '배송/교환/반품','#info','#review','#qna','#delivery']);
     const [divNaviStateClass, setDivNaviStateClass] = useState(['', '', '', '']);
+   
+   
     useEffect(() => {
         //page가 숫자가 아닐때
         axios.get(`/api/view/product?product_num=${page}`)
@@ -25,8 +26,10 @@ function View(){
                 <div className="container">잘못된 페이지</div>
             );
         })
+
     }, [page])
 
+   
     if(isNaN(page)){
         return (
             <div className="container">잘못된 페이지(숫자가아님)</div>
@@ -61,9 +64,9 @@ function View(){
     return(
         
             <div className="container">
+                
                 <div className="row">
                     <div className="col-12">
-                        <Header2 />
                     </div>
                     <div className="pt-5"></div>
                     <ProductInfo product={productinfo} />

@@ -6,10 +6,10 @@ function Categories() {
 
     return (
 
-        <div className="dropdown">
-            <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
-            data-mdb-toggle="dropdown" aria-expanded="false">
-            카테고리
+        <div className="dropdown" style={{marginTop:"60px",marginLeft:"5px"}}>
+            <button className="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+            data-mdb-toggle="dropdown" aria-expanded="false" style={{color:"white"}} >
+            <span style={{fontSize:"13px"}}>카테고리</span>
             </button>
                 <ul className="dropdown-menu" id="categories" aria-labelledby="dropdownMenuButton">
                     <li>

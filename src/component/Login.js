@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import { json, Route, useNavigate, Link } from 'react-router-dom';
 import { useCookies, Cookies } from 'react-cookie';
-import Header from "./Header";
 
 
 function Login() {
@@ -66,7 +65,6 @@ function Login() {
 
     return(
         <div>
-            <Header />
             <h2>Login</h2>
             <form onSubmit={onSubmitHandler}>
             <div>
