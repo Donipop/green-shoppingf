@@ -5,7 +5,7 @@ import Pagination from './Pagination';
 import Modal from './Modal';
 import ReviewUpdate from './ReviewUpdate';
 import { useCookies } from 'react-cookie';
-import Logininformation2 from '../Logininformation2';
+import Logininformation from '../Login/Logininformation';
 
     const ReviewList = (props) => {
     const [List, setList] = useState([]);
@@ -154,7 +154,7 @@ import Logininformation2 from '../Logininformation2';
     
     return (
         <div>
-            <Logininformation2 getuserData={setuserinformation}/>
+            <Logininformation getuserData={setuserinformation}/>
             <select type="number" value={limit} onChange={({target: {value} }) => setLimit(Number(value))}>
                         <option value="10">10개</option>
                         <option value="12">12개</option>

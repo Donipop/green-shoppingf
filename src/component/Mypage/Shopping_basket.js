@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect } from "react";
-import LoginInterceptor from "../LoginInterceptor";
+import LoginInterceptor from "../Login/LoginInterceptor";
 import { useState } from "react";
-import Logininformation from "../Logininformation";
+import Logininformation from "../Login/Logininformation";
 import { useNavigate } from "react-router-dom";
 
 function Shopping_basket() {

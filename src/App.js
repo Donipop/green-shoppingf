@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import Hello from './component/Hello';
-import Hello2 from './component/Hello2';
-import IndexPage from './component/Index'
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import IndexPage from './component/Index/Index'
 import SellerCenter from './component/SellerCenter/SellerCenter';
-import Login from './component/Login';
-import Logout from './component/Logout';
+import Login from './component/Login/Login';
+import Logout from './component/Login/Logout';
 import Notice from './component/Notice/Noticelist'
 import NoticeView from './component/Notice/NoticeView';
 import SellerSignup from './component/SellerSignup/Signup';
@@ -26,12 +24,13 @@ import PaymentPage from './component/Payment/PaymentPage';
 import MyReview from './component/Mypage/MyReview';
 import MyPurchaseInquiry from './component/Mypage/MyPurchaseInquiry';
 import SellerReview from './component/SellerCenter/reviewmanagement/SellerReview';
-import Header2  from './component/Header2';
+import Header  from './component/Header/Header';
 import TalkTalk from './component/TalkTalk/TalkTalk';
 
 import SearchView  from './component/SearchView/SearchView';
 import SellerCenterMain from './component/SellerCenter/SellerCenterMain/SellerCenterMain';
-import Test256 from './component/Test256';
+import Test256 from './component/Login/Test256';
+import Signup from './component/SellerSignup/Signup';
 // function App() {
 //   return (
 //     <div className="App">
@@ -44,12 +43,12 @@ import Test256 from './component/Test256';
 
 
 const Router = (props) => {
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<IndexPage />} />
-        <Route path="/signup" element={<Hello />} />
-        <Route path="/hello2" element={<Hello2 />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path='/Sellercenter/*' element={<SellerCenter />} />
         <Route path='/login' element={<Login/>} />
         <Route path='/logout' element={<Logout/>} />
@@ -73,7 +72,7 @@ const Router = (props) => {
         <Route path='/Mypage/MyReview' element={<MyReview/>} />
         <Route path='/Mypage/MyPurchaseInquiry' element={<MyPurchaseInquiry/>} />
         <Route path='/Sellercenter/reviewmanagement' element={<SellerReview/>} />
-        <Route path='/header2' element={<Header2/>} />
+        <Route path='/header2' element={<Header/>} />
         <Route path='/ct/:uuid' element={<TalkTalk />} />
         <Route path='/searchview' element={<SearchView/>} />
         <Route path='/SellercenterMainpage' element={<SellerCenterMain/>} />

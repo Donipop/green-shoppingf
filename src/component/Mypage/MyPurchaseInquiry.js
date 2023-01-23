@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {useState, useEffect} from 'react';
-import Logininformation from '../Logininformation';
+import Logininformation from '../Login/Logininformation';
 import MypageModal from './Mypagemodal';
 
 

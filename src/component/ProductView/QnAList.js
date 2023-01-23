@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Pagination from "./Pagination";
-import Logininformation2 from '../Logininformation2';
+import Logininformation from '../Login/Logininformation';
 import { useCookies } from "react-cookie";
 
 
@@ -250,7 +250,7 @@ const QnA = ({page}) => {
 
       return (
         <div>
-             <Logininformation2 getuserData={setuserinformation}/>
+             <Logininformation getuserData={setuserinformation}/>
              <div>
                  <h3>QnA</h3>
                  <p className="QnAtext">구매하시려는 상품에 대해 궁금한 점이 있으신 경우 문의해주세요.</p>

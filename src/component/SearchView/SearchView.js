@@ -1,5 +1,5 @@
 import SearchViewData from "./SearchViewData";
-import Header2 from "../Header2";
+import Header from "../Header/Header";
 import styled from "styled-components";
 
 
@@ -8,7 +8,7 @@ const SearchView  = () => {
     return(
         <div>
             <Div>
-                <Header2/>
+                <Header/>
             </Div>
        <SearchViewData/>
        </div>

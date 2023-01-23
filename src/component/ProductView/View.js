@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Header2 from "../Header2";
 import ProductInfo from "./ProductInfo";
 import styled from "styled-components";
 import Review from "./Review";

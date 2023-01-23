@@ -1,10 +1,10 @@
-import './hearder2css.css'
+import './heardercss.css'
 import React, { useRef,useState,useEffect } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import { useCookies } from "react-cookie";
 import Categories from './Categories'
-import Logininformation2 from './Logininformation2';
+import Logininformation from '../Login/Logininformation';
 
 
 const Header2 = () => {
@@ -94,7 +94,7 @@ const Header2 = () => {
 
     return (
     <Div>   
-         <Logininformation2 getuserData={setuserinformation}/>
+         <Logininformation getuserData={setuserinformation}/>
         <Header>        
             <Section>
                 <DDiv>

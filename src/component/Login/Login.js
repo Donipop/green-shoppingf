@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { json, Route, useNavigate, Link } from 'react-router-dom';
 import { useCookies, Cookies } from 'react-cookie';
-import Header2 from "./Header2";
+import Header from "../Header/Header";
 import { useDispatch, useSelector } from "react-redux";
 
 function Login() {
@@ -62,7 +62,7 @@ function Login() {
 
     return(
         <div>
-            <Header2 />
+            <Header />
             <h2>Login</h2>
             <div>
             <form onSubmit={onSubmitHandler}>

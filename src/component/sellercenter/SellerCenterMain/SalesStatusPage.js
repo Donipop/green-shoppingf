@@ -2,7 +2,7 @@ import { useEffect,useState } from "react";
 import ReactApexChart from "react-apexcharts"; 
 import axios from "axios";
 import { useCookies } from "react-cookie";
-import Logininformation2 from '../../Logininformation2'
+import Logininformation from '../../Login/Logininformation'
 
 
 
@@ -105,7 +105,7 @@ const SalesStauts = () => {
         return (
 
             <div className="OrderDeliveryPage" style={{width:"820px",height:"340px",paddingLeft:"30px"}}>
-                <Logininformation2 getuserData={setuserinformation}/>
+                <Logininformation getuserData={setuserinformation}/>
             <div className="PannelHeader">
                 <div style={{padding:"0 25px", borderBottom:"1px solid #e2e6ee"}}>
                     <h3 className="pannel-title">마켓 매출 통계</h3>

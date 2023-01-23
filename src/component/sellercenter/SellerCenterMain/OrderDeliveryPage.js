@@ -3,7 +3,7 @@ import { useEffect,useState } from "react"
 import styled from "styled-components"
 import "./SellerCenterMaincss.css"
 import {useCookies} from "react-cookie"
-import Logininformation2 from '../../Logininformation2'
+import Logininformation from '../../Login/Logininformation'
 
 
 
@@ -53,7 +53,7 @@ const OrderDeliveryPage = () => {
     
     return(
         <div className="OrderDeliveryPage" style={{width:"1200px"}}>
-            <Logininformation2 getuserData={setuserinformation}/>
+            <Logininformation getuserData={setuserinformation}/>
             <div className="PannelHeader">
                 <div style={{padding:"0 25px", borderBottom:"1px solid #e2e6ee"}}>
                     <h3 className="pannel-title">주문/배송</h3>

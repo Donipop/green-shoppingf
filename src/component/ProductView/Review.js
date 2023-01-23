@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import styled from 'styled-components';
 import './Reviewcss.css';
 import ReviewList  from "./ReviewList";
-import Logininformation from "../Logininformation";
+import Logininformation from "../Login/Logininformation";
 
 const Review = () => {
     const {page} = useParams();

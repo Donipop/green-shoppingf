@@ -3,15 +3,16 @@ import "./CategoriesCSS.css";
 
 function Categories() {
   return (
-    <div className="dropdown">
+    <div className="dropdown" style={{ marginTop: "60px", marginLeft: "5px" }}>
       <button
-        className="btn btn-primary dropdown-toggle"
+        className="btn dropdown-toggle"
         type="button"
         id="dropdownMenuButton"
         data-mdb-toggle="dropdown"
         aria-expanded="false"
+        style={{ color: "white" }}
       >
-        카테고리
+        <span style={{ fontSize: "13px" }}>카테고리</span>
       </button>
       <ul
         className="dropdown-menu"
