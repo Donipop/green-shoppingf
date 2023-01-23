@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header2 from './Header2';
 import Categories from './Categories';
-import Test from './test';
 import styled from 'styled-components';
 
 

@@ -7,7 +7,6 @@ import IndexPage from './component/Index'
 import SellerCenter from './component/SellerCenter/SellerCenter';
 import Login from './component/Login';
 import Orderlist from './component/Orderlist/Orderlist';
-import Information from './component/Information';
 import Logout from './component/Logout';
 import Notice from './component/Notice/Noticelist'
 import NoticeView from './component/Notice/NoticeView';
@@ -34,6 +33,7 @@ import TalkTalk from './component/TalkTalk/TalkTalk';
 
 import SearchView  from './component/SearchView/SearchView';
 import SellerCenterMain from './component/SellerCenter/SellerCenterMain/SellerCenterMain';
+import Test256 from './component/Test256';
 // function App() {
 //   return (
 //     <div className="App">
@@ -56,7 +56,6 @@ const Router = (props) => {
         <Route path='/Sellercenter/*' element={<SellerCenter />} />
         <Route path='/login' element={<Login/>} />
         <Route path='/Orderlist' element={<Orderlist/>} />
-        <Route path='/information' element={<Information/>} />
         <Route path='/logout' element={<Logout/>} />
         <Route path='/Notice' element={<Notice/>} />
         <Route path='/NoticeDetail/:id' element={<NoticeView/>} />
@@ -82,6 +81,7 @@ const Router = (props) => {
         <Route path='/ct/:uuid' element={<TalkTalk />} />
         <Route path='/searchview' element={<SearchView/>} />
         <Route path='/SellercenterMainpage' element={<SellerCenterMain/>} />
+        <Route path='/Test256' element={<Test256/>} />
       </Routes>
     </BrowserRouter>
   );
