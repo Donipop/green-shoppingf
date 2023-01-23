@@ -1,233 +1,271 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
-function CategorySelect({getData, UpdateData}){
-    const [categorylist, setCategorylist] = useState({
-        category1: [],
-        category2: [],
-        category3: [],
-        category4: []
+function CategorySelect({ getData, UpdateData }) {
+  const [categorylist, setCategorylist] = useState({
+    category1: [],
+    category2: [],
+    category3: [],
+    category4: [],
+  });
+
+  const [category, setCategory] = useState({
+    category1: "",
+    category2: "",
+    category3: "",
+    category4: "",
+    category_num1: "",
+    category_num2: "",
+    category_num3: "",
+    category_num4: "",
+  });
+
+  const [current_Categoy, setcurrent_Category] = useState("");
+  //렌더후 대분류 카테고리 목록을 가져옴
+  useEffect(() => {
+    get_CategoryList().then((res) => {
+      setCategorylist((categorylist) => {
+        return {
+          ...categorylist,
+          category1: res,
+        };
+      });
     });
-        
-    const [category, setCategory] = useState({
-        category1: '',
-        category2: '',
-        category3: '',
-        category4: '',
-        category_num1: '',
-        category_num2: '',
-        category_num3: '',
-        category_num4: ''
-    });
+  }, []);
 
-    const [current_Categoy,setcurrent_Category] = useState("");
-    //렌더후 대분류 카테고리 목록을 가져옴
-    useEffect(() => {
-        get_CategoryList().then(res =>{
-            setCategorylist(categorylist => {
-                return {
-                    ...categorylist, category1: res
-                }
-            });
-        })
-    },[]);
+  const [UpdateProductData, setUpdateProductData] = useState({
+    categoryNum: "",
+    categoryName: "",
+  });
+  useEffect(() => {
+    if (UpdateData === undefined || UpdateData?.length === 0) return;
+    axios
+      .get("/api/sellercenter/getcategoryroot", {
+        params: {
+          num: UpdateData.category,
+        },
+      })
+      .then((res) => {
+        setUpdateProductData((data) => {
+          return {
+            ...data,
+            categoryNum: res.data.NUM,
+            categoryName: res.data.NAME,
+          };
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [UpdateData]);
 
-    
+  useEffect(() => {
+    if (UpdateProductData.categoryNum === "") return;
 
-    const [UpdateProductData, setUpdateProductData] = useState({
-        categoryNum: '',
-        categoryName: '',
-    });
-    useEffect(() => {
-        if(UpdateData === undefined || UpdateData?.length === 0) return ;
-        axios.get("/api/sellercenter/getcategoryroot",{
-            params:{
-                num: UpdateData.category
-            }
-        }).then((res)=>{
-            setUpdateProductData((data) => {
-                return {
-                    ...data, categoryNum: res.data.NUM, categoryName: res.data.NAME
-                }});
-        }).catch((err)=>{
-            console.log(err);
-        })
+    let splitCategoryNum = UpdateProductData.categoryNum.split(">");
+    let splitCategoryName = UpdateProductData.categoryName.split(">");
 
-    },[UpdateData]);
-    
-    useEffect(() => {
-        if(UpdateProductData.categoryNum === '') return;
-
-        let splitCategoryNum = UpdateProductData.categoryNum.split(">");
-        let splitCategoryName = UpdateProductData.categoryName.split(">");
-        
-        //for문 돌려서 숫자 자동입력 하게
-        for(let i = 0; i < splitCategoryNum.length; i++){
-            setCategory(category => {
-                
-                    if(i > 0){
-                        return {
-                            ...category, ['category' + (i+1)]: ' > ' + splitCategoryName[i], ['category_num' + (i+1)]: splitCategoryNum[i]
-                        }
-                    }else{
-                        return {
-                            ...category, ['category' + (i+1)]: splitCategoryName[i], ['category_num' + (i+1)]: splitCategoryNum[i]
-                        }
-                    }
-            });
-    
-            if (i === 3) break;
-            get_CategoryList(splitCategoryNum[i]).then(res =>{
-                setCategorylist(categorylist => {
-                    return {
-                        ...categorylist, ['category' + (i+2)]: res
-                    }
-                });
-            });
+    //for문 돌려서 숫자 자동입력 하게
+    for (let i = 0; i < splitCategoryNum.length; i++) {
+      setCategory((category) => {
+        if (i > 0) {
+          return {
+            ...category,
+            ["category" + (i + 1)]: " > " + splitCategoryName[i],
+            ["category_num" + (i + 1)]: splitCategoryNum[i],
+          };
+        } else {
+          return {
+            ...category,
+            ["category" + (i + 1)]: splitCategoryName[i],
+            ["category_num" + (i + 1)]: splitCategoryNum[i],
+          };
         }
-        setcurrent_Category(splitCategoryNum[splitCategoryNum.length-1]);
-    },[UpdateProductData]);
-    
+      });
 
-    useEffect(() => {
-        //getData("category",category);
-        getData("category",current_Categoy);
-    },[current_Categoy]);
-    /**
-     * dropdown menu에서 선택한 카테고리를 state에 저장
-     * 
-     */
-    const onChangeCategory = ((e) => {
-        let num = Number(e.target.parentElement.id.split('category')[1]) + 1;
-    
-        //대분류를 제외한 카테고리를 선택했을 때
-        if (e.target.parentElement.id.split('category')[1] !== '1'){
-            categorylist['category' + (num-1)].forEach((category) => {
-                if (category.name === e.target.innerText){
-                    setCategory((ca) => {
-                        return {
-                            
-                            //선택한 카테고리의 상위 카테고리를 제외한 하위 카테고리는 초기화
-                            ...ca, ['category_num' + (num-1)]: category.num, ['category' + (num-1)]: ' > ' + e.target.innerText,
-                             ['category' + (num)]: '', ['category' + (num + 1)]: '', ['category' + (num + 2)]: '',
-                              ['category_num' + (num)]: '', ['category_num' + (num + 1)]: '', ['category_num' + (num + 2)]: ''
+      if (i === 3) break;
+      get_CategoryList(splitCategoryNum[i]).then((res) => {
+        setCategorylist((categorylist) => {
+          return {
+            ...categorylist,
+            ["category" + (i + 2)]: res,
+          };
+        });
+      });
+    }
+    setcurrent_Category(splitCategoryNum[splitCategoryNum.length - 1]);
+  }, [UpdateProductData]);
 
-                              
-                        }
-                        
-                    })
-                    setcurrent_Category((current_Categoy) => category.num);
-                    //선택한 카테고리의 하위 카테고리 목록을 가져옴
-                    get_CategoryList(category.num).then(res =>{
-                        //console.log(categorylist);
-                        setCategorylist(categorylist => {
-                            return {
-                                ...categorylist, ['category' + num]: res, ['category' + (num + 1)]: [], ['category' + (num + 2)]: []
-                            }
-                        });
-                    })
-                }
-            })
-            
-            
-        }else{
-            let num = Number(e.target.parentElement.id.split('category')[1]) + 1;
-            //대분류를 선택했을 때
-            categorylist.category1.forEach((category) => {
-                if (category.name === e.target.innerText){
-                    setCategory((ca) => {
-                        return {
-                            //대분류를 선택했기에 2,3,4번째 카테고리는 초기화
-                            ...ca, category_num1: category.num,category1: e.target.innerText,
-                             category2: '', category3: '', category4: '', category_num2: '', category_num3: '', category_num4: ''
-                        }
-                    })
-                    setcurrent_Category((current_Categoy)=> category.num);
-                    //대분류를 선택했기에 2번째 카테고리 목록을 가져옴
-                    get_CategoryList(category.num).then(res =>{
-                        setCategorylist(categorylist => {
-                            return {
-                                ...categorylist, ['category' + num]: res, ['category' + (num + 1)]: [], ['category' + (num + 2)]: [], ['category' + (num + 3)]: []
-                            }
-                        });
-                    })
-                }
-            })
+  useEffect(() => {
+    //getData("category",category);
+    getData("category", current_Categoy);
+  }, [current_Categoy]);
+  /**
+   * dropdown menu에서 선택한 카테고리를 state에 저장
+   *
+   */
+  const onChangeCategory = (e) => {
+    let num = Number(e.target.parentElement.id.split("category")[1]) + 1;
+
+    //대분류를 제외한 카테고리를 선택했을 때
+    if (e.target.parentElement.id.split("category")[1] !== "1") {
+      categorylist["category" + (num - 1)].forEach((category) => {
+        if (category.name === e.target.innerText) {
+          setCategory((ca) => {
+            return {
+              //선택한 카테고리의 상위 카테고리를 제외한 하위 카테고리는 초기화
+              ...ca,
+              ["category_num" + (num - 1)]: category.num,
+              ["category" + (num - 1)]: " > " + e.target.innerText,
+              ["category" + num]: "",
+              ["category" + (num + 1)]: "",
+              ["category" + (num + 2)]: "",
+              ["category_num" + num]: "",
+              ["category_num" + (num + 1)]: "",
+              ["category_num" + (num + 2)]: "",
+            };
+          });
+          setcurrent_Category((current_Categoy) => category.num);
+          //선택한 카테고리의 하위 카테고리 목록을 가져옴
+          get_CategoryList(category.num).then((res) => {
+            //console.log(categorylist);
+            setCategorylist((categorylist) => {
+              return {
+                ...categorylist,
+                ["category" + num]: res,
+                ["category" + (num + 1)]: [],
+                ["category" + (num + 2)]: [],
+              };
+            });
+          });
         }
+      });
+    } else {
+      let num = Number(e.target.parentElement.id.split("category")[1]) + 1;
+      //대분류를 선택했을 때
+      categorylist.category1.forEach((category) => {
+        if (category.name === e.target.innerText) {
+          setCategory((ca) => {
+            return {
+              //대분류를 선택했기에 2,3,4번째 카테고리는 초기화
+              ...ca,
+              category_num1: category.num,
+              category1: e.target.innerText,
+              category2: "",
+              category3: "",
+              category4: "",
+              category_num2: "",
+              category_num3: "",
+              category_num4: "",
+            };
+          });
+          setcurrent_Category((current_Categoy) => category.num);
+          //대분류를 선택했기에 2번째 카테고리 목록을 가져옴
+          get_CategoryList(category.num).then((res) => {
+            setCategorylist((categorylist) => {
+              return {
+                ...categorylist,
+                ["category" + num]: res,
+                ["category" + (num + 1)]: [],
+                ["category" + (num + 2)]: [],
+                ["category" + (num + 3)]: [],
+              };
+            });
+          });
+        }
+      });
+    }
+  };
+  return (
+    <>
+      <div className="col-3">
+        <ul className="list-group list-group-flush scrollarea" id="category1">
+          {categorylist.category1.map((category) => (
+            <li
+              key={category.num}
+              className="list-group-item list-group-item-action"
+              onClick={onChangeCategory}
+            >
+              {category.name}
+            </li>
+          ))}
+        </ul>
+      </div>
 
+      <div className="col-3">
+        <ul className="list-group list-group-flush scrollarea" id="category2">
+          {categorylist.category2.map((category) => (
+            <li
+              key={category.num}
+              className="list-group-item list-group-item-action"
+              onClick={onChangeCategory}
+            >
+              {category.name}
+            </li>
+          ))}
+        </ul>
+      </div>
 
-    });
-    return(
-        <>
-            <div className='col-3'>
-                <ul className='list-group list-group-flush scrollarea' id='category1'>
+      <div className="col-3">
+        <ul className="list-group list-group-flush scrollarea" id="category3">
+          {categorylist.category3.map((category) => (
+            <li
+              key={category.num}
+              className="list-group-item list-group-item-action"
+              onClick={onChangeCategory}
+            >
+              {category.name}
+            </li>
+          ))}
+        </ul>
+      </div>
 
-                    {categorylist.category1.map((category) => (
-                        <li key={category.num} className='list-group-item list-group-item-action' onClick={onChangeCategory}>
-                        {category.name}
-                    </li>))}
+      <div className="col-3">
+        <ul className="list-group list-group-flush scrollarea" id="category4">
+          {categorylist.category4.map((category) => (
+            <li
+              key={category.num}
+              className="list-group-item list-group-item-action"
+              onClick={onChangeCategory}
+            >
+              {category.name}
+            </li>
+          ))}
+        </ul>
+      </div>
 
-                </ul>
-            </div>
-
-            <div className='col-3'>
-                <ul className='list-group list-group-flush scrollarea' id='category2'>
-
-                    {categorylist.category2.map((category) => (
-                        <li key={category.num} className='list-group-item list-group-item-action' onClick={onChangeCategory}>
-                        {category.name}
-                    </li>))}
-
-                </ul>
-            </div>
-
-            <div className='col-3'>
-                <ul className='list-group list-group-flush scrollarea' id='category3'>
-                    {categorylist.category3.map((category) => (
-                        <li key={category.num} className='list-group-item list-group-item-action' onClick={onChangeCategory}>
-                        {category.name}
-                    </li>))}
-
-                </ul>
-            </div>
-
-            <div className='col-3'>
-                <ul className='list-group list-group-flush scrollarea' id='category4'>
-
-                    {categorylist.category4.map((category) => (
-                        <li key={category.num} className='list-group-item list-group-item-action' onClick={onChangeCategory}>
-                        {category.name}
-                    </li>))}
-
-                </ul>
-            </div>
-
-            <div className='col mt-3'>
-                <h4>선택한 카테고리: {category.category1}{category.category2}{category.category3}{category.category4}</h4>
-            </div>
-        </>
-    )
+      <div className="col mt-3">
+        <h4>
+          선택한 카테고리: {category.category1}
+          {category.category2}
+          {category.category3}
+          {category.category4}
+        </h4>
+      </div>
+    </>
+  );
 }
 
 /**
- * 
- * @param {String} parent_num 
+ *
+ * @param {String} parent_num
  * @returns 입력한 부모를 가진 카테고리 리스트
  */
- function get_CategoryList(parent_num){
-    
-    const re = axios({
-        method: "get",
-        url: "/api/sellercenter/getcategory",
-        params: {
-            parent_num: parent_num
-        },
+function get_CategoryList(parent_num) {
+  const re = axios({
+    method: "get",
+    url: "/api/sellercenter/getcategory",
+    params: {
+      parent_num: parent_num,
+    },
+  });
+  return re
+    .then((res) => {
+      return res.data;
     })
-    return re.then((res) => {
-        return res.data;
-        }).catch((err) => {
-        return err;
-        })
+    .catch((err) => {
+      return err;
+    });
 }
 
 export default CategorySelect;
