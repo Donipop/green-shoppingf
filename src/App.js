@@ -29,7 +29,6 @@ import TalkTalk from './component/TalkTalk/TalkTalk';
 
 import SearchView  from './component/SearchView/SearchView';
 import SellerCenterMain from './component/SellerCenter/SellerCenterMain/SellerCenterMain';
-import Test256 from './component/Login/Test256';
 import Signup from './component/SellerSignup/Signup';
 // function App() {
 //   return (
@@ -76,7 +75,6 @@ const Router = (props) => {
         <Route path='/ct/:uuid' element={<TalkTalk />} />
         <Route path='/searchview' element={<SearchView/>} />
         <Route path='/SellercenterMainpage' element={<SellerCenterMain/>} />
-        <Route path='/Test256' element={<Test256/>} />
       </Routes>
     </BrowserRouter>
   );

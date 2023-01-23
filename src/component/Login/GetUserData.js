@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-function Test123(refreshToken) {
+function GetUserData(refreshToken) {
     let userInformation = {
         user_address : "",
         user_brith : "",
@@ -31,4 +31,4 @@ function Test123(refreshToken) {
         })
 }
 
-export default Test123;
+export default GetUserData;
