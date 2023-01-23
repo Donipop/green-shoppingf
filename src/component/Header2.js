@@ -2,7 +2,10 @@ import './hearder2css.css'
 import React, { useRef,useState,useEffect } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import logo from '../logo.svg'
+import { useCookies } from "react-cookie";
+import Categories from './Categories'
+import Logininformation2 from './Logininformation2';
+
 
 const Header2 = () => {
     const name1 = new URLSearchParams(window.location.search).get('name')
@@ -11,19 +14,58 @@ const Header2 = () => {
     )
     const [searchcont, setSearchcont] = useState('')
     const UlRef = useRef()
-   
     const [count,setCount] = useState(0);
+    const [text, setText] = useState('로그인');
+    const [cookies, setCookie, removeCookie] = useCookies(['refreshToken'])
+    const [aaa, setaaa] = useState('/login')
+    let refreshToken = cookies.refreshToken;
+    const [userinformation, setuserinformation] = useState({
+        user_address : "",
+        user_brith : "",
+        user_email : "",
+        user_grade : "",
+        user_id : "",
+        user_money : "",
+        user_name : "",
+        user_nick : "",
+        user_password : "",
+        user_role : "",
+        user_sex : "",
+        user_signdate : "",
+        user_state : "", 
+        user_tel : ""
+    });
+    let login_information = sessionStorage.getItem("login")
+    login_information = JSON.parse(login_information);
+
+    const textChange = (e) => {
+        if( refreshToken == null ) {
+            setText("로그인")
+            setaaa("/login")
+        }
+        else if (refreshToken != null ) {
+            setText("로그아웃")
+            setaaa("/logout")
+        }
+    }
+
 
 
     useEffect( () => {
+       if(login_information === null){
+        return;
+       }
+        
         axios({
             method:'get',
             url:'/api/mypage/countBasket',
             params: {
-                user_id: 'admin'
+                user_id: login_information.user_id
             }
         })
         .then(res => setCount(res.data))
+
+        textChange()
     },[])
 
 
@@ -52,11 +94,12 @@ const Header2 = () => {
 
     return (
     <Div>   
+         <Logininformation2 getuserData={setuserinformation}/>
         <Header>        
             <Section>
                 <DDiv>
                     <H1>
-                    <a style={{height:"41px"}}>
+                    <a href ='/'style={{height:"41px"}}>
                     <img src="//image7.coupangcdn.com/image/coupang/common/logo_coupang_w350.png" width="174" height="41" alt="쿠팡로고" style={{verticalAlign:"top"}}></img>
                     </a>
                     </H1>
@@ -112,12 +155,15 @@ const Header2 = () => {
                         </ul>
                 </DDiv>
             </Section>
+               <CategoriesDiv>
+                    <Categories />
+               </CategoriesDiv>
         </Header>
                         <Article>
                             <section style={{width:"1020px",margin:"0 auto",fontSize:"11px"}}>
                                 <Menu>
                                     <LII>
-                                        <AAA href='/login'>로그인</AAA>
+                                        <AAA href={(aaa)} >{text}</AAA>
                                     </LII>
 
                                     <LII>
@@ -358,4 +404,17 @@ const MypageSpan = styled.span`
 const AAA = styled.a`
  text-decoration: none;
  color: black;
+`
+
+const CategoriesDiv = styled.div`
+background-image: url(//static.coupangcdn.com/image/coupang/common/pc_header_img_sprite_180104.png);
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 110px;
+    height: 115px;
+    top: 32px;
+    left: 0;
+    margin-right: 30px;
+    background-position: 0 0;
+    text-align: center;
 `

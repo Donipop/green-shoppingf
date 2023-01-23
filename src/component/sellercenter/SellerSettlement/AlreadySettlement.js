@@ -20,7 +20,7 @@ function AlreadySettlement({getDate}) {
     
 
     useEffect(()=> {
-        let result = '';
+        let result = 0;
         axios({
             method:'post',
             url:'/api/sellercenter/getalreadysettlement',
@@ -42,6 +42,7 @@ function AlreadySettlement({getDate}) {
         })
        
     }, [getDate])
+
 
 
     return (

@@ -22,13 +22,15 @@ const SellerReview = () => {
     const [avgstar, setAvgStar] = useState({
         avg: 0
     })
+    let login_information = sessionStorage.getItem("login")
+    login_information = JSON.parse(login_information);
 
     useEffect(() => {
         axios({
             method: "get",
             url: `/api/sellercenter/reviewmanagement/reviewlist`,
             params: {
-                user_id: user_id,
+                user_id: login_information.user_id,
                 start: dateinfo.start,
                 end: dateinfo.end
             }

@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Hello from './component/Hello';
 import Hello2 from './component/Hello2';
-import Header from './component/Header';
 import IndexPage from './component/Index'
 import SellerCenter from './component/SellerCenter/SellerCenter';
 import Login from './component/Login';
-import Orderlist from './component/Orderlist/Orderlist';
 import Information from './component/Information';
 import Logout from './component/Logout';
 import Notice from './component/Notice/Noticelist'
@@ -52,10 +50,8 @@ const Router = (props) => {
         <Route path="/" element={<IndexPage />} />
         <Route path="/signup" element={<Hello />} />
         <Route path="/hello2" element={<Hello2 />} />
-        <Route path='/header' element={<Header />} />
         <Route path='/Sellercenter/*' element={<SellerCenter />} />
         <Route path='/login' element={<Login/>} />
-        <Route path='/Orderlist' element={<Orderlist/>} />
         <Route path='/information' element={<Information/>} />
         <Route path='/logout' element={<Logout/>} />
         <Route path='/Notice' element={<Notice/>} />

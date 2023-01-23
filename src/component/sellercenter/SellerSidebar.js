@@ -132,8 +132,8 @@ function Sidebar() {
               </div>
             </li>
           </ul>
-        </div>
       </div>
     </div>
-  );
+  </div>
+        );
 }

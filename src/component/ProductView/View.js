@@ -49,61 +49,60 @@ function View() {
     });
     setDivNaviStateClass(arr);
   };
+  
+    const aaa = () => {
+     //productinfo.cont에 <p>태그가 들어가있으면 그대로 출력하고, 아니면 img태그로 바꿔서 출력
+     //productinfo.cont가 undefined일때는 에러가 나기때문에, undefined일때는 빈문자열을 리턴
+        if(productinfo.cont === undefined){
+            return '';
+        }
 
-  const aaa = () => {
-    //productinfo.cont에 <p>태그가 들어가있으면 그대로 출력하고, 아니면 img태그로 바꿔서 출력
-    //productinfo.cont가 undefined일때는 에러가 나기때문에, undefined일때는 빈문자열을 리턴
-    if (productinfo.cont === undefined) {
-      return "";
+        if(productinfo.cont.includes('<p>')){
+            return productinfo.cont;
+        }else{
+            return <img src={productinfo.cont} alt="상품이미지" />
+        }
     }
+    return(
+        
+            <div className="container">
+                
+                <div className="row">
+                    <div className="col-12">
+                    </div>
+                    <div className="pt-5"></div>
+                    <ProductInfo product={productinfo} />
+                    <div className="pt-5"></div>
+                </div>
+                <UL className="d-block m-0 p-0" style={{borderLeft: `1px solid #000`}}>
+                    {divNaviState.map((item, index) => {      
+                            if(index < 4){
+                                return (
+                                    <a href={divNaviState[index+4]} key={index+4}>
+                                        <DIVNAVI onClick={onClickDivnavi} key={index} className={divNaviStateClass[index]}>{item}</DIVNAVI>
+                                    </a>
+                                )
+                            }else{
+                                return null;
+                            }
+                    })}
+                </UL>
+                <div className="pt-5">
+                {aaa()}
+                </div>
+            
+                
 
-    if (productinfo.cont.includes("<p>")) {
-      return productinfo.cont;
-    } else {
-      return <img src={productinfo.cont} alt="상품이미지" />;
-    }
-  };
-  console.log(productinfo);
+                <div>
+                    <Review />
+                </div>
+                 <div>
+                    <QnAList page={page} />
+                </div>
+            </div>
+        
+    )
 
-  return (
-    <div className="container">
-      <div className="row">
-        <div className="col-12">
-          <Header2 />
-        </div>
-        <div className="pt-5"></div>
-        <ProductInfo product={productinfo} />
-        <div className="pt-5"></div>
-      </div>
-      <UL className="d-block m-0 p-0" style={{ borderLeft: `1px solid #000` }}>
-        {divNaviState.map((item, index) => {
-          if (index < 4) {
-            return (
-              <a href={divNaviState[index + 4]} key={index + 4}>
-                <DIVNAVI
-                  onClick={onClickDivnavi}
-                  key={index}
-                  className={divNaviStateClass[index]}
-                >
-                  {item}
-                </DIVNAVI>
-              </a>
-            );
-          } else {
-            return null;
-          }
-        })}
-      </UL>
-      <div className="pt-5">{aaa()}</div>
-
-      <div>
-        <Review />
-      </div>
-      <div>
-        <QnAList page={page} />
-      </div>
-    </div>
-  );
 }
 export default View;
 

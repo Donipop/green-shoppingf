@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header2 from './Header2';
-import Categories from './Categories';
-import Test from './test';
 import styled from 'styled-components';
+import ItemRecommend from './ItemRecommend';
 
 
 
@@ -11,20 +10,40 @@ import styled from 'styled-components';
 export default Index;
 
 function Index(){
-    //매일 9시에 새로고침
-    
+    const [list, setList] = useState([
+        {
+        MAINIMAGE: '',
+        ID: 0 },
+        {MAINIMAGE: '',
+        ID: 0 },
+        {MAINIMAGE: '',
+        ID: 0 },
+        {MAINIMAGE: '',
+        ID: 0 },
+        {MAINIMAGE: '',
+        ID: 0 },
+        {MAINIMAGE: '',
+        ID: 0 },
+        {MAINIMAGE: '',
+        ID: 0 },
+        {MAINIMAGE: '',
+        ID: 0 },
+        {MAINIMAGE: '',
+        ID: 0 }
+    ]);
+
     useEffect(() => {
         axios.get('/api/randomitemlist')
         .then((res) => {
-            console.log(res.data);
+            setList(res.data);
         })
         .catch((err) => {
             console.log(err);
         })
     }, [])
-    
 
-   
+
+
 
     return(
         <div className=''>
@@ -64,55 +83,58 @@ function Index(){
                             <EM>오늘 짭팡이 엄선한 가장 HOT한 상품!</EM></H2>
                     </Divvv>
                     <Divtodaylist>
-                        <ul style={{listStyle:"none"}}>
+                        <ul style={{listStyle:"none"}}>   
                             <LIitem>
-                                <img src="https://static.coupangcdn.com/qa/cmg_paperboy/image/1673423587384/C2-B1.jpg" width="468" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
+                                <a href={`/view/${list[0].ID}`}>
+                                <img src={list[0].MAINIMAGE} width="468" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
+                                 ></img>
+                                 <SPan></SPan>
+                                 </a>
+                            </LIitem>
+                            <LIitem>
+                            <img src={list[1].MAINIMAGE} width="468" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
                                  ></img>
                                  <SPan></SPan>
                             </LIitem>
                             <LIitem>
-                            <img src="https://static.coupangcdn.com/qa/cmg_paperboy/image/1673423587384/C2-B1.jpg" width="468" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
-                                 ></img>
-                                 <SPan></SPan>
-                            </LIitem>
-                            <LIitem>
-                            <img src="https://static.coupangcdn.com/qa/cmg_paperboy/image/1673423587384/C2-B1.jpg" width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
+                            <img src={list[2].MAINIMAGE} width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
                                  ></img>
                                  <SPan></SPan>
                             </LIitem>
                         <LIitem>
-                            <img src="https://static.coupangcdn.com/ja/cmg_paperboy/image/1673423540161/C2-B4.jpg" width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
+                            <img src={list[3].MAINIMAGE} width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
                                  ></img>
                                  <SPan></SPan>
                             </LIitem>
                             <LIitem>
-                            <img src="https://static.coupangcdn.com/qa/cmg_paperboy/image/1673423587384/C2-B1.jpg" width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
+                            <img src={list[4].MAINIMAGE} width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
                                  ></img>
                                  <SPan></SPan>
                             </LIitem>
                             <LIitem>
-                            <img src="https://static.coupangcdn.com/qa/cmg_paperboy/image/1673423587384/C2-B1.jpg" width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
+                            <img src={list[5].MAINIMAGE} width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
                                  ></img>
                                  <SPan></SPan>
                             </LIitem>
                             <LIitem>
-                                <img src="https://static.coupangcdn.com/qa/cmg_paperboy/image/1673423587384/C2-B1.jpg" width="468" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
+                                <img src={list[6].MAINIMAGE} width="468" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
                                  ></img>
                                  <SPan></SPan>
                             </LIitem>
                             <LIitem>
-                            <img src="https://static.coupangcdn.com/qa/cmg_paperboy/image/1673423587384/C2-B1.jpg" width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
+                            <img src={list[7].MAINIMAGE} width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
                                  ></img>
                                  <SPan></SPan>
                             </LIitem>   <LIitem>
-                            <img src="https://static.coupangcdn.com/qa/cmg_paperboy/image/1673423587384/C2-B1.jpg" width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
+                            <img src={list[8].MAINIMAGE} width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
                                  ></img>
                                  <SPan></SPan>
                             </LIitem>
                             </ul>
                     </Divtodaylist>
-                </Divv>
+                <ItemRecommend />
 
+                </Divv>
             </SEction>
 
          

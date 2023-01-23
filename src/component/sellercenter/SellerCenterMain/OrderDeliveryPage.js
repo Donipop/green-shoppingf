@@ -2,18 +2,43 @@ import axios from "axios"
 import { useEffect,useState } from "react"
 import styled from "styled-components"
 import "./SellerCenterMaincss.css"
+import {useCookies} from "react-cookie"
+import Logininformation2 from '../../Logininformation2'
+
 
 
 const OrderDeliveryPage = () => {
     const [list, setList] = useState({
         data: [0],
     });
+    const [cookies, setCookie, removeCookie] = useCookies(['refreshToken'])
+    let refreshToken = cookies.refreshToken;
+    const [userinformation, setuserinformation] = useState({
+        user_address : "",
+        user_brith : "",
+        user_email : "",
+        user_grade : "",
+        user_id : "",
+        user_money : "",
+        user_name : "",
+        user_nick : "",
+        user_password : "",
+        user_role : "",
+        user_sex : "",
+        user_signdate : "",
+        user_state : "", 
+        user_tel : ""
+    });
+    let login_information = sessionStorage.getItem("login")
+    login_information = JSON.parse(login_information);
+
     useEffect(() => {
+        
          axios({
             method: 'get',
             url: '/api/sellercenter/deliverystate',
             params: {
-                id: 'admin',
+                id: login_information.user_id
             },
             })
             .then(res => setList({...list,
@@ -26,9 +51,9 @@ const OrderDeliveryPage = () => {
     const list3 = list.data.filter((item) => item === 3)
     const list4 = list.data.filter((item) => item === 4)
     
-    console.log(list3.length)
     return(
         <div className="OrderDeliveryPage" style={{width:"1200px"}}>
+            <Logininformation2 getuserData={setuserinformation}/>
             <div className="PannelHeader">
                 <div style={{padding:"0 25px", borderBottom:"1px solid #e2e6ee"}}>
                     <h3 className="pannel-title">주문/배송</h3>

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {useState, useEffect} from 'react';
 import Logininformation from '../Logininformation';
-import LoginInterceptor from "../LoginInterceptor";
 import MypageModal from './Mypagemodal';
 
 
