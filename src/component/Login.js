@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useDispatch } from 'react-redux';
 import { json, Route, useNavigate, Link } from 'react-router-dom';
 import { useCookies, Cookies } from 'react-cookie';
-
+import Header2 from "./Header2";
+import { useDispatch, useSelector } from "react-redux";
 
 function Login() {
     
@@ -13,6 +13,7 @@ function Login() {
     const [user_name, setuser_name] = useState('')
     const [user_pw, setuser_pw] = useState('')
     const [checked, setchecked] = useState(false)
+    
 
 
     const on_user_nameHandler = (event) => {
@@ -48,10 +49,7 @@ function Login() {
             if(res.returnURL === "/") {
                 setCookie('refreshToken', res.refreshToken,{
                     path:'/',
-                    
                 })
-                sessionStorage.setItem("login", res.vo)
-                
                 alert("홈으로 이동합니다.");
                 Navigate(res.returnURL)
             }
@@ -60,29 +58,36 @@ function Login() {
                 Navigate(res.returnURL)
             }
         })
-        
     }
 
     return(
         <div>
+            <Header2 />
             <h2>Login</h2>
+            <div>
             <form onSubmit={onSubmitHandler}>
-            <div>
-                <label htmlFor='input_id'>ID : </label>
-                <input type='text' value={user_name} onChange={on_user_nameHandler} />
+            <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                    <span className="input-group-text" id="basic-addon1">ID: </span>
+                </div>
+                <input type="text" className="form-control" placeholder="id" aria-label="Username" aria-describedby="basic-addon1" value={user_name} onChange={on_user_nameHandler}/>
             </div>
-            <div>
-                <label htmlFor='input_pw'>PW : </label>
-                <input type='password' value={user_pw} onChange={on_user_pwHandler} />
-            </div>
+                <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text" id="basic-addon1">PW: </span>
+                    </div>
+                    <input type="password" className="form-control" placeholder="password" aria-label="Username" aria-describedby="basic-addon1" value={user_pw} onChange={on_user_pwHandler}/>
+                </div>
             <div>
                 <label htmlFor="auto_login_check">자동로그인</label>
                 <input type="checkbox" onChange={check_the_checkedHandler} checked={checked} /><br />
-                <h2>체크 : {JSON.stringify(checked)}</h2>
-                <button type="submit">Login</button>
+                
+                <button className="btn btn-outline-primary" type="submit">Login</button>
+                
                 
             </div>
             </form>
+            </div>
 
             
 

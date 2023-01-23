@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
 
 const TokTokQnaPage = () => {
     const [chatList, setChatList] = useState([])
@@ -25,7 +28,7 @@ const TokTokQnaPage = () => {
             console.log(err)
         })
     }, [])
-    
+
   return (
     <div
       className="OrderDeliveryPage"

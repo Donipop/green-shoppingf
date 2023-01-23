@@ -11,18 +11,7 @@ function Myinformation() {
     const [cookies, setCookie, removeCookie] = useCookies(['refreshToken'])
     let refreshToken = cookies.refreshToken;
 
-    const[myinfo, setmyinfo] = useState({
-        user_address : "",
-        user_brith	: "",
-        user_email	: "",
-        user_id		: "",
-        user_money	: "",
-        user_name	: "",
-        user_nick	: "",
-        user_password	: "",
-        user_signdate	: "",
-        user_tel		: ""
-    })
+    const[myinfo, setmyinfo] = useState(Logininformation2())
 
     const [password2, setpassword2] = useState('') // 비밀번호 확인
 
