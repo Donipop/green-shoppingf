@@ -10,7 +10,7 @@ const [notice, setNotice] = useState([])
     useEffect(() => {
         axios({
             method: "get",
-            url: `/api/Notice`,
+            url: `/api/notice`,
         })
         .then((res) => {
             setNotice(res.data)
