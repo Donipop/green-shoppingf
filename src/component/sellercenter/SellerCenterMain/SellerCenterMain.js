@@ -9,18 +9,17 @@ import NoticePage from "./NoticePage";
 const SellerCenterMain = ({ user }) => {
   return (
     <div>
-      {user.user_id}
       <Div>
-        <OrderDeliveryPage />
-        <CancleCostSettlePage />
+        <OrderDeliveryPage user={user}/>
+        <CancleCostSettlePage user={user} />
       </Div>
       <div style={{ display: "flex" }}>
-        <SalesStautsPage />
+        <SalesStautsPage user={user}/>
         <TokTokQnaPage />
         <NoticePage />
       </div>
       <div style={{ display: "flex" }}>
-        <SellerReview />
+        <SellerReview user={user}/>
       </div>
     </div>
   );

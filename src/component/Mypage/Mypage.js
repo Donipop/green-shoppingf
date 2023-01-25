@@ -5,15 +5,15 @@ import Shopping_basket from "./Shopping_basket";
 import Coupon from "./Coupon";
 import MyReview from "./MyReview";
 
-function Mypage() {
+function Mypage({user}) {
   return (
     <div>
       <LoginInterceptor />
-      <Header />
-      <MypurChaseInquiry />
+      <Header user={user}/>
+      <MypurChaseInquiry user={user}/>
       <Shopping_basket />
       <Coupon />
-      <MyReview />
+      <MyReview user={user}/>
       <a href="/myinformation">회원정보수정</a>
       <br />
       <a href="/sellersignup">사업자 등록 ㄱㄱ</a>

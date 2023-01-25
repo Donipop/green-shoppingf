@@ -3,21 +3,24 @@ import { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import styled from "styled-components";
 
-const MyReview = () => {
+const MyReview = ({user}) => {
   const [reviewlist, setReviewList] = useState([]);
   const Array = [0, 1, 2, 3, 4];
 
   useEffect(() => {
+    if(user === undefined){
+      return;
+    }
     axios({
       method: "get",
       url: `/api/mypage/myreview`,
       params: {
-        user_id: 'admin',
+        user_id: user.user_id,
       },
     }).then((res) => {
       setReviewList(res.data);
     });
-  }, []);
+  }, [user]);
 
   return (
     <div style={{ marginTop: "40px" }}>

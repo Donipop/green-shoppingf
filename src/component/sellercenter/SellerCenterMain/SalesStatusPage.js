@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 
 
 
-const SalesStauts = () => {
+const SalesStauts = ({user}) => {
     const today = new Date();
     let day = today.getDate();
     let month = today.getMonth() + 1
@@ -15,11 +15,12 @@ const SalesStauts = () => {
     });
    
     useEffect( () => {  
+        if(user === undefined) {return ;}
         axios({
             method: 'get',
             url: '/api/sellercenter/salesstatus',
             params: {
-                id:  'admin',
+                id:  user.user_id,
                 start: year + "-" + month + "-" + (day-8),
                 end: year + "-" + month + "-" + (day),
             },
@@ -28,7 +29,7 @@ const SalesStauts = () => {
             .then(res => setList({...list,
                 data: res.data
                 }))
-    }, [])
+    }, [user])
       
     const linedata = {
         series: [{

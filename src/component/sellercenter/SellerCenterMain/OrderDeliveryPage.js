@@ -2,29 +2,24 @@ import axios from "axios"
 import { useEffect,useState } from "react"
 import styled from "styled-components"
 import "./SellerCenterMaincss.css"
-import {useCookies} from "react-cookie"
 
-
-
-const OrderDeliveryPage = () => {
+const OrderDeliveryPage = ({user}) => {
     const [list, setList] = useState({
         data: [0],
     });
-   
-
     useEffect(() => {
-        
+    if(user === undefined) {return ;}        
          axios({
             method: 'get',
             url: '/api/sellercenter/deliverystate',
             params: {
-                id: 'admin2'
+                id:  user.user_id
             },
             })
             .then(res => setList({...list,
                 data: res.data
                 }))
-    }, [])
+    }, [user])
      //list의 값이 0,2,3,4인것만 따로 빼서 배열에 넣기
     const list0 = list.data.filter((item) => item === 0)
     const list2 = list.data.filter((item) => item === 2)

@@ -4,9 +4,8 @@ import ReactApexChart from "react-apexcharts";
 
 
 
-const SellerReview = () => {
+const SellerReview = ({user}) => {
     
-    const user_id = "admin"
     const [starnum, setStarNum] = useState([])
     const [starlist, setStarList] = useState(
         {five: 0, four: 0, three: 0, two: 0, one: 0 }
@@ -24,11 +23,12 @@ const SellerReview = () => {
     })
    
     useEffect(() => {
+      if(user === undefined) {return ;}
         axios({
             method: "get",
             url: `/api/sellercenter/reviewmanagement/reviewlist`,
             params: {
-                user_id: 'admin2',
+                user_id: user.user_id,
                 start: dateinfo.start,
                 end: dateinfo.end
             }
@@ -40,7 +40,7 @@ const SellerReview = () => {
         }
         )      
 
-    }, [dateinfo])
+    }, [dateinfo,user])
      
 
     useEffect(() => {

@@ -4,8 +4,7 @@ import styled from 'styled-components'
 import axios from 'axios'
 import { useCookies } from "react-cookie";
 import Categories from './Categories'
-import GetUserData from '../Login/GetUserData'
-const Header2 = () => {
+const Header = ({user}) => {
     const name1 = new URLSearchParams(window.location.search).get('name')
     const [name, setName] = useState(
         name1 === null ? "전체" : name1
@@ -17,10 +16,6 @@ const Header2 = () => {
     const [aaa, setaaa] = useState('/login')
     const [cookies, setCookie, removeCookie] = useCookies(['refreshToken'])
     let refreshToken = cookies.refreshToken;
-    const [data, setData] = useState({
-        user_id: null,
-    });
-    let user = useState(GetUserData(refreshToken));
 
     const textChange = (e) => {
         if (refreshToken === undefined || refreshToken === null) {
@@ -34,17 +29,20 @@ const Header2 = () => {
     }
 
     useEffect(() => {
+        if(user === undefined){
+            return;
+        }
             axios({
                 method: 'get',
                 url: '/api/mypage/countBasket',
                 params: {
-                    user_id: 'admin'
+                    user_id: user.user_id
                 }
             })
                 .then(res => setCount(res.data))
             textChange()
         
-    }, [data.user_id])
+    }, [user])
 
     const noneCheck = () => {
         if (UlRef.current.style.display === "none") {
@@ -67,7 +65,7 @@ const Header2 = () => {
 
     return (
         <Div>
-            <Header>
+            <HeaderStyle>
                 <Section>
                     <DDiv>
                         <H1>
@@ -130,7 +128,7 @@ const Header2 = () => {
                 <CategoriesDiv>
                     <Categories />
                 </CategoriesDiv>
-            </Header>
+            </HeaderStyle>
             <Article>
                 <section style={{ width: "1020px", margin: "0 auto", fontSize: "11px" }}>
                     <Menu>
@@ -154,7 +152,7 @@ const Header2 = () => {
     )
 }
 
-export default Header2
+export default Header
 
 const LI = styled.li`
     list-style: none;
@@ -250,7 +248,7 @@ const Div = styled.div`
 
 `
 
-const Header = styled.header`
+const HeaderStyle = styled.header`
 width:1020px;
 position:relative;
 height:147px;

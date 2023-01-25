@@ -4,13 +4,14 @@ import './Reviewcss.css';
 import {useParams} from "react-router-dom";
 
 const QnApopup = () => {
+    const {user_id} = useParams();
     const {page} = useParams();
     const [letter, setletter] = useState(0);
     const [aria, setaria] = useState(false);
     const [account, setAccount] = useState({
         cont: '',
         product_num: page,
-        user_id: "dlrjsxptmxm",
+        user_id: user_id,
         product_name: ""
     })
         
@@ -47,10 +48,6 @@ const QnApopup = () => {
          .then(alert("문의가 접수되었습니다."), window.close(), window.opener.location.reload())
          
     }
-
-    
-
-   
 
     return(
         <div>

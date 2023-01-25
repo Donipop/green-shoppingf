@@ -2,10 +2,8 @@ import axios from "axios"
 import styled from "styled-components"
 import "./SellerCenterMaincss.css"
 import {useEffect, useState} from "react"
-import {useCookies} from "react-cookie"
-import Logininformation from '../../Login/Logininformation'
 
-const CancleCostSettlePage = () => {
+const CancleCostSettlePage = ({user}) => {
     const [List, setList] = useState({
         count : 0,
         beforeSettleSum: 0,
@@ -13,13 +11,12 @@ const CancleCostSettlePage = () => {
     });
 
     useEffect(() => {
-       
-
+        if(user === undefined) {return ;}
         axios({
             method: 'get',
             url: '/api/sellercenter/canclecostsettle',
             params: {
-                id: 'admin'
+                id: user.user_id
             },
             })
             .then(res => setList({...List,
@@ -27,7 +24,7 @@ const CancleCostSettlePage = () => {
                  beforeSettleSum: res.data[0].beforeSettleSum,
                  afterSettleSum: res.data[0].afterSettleSum
             }))
-    }, [])
+    }, [user])
     return(
         <div className="OrderDeliveryPage" style={{width:"1200px"}}>
             <div className="PannelHeader">

@@ -10,9 +10,6 @@ const AnswerUpdate = () => {
     const{child_id} = useParams();
     const[answercont, setAnswercont]  = useState(cont)
 
-     
-    
-
      useEffect(() => {
          axios({
              method: 'get',
@@ -28,7 +25,7 @@ const AnswerUpdate = () => {
         setAnswercont(e.target.value)
     }
 
-    const addadd = (e) => {
+    const QnaUpdate = (e) => {
         axios({
             method: 'post',
             url: `/api/view/QnA/answerUpdate/${page}/${id}`,
@@ -42,11 +39,6 @@ const AnswerUpdate = () => {
         .then(alert("답변이 수정되었습니다."),window.close(), window.opener.location.reload())
 
     }
-
-     
-
-
-
 
     return(
         <div>
@@ -68,7 +60,7 @@ const AnswerUpdate = () => {
                         <textarea className="QnAcont" value={answercont} placeholder="답변을 입력하세요." onChange={QnaCont} name="cont"></textarea>
                         
                     </div>
-                    <a href="#!"className="add" role="button" onClick={addadd}>수정</a>
+                    <a href="#!"className="add" role="button" onClick={QnaUpdate}>수정</a>
                 </form>
             </div>
         </div>

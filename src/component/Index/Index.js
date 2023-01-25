@@ -6,7 +6,7 @@ import ItemRecommend from './ItemRecommend';
 
 export default Index;
 
-function Index(){
+function Index({user}){
     const [list, setList] = useState([
         {
         MAINIMAGE: '',
@@ -44,7 +44,7 @@ function Index(){
 
     return(
         <div className=''>
-            <Header/>
+            <Header user={user}/>
                 <Section>
                     <img src="https://static.coupangcdn.com/da/cmg_paperboy/image/1673938680547/230118_C1_%ED%99%88-%EC%8B%9C%EC%A6%8C%EC%98%A4%ED%94%84_SMD-24729_PC.jpg" width="1920" height="450" ></img>
                 <Div>

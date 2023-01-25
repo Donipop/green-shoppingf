@@ -5,8 +5,9 @@ import ProductInfo from "./ProductInfo";
 import styled from "styled-components";
 import Review from "./Review";
 import QnAList from "./QnAList";
+import Header from "../Header/Header";
 
-function View() {
+function View({user}) {
   const { page } = useParams();
   const [productinfo, setProductinfo] = useState({ cont: "<p>" });
   const [divNaviState, setDivNaviState] = useState([
@@ -63,9 +64,8 @@ function View() {
         }
     }
     return(
-        
             <div className="container">
-                
+              <Header user={user}/>
                 <div className="row">
                     <div className="col-12">
                     </div>
@@ -89,14 +89,11 @@ function View() {
                 <div className="pt-5">
                 {aaa()}
                 </div>
-            
-                
-
                 <div>
-                    <Review />
+                    <Review user={user}/>
                 </div>
                  <div>
-                    <QnAList page={page} />
+                    <QnAList page={page} user={user}/>
                 </div>
             </div>
         
