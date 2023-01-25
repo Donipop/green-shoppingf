@@ -7,16 +7,18 @@ import TokTokQnaPage from "./TokTokQnaPage";
 import NoticePage from "./NoticePage";
 
 const SellerCenterMain = ({ user }) => {
+  if(user === undefined){
+    return ;
+  }
   return (
     <div>
-      {user.user_id}
       <Div>
         <OrderDeliveryPage />
         <CancleCostSettlePage />
       </Div>
       <div style={{ display: "flex" }}>
         <SalesStautsPage />
-        <TokTokQnaPage />
+        <TokTokQnaPage user={user}/>
         <NoticePage />
       </div>
       <div style={{ display: "flex" }}>

@@ -2,7 +2,7 @@ import ViewDate from "./ViewDate";
 import ViewTable from "./ViewTable";
 import { useState } from "react";
 
-function TotalOrderList() {
+function TotalOrderList({ marketName }) {
   const [dateInfo, setDateInfo] = useState({
     start: "",
     end: "",
@@ -23,7 +23,7 @@ function TotalOrderList() {
           </div>
 
           <div className="alert alert-secondary">
-            <ViewTable getDate={dateInfo} />
+            <ViewTable getDate={dateInfo} marketName={marketName} />
           </div>
 
           <div className="alert alert-secondary"></div>

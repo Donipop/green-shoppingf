@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigate, Route, Routes } from "react-router-dom";
 import SellerHeader from "./SellerHeader";
 import SellerSidebar from "./SellerSidebar";
@@ -10,37 +10,65 @@ import ProductUpdate from "./Update/ProductUpdate";
 import SalesManageMent from "./SalesManegement/SalesMenegement";
 import SellerCenterMain from "./SellerCenterMain/SellerCenterMain";
 import SellerSettlement from "./SellerSettlement/SellerSettlement";
-import { useEffect } from "react";
+import axios from "axios";
 
 export default SellerCenter;
 
-function SellerCenter({user}) {
-  // const params = useParams();
-  const Navigate = useNavigate()
-  useEffect(()=>{
-    if(user === undefined) {return ;}
-    if(user === '') {
-      Navigate('/')
-      return;
+function SellerCenter({ user }) {
+  const [marketName, setMarketName] = useState();
+
+  useLayoutEffect(() => {
+    if (user !== undefined) {
+      axios
+        .get("/api/sellercenter/getmarketnamelist", {
+          params: {
+            user_id: user.user_id,
+          },
+        })
+        .then((res) => {
+          setMarketName(res.data[0]);
+        });
     }
-  },[user])
+  }, [user]);
+
+  if (user === undefined) {
+    return;
+  }
   return (
     <div>
-      <SellerHeader />
+      <SellerHeader user={user} />
       <div className="d-flex">
         <SellerSidebar />
         <Routes>
           {/* <Route path = '*' element={<h1>404 Not Found</h1>}></Route> */}
           <Route path="/" element={<SellerCenterMain user={user} />}></Route>
-          <Route path="/create" element={<Create />}></Route>
-          <Route path="/totalorderlist" element={<TotalOrderList />}></Route>
-          <Route path="/orderpost" element={<OrderPost />}></Route>
-          <Route path="/orderconfirm" element={<OrderConfirm />}></Route>
-          <Route path="/update" element={<ProductUpdate />}></Route>
-          <Route path="/salesmanegement" element={<SalesManageMent />}></Route>
+          <Route
+            path="/create"
+            element={<Create user={user} marketName={marketName} />}
+          ></Route>
+          <Route
+            path="/totalorderlist"
+            element={<TotalOrderList marketName={marketName} />}
+          ></Route>
+          <Route
+            path="/orderpost"
+            element={<OrderPost marketName={marketName} />}
+          ></Route>
+          <Route
+            path="/orderconfirm"
+            element={<OrderConfirm marketName={marketName} />}
+          ></Route>
+          <Route
+            path="/update"
+            element={<ProductUpdate user={user} marketName={marketName} />}
+          ></Route>
+          <Route
+            path="/salesmanegement"
+            element={<SalesManageMent user={user} />}
+          ></Route>
           <Route
             path="/sellersettlement"
-            element={<SellerSettlement />}
+            element={<SellerSettlement user={user} />}
           ></Route>
         </Routes>
       </div>

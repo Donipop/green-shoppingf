@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function OrderPost() {
+function OrderPost({ marketName }) {
   const [allChecked, setAllChecked] = useState(false);
   const [isChecked, setIsChecked] = useState();
   const [list, setList] = useState([]);
@@ -23,10 +23,13 @@ function OrderPost() {
   }, [list, allChecked]);
 
   useEffect(() => {
+    if (marketName === undefined) {
+      return;
+    }
     axios
       .get("/api/sellercenter/getorderlist", {
         params: {
-          marketName: "아이유당근마켓",
+          marketName: marketName,
         },
       })
       .then((res) => {
@@ -37,7 +40,7 @@ function OrderPost() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [marketName]);
 
   const onClickPost = () => {
     let postList = [];

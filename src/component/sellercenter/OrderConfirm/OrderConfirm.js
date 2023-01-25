@@ -4,7 +4,7 @@ import { useState } from "react";
 import OrderConfirmDate from "./OrderConfirmDate";
 import OrderConfirmModal from "./OrderConfirmModal";
 
-function OrderConfirm() {
+function OrderConfirm({marketName}) {
   const [dateInfo, setDateInfo] = useState({
     start: "",
     end: "",
@@ -28,6 +28,7 @@ function OrderConfirm() {
               <OrderConfirmTable
                 getDate={dateInfo}
                 setModalInfo={setModalInfo}
+                marketName={marketName}
               />
             </div>
           </div>

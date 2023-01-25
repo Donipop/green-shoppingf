@@ -1,7 +1,7 @@
 ////////////////////////////////////
 // 상품등록 페이지
 ////////////////////////////////////
-import React, { useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import styled from "styled-components";
 import "../../css/create.css";
 import CategorySelect from "./create/CategorySelect";
@@ -15,7 +15,7 @@ import axios from "axios";
  * 상품등록 페이지 컴포넌트
  * @returns create page
  */
-function Create() {
+function Create({ user, marketName }) {
   const [product, setProduct] = useState({
     category: "",
     title: "",
@@ -23,10 +23,17 @@ function Create() {
     mainImg: "",
     detailImg: [""],
     product: [""],
-    market_name: "마켓이름",
+    market_name: user.marketName,
     event: "",
-    userId: "admin",
+    userId: user.user_id,
   });
+  useEffect(() => {
+    setProduct((product) =>{
+      return{
+        ...product, market_name: marketName
+      }
+    })
+  }, [marketName]);
 
   const onClickCreate = () => {
     axios.post("/api/sellercenter/create", product).then((res) => {

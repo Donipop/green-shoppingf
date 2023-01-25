@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ViewDetailProductInfo from "./ViewDetailProductInfo";
 
-function ViewTable({ getDate }) {
+function ViewTable({ getDate, marketName }) {
   const [allChecked, setAllChecked] = useState(false);
   const [isChecked, setIsChecked] = useState();
   const [list, setList] = useState([]);
@@ -41,10 +41,13 @@ function ViewTable({ getDate }) {
     );
   }, [getDate, list]);
   useEffect(() => {
+    if (marketName === undefined) {
+      return;
+    }
     axios
       .get("/api/sellercenter/getorderlist", {
         params: {
-          marketName: "아이유당근마켓",
+          marketName: marketName,
         },
       })
       .then((res) => {
@@ -54,7 +57,7 @@ function ViewTable({ getDate }) {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [marketName]);
 
   const showProductModal = (e, index) => {
     let data = {

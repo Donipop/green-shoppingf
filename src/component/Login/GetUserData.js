@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-async function GetUserData(refreshToken) {
+function GetUserData(refreshToken) {
     // let userInformation = {
     //     user_address : "",
     //     user_brith : "",
