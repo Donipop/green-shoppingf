@@ -342,16 +342,6 @@ function ProductInfo({ product }) {
                 </li>
               );
             })}
-            <li>
-              <button
-                className="dropdown-item"
-                type="button"
-                indexid="50"
-                onClick={onClickAdd}
-              >
-                테스트
-              </button>
-            </li>
           </ul>
         </div>
         <div>

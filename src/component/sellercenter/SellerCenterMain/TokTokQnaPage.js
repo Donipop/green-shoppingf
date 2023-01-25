@@ -2,32 +2,34 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-
-const TokTokQnaPage = () => {
-    const [chatList, setChatList] = useState([])
-    useEffect(() => {
-        axios.get("/api/chat/getChatList",
-        {
-            params: {
-                marketOwner: "admin2"
-            }
-        })
-        .then(res => {
-            console.log(res.data)
-            for(let i = 0; i < res.data.length; i++){
-                let data = {
-                    id: res.data[i].chatList.sender,
-                    lastMessage: res.data[i].chatList.message,
-                    count: res.data[i].count,
-                    uuid: res.data[i].uuid
-                }
-                setChatList((chatList) => [...chatList, data]);
-            }
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    }, [])
+const TokTokQnaPage = ({ user }) => {
+  const [chatList, setChatList] = useState([]);
+  useEffect(() => {
+    if (user === undefined) {
+      return;
+    }
+    axios
+      .get("/api/chat/getChatList", {
+        params: {
+          marketOwner: user.user_id,
+        },
+      })
+      .then((res) => {
+        // console.log(res.data);
+        for (let i = 0; i < res.data.length; i++) {
+          let data = {
+            id: res.data[i].chatList.sender,
+            lastMessage: res.data[i].chatList.message,
+            count: res.data[i].count,
+            uuid: res.data[i].uuid,
+          };
+          setChatList((chatList) => [...chatList, data]);
+        }
+      })
+      .catch((err) => {
+        // console.log(err);
+      });
+  }, [user]);
 
   return (
     <div
@@ -48,6 +50,48 @@ const TokTokQnaPage = () => {
           >
             톡톡문의
           </h3>
+        </div>
+        <div style={{ height: "270px", overflow: "auto" }}>
+          <ol className="list-group list-group-numbered">
+            {chatList.map((item, index) => {
+              return (
+                <a
+                  href={`/ct/${item.uuid}?id=admin2`}
+                  key={index}
+                  style={{ textDecoration: "none" }}
+                  target="_blank"
+                  rel="noreferrer"
+                  role="button"
+                  onClick={() => {
+                    window.open(
+                      `/ct/${item.uuid}?id=admin2`,
+                      "톡톡문의",
+                      "width=400, height=600, left=100, top=100, location=no, status=no, menubar=no, toolbar=no, scrollbars=no, resizable=no"
+                    );
+                  }}
+                >
+                  <li className="list-group-item d-flex justify-content-between align-items-start">
+                    <div className="ms-2 me-auto">
+                      <div className="fw-bold">{item.id}</div>
+                      {item.lastMessage}
+                    </div>
+                    {item.count === 0 ? (
+                      <span
+                        className="badge bg-primary rounded-pill"
+                        style={{ display: "none" }}
+                      >
+                        0
+                      </span>
+                    ) : (
+                      <span className="badge bg-primary rounded-pill">
+                        {item.count}
+                      </span>
+                    )}
+                  </li>
+                </a>
+              );
+            })}
+          </ol>
         </div>
       </div>
     </div>

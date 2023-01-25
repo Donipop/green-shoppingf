@@ -2,14 +2,17 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-function OrderConfirmTable({ getDate, setModalInfo }) {
+function OrderConfirmTable({ getDate, setModalInfo, marketName }) {
   const [orderConfirm, setOrderConfirm] = useState([]);
 
   useEffect(() => {
+    if (marketName === undefined) {
+      return;
+    }
     axios
       .get("/api/sellercenter/getorderconfirm", {
         params: {
-          marketName: "아이유당근마켓",
+          marketName: marketName,
         },
       })
       .then((res) => {
@@ -19,7 +22,7 @@ function OrderConfirmTable({ getDate, setModalInfo }) {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [marketName]);
 
   const showProductModal = (e, index) => {
     setModalInfo(orderConfirm[index]);

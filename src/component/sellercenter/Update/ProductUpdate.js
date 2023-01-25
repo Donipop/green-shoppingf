@@ -7,7 +7,7 @@ import ProductContent from "../create/ProductContent";
 import ProductAdd from "../create/ProductAdd";
 import axios from "axios";
 
-function ProductUpdate() {
+function ProductUpdate({ user, marketName }) {
   const [updateproduct, setUpdateProduct] = useState([]);
   const [productDetail, setProductDetail] = useState([]);
   const [exsitingProduct, setExsitingProduct] = useState([]);
@@ -17,14 +17,21 @@ function ProductUpdate() {
     title: "",
     cont: "",
     mainImg: "",
-    detailImg: [],
-    product: [],
-    market_name: "마켓이름",
+    detailImg: [""],
+    product: [""],
+    market_name: user.marketName,
     event: "",
-    userId: "admin",
+    userId: user.user_id,
     id: "",
   });
-
+  useEffect(() => {
+    setProduct((product) => {
+      return {
+        ...product,
+        market_name: marketName,
+      };
+    });
+  }, [marketName]);
   useEffect(() => {
     if (updateproduct?.id === undefined) return;
     setProduct((product) => {

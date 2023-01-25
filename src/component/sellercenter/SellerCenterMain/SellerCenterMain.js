@@ -7,6 +7,9 @@ import TokTokQnaPage from "./TokTokQnaPage";
 import NoticePage from "./NoticePage";
 
 const SellerCenterMain = ({ user }) => {
+  if(user === undefined){
+    return ;
+  }
   return (
     <div>
       <Div>
@@ -15,7 +18,7 @@ const SellerCenterMain = ({ user }) => {
       </Div>
       <div style={{ display: "flex" }}>
         <SalesStautsPage user={user}/>
-        <TokTokQnaPage />
+        <TokTokQnaPage user={user}/>
         <NoticePage />
       </div>
       <div style={{ display: "flex" }}>
