@@ -9,21 +9,21 @@ export default function UserFindId() {
     function FindUserId(e) {
         e.preventDefault();
         
-        let tlqkf = user_tel.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)
+        let tel = user_tel.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)
         
         
-        alert(tlqkf)                    
-    // axios({
-    //         method: 'post',
-    //         url: '/api/login/findId',
-    //         params: {
-    //             user_name: user_name,
-    //             user_tel: user_tel
-    //         }
-    //     })
-    //     .then(res => {
-    //         console.log(res.data)
-    //     })
+                            
+    axios({
+            method: 'post',
+            url: '/api/login/findId',
+            params: {
+                user_name: user_name,
+                user_tel: tel
+            }
+        })
+        .then(res => {
+            console.log(res.data)
+        })
     }
 
     return (

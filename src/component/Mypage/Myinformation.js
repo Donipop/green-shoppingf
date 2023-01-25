@@ -10,7 +10,22 @@ function Myinformation() {
   const [cookies, setCookie, removeCookie] = useCookies(["refreshToken"]);
   let refreshToken = cookies.refreshToken;
 
-  const [myinfo, setmyinfo] = useState(Logininformation());
+  const [myinfo, setmyinfo] = useState({
+    user_address: "",
+            user_brith: "",
+            user_email: "",
+            user_grade: "",
+            user_id: "",
+            user_money: "",
+            user_name: "",
+            user_nick: "",
+            user_password: "",
+            user_role: "",
+            user_sex: "",
+            user_signdate: "",
+            user_state: "",
+            user_tel: "",
+  });
 
   const [password2, setpassword2] = useState(""); // 비밀번호 확인
 
@@ -119,7 +134,7 @@ function Myinformation() {
   return (
     <div>
       <Header />
-      <LoginInterceptor />
+      {/* <LoginInterceptor /> */}
       <Logininformation getuserData={setmyinfo} />
       <div className="row m-2">
         <div className="col-12">

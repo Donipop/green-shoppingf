@@ -9,32 +9,32 @@ import SalesViewTable from "./SalesViewTable";
 function SalesManageMent() {
   const [cookies, setCookie, removeCookie] = useCookies(["refreshToken"]);
   let refreshToken = cookies.refreshToken;
-  const [user_id, setuser_id] = useState("");
+  const [user_id, setuser_id] = useState('admin');
   const [dateInfo, setDateInfo] = useState({
     start: "",
     end: "",
   });
 
   useEffect(() => {
-    axios({
-      method: "post",
-      url: "/api/login/refreshTokenToAccessToken",
-      data: {
-        refreshToken: refreshToken,
-      },
-    })
-      .then((res) => res.data)
-      .then((res) => {
-        if (res == null) {
-          alert("다시 로그인 해주시길 바랍니다.");
-          Navigate("/");
-        } else {
-          setuser_id(res.user_id);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // axios({
+    //   method: "post",
+    //   url: "/api/login/refreshTokenToAccessToken",
+    //   data: {
+    //     refreshToken: refreshToken,
+    //   },
+    // })
+    //   .then((res) => res.data)
+    //   .then((res) => {
+    //     if (res == null) {
+    //       alert("다시 로그인 해주시길 바랍니다.");
+    //       Navigate("/");
+    //     } else {
+    //       setuser_id(res.user_id);
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   }, [refreshToken]);
 
   return (

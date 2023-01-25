@@ -116,10 +116,13 @@ function Login() {
             />
             <br/> */}
             </Innerdiv>
-            <div>
-            <HrefA href="/UserSignUp">회원가입</HrefA><br/>
-                <ButtonCustom onClick={(e) => UserFindId(e)}>아이디 찾기</ButtonCustom><br/>
-                <ButtonCustom onClick={(e) => UserFindPassword(e)}>비밀번호 찾기</ButtonCustom>
+            <div style={{display:"flex"}}>
+            <HrefA style={{marginLeft:"0px"}}href="/UserSignUp">회원가입</HrefA>
+              <div style={{marginLeft:"70px"}}>
+                <HrefA onClick={(e) => UserFindId(e)}>아이디 찾기</HrefA>
+                <span style={{margin:"0 10px"}}>|</span>
+                <HrefA onClick={(e) => UserFindPassword(e)}>비밀번호 찾기</HrefA>
+                </div>
             </div>
           
         </form>
@@ -158,14 +161,9 @@ const HrefA = styled.a`
     color: #0073e9;
     font-size: 14px;
     line-height: 24px;
+    cursor: pointer;
     `
-const ButtonCustom = styled.button`
-    background: transparent;
-    text-decoration: none;
-    color: #0073e9;
-    font-size: 14px;
-    line-height: 24px;
-    `
+
 
 
 
