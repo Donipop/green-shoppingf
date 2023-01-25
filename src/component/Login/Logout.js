@@ -30,6 +30,7 @@ function Logout() {
 
   useEffect(() => {
     Logout();
+    window.location.reload();
   });
 
   return (

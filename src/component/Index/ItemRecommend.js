@@ -1,27 +1,107 @@
 import styled from "styled-components";
 import { FaStar } from "react-icons/fa";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import { useRef } from "react";
 
 const ItemRecommend = () => {
   const Array = [0, 1, 2, 3, 4];
+  const [page, setPage] = useState(1);
+  const [list, setList] = useState([]);
+  const [recommendItemList, setRecommendItemList] = useState([[],[],[]])
+  const preventRef = useRef();
+  const nextRef = useRef();
 
+  useEffect(() => {
+    axios.get("/api/recommenditemlist").then((res) => {
+      setList(res.data);
+    });
+  }, []);
+
+  const next = () => {
+    if (page === 1) {
+      setPage(2);
+
+    } else if (page === 2) {
+      setPage(3);
+    }
+
+  };
+ 
+  const prevent = () => {
+    if (page === 3) {
+      setPage(2);
+    } else if (page === 2) {
+      setPage(1);
+    }
+  };  
+  useEffect(() => {
+    if(list.length === 0){
+      return;
+    }
+    let arr = list;
+    setRecommendItemList(division(arr, 5));
+  }, [list]);
+
+  const division = (arr, n) => {
+    const length = arr.length;
+    const divide = Math.floor(length / n) + (Math.floor( length % n ) > 0 ? 1 : 0);
+    const newArray = [];
+  
+    for (let i = 0; i <= divide; i++) {
+      // 배열 0부터 n개씩 잘라 새 배열에 넣기
+      newArray.push(arr.splice(0, n)); 
+    }
+  
+    return newArray;
+  }
+
+  const opacity = () => {
+    if(preventRef.current === undefined && nextRef.current === undefined){
+      return;
+    }
+    if (page === 1) {
+      preventRef.current.style.opacity = "0";
+      nextRef.current.style.opacity = "1";
+    } else if (page === 2) {
+      preventRef.current.style.opacity = "1";
+      nextRef.current.style.opacity = "1";
+    } else if (page === 3) {
+      preventRef.current.style.opacity = "1";
+      nextRef.current.style.opacity = "0";
+    }
+  };
+
+  
+ 
+  
   return (
     <Div>
-      <DDiv>
+       <DDiv>
         <div style={{ borderBottom: "1px solid #EEE" }}>
           <HeaderDiv>
+            <div style={{float:"right"}}>
+            <span style={{fontSize:"14px"}}>
+              <em style={{fontStyle:"normal",fontWeight:"700",color:"#111"}}>{page}</em>
+              /3
+            </span>
+            </div>
             <Span>이런 아이템 어떠세요?</Span>
           </HeaderDiv>
           <BodyDiv>
             <BodyscrollerDiv>
               <Divv>
                 <Ul>
-                  <Li>
+                  {recommendItemList[page-1].map((item, idx) => {
+                    return(
+                  <Li key={item.ID}>
                     <div>
-                      <A>
+                      <A href={`/view/${item.ID}`}>
                         <div style={{ position: "relative" }}>
                           <img
-                            src="https://thumbnail10.coupangcdn.com/thumbnails/remote/292x292ex/image/vendor_inventory/14b7/bd63e858fcb5be18450891631edd73fdddc16190c3af36002d94825c6d4a.jpg"
-                            width={194}
+                            src={item.MAINIMAGE}
+                            width={194} 
                           ></img>
                         </div>
                       </A>
@@ -39,27 +119,31 @@ const ItemRecommend = () => {
                             letterSpacing: "normal",
                           }}
                         >
-                          비버리힐즈 폴로클럽 NEW 플리스 기모 후드 집업 후리스
+                          {item.TITLE}
                         </span>
                       </Divvv>
                       <StarDiv>
                         <Stars>
                           {Array.map((el, idx) => {
                             return (
-                              <FaStar key={idx} size="15" color={"#fcc419"} />
+                              <FaStar key={idx} size="15" color={item.starCount / 5 > el ? "#fcc419" : "gray"} />
                             );
                           })}
-                          <Spann>(154)</Spann>
+                          <Spann>({item.star})</Spann>
                         </Stars>
                       </StarDiv>
                     </TitleDiv>
-                  </Li>
+                  </Li>              
+             )})}
                 </Ul>
               </Divv>
             </BodyscrollerDiv>
           </BodyDiv>
         </div>
       </DDiv>
+      {opacity()}
+      <AButtontwo ref={preventRef} onClick={prevent}></AButtontwo>
+      <AButton ref={nextRef} onClick={next}></AButton>
     </Div>
   );
 };
@@ -97,7 +181,7 @@ const Span = styled.span`
 `;
 
 const BodyDiv = styled.div`
-  width: auto;
+  width: 900px;
   margin: 0 0 35px;
   position: relative;
 `;
@@ -183,3 +267,33 @@ const Spann = styled.span`
   font-size: 12px;
   color: #878787;
 `;
+
+const AButton = styled.a`
+opacity: 1;
+right: 0;
+display: block;
+background: url(https://static.coupangcdn.com/image/fodium/desktop/widget-sdp-alsoviewedproducts-20160622.png) no-repeat;
+background-position: -78px -2px;
+position: absolute;
+top: 200px;
+width: 36px;
+height: 39px;
+text-indent: -9999em;
+text-decoration: none;
+cursor: pointer;
+`
+
+const AButtontwo = styled.a`
+opacity: 1;
+left: 0;
+display: block;
+background: url(https://static.coupangcdn.com/image/fodium/desktop/widget-sdp-alsoviewedproducts-20160622.png) no-repeat;
+background-position:-2px -43px;
+position: absolute;
+top: 200px;
+width: 36px;
+height: 39px;
+text-indent: -9999em;
+text-decoration: none;
+cursor: pointer;
+`

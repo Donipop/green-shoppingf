@@ -65,6 +65,7 @@ function View({user}) {
   };
   return (
     <div className="container">
+      <Header user={user}/>
       <div className="row">
         <div className="col-12"></div>
         <div className="pt-5"></div>
@@ -91,12 +92,11 @@ function View({user}) {
         })}
       </UL>
       <div className="pt-5">{viewCont()}</div>
-
       <div>
-        <Review />
+        <Review user={user}/>
       </div>
       <div>
-        <QnAList page={page} />
+        <QnAList page={page} user={user} />
       </div>
     </div>
   );
