@@ -58,45 +58,36 @@ const Router = (props) => {
       <Routes>
         <Route path="/" element={<IndexPage user={data}/>} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/Sellercenter/*" element={<SellerCenter user={data} />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/logout" element={<Logout />} />
-        <Route path="/Notice" element={<Notice />} />
-        <Route path="/NoticeDetail/:id" element={<NoticeView />} />
-        <Route path="/SellerSignup" element={<SellerSignup />} />
-        <Route path="/SellerSignup2" element={<SellerSignup2 />} />
-        <Route path="/myinformation" element={<Myinformation />} />
-        <Route path="/mypage" element={<Mypage />} />
-        <Route path="/writenotice" element={<Writenotice />} />
-        <Route path="/view/:page" element={<View />} />
-        <Route path="/view/:page/Review" element={<Review />} />
-        <Route path="/QnA:page" element={<QnAList />} />
-        <Route path="/QnA/write/:page" element={<QnAQuestionWrite />} />
-        <Route path="/QnA/reply/:page/:id" element={<QnAanswerWrite />} />
-        <Route path="/QnA/update/:page/:id" element={<QnAQuestionUpdate />} />
-        <Route
-          path="/QnA/answerUpdate/:page/:id/:child_id/:cont"
-          element={<QnAanswerUpdate />}
-        />
-        <Route path="/Mypage/coupon" element={<Coupon />} />
-        <Route path="/mypage/Shopping_basket" element={<Shopping_basket />} />
-        <Route path="/Payment" element={<PaymentPage />} />
-        <Route path="/Mypage/MyReview" element={<MyReview />} />
-        <Route
-          path="/Mypage/MyPurchaseInquiry"
-          element={<MyPurchaseInquiry />}
-        />
-        <Route
-          path="/Sellercenter/reviewmanagement"
-          element={<SellerReview />}
-        />
-        <Route path="/header" element={<Header />} />
-        <Route path="/ct/:uuid" element={<TalkTalk />} />
-        <Route path="/searchview" element={<SearchView />} />
-        <Route path="/SellercenterMainpage" element={<SellerCenterMain />} />
-        <Route path="/UserSignUp" element={<UserSignUp />} />
-        <Route path="/UserFindId" element={<UserFindId />} />
-        <Route path="/UserFindPassword" element={<UserFindPassword />} />
+        <Route path='/Sellercenter/*' element={<SellerCenter user={data}/>} />
+        <Route path='/login' element={<Login/>} />
+        <Route path='/logout' element={<Logout/>} />
+        <Route path='/Notice' element={<Notice/>} />
+        <Route path='/NoticeDetail/:id' element={<NoticeView/>} />
+        <Route path='/SellerSignup' element={<SellerSignup/>} />
+        <Route path='/SellerSignup2' element={<SellerSignup2/>} />
+        <Route path='/myinformation' element={<Myinformation/>} />
+        <Route path='/mypage' element={<Mypage user={data}/>} />
+        <Route path='/writenotice' element={<Writenotice/>} />
+        <Route path="/view/:page" element={<View user={data}/>} />
+        <Route path='/view/:page/Review' element={<Review/>} />
+        <Route path='/QnA:page' element={<QnAList/>} />
+        <Route path='/QnA/write/:page/:user_id' element={<QnAQuestionWrite/>} />
+        <Route path='/QnA/reply/:page/:id/:user_id' element={<QnAanswerWrite/>} />
+        <Route path='/QnA/update/:page/:id' element={<QnAQuestionUpdate/>} />
+        <Route path='/QnA/answerUpdate/:page/:id/:child_id/:cont' element={<QnAanswerUpdate/>} />
+        <Route path='/Mypage/coupon' element={<Coupon/>} />
+        <Route path='/mypage/Shopping_basket' element={<Shopping_basket/>} />
+        <Route path='/Payment' element={<PaymentPage/>} />
+        <Route path='/Mypage/MyReview' element={<MyReview/>} />
+        <Route path='/Mypage/MyPurchaseInquiry' element={<MyPurchaseInquiry/>} />
+        <Route path='/Sellercenter/reviewmanagement' element={<SellerReview/>} />
+        {/* <Route path='/header' element={<Header user={data}/>} /> */}
+        <Route path='/ct/:uuid' element={<TalkTalk />} />
+        <Route path='/searchview' element={<SearchView/>} />
+        <Route path='/SellercenterMainpage' element={<SellerCenterMain/>} />
+        <Route path='/UserSignUp' element={<UserSignUp />} />
+        <Route path='/UserFindId' element={<UserFindId/>} />
+        <Route path='/UserFindPassword' element={<UserFindPassword/>} />
       </Routes>
     </BrowserRouter>
   );
