@@ -2,31 +2,53 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import LoginInterceptor from "../Login/LoginInterceptor";
-import { useCookies } from "react-cookie";
 import styled from "styled-components";
-import Logininformation from "../Login/Logininformation";
 
-function Myinformation() {
-  const [cookies, setCookie, removeCookie] = useCookies(["refreshToken"]);
-  let refreshToken = cookies.refreshToken;
 
+function Myinformation({user}) {
   const [myinfo, setmyinfo] = useState({
-    user_address: "",
-            user_brith: "",
-            user_email: "",
-            user_grade: "",
-            user_id: "",
-            user_money: "",
-            user_name: "",
-            user_nick: "",
-            user_password: "",
-            user_role: "",
-            user_sex: "",
-            user_signdate: "",
-            user_state: "",
-            user_tel: "",
+            user_address: '',
+            user_brith: '',
+            user_email: '',
+            user_grade: '',
+            user_id: '',
+            user_money: '',
+            user_name: '',
+            user_nick: '',
+            user_password: '',
+            user_role: '',
+            user_sex: '',
+            user_signdate: '',
+            user_state: '',
+            user_tel: ''
   });
 
+  useEffect(() => {
+    if(user === undefined){
+      return;
+    }
+    setmyinfo({
+      user_address: user.user_address,
+            user_brith: user.user_brith,
+            user_email: user.user_email,
+            user_grade: user.user_grade,
+            user_id: user.user_id,
+            user_money: user.user_money,
+            user_name: user.user_name,
+            user_nick: user.user_nick,
+            user_password: user.user_password,
+            user_role: user.user_role,
+            user_sex: user.user_sex,
+            user_signdate: user.user_signdate,
+            user_state: user.user_state,
+            user_tel: user.user_tel,
+    })
+  }, [user])
+
+
+  
+
+  
   const [password2, setpassword2] = useState(""); // 비밀번호 확인
 
   const [CheckCheck, setCheckCheck] = useState(true); // 체크 총 체크
@@ -58,7 +80,7 @@ function Myinformation() {
       url: "/api/mypage/myinfoUpdate",
       data: {
         myinfo: myinfo,
-        refreshToken: refreshToken,
+        
       },
     })
       .then((res) => res.data)
@@ -131,11 +153,11 @@ function Myinformation() {
     }
   }, [Checknick.check, Checkpassword.check]);
 
+  
   return (
     <div>
       <Header />
-      {/* <LoginInterceptor /> */}
-      <Logininformation getuserData={setmyinfo} />
+      <LoginInterceptor />
       <div className="row m-2">
         <div className="col-12">
           <div className="alert alert-secondary">
