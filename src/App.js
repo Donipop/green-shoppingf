@@ -26,22 +26,18 @@ import MyPurchaseInquiry from './component/Mypage/MyPurchaseInquiry';
 import SellerReview from './component/SellerCenter/reviewmanagement/SellerReview';
 import Header  from './component/Header/Header';
 import TalkTalk from './component/TalkTalk/TalkTalk';
-
 import SearchView  from './component/SearchView/SearchView';
 import SellerCenterMain from './component/SellerCenter/SellerCenterMain/SellerCenterMain';
 import Signup from './component/SellerSignup/Signup';
-// function App() {
-//   return (
-//     <div className="App">
-//       <Hello />
-//     </div>
-//   );
-// }
+import UserSignUp from './component/SignUp/UserSignUp';
+import UserFindId from './component/SignUp/UserFindId';
+import UserFindPassword from './component/SignUp/UserFindPassword';
 
-// export default App;
+
 
 
 const Router = (props) => {
+  
 
   return (
     <BrowserRouter>
@@ -75,6 +71,9 @@ const Router = (props) => {
         <Route path='/ct/:uuid' element={<TalkTalk />} />
         <Route path='/searchview' element={<SearchView/>} />
         <Route path='/SellercenterMainpage' element={<SellerCenterMain/>} />
+        <Route path='/UserSignUp' element={<UserSignUp/>} />
+        <Route path='/UserFindId' element={<UserFindId/>} />
+        <Route path='/UserFindPassword' element={<UserFindPassword/>} />
       </Routes>
     </BrowserRouter>
   );
