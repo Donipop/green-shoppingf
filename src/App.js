@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import IndexPage from "./component/Index/Index";
 import SellerCenter from "./component/SellerCenter/SellerCenter";
@@ -35,7 +35,6 @@ import SellerCenterMain from "./component/SellerCenter/SellerCenterMain/SellerCe
 import Signup from "./component/SellerSignup/Signup";
 import { useCookies } from "react-cookie";
 import GetUserData from "./component/Login/GetUserData";
-import { useState, useLayoutEffect } from "react";
 
 const Router = (props) => {
   
@@ -77,12 +76,12 @@ const Router = (props) => {
         <Route path='/QnA/answerUpdate/:page/:id/:child_id/:cont' element={<QnAanswerUpdate/>} />
         <Route path='/Mypage/coupon' element={<Coupon/>} />
         <Route path='/mypage/Shopping_basket' element={<Shopping_basket/>} />
-        <Route path='/Payment' element={<PaymentPage/>} />
+        <Route path='/Payment' element={<PaymentPage user={data}/>} />
         <Route path='/Mypage/MyReview' element={<MyReview/>} />
         <Route path='/Mypage/MyPurchaseInquiry' element={<MyPurchaseInquiry/>} />
         <Route path='/Sellercenter/reviewmanagement' element={<SellerReview/>} />
         {/* <Route path='/header' element={<Header user={data}/>} /> */}
-        <Route path='/ct/:uuid' element={<TalkTalk />} />
+        <Route path='/ct/:uuid' element={<TalkTalk user={data}/>} />
         <Route path='/searchview' element={<SearchView/>} />
         <Route path='/SellercenterMainpage' element={<SellerCenterMain/>} />
         <Route path='/UserSignUp' element={<UserSignUp />} />

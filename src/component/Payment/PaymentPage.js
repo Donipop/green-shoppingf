@@ -1,10 +1,15 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import ClientInfo from "./ClientInfo";
 import DeliveryInfo from "./DeliveryInfo";
-function PaymentPage(){
+function PaymentPage({user}){
+    useLayoutEffect(() => {
+       if(user === undefined){
+        return ;
+       }
+    }, [user])
     const {state} = useLocation();
     const [productList, setProductList] = useState([]);
     const [isChecked, setIsChecked] = useState([true,false,false]);
@@ -21,8 +26,9 @@ function PaymentPage(){
         totalDeliveryPrice: 0, //배송비
         totalPaymentPrice: 0, //총결제금액
     });
+    const [postAddress, setPostAddress] = useState();
     useEffect(() => {
-        //console.log(state)
+        console.log(state)
         for(let i=0; i<state.length; i++){
             for(let j=0; j<state[i].listItem.length; j++){
                 let products = {
@@ -96,10 +102,18 @@ function PaymentPage(){
     }
 
     const onClickBuy = () => {
-        axios.post('/api/payment/purchase',purchase)
+        let data = {
+            paymentVo: purchase,
+            userId: user.user_id,
+            postAddress: postAddress,
+        }
+        axios.post('/api/payment/purchase',data)
         .then((res) => {
             if(res.data === 'success'){
                 alert('구매가 완료되었습니다.');
+                window.location.href = '/';
+            }else{
+                alert('구매에 실패하였습니다.');
                 window.location.href = '/';
             }
         }).catch((err) => {
@@ -118,12 +132,12 @@ function PaymentPage(){
                 <div className="col-12">
                     <h3>구매자정보</h3>
                 </div>
-                <ClientInfo />
+                <ClientInfo user={user}/>
                 
                 <div className="col-12 mt-5">
                     <h3>배송지 정보</h3>
                 </div>
-                <DeliveryInfo />
+                <DeliveryInfo user={user} setPostAddress={setPostAddress}/>
 
                 <div className="col-12 mt-5">
                     <h3>상품정보</h3>

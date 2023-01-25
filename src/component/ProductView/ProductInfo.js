@@ -106,13 +106,13 @@ function ProductInfo({ product }) {
   }, [listItem]);
 
   useEffect(() => {
-    //제목
-    setTitle(product.title);
-    //상세제품
-    let today = new Date();
     if (product.product === undefined) {
       return;
     }
+    //상세제품
+    let today = new Date();
+    //제목
+    setTitle(product.title);
 
     if (product.product.length > 0) {
       //상세제품 등록
@@ -124,6 +124,7 @@ function ProductInfo({ product }) {
           product_count: "",
           dateStart: "",
           dateEnd: "",
+          indexId: 0
         };
         if (
           new Date(product.product[i].dateStart) > today ||
@@ -138,6 +139,7 @@ function ProductInfo({ product }) {
         products.product_count = product.product[i].product_count;
         products.dateStart = product.product[i].dateStart;
         products.dateEnd = product.product[i].dateEnd;
+        products.indexId = i;
         setDetailProduct((detailProduct) => {
           return [...detailProduct, products];
         });
@@ -203,14 +205,6 @@ function ProductInfo({ product }) {
     setMainImg(imgList[key].url);
   };
   const onClickBuyBtn = () => {
-    let logininformation = sessionStorage.getItem("login");
-    logininformation = JSON.parse(logininformation);
-    let user_id = logininformation?.user_id;
-
-    // if(user_id === undefined || user_id === null || user_id === ''){
-    //     alert('로그인이 필요합니다.');
-    //     return;
-    // }
     if (totalPrice === 0) {
       alert("상품을 선택해주세요.");
       return;
@@ -237,7 +231,6 @@ function ProductInfo({ product }) {
       productId: product.productId,
       listItem: changeListItem,
     };
-    console.log([data]);
     naviGate("/Payment", { state: [data] });
   };
 
@@ -334,7 +327,7 @@ function ProductInfo({ product }) {
                   <button
                     className="dropdown-item"
                     type="button"
-                    indexid={index}
+                    indexid={item.indexId}
                     onClick={onClickAdd}
                   >
                     {item.product_name}

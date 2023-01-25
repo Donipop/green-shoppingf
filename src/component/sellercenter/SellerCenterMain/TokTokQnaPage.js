@@ -23,6 +23,7 @@ const TokTokQnaPage = ({ user }) => {
             count: res.data[i].count,
             uuid: res.data[i].uuid,
           };
+          console.log(data);
           setChatList((chatList) => [...chatList, data]);
         }
       })
@@ -56,7 +57,7 @@ const TokTokQnaPage = ({ user }) => {
             {chatList.map((item, index) => {
               return (
                 <a
-                  href={`/ct/${item.uuid}?id=admin2`}
+                  href={`/ct/${item.uuid}?id=${user.user_id}`}
                   key={index}
                   style={{ textDecoration: "none" }}
                   target="_blank"
@@ -64,7 +65,7 @@ const TokTokQnaPage = ({ user }) => {
                   role="button"
                   onClick={() => {
                     window.open(
-                      `/ct/${item.uuid}?id=admin2`,
+                      `/ct/${item.uuid}?id=${user.user_id}`,
                       "톡톡문의",
                       "width=400, height=600, left=100, top=100, location=no, status=no, menubar=no, toolbar=no, scrollbars=no, resizable=no"
                     );

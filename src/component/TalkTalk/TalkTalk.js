@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
 import {
   MDBContainer,
@@ -14,25 +14,26 @@ import TalkMyMessage from "./TalkMyMessage";
 import "./TalkTalk.css";
 import * as StompJs from "@stomp/stompjs";
 
-function TalkTalk(){
+function TalkTalk({user}){
     const {uuid} = useParams();
     const params = new URLSearchParams(window.location.search);
     const chatBody = useRef();
     const [chat, setChat] = useState([]);
     const client = useRef({});
-    
+    const [marketOwner, setMarketOwner] = useState();
     useEffect(() => {
+        if(user === undefined || user === "undefine" || user === ''){return ;}
         connect();
         return () => disconnect();
-    }, []);
+    }, [user]);
 
     const connect = () => {
         client.current = new StompJs.Client({
             brokerURL: "ws://localhost:8080/api/ws", // 웹소켓 서버로 직접 접속
             connectHeaders: {
                 "userId" : params.get("id"),
-                "marketOwner": 'admin2',
-                "uuid": uuid
+                "uuid": uuid,
+                "loginCheck": user === '' || user === undefined ? "false" : "true",
             },
             onConnect: () =>{
                 subscription();
@@ -60,8 +61,6 @@ function TalkTalk(){
         //채팅방 내역 구독
         client.current.subscribe(`/queue/user/${uuid}`, (msg) => {
             let data = JSON.parse(msg.body);
-            // console.log(data);
-            // console.log(data.length);
             if(data.length >= 0){return;}
             if(data.userId !== params.get('id')){
                 setChat((chat) => [...chat, TalkMyMessage(data.message.toString(),1)]);
@@ -70,7 +69,11 @@ function TalkTalk(){
         //다이렉트 메시지 구독
         client.current.subscribe('/user/queue/message', (msg) => {
             let data = JSON.parse(msg.body);
+            //console.log(data)
             console.log(data)
+            if(data.type === 'marketOwner'){
+                setMarketOwner(() => data.marketOwner);
+            }
             if(data.type === 'error'){
                 switch(data.code){
                     case "1":
@@ -98,9 +101,8 @@ function TalkTalk(){
                 return;
             }
             setChat([]);
-                data.chatList.map((item, index) => {
-                    // console.log(item);
-                    setChat((chat) => [...chat, TalkMyMessage(item.message.toString(),item.sender === params.get('id') ? 0 : 1)]);
+                data.chatList.map((item) => {
+                    return setChat((chat) => [...chat, TalkMyMessage(item.message.toString(),item.sender === params.get('id') ? 0 : 1)]);
                 })
         })
 
@@ -108,7 +110,7 @@ function TalkTalk(){
             'type': 'connect',
             'uuid' : uuid,
             'userId': params.get('id'),
-            'marketOwner': 'admin2',
+            'marketOwner': '',
         }
         client.current.publish({
             destination: "/api/user",
@@ -128,7 +130,10 @@ function TalkTalk(){
                     'message' : e.target.value.trim(),
                     'uuid' : uuid,
                     'userId': params.get('id'),
-                    'marketOwner': 'admin2',
+                    'marketOwner': marketOwner,
+                }
+                if(msgData.message === ''){
+                    return;
                 }
                 client.current.publish({
                     destination: "/api/queue",

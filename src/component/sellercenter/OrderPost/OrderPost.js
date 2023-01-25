@@ -33,7 +33,7 @@ function OrderPost({ marketName }) {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setList(res.data);
         setIsChecked(new Array(res.data.length).fill(false));
       })

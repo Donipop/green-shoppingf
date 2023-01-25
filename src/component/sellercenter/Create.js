@@ -39,6 +39,7 @@ function Create({ user, marketName }) {
     axios.post("/api/sellercenter/create", product).then((res) => {
       if (res.data === "success") {
         alert("상품등록이 완료되었습니다.");
+        window.location.href = "/sellercenter";
       } else {
         alert(res.data);
       }
