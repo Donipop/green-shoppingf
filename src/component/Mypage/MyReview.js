@@ -1,12 +1,10 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import Logininformation from "../Login/Logininformation";
 import { FaStar } from "react-icons/fa";
 import styled from "styled-components";
 
 const MyReview = () => {
   const [reviewlist, setReviewList] = useState([]);
-  let user_id = Logininformation();
   const Array = [0, 1, 2, 3, 4];
 
   useEffect(() => {
@@ -14,12 +12,12 @@ const MyReview = () => {
       method: "get",
       url: `/api/mypage/myreview`,
       params: {
-        user_id: user_id,
+        user_id: 'admin',
       },
     }).then((res) => {
       setReviewList(res.data);
     });
-  }, [user_id]);
+  }, []);
 
   return (
     <div style={{ marginTop: "40px" }}>
