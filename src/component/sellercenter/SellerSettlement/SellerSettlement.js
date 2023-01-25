@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import axios from "axios";
 import SellerSettleup from "./SellerSettleup";
 import AlreadySettlement from "./AlreadySettlement";
 import SellerSettleDate from "./SellerSettleDate";
 
-function SellerSettlement() {
-  const [cookies, setCookie, removeCookie] = useCookies(["refreshToken"]);
-  let refreshToken = cookies.refreshToken;
-  const [user_id, setuser_id] = useState("admin");
+function SellerSettlement({ user }) {
+  const [user_id, setuser_id] = useState("");
   const [market_namelist, setmarket_namelist] = useState([]); // 마켓 이름 리스트
   const [before_settlement, setbefore_settlement] = useState([]); // 정산전 정보
   const [totalpricemap, settotalpricemap] = useState([]); // 마켓별 가격총합
@@ -27,26 +23,11 @@ function SellerSettlement() {
   let format_today = today.toISOString().replace("T", " ").substring(0, 19); // 날짜 yyyy-mm-dd hh:mm:ss
 
   useEffect(() => {
-    // axios({
-    //   method: "post",
-    //   url: "/api/login/refreshTokenToAccessToken",
-    //   data: {
-    //     refreshToken: refreshToken,
-    //   },
-    // })
-    //   .then((res) => res.data)
-    //   .then((res) => {
-    //     if (res == null) {
-    //       alert("다시 로그인 해주시길 바랍니다.");
-    //       Navigate("/");
-    //     } else {
-    //       setuser_id(res.user_id);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-  }, [refreshToken]);
+    if (user === undefined) {
+      return;
+    }
+    setuser_id(user.user_id);
+  }, [user]);
 
   useEffect(() => {
     axios({
@@ -162,11 +143,9 @@ function SellerSettlement() {
               </tbody>
             </table>
           </div>
-
           <div className="alert alert-secondary">
             <SellerSettleDate getDate={setDateInfo} />
           </div>
-
           <div className="alert alert-secondary">
             <h6>이미정산된 정보</h6>
             <AlreadySettlement getDate={[dateInfo, user_id]} />

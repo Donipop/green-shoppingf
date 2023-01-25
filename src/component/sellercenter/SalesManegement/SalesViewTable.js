@@ -25,6 +25,10 @@ function SalesViewTable({ getDate }) {
   };
 
   useEffect(() => {
+    if (getDate[0].start === "" || getDate[0].end === "" || getDate[1] === "") {
+      return;
+    }
+    console.log(getDate);
     let result = 0;
     axios({
       method: "post",

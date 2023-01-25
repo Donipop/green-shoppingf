@@ -37,10 +37,10 @@ function SellerCenter({user}) {
           <Route path="/orderpost" element={<OrderPost />}></Route>
           <Route path="/orderconfirm" element={<OrderConfirm />}></Route>
           <Route path="/update" element={<ProductUpdate />}></Route>
-          <Route path="/salesmanegement" element={<SalesManageMent />}></Route>
+          <Route path="/salesmanegement" element={<SalesManageMent user={user}/>}></Route>
           <Route
             path="/sellersettlement"
-            element={<SellerSettlement />}
+            element={<SellerSettlement user={user}/>}
           ></Route>
         </Routes>
       </div>
