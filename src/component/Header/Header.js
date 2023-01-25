@@ -1,12 +1,10 @@
 import './heardercss.css'
-import React, { useRef,useState,useEffect } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import { useCookies } from "react-cookie";
 import Categories from './Categories'
-import Logininformation from '../Login/Logininformation';
-
-
+import GetUserData from '../Login/GetUserData'
 const Header2 = () => {
     const name1 = new URLSearchParams(window.location.search).get('name')
     const [name, setName] = useState(
@@ -14,63 +12,42 @@ const Header2 = () => {
     )
     const [searchcont, setSearchcont] = useState('')
     const UlRef = useRef()
-    const [count,setCount] = useState(0);
+    const [count, setCount] = useState(0);
     const [text, setText] = useState('로그인');
-    const [cookies, setCookie, removeCookie] = useCookies(['refreshToken'])
     const [aaa, setaaa] = useState('/login')
+    const [cookies, setCookie, removeCookie] = useCookies(['refreshToken'])
     let refreshToken = cookies.refreshToken;
-    const [userinformation, setuserinformation] = useState({
-        user_address : "",
-        user_brith : "",
-        user_email : "",
-        user_grade : "",
-        user_id : "",
-        user_money : "",
-        user_name : "",
-        user_nick : "",
-        user_password : "",
-        user_role : "",
-        user_sex : "",
-        user_signdate : "",
-        user_state : "", 
-        user_tel : ""
+    const [data, setData] = useState({
+        user_id: null,
     });
-    let login_information = sessionStorage.getItem("login")
-    login_information = JSON.parse(login_information);
+    let user = useState(GetUserData(refreshToken));
 
     const textChange = (e) => {
-        if( refreshToken == null ) {
+        if (refreshToken === undefined || refreshToken === null) {
             setText("로그인")
             setaaa("/login")
         }
-        else if (refreshToken != null ) {
+        else if (refreshToken !== undefined || refreshToken !== null) {
             setText("로그아웃")
             setaaa("/logout")
         }
     }
 
-
-
-    useEffect( () => {
-       if(login_information === null){
-        return;
-       }
+    useEffect(() => {
+            axios({
+                method: 'get',
+                url: '/api/mypage/countBasket',
+                params: {
+                    user_id: 'admin'
+                }
+            })
+                .then(res => setCount(res.data))
+            textChange()
         
-        axios({
-            method:'get',
-            url:'/api/mypage/countBasket',
-            params: {
-                user_id: login_information.user_id
-            }
-        })
-        .then(res => setCount(res.data))
-
-        textChange()
-    },[])
-
+    }, [data.user_id])
 
     const noneCheck = () => {
-        if(UlRef.current.style.display === "none"){
+        if (UlRef.current.style.display === "none") {
             UlRef.current.style.display = "block"
         } else {
             UlRef.current.style.display = "none"
@@ -84,60 +61,55 @@ const Header2 = () => {
 
     const submit = (e) => {
         e.preventDefault()
-            window.location.href = `/searchview?searchcont=${searchcont}&name=${name}`
-        
+        window.location.href = `/searchview?searchcont=${searchcont}&name=${name}`
+
     }
 
-
-    
-
-
     return (
-    <Div>   
-         <Logininformation getuserData={setuserinformation}/>
-        <Header>        
-            <Section>
-                <DDiv>
-                    <H1>
-                    <a href ='/'style={{height:"41px"}}>
-                    <img src="//image7.coupangcdn.com/image/coupang/common/logo_coupang_w350.png" width="174" height="41" alt="쿠팡로고" style={{verticalAlign:"top"}}></img>
-                    </a>
-                    </H1>
-                <DDDiv>
-                <form onSubmit={submit}>
-                    <fieldset>
-                        <legend style={{display:"none"}}>상품검색</legend>
-                        <DIv >
-                            <DDIv >
-                            <a href="#!"className="dd" onClick={noneCheck}></a>
-                                <a href="#!"className="ff" onClick={noneCheck} style={{textAlign:"left"}}>{name}</a>
-                            </DDIv >
-                
-                                <Ul ref={UlRef} style={{display:"none"}} >
-                                    <LI><A onClick={ValueSelect}>전체</A></LI>
-                                    <LI><A onClick={ValueSelect}href="#255"rel='255'>남성</A></LI>
-                                    <LI><A onClick={ValueSelect}>여성</A></LI>
-                                    <LI><A onClick={ValueSelect}>남녀공용패션</A></LI>
-                                    <LI><A onClick={ValueSelect}>유아동패션</A></LI>
-                                    <LI><A onClick={ValueSelect}>출산/유아동</A></LI>
-                                    <LI><A onClick={ValueSelect}>뷰티</A></LI>
-                                    <LI><A onClick={ValueSelect}>식품</A></LI>
-                                    <LI><A onClick={ValueSelect}>주방용퓸</A></LI>
-                                    <LI><A onClick={ValueSelect}>생활용품</A></LI>
-                                </Ul>
-                        </DIv>
-                            <Input type="text" onChange={(e) => setSearchcont(e.target.value)} placeholder="찾고 싶은 상품을 검색해보세요!"></Input>
-                            <AImage onClick={submit}></AImage>
-                    </fieldset>
-                </form>       
-                </DDDiv>
-                        <ul style={{marginTop:"3px",fontSize:"12px",listStyle:"none",}}>
+        <Div>
+            <Header>
+                <Section>
+                    <DDiv>
+                        <H1>
+                            <a href='/' style={{ height: "41px" }}>
+                                <img src="//image7.coupangcdn.com/image/coupang/common/logo_coupang_w350.png" width="174" height="41" alt="쿠팡로고" style={{ verticalAlign: "top" }}></img>
+                            </a>
+                        </H1>
+                        <DDDiv>
+                            <form onSubmit={submit}>
+                                <fieldset>
+                                    <legend style={{ display: "none" }}>상품검색</legend>
+                                    <DIv >
+                                        <DDIv >
+                                            <a href="#!" className="dd" onClick={noneCheck}></a>
+                                            <a href="#!" className="ff" onClick={noneCheck} style={{ textAlign: "left" }}>{name}</a>
+                                        </DDIv >
+
+                                        <Ul ref={UlRef} style={{ display: "none" }} >
+                                            <LI><A onClick={ValueSelect}>전체</A></LI>
+                                            <LI><A onClick={ValueSelect} href="#255" rel='255'>남성</A></LI>
+                                            <LI><A onClick={ValueSelect}>여성</A></LI>
+                                            <LI><A onClick={ValueSelect}>남녀공용패션</A></LI>
+                                            <LI><A onClick={ValueSelect}>유아동패션</A></LI>
+                                            <LI><A onClick={ValueSelect}>출산/유아동</A></LI>
+                                            <LI><A onClick={ValueSelect}>뷰티</A></LI>
+                                            <LI><A onClick={ValueSelect}>식품</A></LI>
+                                            <LI><A onClick={ValueSelect}>주방용퓸</A></LI>
+                                            <LI><A onClick={ValueSelect}>생활용품</A></LI>
+                                        </Ul>
+                                    </DIv>
+                                    <Input type="text" onChange={(e) => setSearchcont(e.target.value)} placeholder="찾고 싶은 상품을 검색해보세요!"></Input>
+                                    <AImage onClick={submit}></AImage>
+                                </fieldset>
+                            </form>
+                        </DDDiv>
+                        <ul style={{ marginTop: "3px", fontSize: "12px", listStyle: "none", }}>
                             <LLI>
-                                <a href='/mypage' style={{textDecoration:"none"}}>
+                                <a href='/mypage' style={{ textDecoration: "none" }}>
                                     <MypageSpan>
 
                                     </MypageSpan>
-                                    <span style={{width:"50px", paddingTop:"7px", textAlign:"center", color:"#333"}}>
+                                    <span style={{ width: "50px", paddingTop: "7px", textAlign: "center", color: "#333" }}>
                                         마이짭팡
                                     </span>
 
@@ -145,40 +117,40 @@ const Header2 = () => {
 
                             </LLI>
                             <LLI>
-                                 <AA href="/mypage">
+                                <AA href="/mypage">
                                     <Span></Span>
-                                    <span style={{width:"50px", paddingTop:"7px", textAlign:"center", color:"#333"}} >장바구니</span>
+                                    <span style={{ width: "50px", paddingTop: "7px", textAlign: "center", color: "#333" }} >장바구니</span>
                                     <Em>{count}</Em>
                                 </AA>
                             </LLI>
-            
+
                         </ul>
-                </DDiv>
-            </Section>
-               <CategoriesDiv>
+                    </DDiv>
+                </Section>
+                <CategoriesDiv>
                     <Categories />
-               </CategoriesDiv>
-        </Header>
-                        <Article>
-                            <section style={{width:"1020px",margin:"0 auto",fontSize:"11px"}}>
-                                <Menu>
-                                    <LII>
-                                        <AAA href={(aaa)} >{text}</AAA>
-                                    </LII>
+                </CategoriesDiv>
+            </Header>
+            <Article>
+                <section style={{ width: "1020px", margin: "0 auto", fontSize: "11px" }}>
+                    <Menu>
+                        <LII>
+                            <AAA href={(aaa)} >{text}</AAA>
+                        </LII>
 
-                                    <LII>
-                                        <AAA href='/signup'>회원가입</AAA>
-                                    </LII>
+                        <LII>
+                            <AAA href='/signup'>회원가입</AAA>
+                        </LII>
 
-                                    <LII>
-                                        <AAA>고객센터</AAA>
-                                    </LII>
+                        <LII>
+                            <AAA>고객센터</AAA>
+                        </LII>
 
-                                </Menu>
-                            </section>
+                    </Menu>
+                </section>
 
-                        </Article>
-    </Div>    
+            </Article>
+        </Div>
     )
 }
 
@@ -230,7 +202,7 @@ const AImage = styled.a`
     left: 468px;
 `
 
-const AA= styled.a`
+const AA = styled.a`
 width: 50px;
     height: 60px;
     margin-top: -10px;

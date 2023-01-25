@@ -2,11 +2,9 @@ import axios from "axios";
 import { useEffect } from "react";
 import LoginInterceptor from "../Login/LoginInterceptor";
 import { useState } from "react";
-import Logininformation from "../Login/Logininformation";
 import { useNavigate } from "react-router-dom";
 
 function Shopping_basket() {
-  let user_id = Logininformation(); // 로그인된 유저의 아이디를 가져온다.
   const [shoppingBasket, set_shoppingBasket] = useState([]); // 장바구니 정보를 담을 배열
   const [orderprice, set_orderprice] = useState(0); // 총 상품 주문 금액
   const [deliveryprice, set_deliveryprice] = useState(0); // 총 배송비
@@ -21,7 +19,7 @@ function Shopping_basket() {
       method: "post",
       url: "/api/mypage/user_shopping_basket",
       params: {
-        user_id: user_id,
+        user_id: 'admin',
       },
     })
       .then((res) => {
@@ -31,7 +29,7 @@ function Shopping_basket() {
       .catch((err) => {
         console.log(err);
       });
-  }, [user_id]);
+  }, []);
 
   useEffect(() => {
     calculateOrderPrice();
@@ -158,7 +156,7 @@ function Shopping_basket() {
         method: "post",
         url: "/api/mypage/delete_shopping_basket",
         params: {
-          user_id: user_id,
+          user_id: 'admin',
           shoppingBasket_deleteList: shoppingBasket_deleteList.toString(),
         },
       })
@@ -194,7 +192,7 @@ function Shopping_basket() {
     <div style={{ marginTop: "40px" }}>
       <LoginInterceptor />
       <div>
-        <h1>장바구니 / 로그인된 유저 : {user_id}</h1>
+        <h1>장바구니 / 로그인된 유저 : {'admin'}</h1>
         <table>
           <tbody>
             <tr style={{ width: "1270px" }}>

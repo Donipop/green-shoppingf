@@ -52,8 +52,8 @@ const Logininformation = ({ getuserData }) => {
           });
         }
       });
+    
   }, [refreshToken, userinformation.user_email]);
-
   useEffect(() => {
     getuserData(userinformation);
   }, [userinformation]);

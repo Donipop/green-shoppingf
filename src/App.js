@@ -1,47 +1,50 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import IndexPage from './component/Index/Index'
-import SellerCenter from './component/SellerCenter/SellerCenter';
-import Login from './component/Login/Login';
-import Logout from './component/Login/Logout';
-import Notice from './component/Notice/Noticelist'
-import NoticeView from './component/Notice/NoticeView';
-import SellerSignup from './component/SellerSignup/Signup';
-import SellerSignup2 from './component/SellerSignup/Signup2';
-import Myinformation from './component/Mypage/Myinformation';
-import Mypage from './component/Mypage/Mypage';
-import Writenotice from './component/Notice/Writenotice';
-import Review from './component/ProductView/Review';
-import QnAList from './component/ProductView/QnAList';
-import QnAQuestionWrite from './component/ProductView/QnAQuestionWrite';
-import QnAanswerWrite from './component/ProductView/QnAanswerWrite';
-import View from './component/ProductView/View';
-import QnAQuestionUpdate from './component/ProductView/QnAQuestionUpdate';
-import QnAanswerUpdate from './component/ProductView/QnAanswerUpdate';
-import Coupon from './component/Mypage/Coupon';
-import Shopping_basket from './component/Mypage/Shopping_basket';
-import PaymentPage from './component/Payment/PaymentPage';
-import MyReview from './component/Mypage/MyReview';
-import MyPurchaseInquiry from './component/Mypage/MyPurchaseInquiry';
-import SellerReview from './component/SellerCenter/reviewmanagement/SellerReview';
-import Header  from './component/Header/Header';
-import TalkTalk from './component/TalkTalk/TalkTalk';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import IndexPage from "./component/Index/Index";
+import SellerCenter from "./component/SellerCenter/SellerCenter";
+import Login from "./component/Login/Login";
+import Logout from "./component/Login/Logout";
+import Notice from "./component/Notice/Noticelist";
+import NoticeView from "./component/Notice/NoticeView";
+import SellerSignup from "./component/SellerSignup/Signup";
+import SellerSignup2 from "./component/SellerSignup/Signup2";
+import Myinformation from "./component/Mypage/Myinformation";
+import Mypage from "./component/Mypage/Mypage";
+import Writenotice from "./component/Notice/Writenotice";
+import Review from "./component/ProductView/Review";
+import QnAList from "./component/ProductView/QnAList";
+import QnAQuestionWrite from "./component/ProductView/QnAQuestionWrite";
+import QnAanswerWrite from "./component/ProductView/QnAanswerWrite";
+import View from "./component/ProductView/View";
+import QnAQuestionUpdate from "./component/ProductView/QnAQuestionUpdate";
+import QnAanswerUpdate from "./component/ProductView/QnAanswerUpdate";
+import Coupon from "./component/Mypage/Coupon";
+import Shopping_basket from "./component/Mypage/Shopping_basket";
+import PaymentPage from "./component/Payment/PaymentPage";
+import MyReview from "./component/Mypage/MyReview";
+import MyPurchaseInquiry from "./component/Mypage/MyPurchaseInquiry";
+import SellerReview from "./component/SellerCenter/reviewmanagement/SellerReview";
+import Header from "./component/Header/Header";
+import TalkTalk from "./component/TalkTalk/TalkTalk";
+import UserSignUp from './component/SignUp/UserSignUp';
+import UserFindId from './component/SignUp/UserFindId';
+import UserFindPassword from './component/SignUp/UserFindPassword';
 
-import SearchView  from './component/SearchView/SearchView';
-import SellerCenterMain from './component/SellerCenter/SellerCenterMain/SellerCenterMain';
-import Signup from './component/SellerSignup/Signup';
-// function App() {
-//   return (
-//     <div className="App">
-//       <Hello />
-//     </div>
-//   );
-// }
-
-// export default App;
-
+import SearchView from "./component/SearchView/SearchView";
+import SellerCenterMain from "./component/SellerCenter/SellerCenterMain/SellerCenterMain";
+import Signup from "./component/SellerSignup/Signup";
+import { useCookies } from "react-cookie";
+import GetUserData from "./component/Login/GetUserData";
+import { useState, useEffect } from "react";
 
 const Router = (props) => {
+  const [cookie, setCookie, removeCookie] = useCookies(["refreshToken"]);
+  let refreshToken = cookie.refreshToken;
+
+  const [data, setData] = useState();
+  useEffect(() => {
+    GetUserData(refreshToken).then((res) => {setData(res);});
+  }, [refreshToken]);
 
   return (
     <BrowserRouter>
@@ -71,13 +74,16 @@ const Router = (props) => {
         <Route path='/Mypage/MyReview' element={<MyReview/>} />
         <Route path='/Mypage/MyPurchaseInquiry' element={<MyPurchaseInquiry/>} />
         <Route path='/Sellercenter/reviewmanagement' element={<SellerReview/>} />
-        <Route path='/header2' element={<Header/>} />
+        <Route path='/header' element={<Header/>} />
         <Route path='/ct/:uuid' element={<TalkTalk />} />
         <Route path='/searchview' element={<SearchView/>} />
         <Route path='/SellercenterMainpage' element={<SellerCenterMain/>} />
+        <Route path='/UserSignUp' element={<UserSignUp />} />
+        <Route path='/UserFindId' element={<UserFindId/>} />
+        <Route path='/UserFindPassword' element={<UserFindPassword/>} />
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default Router;
