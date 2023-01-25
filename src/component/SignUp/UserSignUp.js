@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Hello() {
+export default function UserSignUp() {
   const [name, setName] = useState("");
   const [ptest, setPtest] = useState("");
   const [check_the_password, setCheck_the_password] =
