@@ -37,7 +37,7 @@ function Myinformation() {
   };
 
   function myinfoUpdate() {
-    
+    console.log(myinfo);
     axios({
       method: "post",
       url: "/api/mypage/myinfoUpdate",
