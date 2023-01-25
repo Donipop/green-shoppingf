@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { useNavigate, Route, Routes } from "react-router-dom";
 import SellerHeader from "./SellerHeader";
 import SellerSidebar from "./SellerSidebar";
 import Create from "./Create";
@@ -10,10 +10,20 @@ import ProductUpdate from "./Update/ProductUpdate";
 import SalesManageMent from "./SalesManegement/SalesMenegement";
 import SellerCenterMain from "./SellerCenterMain/SellerCenterMain";
 import SellerSettlement from "./SellerSettlement/SellerSettlement";
+import { useEffect } from "react";
+
 export default SellerCenter;
 
-function SellerCenter() {
+function SellerCenter({user}) {
   // const params = useParams();
+  const Navigate = useNavigate()
+  useEffect(()=>{
+    if(user === undefined) {return ;}
+    if(user === '') {
+      Navigate('/')
+      return;
+    }
+  },[user])
   return (
     <div>
       <SellerHeader />
@@ -21,7 +31,7 @@ function SellerCenter() {
         <SellerSidebar />
         <Routes>
           {/* <Route path = '*' element={<h1>404 Not Found</h1>}></Route> */}
-          <Route path="/" element={<SellerCenterMain />}></Route>
+          <Route path="/" element={<SellerCenterMain user={user} />}></Route>
           <Route path="/create" element={<Create />}></Route>
           <Route path="/totalorderlist" element={<TotalOrderList />}></Route>
           <Route path="/orderpost" element={<OrderPost />}></Route>

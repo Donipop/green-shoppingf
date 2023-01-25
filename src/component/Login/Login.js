@@ -34,8 +34,6 @@ function Login() {
 
     const onSubmitHandler = (event) => {
         event.preventDefault();
-        
-
         axios({
             method: "post",
             url: "/api/login/login",
