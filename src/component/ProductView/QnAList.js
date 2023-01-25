@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Pagination from "./Pagination";
-import Logininformation from '../Login/Logininformation';
 import { useCookies } from "react-cookie";
 
 
@@ -11,27 +10,7 @@ const QnA = ({page}) => {
     const offset = (paging - 1) * limit;
     const [test, setTest] = useState([]);
     const [reply, setReply] = useState([]);
-    const [cookies, setCookie, removeCookie] = useCookies(['refreshToken'])
     const [marketNamecheck, setmarketNamecheck] = useState(false);
-    
-    let refreshToken = cookies.refreshToken;
-    const [userinformation, setuserinformation] = useState({
-        user_address : "",
-        user_brith : "",
-        user_email : "",
-        user_grade : "",
-        user_id : "",
-        user_money : "",
-        user_name : "",
-        user_nick : "",
-        user_password : "",
-        user_role : "",
-        user_sex : "",
-        user_signdate : "",
-        user_state : "", 
-        user_tel : ""
-    });
-   
 
     useEffect(() => {
         axios({
@@ -80,15 +59,12 @@ const QnA = ({page}) => {
         }, [page])
      
     useEffect(() => {
-        if(userinformation.user_id === ""){
-            return;
-        }
           axios({
             method: 'get',
             url: `/api/view/marketcheck`,
             params:{
                 page: page,
-                user_id : userinformation.user_id
+                user_id : 'admin'
             }
         })
             .then((res) => {
@@ -96,14 +72,13 @@ const QnA = ({page}) => {
             
         })
 
-    }, [userinformation.user_id])
+    }, [])
 
 
     // 질문하기
     const QnASite = () => {
         window.open(`http://localhost:3000/QnA/write/${page}`,"_blank","width=650, height=730");
     }
-    
     
     //답변하기 
     const onsubmit = (e) => {
@@ -149,10 +124,6 @@ const QnA = ({page}) => {
     }
     
        const QuestionDelete = (e,index) => {
-        if(userinformation.user_id !== test[index].user_id){
-            alert("본인이 작성한 글만 삭제할 수 있습니다.")
-            return;
-        }
             //답변이 있는지 없는지 확인
             let check = false;
             for(let i=0; i<reply.length; i++){
@@ -223,10 +194,6 @@ const QnA = ({page}) => {
         }
 
         const QuestionUpdate = (e,index) => {
-            if(userinformation.user_id !== test[index].user_id){
-                alert("본인이 작성한 글만 수정할 수 있습니다.")
-                return;
-            }
             window.open(`http://localhost:3000/QnA/update/${page}/${e.target.id}`,"_blank","width=650, height=730");
         }
 
@@ -250,7 +217,6 @@ const QnA = ({page}) => {
 
       return (
         <div>
-             <Logininformation getuserData={setuserinformation}/>
              <div>
                  <h3>QnA</h3>
                  <p className="QnAtext">구매하시려는 상품에 대해 궁금한 점이 있으신 경우 문의해주세요.</p>

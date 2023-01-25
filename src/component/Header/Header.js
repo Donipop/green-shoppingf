@@ -34,23 +34,16 @@ const Header2 = () => {
     }
 
     useEffect(() => {
-        user[0].then((res) => {
-            setData({
-                user_id: res.user_id,
-            })
-        })
-
-        if (data.user_id !== undefined && data.user_id !== null) {
             axios({
                 method: 'get',
                 url: '/api/mypage/countBasket',
                 params: {
-                    user_id: data.user_id
+                    user_id: 'admin'
                 }
             })
                 .then(res => setCount(res.data))
             textChange()
-        }
+        
     }, [data.user_id])
 
     const noneCheck = () => {

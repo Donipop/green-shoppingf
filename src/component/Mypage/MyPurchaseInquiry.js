@@ -1,11 +1,9 @@
 import axios from 'axios';
 import {useState, useEffect} from 'react';
-import Logininformation from '../Login/Logininformation';
 import MypageModal from './Mypagemodal';
 
 
     const MypurChaseInquiry = () => { 
-        let user_id = Logininformation();
         const [purchaselist, setPurchaseList] = useState([]);
         
         let iu = "https://w.namu.la/s/59bbf73b123d0f9f693be3c3de9506b24a1f2a3067b4ffd0207a3a08eee32d750ebf1ca3e33084aa3bbcd6916bd0a8a187cc4556b87fa269c25f1a7ff3ea279f9808bcff5cd75221317e48e817290c6b7e7900c07b3e649379dc7a57a7653a886e08ae6b2df44d7d347e8c801f2b9f15"
@@ -22,13 +20,13 @@ import MypageModal from './Mypagemodal';
             method: 'get',
             url: `/api/mypage/MyPurchaseInquiry`,
             params: {
-            user_id: user_id
+            user_id: 'admin'
             }
             })
             .then((res) => {
                 setPurchaseList(res.data)
             })
-            }, [user_id])
+            }, [])
 
         const nullcheck = () => {
             if(purchaselist.length === 0){

@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import styled from 'styled-components';
 import './Reviewcss.css';
 import ReviewList  from "./ReviewList";
-import Logininformation from "../Login/Logininformation";
 
 const Review = () => {
     const {page} = useParams();
@@ -19,7 +18,6 @@ const Review = () => {
         cont: '',
         title: ''
     })
-    let user_id = Logininformation();
 
     const handleStarClick = index => {
         let clickStates = [...clicked];
@@ -41,12 +39,6 @@ const Review = () => {
         setAccount({...account, [e.target.name]: e.target.value})
         }
       const ReviewSubmit = (e) =>{
-
-        if(user_id === "로그인 된 정보가 없습니다."){
-          alert("로그인이 필요한 서비스입니다.")
-          return false;
-        } 
-
         if(star === 0){
           alert("별점을 입력해주세요")
           return false;
@@ -60,7 +52,7 @@ const Review = () => {
                 star: star,
                 id: 1,
                 product_num: page,   
-                user_id: user_id
+                user_id: 'admin'
 
         }
         }).then((res) => {
