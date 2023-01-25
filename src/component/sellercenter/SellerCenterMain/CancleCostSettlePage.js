@@ -19,11 +19,17 @@ const CancleCostSettlePage = ({user}) => {
                 id: user.user_id
             },
             })
-            .then(res => setList({...List,
-                 count: res.data[0].count,
-                 beforeSettleSum: res.data[0].beforeSettleSum,
-                 afterSettleSum: res.data[0].afterSettleSum
-            }))
+            .then((res) => {
+                if(res.data === ''){
+                    return;
+                }
+                setList({...List,
+                    count: res.data[0].count,
+                    beforeSettleSum: res.data[0].beforeSettleSum,
+                    afterSettleSum: res.data[0].afterSettleSum
+            }  
+            )
+        })  
     }, [user])
     return(
         <div className="OrderDeliveryPage" style={{width:"1200px"}}>

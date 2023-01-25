@@ -4,13 +4,13 @@ import axios from "axios";
 
 const QnAReply = () => {
   const [List, setList] = useState([]);
+  const {user_id} = useParams();
   const { id } = useParams();
   const { page } = useParams();
-
   const [account, setAccount] = useState({
     cont: "",
     product_num: page,
-    user_id: "admin",
+    user_id: user_id,
     id: 3,
     product_name: "아이패드",
     child_id: id,

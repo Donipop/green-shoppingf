@@ -72,7 +72,7 @@ const Router = (props) => {
         <Route path='/view/:page/Review' element={<Review/>} />
         <Route path='/QnA:page' element={<QnAList/>} />
         <Route path='/QnA/write/:page/:user_id' element={<QnAQuestionWrite/>} />
-        <Route path='/QnA/reply/:page/:id' element={<QnAanswerWrite/>} />
+        <Route path='/QnA/reply/:page/:id/:user_id' element={<QnAanswerWrite/>} />
         <Route path='/QnA/update/:page/:id' element={<QnAQuestionUpdate/>} />
         <Route path='/QnA/answerUpdate/:page/:id/:child_id/:cont' element={<QnAanswerUpdate/>} />
         <Route path='/Mypage/coupon' element={<Coupon/>} />

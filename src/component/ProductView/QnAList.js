@@ -85,7 +85,7 @@ const QnA = ({ page, user }) => {
     e.preventDefault();
     let key = e.target.attributes.id.value;
     window.open(
-      `http://localhost:3000/QnA/reply/${page}/${key}`,
+      `http://localhost:3000/QnA/reply/${page}/${key}/${user.user_id}`,
       "_blank",
       "width=650, height=730"
     );
