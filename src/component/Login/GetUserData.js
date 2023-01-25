@@ -26,17 +26,9 @@ function GetUserData(refreshToken) {
             }
         })
         .then((res) => {
-            if (res.data.length === 0) {
-                console.log("없음")
-                return userInformation
-            } else {
             userInformation = res.data;
-            console.log("있음")
             return userInformation
-            }
         })
-        
-    
 }
 
 export default GetUserData;
