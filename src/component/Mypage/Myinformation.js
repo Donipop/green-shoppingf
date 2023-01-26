@@ -43,7 +43,6 @@ function Myinformation({ user }) {
   };
 
   function myinfoUpdate() {
-    console.log(myinfo);
     axios({
       method: "post",
       url: "/api/mypage/checkDuplicateNick",
@@ -140,8 +139,7 @@ function Myinformation({ user }) {
   }, [CheckPassword.check]);
 
   return (
-    <div>
-      <Header />
+    <div style={{width:1150}}>
       <LoginInterceptor />
       <div className="row m-2">
         <div className="col-12">

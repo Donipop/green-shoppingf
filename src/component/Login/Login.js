@@ -69,8 +69,8 @@ function Login() {
   }
 
   return (
-    <Outerdiv>
-      <Header />
+    <Outerdiv style={{height:500}}>
+      <Header/>
       <h2>Login</h2>
       <div style={{ margin: "auto" }}>
         <form onSubmit={onSubmitHandler}>

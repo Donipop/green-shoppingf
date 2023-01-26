@@ -32,6 +32,7 @@ function View({user}) {
         console.log(err);
         return <div className="container">잘못된 페이지</div>;
       });
+      
   }, [page]);
 
   if (isNaN(page)) {
@@ -61,7 +62,7 @@ function View({user}) {
       return <div dangerouslySetInnerHTML={{ __html: productinfo.cont }}></div>;
     } else {
       return <img src={productinfo.cont} alt="상품이미지" />;
-    }
+    } 
   };
   return (
     <div className="container">
@@ -69,7 +70,7 @@ function View({user}) {
       <div className="row">
         <div className="col-12"></div>
         <div className="pt-5"></div>
-        <ProductInfo product={productinfo} user={user} />
+        <ProductInfo product={productinfo} user={user}/>
         <div className="pt-5"></div>
       </div>
       <UL className="d-block m-0 p-0" style={{ borderLeft: `1px solid #000` }}>

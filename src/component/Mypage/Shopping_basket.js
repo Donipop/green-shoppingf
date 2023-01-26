@@ -4,7 +4,8 @@ import LoginInterceptor from "../Login/LoginInterceptor";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Shopping_basket() {
+function Shopping_basket({user}) {
+  const [user_id, setuser_id] = useState(); // 유저 아이디
   const [shoppingBasket, set_shoppingBasket] = useState([]); // 장바구니 정보를 담을 배열
   const [orderprice, set_orderprice] = useState(0); // 총 상품 주문 금액
   const [deliveryprice, set_deliveryprice] = useState(0); // 총 배송비
@@ -15,11 +16,15 @@ function Shopping_basket() {
 
   //////////////////////////////////////////// 장바구니 정보를 가져온다. 초기설정 ////////////////////////////////////////////
   useEffect(() => {
+    if(user === undefined){
+      return;
+    } 
+    setuser_id(user.user_id);
     axios({
       method: "post",
       url: "/api/mypage/user_shopping_basket",
       params: {
-        user_id: "admin",
+        user_id: user.user_id,
       },
     })
       .then((res) => {
@@ -29,7 +34,7 @@ function Shopping_basket() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     calculateOrderPrice();
@@ -87,7 +92,7 @@ function Shopping_basket() {
             };
 
             Item.name = shoppingBasket[i].name;
-            Item.price = shoppingBasket[i].price;
+            Item.price = shoppingBasket[i].price - shoppingBasket[i].discount;
             Item.count = shoppingBasket[i].count;
             Item.productDetailId = shoppingBasket[i].productDetailId;
 
@@ -169,29 +174,10 @@ function Shopping_basket() {
         });
     }
   }
-
-  // 장바구니에서 수량 변경
-  function count_up(e) {
-    let index = e.target.getAttribute("indexid");
-    if (shoppingBasket[index].count < 99) {
-      shoppingBasket[index].count += 1;
-    }
-  }
-
-  function count_down(e) {
-    let index = e.target.getAttribute("indexid");
-    if (shoppingBasket[index].count > 1) {
-      shoppingBasket[index].count -= 1;
-    }
-  }
-
-  function test123() {}
-
   return (
-    <div style={{ marginTop: "40px" }}>
-      <LoginInterceptor />
+    <div className="Shopping_basket" style={{ marginTop: "40px", display: "flex"}}>
       <div>
-        <h1>장바구니 / 로그인된 유저 : {"admin"}</h1>
+        <h1>장바구니 </h1>
         <table>
           <tbody>
             <tr style={{ width: "1270px" }}>
@@ -239,17 +225,18 @@ function Shopping_basket() {
                   fontWeight: "normal",
                   borderTop: "3px solid black",
                   borderBottom: "2px solid black",
+                  paddingLeft: "10px",
                 }}
               >
                 마켓이름
               </th>
               <th
                 style={{
-                  width: "150px",
+                  width: "70px",
                   fontWeight: "normal",
                   borderTop: "3px solid black",
                   borderBottom: "2px solid black",
-                  paddingLeft: "80px",
+                  paddingLeft: "100px",
                 }}
               >
                 수량
@@ -296,7 +283,7 @@ function Shopping_basket() {
                 <td
                   style={{ borderBottom: "1px solid #e9ecef", width: "120px" }}
                 >
-                  {List.price}원
+                  {List.price - List.discount}원
                 </td>
                 <td
                   style={{
@@ -333,7 +320,7 @@ function Shopping_basket() {
           <div>
             <button onClick={order_shopping_basket}>주문하기</button>
             <button onClick={delete_shopping_basket}>삭제하기</button>
-            <button onClick={test123}>테스트</button>
+            <button onClick={() => {Navigate("/")}}>쇼핑 계속하기</button>
           </div>
         </div>
       </div>

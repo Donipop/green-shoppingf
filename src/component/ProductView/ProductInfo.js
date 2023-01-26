@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -93,7 +94,6 @@ function ProductInfo({ product, user }) {
       });
     });
   };
-
   //금액 변동될때 마다 총금액 계산
   useEffect(() => {
     //총 상품금액
@@ -124,7 +124,7 @@ function ProductInfo({ product, user }) {
           product_count: "",
           dateStart: "",
           dateEnd: "",
-          indexId: 0
+          indexId: 0,
         };
         if (
           new Date(product.product[i].dateStart) > today ||
@@ -237,6 +237,60 @@ function ProductInfo({ product, user }) {
     };
     naviGate("/Payment", { state: [data] });
   };
+
+  function onClickToShoppingBasket() {
+    if(user === undefined || user === ''){
+      alert('로그인이 필요합니다.');
+      return;
+    }
+    if (totalPrice === 0) {
+      alert("상품을 선택해주세요.");
+      return;
+    }
+    let changeListItem = [];
+    let checkI = 0;
+    for (let i = 0; i < listItem.length; i++) {
+      let Item = {
+        name: "",
+        price: "",
+        count: "",
+        productDetailId: "",
+      };
+      Item.name = listItem[i].name;
+      Item.price = listItem[i].price;
+      Item.count = listItem[i].count;
+      Item.productDetailId = listItem[i].productDetailId;
+      changeListItem.push(Item);
+      checkI = checkI + 1;
+    }
+
+    let data = {
+      marketName: product.market_name,
+      delivery: delivery,
+      productId: product.productId,
+      listItem: changeListItem,
+    };
+    let productDetailIdList = [];
+    let countList = [];
+    for(let i = 0; i < data.listItem.length; i++){
+      productDetailIdList.push(data.listItem[i].productDetailId)
+      countList.push(data.listItem[i].count)
+    }
+    
+    axios({
+      method: "post",
+      url: "/api/sellercenter/addShoppingBasket",
+      data: {
+        productDetailIdList: productDetailIdList,
+        countList: countList,
+        user_id: user.user_id
+      },
+    }).then((res) => {
+      alert("장바구니에 담겼습니다.")
+      window.location.reload();
+    });
+    //naviGate("/ShoppingBasket", { state: [data] });
+  }
   const onClickTalkBtn = () =>{
     if(user === undefined || user === ''){
       alert('로그인이 필요합니다.');
@@ -444,7 +498,10 @@ function ProductInfo({ product, user }) {
             <button className="btn btn-outline-secondary w-100">찜하기</button>
           </div>
           <div className="col-4">
-            <button className="btn btn-outline-secondary w-100">
+            <button
+              onClick={onClickToShoppingBasket}
+              className="btn btn-outline-secondary w-100"
+            >
               장바구니
             </button>
           </div>
@@ -490,4 +547,3 @@ const LINE = styled.div`
   margin: 10px 0;
   display: block;
 `;
-
