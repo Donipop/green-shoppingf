@@ -1,7 +1,9 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-function ProductInfo({ product }) {
+function ProductInfo({ product, user }) {
+  const [user_id, setuser_id] = useState("");
   const [listItem, setListItem] = useState([]);
   const [detailProduct, setDetailProduct] = useState([]);
   const [title, setTitle] = useState("");
@@ -93,6 +95,13 @@ function ProductInfo({ product }) {
       });
     });
   };
+  useEffect(() => {
+    if (user === undefined) {
+      return;
+    } else {
+      setuser_id(user.user_id);
+    }
+  }, [user]);
 
   //금액 변동될때 마다 총금액 계산
   useEffect(() => {
@@ -124,7 +133,7 @@ function ProductInfo({ product }) {
           product_count: "",
           dateStart: "",
           dateEnd: "",
-          indexId: 0
+          indexId: 0,
         };
         if (
           new Date(product.product[i].dateStart) > today ||
@@ -233,6 +242,56 @@ function ProductInfo({ product }) {
     };
     naviGate("/Payment", { state: [data] });
   };
+
+  function onClickToShoppingBasket() {
+    if (totalPrice === 0) {
+      alert("상품을 선택해주세요.");
+      return;
+    }
+    let changeListItem = [];
+    let checkI = 0;
+    for (let i = 0; i < listItem.length; i++) {
+      let Item = {
+        name: "",
+        price: "",
+        count: "",
+        productDetailId: "",
+      };
+      Item.name = listItem[i].name;
+      Item.price = listItem[i].price;
+      Item.count = listItem[i].count;
+      Item.productDetailId = listItem[i].productDetailId;
+      changeListItem.push(Item);
+      checkI = checkI + 1;
+    }
+
+    let data = {
+      marketName: product.market_name,
+      delivery: delivery,
+      productId: product.productId,
+      listItem: changeListItem,
+    };
+    let productDetailIdList = [];
+    let countList = [];
+    for(let i = 0; i < data.listItem.length; i++){
+      productDetailIdList.push(data.listItem[i].productDetailId)
+      countList.push(data.listItem[i].count)
+    }
+    
+    axios({
+      method: "post",
+      url: "/api/sellercenter/addShoppingBasket",
+      data: {
+        productDetailIdList: productDetailIdList,
+        countList: countList,
+        user_id: user_id
+      },
+    }).then((res) => {
+      alert("장바구니에 담겼습니다.")
+      window.location.reload();
+    });
+    //naviGate("/ShoppingBasket", { state: [data] });
+  }
 
   return (
     <>
@@ -432,7 +491,10 @@ function ProductInfo({ product }) {
             <button className="btn btn-outline-secondary w-100">찜하기</button>
           </div>
           <div className="col-4">
-            <button className="btn btn-outline-secondary w-100">
+            <button
+              onClick={onClickToShoppingBasket}
+              className="btn btn-outline-secondary w-100"
+            >
               장바구니
             </button>
           </div>
@@ -478,4 +540,3 @@ const LINE = styled.div`
   margin: 10px 0;
   display: block;
 `;
-

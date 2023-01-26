@@ -35,7 +35,7 @@ import MypageModal from './Mypagemodal';
             if(purchaselist.length === 0){
                 return (
                     <div style={{textAlign:"center",marginTop:"20px",marginBottom:"20px",width:"1270px"}}>
-                        <h2 style={{fontWeight:400}}>구매내역이 업읍니다</h2>
+                        <h2 style={{fontWeight:400}}>구매내역이 없습니다</h2>
                     </div>
                 ) 
             }
@@ -43,7 +43,7 @@ import MypageModal from './Mypagemodal';
 
 
     return(
-    <div >
+    <div className='MyPurchaseInquiry' style={{marginTop:"40px"}}>
         <div>
       <h2>구매내역 조회</h2>
         </div>
