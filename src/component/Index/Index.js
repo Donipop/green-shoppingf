@@ -6,53 +6,70 @@ import ItemRecommend from './ItemRecommend';
 
 export default Index;
 
-function Index({user}){
+function Index({ user }) {
     const [list, setList] = useState([
         {
-        MAINIMAGE: '',
-        ID: 0 },
-        {MAINIMAGE: '',
-        ID: 0 },
-        {MAINIMAGE: '',
-        ID: 0 },
-        {MAINIMAGE: '',
-        ID: 0 },
-        {MAINIMAGE: '',
-        ID: 0 },
-        {MAINIMAGE: '',
-        ID: 0 },
-        {MAINIMAGE: '',
-        ID: 0 },
-        {MAINIMAGE: '',
-        ID: 0 },
-        {MAINIMAGE: '',
-        ID: 0 }
+            MAINIMAGE: '',
+            ID: 0
+        },
+        {
+            MAINIMAGE: '',
+            ID: 0
+        },
+        {
+            MAINIMAGE: '',
+            ID: 0
+        },
+        {
+            MAINIMAGE: '',
+            ID: 0
+        },
+        {
+            MAINIMAGE: '',
+            ID: 0
+        },
+        {
+            MAINIMAGE: '',
+            ID: 0
+        },
+        {
+            MAINIMAGE: '',
+            ID: 0
+        },
+        {
+            MAINIMAGE: '',
+            ID: 0
+        },
+        {
+            MAINIMAGE: '',
+            ID: 0
+        }
     ]);
 
     useEffect(() => {
         axios.get('/api/randomitemlist')
-        .then((res) => {
-            setList(res.data);
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+            .then((res) => {
+                setList(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }, [])
 
 
 
 
-    return(
+    return (
         <div className=''>
-            <Header user={user}/>
-                <Section>
-                    <img src="https://static.coupangcdn.com/da/cmg_paperboy/image/1673938680547/230118_C1_%ED%99%88-%EC%8B%9C%EC%A6%8C%EC%98%A4%ED%94%84_SMD-24729_PC.jpg" width="1920" height="450" ></img>
+            <Header user={user} />
+            <Section>
+                <img src="https://static.coupangcdn.com/da/cmg_paperboy/image/1673938680547/230118_C1_%ED%99%88-%EC%8B%9C%EC%A6%8C%EC%98%A4%ED%94%84_SMD-24729_PC.jpg" width="1920" height="450" ></img>
                 <Div>
                 </Div>
                 <Ull>
                     <Li>
                         <Image src="https://static.coupangcdn.com/la/cmg_paperboy/image/1673516292563/item.jpg" width="180" height="60" alt="">
-                        </Image>    
+                        </Image>
                         <Span></Span>
                     </Li>
                     <Li>
@@ -60,7 +77,7 @@ function Index({user}){
                         <Span></Span>
                     </Li>
                     <Li>
-                    <Image src="https://static.coupangcdn.com/ea/cmg_paperboy/image/1673938685046/230118_C1_%ED%99%88-%EC%8B%9C%EC%A6%8C%EC%98%A4%ED%94%84_SMD-24729_BOX.png" width="180" height="60" alt=""></Image>
+                        <Image src="https://static.coupangcdn.com/ea/cmg_paperboy/image/1673938685046/230118_C1_%ED%99%88-%EC%8B%9C%EC%A6%8C%EC%98%A4%ED%94%84_SMD-24729_BOX.png" width="180" height="60" alt=""></Image>
                     </Li>
                     <Li>
                         <Image src="https://image8.coupangcdn.com/image/ccm/banner/2a71e969976ffc181fc7d924df24984f.png" width="180" height="60" alt=""></Image>
@@ -71,75 +88,66 @@ function Index({user}){
                         <Span></Span>
                     </Li>
                 </Ull>
-                </Section>
+            </Section>
             <SEction>
                 <Divv>
                     <Divvv>
-                        <H2>오늘의 발견 
-                            <span style={{marginRight:"5px",marginLeft:"5px",fontWeight:"100",fontSize:"20px"}}>|</span> 
+                        <H2>오늘의 발견
+                            <span style={{ marginRight: "5px", marginLeft: "5px", fontWeight: "100", fontSize: "20px" }}>|</span>
                             <EM>오늘 짭팡이 엄선한 가장 HOT한 상품!</EM></H2>
                     </Divvv>
                     <Divtodaylist>
-                        <ul style={{listStyle:"none"}}>   
+                        <ul style={{ listStyle: "none" }}>
                             <LIitem>
                                 <a href={`/view/${list[0].ID}`}>
-                                <img src={list[0].MAINIMAGE} width="468" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
-                                 ></img>
-                                 <SPan></SPan>
-                                 </a>
+                                    <img src={list[0].MAINIMAGE} width="468" height="298"></img>
+                                    <SPan></SPan>
+                                </a>
                             </LIitem>
                             <LIitem>
-                            <img src={list[1].MAINIMAGE} width="468" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
-                                 ></img>
-                                 <SPan></SPan>
+                                <img src={list[1].MAINIMAGE} width="468" height="298"></img>
+                                <SPan></SPan>
                             </LIitem>
                             <LIitem>
-                            <img src={list[2].MAINIMAGE} width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
-                                 ></img>
-                                 <SPan></SPan>
-                            </LIitem>
-                        <LIitem>
-                            <img src={list[3].MAINIMAGE} width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
-                                 ></img>
-                                 <SPan></SPan>
+                                <img src={list[2].MAINIMAGE} width="228" height="298"></img>
+                                <SPan></SPan>
                             </LIitem>
                             <LIitem>
-                            <img src={list[4].MAINIMAGE} width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
-                                 ></img>
-                                 <SPan></SPan>
+                                <img src={list[3].MAINIMAGE} width="228" height="298"></img>
+                                <SPan></SPan>
                             </LIitem>
                             <LIitem>
-                            <img src={list[5].MAINIMAGE} width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
-                                 ></img>
-                                 <SPan></SPan>
+                                <img src={list[4].MAINIMAGE} width="228" height="298"></img>
+                                <SPan></SPan>
                             </LIitem>
                             <LIitem>
-                                <img src={list[6].MAINIMAGE} width="468" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
-                                 ></img>
-                                 <SPan></SPan>
+                                <img src={list[5].MAINIMAGE} width="228" height="298"></img>
+                                <SPan></SPan>
                             </LIitem>
                             <LIitem>
-                            <img src={list[7].MAINIMAGE} width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
-                                 ></img>
-                                 <SPan></SPan>
+                                <img src={list[6].MAINIMAGE} width="468" height="298"></img>
+                                <SPan></SPan>
+                            </LIitem>
+                            <LIitem>
+                                <img src={list[7].MAINIMAGE} width="228" height="298"></img>
+                                <SPan></SPan>
                             </LIitem>   <LIitem>
-                            <img src={list[8].MAINIMAGE} width="228" height="298" alt=""  data-load-time-start="304.59999999403954" data-load-time-end="304.59999999403954" data-load-time="385.29999999701977"
-                                 ></img>
-                                 <SPan></SPan>
+                                <img src={list[8].MAINIMAGE} width="228" height="298"></img>
+                                <SPan></SPan>
                             </LIitem>
-                            </ul>
+                        </ul>
                     </Divtodaylist>
-                <ItemRecommend />
+                    <ItemRecommend />
 
                 </Divv>
             </SEction>
 
-         
-        </div>
-        
 
-        
-        
+        </div>
+
+
+
+
     );
 
 }

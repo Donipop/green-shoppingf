@@ -20,9 +20,6 @@ const CancleCostSettlePage = ({user}) => {
             },
             })
             .then((res) => {
-                if(res.data === ''){
-                    return;
-                }
                 setList({...List,
                     count: res.data[0].count,
                     beforeSettleSum: res.data[0].beforeSettleSum,

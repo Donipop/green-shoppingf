@@ -12,6 +12,10 @@ const SearchViewData = () => {
   );
   const name = new URLSearchParams(window.location.search).get("name");
   useEffect(() => {
+    if(searchcont === ''){
+      alert('검색어를 입력해주세요.')
+      return;
+    }
     axios({
       method: "get",
       url: `/api/searchview?searchcont=${searchcont}&name=${name}`,
@@ -24,7 +28,7 @@ const SearchViewData = () => {
     if (searchviewList.length === 0) {
       return (
         <div style={{ margin: "20px 20px 20px 20px" }}>
-          검색된 결과가 없스비다.
+          검색된 결과가 없습니다.
         </div>
       );
     }

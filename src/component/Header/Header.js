@@ -13,18 +13,31 @@ const Header = ({user}) => {
     const UlRef = useRef()
     const [count, setCount] = useState(0);
     const [text, setText] = useState('로그인');
-    const [aaa, setaaa] = useState('/login')
+    const [loginText, setLoginText] = useState('/login')
     const [cookies, setCookie, removeCookie] = useCookies(['refreshToken'])
+    const [userrole, setUserole] = useState('회원가입')
+    const hrefRef = useRef();
     let refreshToken = cookies.refreshToken;
 
     const textChange = (e) => {
         if (refreshToken === undefined || refreshToken === null) {
             setText("로그인")
-            setaaa("/login")
+            setLoginText("/login")
         }
         else if (refreshToken !== undefined || refreshToken !== null) {
             setText("로그아웃")
-            setaaa("/logout")
+            setLoginText("/logout")
+        }
+    }
+
+    const userRoleCheck = () => {
+         if(user.user_role === 0 ){
+            setUserole("")
+         } else if(user.user_role === 1){
+            hrefRef.current.href = "/sellercenter"
+            setUserole("My market")
+            } else if(user.user_role === 2){
+            setUserole("관리자")
         }
     }
 
@@ -41,6 +54,7 @@ const Header = ({user}) => {
             })
                 .then(res => setCount(res.data))
             textChange()
+            userRoleCheck()
         
     }, [user])
 
@@ -110,9 +124,7 @@ const Header = ({user}) => {
                                     <span style={{ width: "50px", paddingTop: "7px", textAlign: "center", color: "#333" }}>
                                         마이짭팡
                                     </span>
-
                                 </a>
-
                             </LLI>
                             <LLI>
                                 <AA href="/mypage">
@@ -121,7 +133,6 @@ const Header = ({user}) => {
                                     <Em>{count}</Em>
                                 </AA>
                             </LLI>
-
                         </ul>
                     </DDiv>
                 </Section>
@@ -133,20 +144,18 @@ const Header = ({user}) => {
                 <section style={{ width: "1020px", margin: "0 auto", fontSize: "11px" }}>
                     <Menu>
                         <LII>
-                            <AAA href={(aaa)} >{text}</AAA>
+                            <AAA href={(loginText)} >{text}</AAA>
                         </LII>
 
                         <LII>
-                            <AAA href='/signup'>회원가입</AAA>
+                           <AAA ref={hrefRef} href='/UserSignUp'>{userrole}</AAA>
                         </LII>
 
                         <LII>
                             <AAA>고객센터</AAA>
                         </LII>
-
                     </Menu>
                 </section>
-
             </Article>
         </Div>
     )
