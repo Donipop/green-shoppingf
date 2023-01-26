@@ -5,14 +5,13 @@ import AlreadySettlement from "./AlreadySettlement";
 import SellerSettleDate from "./SellerSettleDate";
 
 function SellerSettlement({ user }) {
-  const [user_id, setuser_id] = useState("");
-  const [market_namelist, setmarket_namelist] = useState([]); // 마켓 이름 리스트
-  const [before_settlement, setbefore_settlement] = useState([]); // 정산전 정보
-  const [totalpricemap, settotalpricemap] = useState([]); // 마켓별 가격총합
-  const [modalInfo, setModalInfo] = useState([]); // 모달창 정보
+  let user_id = user.user_id;
+  const [market_namelist, setmarket_namelist] = useState([]);
+  const [before_settlement, setbefore_settlement] = useState([]);
+  const [totalpricemap, settotalpricemap] = useState([]);
+  const [modalInfo, setModalInfo] = useState([]);
   const [seller_info, setseller_info] = useState([]);
-  const [before_settlement_id, setbefore_settlement_id] = useState([]); // 정산전 정보 id
-
+  const [before_settlement_id, setbefore_settlement_id] = useState([]);
   const [dateInfo, setDateInfo] = useState({
     start: "",
     end: "",
@@ -20,46 +19,59 @@ function SellerSettlement({ user }) {
 
   let today = new Date();
   today.setHours(today.getHours() + 9);
-  let format_today = today.toISOString().replace("T", " ").substring(0, 19); // 날짜 yyyy-mm-dd hh:mm:ss
+  let format_today = today.toISOString().replace("T", " ").substring(0, 19);
 
   useEffect(() => {
     if (user === undefined) {
       return;
     }
-    setuser_id(user.user_id);
-  }, [user]);
-
-  useEffect(() => {
+    /////////
     axios({
       method: "post",
-      url: "/api/sellercenter/getmarketnamelist",
+      url: "/api/sellercenter/getsellerinfo",
       params: {
         user_id: user_id,
       },
     })
       .then((res) => res.data)
       .then((res) => {
-        setmarket_namelist(res);
-
-        for (let i = 0; i < res.length; i++) {
-          axios({
-            method: "post",
-            url: "/api/sellercenter/getbeforesettlement",
-            params: {
-              user_id: user_id,
-              market_name: res[i],
-            },
+        setseller_info(res);
+      })
+      .then(
+        axios({
+          method: "get", // 시발 이거 존나 이해안감 csrf 관련 설정인듯 (post 하면 안되고 get으로 해야함) 다음에 한번 알아보기로 백엔드는 postmapping으로 적혀있음에도 불구하고 됨 ㅅㅂ 이게 뭐냐고 개좆같은거
+          url: "/api/sellercenter/getmarketnamelist",
+          params: {
+            user_id: user_id,
+          },
+        })
+          .then((res) => res.data)
+          .then((res) => {
+            setmarket_namelist(res);
+            for (let i = 0; i < res.length; i++) {
+              axios({
+                method: "post",
+                url: "/api/sellercenter/getbeforesettlement",
+                params: {
+                  user_id: user_id,
+                  market_name: res[i],
+                },
+              })
+                .then((response) => response.data)
+                .then((response) => {
+                  setbefore_settlement(response);
+                  for (let i = 0; i < response.length; i++) {
+                    if (res[i] !== undefined) {
+                      before_settlement_id.push(res[i]);
+                    }
+                    
+                  }
+                });
+            }
           })
-            .then((res) => res.data)
-            .then((res) => {
-              setbefore_settlement(res);
-              for (let i = 0; i < res.length; i++) {
-                before_settlement_id.push(res[i].ID);
-              }
-            });
-        }
-      });
-  }, [user_id]);
+      );
+    ////////
+  }, [user, user_id, before_settlement_id]);
 
   useEffect(() => {
     for (let i = 0; i < market_namelist.length; i++) {
@@ -74,20 +86,6 @@ function SellerSettlement({ user }) {
       ]);
     }
   }, [before_settlement]);
-
-  useEffect(() => {
-    axios({
-      method: "post",
-      url: "/api/sellercenter/getsellerinfo",
-      params: {
-        user_id: user_id,
-      },
-    })
-      .then((res) => res.data)
-      .then((res) => {
-        setseller_info(res);
-      });
-  }, [user_id]);
 
   const showProductModal = (index) => {
     let data = {

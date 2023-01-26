@@ -35,7 +35,7 @@ function AlreadySettlement({ getDate }) {
 
         setAlreadySettleMoney(result);
       });
-  }, [getDate]);
+  }, [getstartdate, getenddate, getuserid]);
 
   return (
     <DOV className="row">

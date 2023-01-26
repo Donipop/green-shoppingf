@@ -4,16 +4,29 @@ import SalesViewDate from "./SalesViewDate";
 import SalesViewTable from "./SalesViewTable";
 
 function SalesManageMent({ user }) {
-  const [user_id, setuser_id] = useState("");
+  let user_id = user.user_id;
+  let date = new Date(); 
+  let year = date.getFullYear(); 
+  let month = date.getMonth() + 1;
+  if (month === 1) {
+    year = year - 1;
+    month = 12;
+  } else if (2 <= month && month <= 9) {
+    month = "0" + month;
+  }
+  let date2 = new Date(year, month, 0).getDate();
+  let lastday = `${year}-${month}-${date2}`; 
+  let monthbefore = `${year}-${month}-01`; 
+
   const [dateInfo, setDateInfo] = useState({
-    start: "",
-    end: "",
+    start: monthbefore,
+    end: lastday,
   });
   useEffect(() => {
     if (user === undefined) {
       return;
     }
-    setuser_id(user.user_id);
+    
   }, [user]);
   return (
     <div className="w-100">

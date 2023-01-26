@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import IndexPage from "./component/Index/Index";
 import SellerCenter from "./component/SellerCenter/SellerCenter";
@@ -64,7 +64,7 @@ const Router = (props) => {
         <Route path='/NoticeDetail/:id' element={<NoticeView/>} />
         <Route path='/SellerSignup' element={<SellerSignup/>} />
         <Route path='/SellerSignup2' element={<SellerSignup2/>} />
-        <Route path='/myinformation' element={<Myinformation/>} />
+        <Route path='/myinformation' element={<Myinformation user={data}/>} />
         <Route path='/mypage' element={<Mypage user={data}/>} />
         <Route path='/writenotice' element={<Writenotice/>} />
         <Route path="/view/:page" element={<View user={data}/>} />
