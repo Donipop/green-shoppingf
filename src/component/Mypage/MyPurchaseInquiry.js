@@ -30,7 +30,6 @@ import MypageModal from './Mypagemodal';
                 setPurchaseList(res.data)
             })
             }, [user])
-
         const nullcheck = () => {
             if(purchaselist.length === 0){
                 return (
@@ -40,7 +39,6 @@ import MypageModal from './Mypagemodal';
                 ) 
             }
         }
-
 
     return(
     <div >
@@ -69,9 +67,15 @@ import MypageModal from './Mypagemodal';
                     
                 <div key ={item.id} style={{display:"flex",borderBottom:"1px solid #f5f5f5",width:"1270px",lineHeight:"100px",fontWeight:"700"}}>
                     
-                    <div style={{padding:"10px"}}><img src={iu} width='80' height='80'></img></div>
+                    <div style={{padding:"10px"}}>
+                        {item.mainimage === null ? (
+                            <img  src={`http://donipop.com:3333/img/${item.productimage}`} width='80' height='80'></img>
+                        ) : (
+                            <img  src={item.mainimage} width='80' height='80'></img>
+                        )}
+                        </div>
                      <div style={{width:"355px"}}>
-                             아이유가 입을뻔한 후드티 
+                             {item.title}
                      </div>
                      <div style={{color:"#aaa", fontSize:"14px", width:"180px", textAlign:"center"}}>
                        {item.time}
@@ -80,7 +84,7 @@ import MypageModal from './Mypagemodal';
                        {item.id}
                      </div>
                      <div style={{fontSize:"14px", width:"180px", textAlign:"center"}}>
-                       {(item.totalprice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
+                       {(item.totalprice - 2500).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원({item.count})
                      </div>
                      {item.state === 0 ? (
                          <div>

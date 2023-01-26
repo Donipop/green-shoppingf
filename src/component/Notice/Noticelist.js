@@ -10,23 +10,13 @@ import { Link} from 'react-router-dom';
     useEffect(() => {
         axios({
         method: 'get',
-        url: '/api/Notice',
+        url: '/api/notice',
         })
         .then(res => setList(res.data))
         
 
         }, [])
     
-    const write = () => {
-        
-        
-
-        
-    }
-
-    
-
-
     return(
         <div>
     <h3 id= "TEST" style={{marginBottom:"25px"}}>공지사항</h3>
@@ -55,7 +45,6 @@ import { Link} from 'react-router-dom';
         )))} 
         </tbody>
         </table>
-        <button id="write_button" onClick={write}>버튼</button>
     </div>
     )
 
