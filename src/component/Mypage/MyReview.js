@@ -22,6 +22,16 @@ const MyReview = ({user}) => {
     });
   }, [user]);
 
+  const reviewCheck = () => {
+    if(reviewlist.length === 0){
+    return (
+      <div style={{marginLeft:"500px",marginTop:"15px"}}>
+        <h2>등록한 리뷰가 없습니다.</h2>
+      </div>
+    )
+    }
+  }
+  console.log(reviewlist)
   return (
     <div style={{ marginTop: "40px" }}>
       <div>
@@ -66,7 +76,11 @@ const MyReview = ({user}) => {
                   }}
                 >
                   <a style={{ height: "100%", textDecoration: "none" }}>
-                    <Img src={item.mainimage}></Img>
+                  {item.mainimage === null ? (
+                            <img  src={`http://donipop.com:3333/img/${item.productimage}`} width='100' height='100'></img>
+                        ) : (
+                            <img  src={item.mainimage} width='100' height='100'></img>
+                        )}
                   </a>
                 </div>
                 <Divv>
@@ -146,6 +160,7 @@ const MyReview = ({user}) => {
           </Li>
         </Ul>
       ))}
+      {reviewCheck()}
     </div>
   );
 };

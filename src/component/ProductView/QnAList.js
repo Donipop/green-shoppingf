@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "./Pagination";
+import { FaAlignCenter } from "react-icons/fa";
 
 const QnA = ({ page, user }) => {
   const [limit, setLimit] = useState(10);
@@ -151,6 +152,10 @@ const QnA = ({ page, user }) => {
   };
 
   const QuestionDelete = (e, index) => {
+    if(user === undefined){
+        alert("권한이 없습니다.")
+        return;
+    }
     if (user.user_id !== test[index].user_id) {
       console.log(user.user_id, test[index].user_id);
       alert("본인이 작성한 글만 삭제가 가능합니다.");
@@ -223,6 +228,10 @@ const QnA = ({ page, user }) => {
   };
 
   const QuestionUpdate = (e, index) => {
+    if(user === undefined){
+        alert("권한이 없습니다")
+        return;
+    }
     if (user.user_id !== test[index].user_id) {
       alert("본인이 작성한 글만 수정 가능합니다.");
       return;

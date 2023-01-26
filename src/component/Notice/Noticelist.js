@@ -10,7 +10,7 @@ import { Link} from 'react-router-dom';
     useEffect(() => {
         axios({
         method: 'get',
-        url: '/api/Notice',
+        url: '/api/notice',
         })
         .then(res => setList(res.data))
         
