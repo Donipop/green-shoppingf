@@ -31,7 +31,9 @@ function TalkTalk({user}){
         client.current = new StompJs.Client({
             brokerURL: "ws://localhost:8080/api/ws", // 웹소켓 서버로 직접 접속
             connectHeaders: {
-                "userId" : params.get("id"),
+                "userId" : user.user_id ? user.user_id : null,
+                "marketOwner": params.get("m") ? params.get("m") : null,
+                "productId": params.get("p") ? params.get("p") : null,
                 "uuid": uuid,
                 "loginCheck": user === '' || user === undefined ? "false" : "true",
             },
@@ -61,56 +63,27 @@ function TalkTalk({user}){
         //채팅방 내역 구독
         client.current.subscribe(`/queue/user/${uuid}`, (msg) => {
             let data = JSON.parse(msg.body);
-            if(data.length >= 0){return;}
-            if(data.userId !== params.get('id')){
-                setChat((chat) => [...chat, TalkMyMessage(data.message.toString(),1)]);
-            }
+            console.log(data)
+            // if(data.length >= 0){return;}
+            // if(data.userId !== params.get('id')){
+            //     setChat((chat) => [...chat, TalkMyMessage(data.message.toString(),1)]);
+            // }
         });
         //다이렉트 메시지 구독
         client.current.subscribe('/user/queue/message', (msg) => {
             let data = JSON.parse(msg.body);
-            //console.log(data)
             console.log(data)
-            if(data.type === 'marketOwner'){
-                setMarketOwner(() => data.marketOwner);
-            }
-            if(data.type === 'error'){
-                switch(data.code){
-                    case "1":
-                        console.log('정상적인 접근이 아닙니다.')
-                        break;
-                    case "2":
-                        console.log('uuid틀림')
-                        window.location.href = `/ct/${data.uuid}?id=${params.get('id')}`;
-                        break;
-                    case "3":
-                        console.log('채팅방이 존재하지 않습니다. [채팅방 생성]')
-                        break;
-                    case "4":
-                        console.log('마켓오너 잘못된 접속')
-                        break;
-                    default:
-                        console.log('알수없는 에러')
-                        break;
-                }
-            }
-            if(data.type !== 'connect'){
-                return ;
-            }
-            if(data.chatList === null){
-                return;
-            }
-            setChat([]);
-                data.chatList.map((item) => {
-                    return setChat((chat) => [...chat, TalkMyMessage(item.message.toString(),item.sender === params.get('id') ? 0 : 1)]);
-                })
+            
+            // setChat([]);
+            //     data.chatList.map((item) => {
+            //         return setChat((chat) => [...chat, TalkMyMessage(item.message.toString(),item.sender === params.get('id') ? 0 : 1)]);
+            //     })
         })
 
         let msgData = {
-            'type': 'connect',
+            'type' : 'connect',
             'uuid' : uuid,
-            'userId': params.get('id'),
-            'marketOwner': '',
+            'userId': user.user_id ? user.user_id : null,
         }
         client.current.publish({
             destination: "/api/user",
@@ -126,23 +99,24 @@ function TalkTalk({user}){
                     e.target.value = '';
                     return;
                 }
-                let msgData = {
-                    'message' : e.target.value.trim(),
-                    'uuid' : uuid,
-                    'userId': params.get('id'),
-                    'marketOwner': marketOwner,
-                }
-                if(msgData.message === ''){
-                    return;
-                }
-                client.current.publish({
-                    destination: "/api/queue",
-                    body: JSON.stringify(msgData)
-                    // binaryBody: binaryData,
-                    // headers: { 'content-type': 'application/octet-stream' },
-                })
-                setChat([...chat, TalkMyMessage(msgData.message.toString(),0)]);
-                e.target.value = '';
+
+                // let msgData = {
+                //     'message' : e.target.value.trim(),
+                //     'uuid' : uuid,
+                //     'userId': params.get('id'),
+                //     'marketOwner': marketOwner,
+                // }
+                // if(msgData.message === ''){
+                //     return;
+                // }
+                // client.current.publish({
+                //     destination: "/api/queue",
+                //     body: JSON.stringify(msgData)
+                //     // binaryBody: binaryData,
+                //     // headers: { 'content-type': 'application/octet-stream' },
+                // })
+                // setChat([...chat, TalkMyMessage(msgData.message.toString(),0)]);
+                // e.target.value = '';
             }
         }
         // 자동 스크롤 제일 아래로

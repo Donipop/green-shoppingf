@@ -23,7 +23,7 @@ const TokTokQnaPage = ({ user }) => {
             count: res.data[i].count,
             uuid: res.data[i].uuid,
           };
-          console.log(data);
+          // console.log(data);
           setChatList((chatList) => [...chatList, data]);
         }
       })

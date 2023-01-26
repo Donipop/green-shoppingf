@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-function ProductInfo({ product }) {
+function ProductInfo({ product, user }) {
   const [listItem, setListItem] = useState([]);
   const [detailProduct, setDetailProduct] = useState([]);
   const [title, setTitle] = useState("");
@@ -205,6 +205,10 @@ function ProductInfo({ product }) {
     setMainImg(imgList[key].url);
   };
   const onClickBuyBtn = () => {
+    if(user === undefined || user === ''){
+      alert('로그인이 필요합니다.');
+      return;
+    }
     if (totalPrice === 0) {
       alert("상품을 선택해주세요.");
       return;
@@ -233,7 +237,14 @@ function ProductInfo({ product }) {
     };
     naviGate("/Payment", { state: [data] });
   };
-
+  const onClickTalkBtn = () =>{
+    window.open("http://localhost:3000/ct/1?id=admin2")
+    // if(user === undefined || user === ''){
+    //   alert('로그인이 필요합니다.');
+    //   return;
+    // }
+    
+  }
   return (
     <>
       <div className="col-1">
@@ -424,7 +435,7 @@ function ProductInfo({ product }) {
         </div>
         <div className="row w-100 mt-2">
           <div className="col-4">
-            <button className="btn btn-outline-secondary w-100">
+            <button className="btn btn-outline-secondary w-100" onClick={onClickTalkBtn}>
               톡톡문의
             </button>
           </div>

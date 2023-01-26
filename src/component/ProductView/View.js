@@ -69,7 +69,7 @@ function View({user}) {
       <div className="row">
         <div className="col-12"></div>
         <div className="pt-5"></div>
-        <ProductInfo product={productinfo} />
+        <ProductInfo product={productinfo} user={user} />
         <div className="pt-5"></div>
       </div>
       <UL className="d-block m-0 p-0" style={{ borderLeft: `1px solid #000` }}>
