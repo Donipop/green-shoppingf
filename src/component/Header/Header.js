@@ -154,6 +154,9 @@ const Header = ({user}) => {
                         <LII>
                             <AAA>고객센터</AAA>
                         </LII>
+                        <LII>
+                            <AAA href='/notice'>공지사항</AAA>
+                        </LII>
                     </Menu>
                 </section>
             </Article>
