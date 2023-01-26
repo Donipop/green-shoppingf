@@ -19,7 +19,7 @@ function Shopping_basket() {
       method: "post",
       url: "/api/mypage/user_shopping_basket",
       params: {
-        user_id: 'admin',
+        user_id: "admin",
       },
     })
       .then((res) => {
@@ -156,7 +156,7 @@ function Shopping_basket() {
         method: "post",
         url: "/api/mypage/delete_shopping_basket",
         params: {
-          user_id: 'admin',
+          user_id: "admin",
           shoppingBasket_deleteList: shoppingBasket_deleteList.toString(),
         },
       })
@@ -183,7 +183,6 @@ function Shopping_basket() {
     if (shoppingBasket[index].count > 1) {
       shoppingBasket[index].count -= 1;
     }
-    
   }
 
   function test123() {}
@@ -192,7 +191,7 @@ function Shopping_basket() {
     <div style={{ marginTop: "40px" }}>
       <LoginInterceptor />
       <div>
-        <h1>장바구니 / 로그인된 유저 : {'admin'}</h1>
+        <h1>장바구니 / 로그인된 유저 : {"admin"}</h1>
         <table>
           <tbody>
             <tr style={{ width: "1270px" }}>
@@ -313,13 +312,7 @@ function Shopping_basket() {
                     paddingLeft: "80px",
                   }}
                 >
-                  <button indexid={index} onClick={count_down}>
-                    -
-                  </button>
                   {List.count}
-                  <button indexid={index} onClick={count_up}>
-                    +
-                  </button>
                 </td>
                 <td
                   style={{

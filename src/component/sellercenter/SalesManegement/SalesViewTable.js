@@ -5,12 +5,12 @@ import SalesViewDetailInfo from "./SalesViewDetailInfo";
 import Pagination from "./Pagination";
 
 function SalesViewTable({ getDate }) {
-  let getstartdate = getDate[0].start;
-  let getenddate = getDate[0].end;
+  let getStartDate = getDate[0].start;
+  let getEndDate = getDate[0].end;
+  let user_id = getDate[1];
   const [purchaseconfirm, setpurchaseconfirm] = useState([]);
   const [month_of_sales, setmonth_of_sales] = useState(0);
   const [modalInfo, setModalInfo] = useState([]);
-
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
@@ -25,10 +25,9 @@ function SalesViewTable({ getDate }) {
   };
 
   useEffect(() => {
-    if (getDate[0].start === "" || getDate[0].end === "" || getDate[1] === "") {
+    if (getStartDate === "" || getEndDate === "" || user_id === "") {
       return;
     }
-    console.log(getDate);
     let result = 0;
     axios({
       method: "post",
@@ -39,22 +38,20 @@ function SalesViewTable({ getDate }) {
         user_id: getDate[1],
       },
     })
-      .then((res) => res.data)
+      .then((res) => res.data) 
       .then((res) => {
         setpurchaseconfirm(res);
-
         for (let i = 0; i < res.length; i++) {
           result += res[i].totalprice;
         }
-
         setmonth_of_sales(result);
       });
-  }, [getDate]);
+  }, []);
 
   return (
     <DOV className="row">
       <span>
-        {getstartdate} ~ {getenddate}
+        {getStartDate} ~ {getEndDate}
       </span>
       <span>총 매출액 : </span>
       <COUNTGREEN>{month_of_sales}</COUNTGREEN>

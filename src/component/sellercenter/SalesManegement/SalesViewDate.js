@@ -31,6 +31,7 @@ function ViewDate({ getDate }) {
       start: monthbefore,
       end: lastday,
     });
+    
   }, []);
 
   const onClickOneClickDate = (index) => {

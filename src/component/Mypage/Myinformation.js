@@ -1,66 +1,35 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import Header from "../Header/Header";
 import LoginInterceptor from "../Login/LoginInterceptor";
 import styled from "styled-components";
 
+function Myinformation({ user }) {
+  const [myinfo, setmyinfo] = useState([]);
+  const [beforeNick, setbeforeNick] = useState("");
+  const [beforePassword, setbeforePassword] = useState("");
+  const [changedPassword, setchangedPassword] = useState("");
+  const [changedNick, setchangedNick] = useState("");
 
-function Myinformation({user}) {
-  const [myinfo, setmyinfo] = useState({
-            user_address: '',
-            user_brith: '',
-            user_email: '',
-            user_grade: '',
-            user_id: '',
-            user_money: '',
-            user_name: '',
-            user_nick: '',
-            user_password: '',
-            user_role: '',
-            user_sex: '',
-            user_signdate: '',
-            user_state: '',
-            user_tel: ''
-  });
-
-  useEffect(() => {
-    if(user === undefined){
+  useLayoutEffect(() => {
+    if (user === undefined) {
       return;
     }
-    setmyinfo({
-      user_address: user.user_address,
-            user_brith: user.user_brith,
-            user_email: user.user_email,
-            user_grade: user.user_grade,
-            user_id: user.user_id,
-            user_money: user.user_money,
-            user_name: user.user_name,
-            user_nick: user.user_nick,
-            user_password: user.user_password,
-            user_role: user.user_role,
-            user_sex: user.user_sex,
-            user_signdate: user.user_signdate,
-            user_state: user.user_state,
-            user_tel: user.user_tel,
-    })
-  }, [user])
+    setbeforeNick(user.user_nick);
+    setbeforePassword(user.user_password);
+    setchangedNick(user.user_nick);
+    setmyinfo(user);
+  }, [user]);
 
+  const [finalCheck, setfinalCheck] = useState(true);
 
-  
-
-  
-  const [password2, setpassword2] = useState(""); // 비밀번호 확인
-
-  const [CheckCheck, setCheckCheck] = useState(true); // 체크 총 체크
-
-  // 닉네임 중복확인
-  const [Checknick, setnickCheck] = useState({
+  const [CheckNick, setCheckNick] = useState({
     check: true,
-    message: "닉네임을 설정해주세요",
+    message: "닉네임이 기존 닉네임과 같습니다.",
+    buttonVisible: "hidden",
   });
 
-  // 비밀번호 중복확인
-  const [Checkpassword, setCheckpassword] = useState({
+  const [CheckPassword, setCheckpassword] = useState({
     check: true,
     message: "변경하실 비밀번호를 입력해주세요",
   });
@@ -77,83 +46,99 @@ function Myinformation({user}) {
     console.log(myinfo);
     axios({
       method: "post",
-      url: "/api/mypage/myinfoUpdate",
-      data: {
-        myinfo: myinfo,
-        
+      url: "/api/mypage/checkDuplicateNick",
+      params: {
+        user_nick: myinfo.user_nick,
+      },
+    });
+    // axios({
+    //   method: "post",
+    //   url: "/api/mypage/myinfoUpdate",
+    //   data: {
+    //     myinfo: myinfo,
+
+    //   },
+    // })
+    //   .then((res) => res.data)
+    //   .then((res) => {
+    //     if (res === 1) {
+    //       alert("회원정보가 수정되었습니다.");
+    //       window.location.reload();
+    //     } else {
+    //       alert("회원정보 수정에 실패하였습니다.");
+    //     }
+    //   });
+  }
+
+  function onChangePassword(e) {
+    setchangedPassword(e.target.value);
+    if (e.target.value === beforePassword) {
+      setCheckpassword({
+        ...CheckPassword,
+        check: true,
+        message: "현재 비밀번호랑 일치합니다.",
+      });
+    } else {
+      setCheckpassword({
+        ...CheckPassword,
+        check: false,
+        message: "사용가능한 비밀번호 입니다.",
+      });
+    }
+  }
+
+  function onChangeNick(e) {
+    setchangedNick(e.target.value);
+    if (e.target.value === beforeNick) {
+      setCheckNick({
+        ...CheckNick,
+        message: "현재 닉네임과 같습니다.",
+      });
+    } else {
+      setCheckNick({
+        ...CheckNick,
+        buttonVisible: true,
+        message: "중복여부 체크바랍니다.",
+      });
+    }
+  }
+
+  function checkDuplicateNick(e) {
+    e.preventDefault();
+    console.log(changedNick);
+    axios({
+      method: "post",
+      url: "/api/mypage/checkDuplicateNick",
+      params: {
+        user_nick: changedNick,
       },
     })
       .then((res) => res.data)
       .then((res) => {
-        if (res === 1) {
-          alert("회원정보가 수정되었습니다.");
-          window.location.reload();
+        if (res === false) {
+          setCheckNick({
+            ...CheckNick,
+            check: false,
+            message: "중복된 닉네임입니다.",
+          });
         } else {
-          alert("회원정보 수정에 실패하였습니다.");
+          setCheckNick({
+            ...CheckNick,
+            check: true,
+            message: "사용가능한 닉네임입니다.",
+          });
         }
       });
   }
 
-  function onChangePassword2(e) {
-    setpassword2(e.target.value);
-  }
-
-  // 비밀번호 체크
   useEffect(() => {
-    if (password2 === myinfo.user_password) {
-      setCheckpassword({
-        check: false,
-        message: "비밀번호가 일치합니다.",
-      });
+    if (CheckPassword.check === false) {
+      setfinalCheck(false);
     } else {
-      setCheckpassword({
-        check: true,
-        message: "비밀번호가 일치하지 않습니다.",
-      });
+      setfinalCheck(true);
     }
-  }, [myinfo.user_password, password2]);
+  }, [CheckPassword.check]);
 
-  // 유저 닉네임 상시 체크
-  useEffect(() => {
-    if (myinfo.user_nick === "" || myinfo.user_nick.length < 3) {
-      setnickCheck({
-        check: true,
-        message: "닉네임은 3자 이상 입력해주세요.",
-      });
-    } else {
-      axios({
-        method: "post",
-        url: "/api/mypage/checkduplicatenick",
-        params: {
-          user_nick: myinfo.user_nick,
-        },
-      })
-        .then((res) => res.data)
-        .then((res) => {
-          if (res === true) {
-            setnickCheck({
-              check: false,
-              message: "사용가능한 닉네임입니다.",
-            });
-          } else {
-            setnickCheck({
-              check: true,
-              message: "중복된 닉네임입니다.",
-            });
-          }
-        });
-    }
-  }, [myinfo.user_nick]);
-
-  useEffect(() => {
-    if (Checknick.check === false && Checkpassword.check === false) {
-      setCheckCheck(false);
-    } else {
-      setCheckCheck(true);
-    }
-  }, [Checknick.check, Checkpassword.check]);
-
-  
   return (
     <div>
       <Header />
@@ -161,7 +146,7 @@ function Myinformation({user}) {
       <div className="row m-2">
         <div className="col-12">
           <div className="alert alert-secondary">
-            <h6>{myinfo.user_id}님의 회원정보수정 페이지</h6>
+            <h6>{myinfo.user_id}님의 회원정보수정 페이지 </h6>
             <button
               onClick={() => {
                 console.log(myinfo);
@@ -171,17 +156,10 @@ function Myinformation({user}) {
             </button>
             <button
               onClick={() => {
-                console.log(Checkpassword.message);
+                console.log(CheckPassword.message);
               }}
             >
               비번확인
-            </button>
-            <button
-              onClick={() => {
-                console.log(CheckCheck);
-              }}
-            >
-              체크확인
             </button>
 
             <form>
@@ -197,27 +175,17 @@ function Myinformation({user}) {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="user_password">비밀번호</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="user_password"
-                  value={myinfo.user_password}
-                  onChange={onChangeMyinfo}
-                />
-              </div>
-              <div className="form-group">
                 <label htmlFor="user_password">비밀번호 확인</label>
                 <input
                   type="password"
                   className="form-control"
                   id="user_password2"
-                  value={password2}
-                  onChange={(e) => onChangePassword2(e)}
+                  value={changedPassword}
+                  onChange={(e) => onChangePassword(e)}
                 />
               </div>
               <div className="form-group">
-                <COUNTBLACK>{Checkpassword.message}</COUNTBLACK>
+                <COUNTBLACK>{CheckPassword.message}</COUNTBLACK>
               </div>
               <div className="form-group">
                 <label htmlFor="user_name">이름</label>
@@ -236,12 +204,19 @@ function Myinformation({user}) {
                   type="text"
                   className="form-control"
                   id="user_nick"
-                  value={myinfo.user_nick}
-                  onChange={onChangeMyinfo}
+                  value={changedNick}
+                  onChange={(e) => onChangeNick(e)}
                 />
               </div>
               <div className="form-group">
-                <COUNTBLACK>{Checknick.message}</COUNTBLACK>
+                <COUNTBLACK>{CheckNick.message}</COUNTBLACK>
+                <button
+                  className="btn btn-primary"
+                  style={{ visibility: CheckNick.buttonVisible }}
+                  onClick={checkDuplicateNick}
+                >
+                  중복체크
+                </button>
               </div>
               <div className="form-group">
                 <label htmlFor="user_email">이메일</label>
@@ -310,8 +285,8 @@ function Myinformation({user}) {
             </form>
             <button
               className="btn btn-primary"
-              disabled={CheckCheck}
               onClick={myinfoUpdate}
+              disabled={finalCheck}
             >
               수정하기
             </button>

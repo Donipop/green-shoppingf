@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import IndexPage from "./component/Index/Index";
 import SellerCenter from "./component/SellerCenter/SellerCenter";
@@ -35,7 +35,7 @@ import SellerCenterMain from "./component/SellerCenter/SellerCenterMain/SellerCe
 import Signup from "./component/SellerSignup/Signup";
 import { useCookies } from "react-cookie";
 import GetUserData from "./component/Login/GetUserData";
-import { useState, useLayoutEffect } from "react";
+
 
 const Router = (props) => {
   
@@ -65,7 +65,7 @@ const Router = (props) => {
         <Route path='/NoticeDetail/:id' element={<NoticeView/>} />
         <Route path='/SellerSignup' element={<SellerSignup/>} />
         <Route path='/SellerSignup2' element={<SellerSignup2/>} />
-        <Route path='/myinformation' element={<Myinformation/>} />
+        <Route path='/myinformation' element={<Myinformation user={data}/>} />
         <Route path='/mypage' element={<Mypage user={data}/>} />
         <Route path='/writenotice' element={<Writenotice/>} />
         <Route path="/view/:page" element={<View user={data}/>} />
