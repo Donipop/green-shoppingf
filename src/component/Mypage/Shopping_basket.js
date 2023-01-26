@@ -161,7 +161,7 @@ function Shopping_basket({user}) {
         method: "post",
         url: "/api/mypage/delete_shopping_basket",
         params: {
-          user_id: "admin",
+          user_id: user_id,
           shoppingBasket_deleteList: shoppingBasket_deleteList.toString(),
         },
       })
