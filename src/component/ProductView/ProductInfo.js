@@ -238,11 +238,12 @@ function ProductInfo({ product, user }) {
     naviGate("/Payment", { state: [data] });
   };
   const onClickTalkBtn = () =>{
-    window.open("http://localhost:3000/ct/1?id=admin2")
-    // if(user === undefined || user === ''){
-    //   alert('로그인이 필요합니다.');
-    //   return;
-    // }
+    if(user === undefined || user === ''){
+      alert('로그인이 필요합니다.');
+      return;
+    }
+    let productId = window.location.pathname.replace('/view/','');
+    window.open(`http://localhost:3000/ct/view?p=${productId}`)
     
   }
   return (

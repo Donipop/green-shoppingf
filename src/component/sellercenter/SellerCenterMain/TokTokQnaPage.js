@@ -15,7 +15,7 @@ const TokTokQnaPage = ({ user }) => {
         },
       })
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         for (let i = 0; i < res.data.length; i++) {
           let data = {
             id: res.data[i].chatList.sender,
@@ -65,7 +65,7 @@ const TokTokQnaPage = ({ user }) => {
                   role="button"
                   onClick={() => {
                     window.open(
-                      `/ct/${item.uuid}?id=${user.user_id}`,
+                      `/ct/${item.uuid}?m=${user.user_id}`,
                       "톡톡문의",
                       "width=400, height=600, left=100, top=100, location=no, status=no, menubar=no, toolbar=no, scrollbars=no, resizable=no"
                     );
