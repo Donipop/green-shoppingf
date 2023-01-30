@@ -23,7 +23,7 @@ const SellerSignup = () => {
       alert("마켓이름을 입력하세요");
       return;
     }
-    navigate("/SellerSignup2", { state: account });
+    navigate("/mypage/SellerSignupDetail", { state: account });
   };
 
   return (

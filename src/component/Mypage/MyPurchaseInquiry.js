@@ -27,6 +27,7 @@ import MypageModal from './Mypagemodal';
             }
             })
             .then((res) => {
+                console.log(res.data)
                 setPurchaseList(res.data)
             })
             }, [user])

@@ -171,7 +171,7 @@ function Index({ user }) {
                   <SPan></SPan>
                 </a>
               </LIitem>
-              <LIitem>
+              {/* <LIitem>
                 <a href={`/view/${list[7].ID}`}>
                   <img src={list[7].MAINIMAGE} width="228" height="298"></img>
                   <SPan></SPan>
@@ -182,7 +182,7 @@ function Index({ user }) {
                   <img src={list[8].MAINIMAGE} width="228" height="298"></img>
                   <SPan></SPan>
                 </a>
-              </LIitem>
+              </LIitem> */}
             </ul>
           </Divtodaylist>
           <ItemRecommend />

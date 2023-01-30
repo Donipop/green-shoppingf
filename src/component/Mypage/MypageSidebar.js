@@ -43,7 +43,7 @@ function MypageSidebar() {
             회원정보 수정
             </a>
             <a
-              href="/mypage/sellersignup"
+              href="/mypage/SellerSignup"
               className="link-white d-inline-flex text-decoration-none rounded"
             >
             판매자 회원등록 하기

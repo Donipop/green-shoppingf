@@ -47,9 +47,11 @@ export default function UserSignUp() {
       },
       body: JSON.stringify(account),
     })
-      .then((response) => response.text(), console.log(account))
+      .then((response) => response.data)
+      .then((response) => {
+        alert(response)
+      }) 
       .then((name) => setPtest(name))
-      .then(alert("로그인 화면으로 이동합니다."))
       .then(Navigate("/"));
   }
 

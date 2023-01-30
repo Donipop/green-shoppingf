@@ -61,8 +61,9 @@ function SellerSettlement({ user }) {
                 .then((response) => {
                   setbefore_settlement(response);
                   for (let i = 0; i < response.length; i++) {
-                    if (res[i] !== undefined) {
-                      before_settlement_id.push(res[i]);
+                    if (response[i] !== undefined) {
+                      before_settlement_id.push(response[i].ID);
+                      
                     }
                     
                   }

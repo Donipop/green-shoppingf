@@ -11,17 +11,18 @@ const SellerReview = ({user}) => {
         {five: 0, four: 0, three: 0, two: 0, one: 0 }
     )
     const today = new Date();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
     const hour = today.getHours() - 9;
     const minute = today.getMinutes();
     const [dateinfo, setDateInfo] = useState({
         start: "1923-1-5",
-        end: "2023-1-5" + " " + hour + ":" + minute
+        end: "2023-"+ month+"-"+day + " " + hour + ":" + minute
     });
     const [allreview, setAllReview] = useState('')
     const [avgstar, setAvgStar] = useState({
         avg: 0
     })
-   
     useEffect(() => {
       if(user === undefined) {return ;}
         axios({
@@ -35,10 +36,9 @@ const SellerReview = ({user}) => {
         })
         .then((res) => {
             setStarNum(res.data)
-            setAllReview(res.data.length)
-           
-        }
-        )      
+            setAllReview(res.data.length) 
+        })
+             
 
     }, [dateinfo,user])
      
@@ -75,6 +75,7 @@ const SellerReview = ({user}) => {
         } 
       })}
     }
+    
      },[starnum,dateinfo])
 
         const ChangeDate = (e) => {

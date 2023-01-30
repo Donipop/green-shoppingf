@@ -12,11 +12,9 @@ import SellerSignup from "../SellerSignup/SellerSignup";
 import SellerSignupDetail from "../SellerSignup/SellerSignupDetail";
 
 function Mypage({ user }) {
-  useLayoutEffect(() => {
-    if (user === undefined) {
-      return;
-    }
-  });
+  if(user === undefined) {
+    return;
+  }
 
   return (
     <div>
