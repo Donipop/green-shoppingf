@@ -7,8 +7,8 @@ function SellerSettleup(DetailInfo) {
       alert("정산할 금액이 없습니다.");
       return;
     }
-
     axios({
+      
       method: "post",
       url: "/api/sellercenter/settleup",
       data: {
