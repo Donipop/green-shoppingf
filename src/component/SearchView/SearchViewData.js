@@ -12,10 +12,10 @@ const SearchViewData = () => {
   );
   const name = new URLSearchParams(window.location.search).get("name");
   useEffect(() => {
-    if(searchcont === ''){
-      alert('검색어를 입력해주세요.')
-      return;
-    }
+    // if(searchcont === ''){
+    //   alert('검색어를 입력해주세요.')
+    //   return;
+    // }
     axios({
       method: "get",
       url: `/api/searchview?searchcont=${searchcont}&name=${name}`,

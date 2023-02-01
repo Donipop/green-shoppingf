@@ -57,7 +57,7 @@ const TokTokQnaPage = ({ user }) => {
             {chatList.map((item, index) => {
               return (
                 <a
-                  href={`/ct/${item.uuid}?id=${user.user_id}`}
+                  href={`/ct/${item.uuid}?m=${user.user_id}`}
                   key={index}
                   style={{ textDecoration: "none" }}
                   target="_blank"

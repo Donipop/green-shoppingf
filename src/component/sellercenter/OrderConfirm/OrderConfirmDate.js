@@ -107,6 +107,14 @@ function OrderConfirmDate({ getDate }) {
             (date <= 9 ? "0" + date : date),
         });
         break;
+      case 4:
+        // console.log("전체");
+        setDateInfo({
+          ...dateInfo,
+          start: '2000-01-01',
+          end: '2100-12-31',
+        });
+        break;
       default:
         // console.log("오늘");
         setDateInfo({
@@ -175,6 +183,13 @@ function OrderConfirmDate({ getDate }) {
                 onClick={() => onClickOneClickDate(3)}
               >
                 3개월
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => onClickOneClickDate(4)}
+              >
+                전체
               </button>
             </div>
 

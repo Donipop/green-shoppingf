@@ -10,7 +10,10 @@ const SearchView  = () => {
             <Div>
                 <Header/>
             </Div>
-       <SearchViewData/>
+            <div className="container">
+            <SearchViewData/>
+            </div>
+       
        </div>
 
 

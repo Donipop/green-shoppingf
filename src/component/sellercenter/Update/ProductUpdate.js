@@ -159,6 +159,20 @@ function ProductUpdate({ user, marketName }) {
         console.log(err);
       });
   };
+  const onClickProductDelete = () => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      axios
+        .post("/api/sellercenter/deleteProduct", {
+          productId: parseInt(product.id),
+        })
+        .then((res) => {
+          alert("삭제되었습니다.");
+          
+        });
+    } else {
+      alert("취소되었습니다.");
+    }
+  };
   return (
     <div className="w-100">
       <div className="row">
@@ -168,7 +182,10 @@ function ProductUpdate({ user, marketName }) {
           </div>
 
           <div className="alert alert-secondary" role={"alert"}>
-            <ProductUpdateSelect getProductData={setUpdateProduct} />
+            <ProductUpdateSelect
+              getProductData={setUpdateProduct}
+              marketName={marketName}
+            />
           </div>
         </div>
 
@@ -254,9 +271,16 @@ function ProductUpdate({ user, marketName }) {
                     수정
                   </button>
                 </div>
-
                 <div className="col-3">
                   <button className="btn btn-secondary w-100">미리보기</button>
+                </div>
+                <div className="col-3">
+                  <button
+                    className="btn btn-danger w-100"
+                    onClick={onClickProductDelete}
+                  >
+                    삭제
+                  </button>
                 </div>
               </div>
             </div>

@@ -34,7 +34,7 @@ export default function ProductImg({ getData, UpdateData }) {
               e.target.remove();
               getData("mainImgDelete", e.target.currentSrc);
             };
-            let data = e.target.result + "___1";
+            let data = e.target.result;
 
             getData("mainImg", data);
           };
