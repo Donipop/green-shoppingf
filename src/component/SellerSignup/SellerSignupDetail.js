@@ -3,16 +3,17 @@ import React, { useRef, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const SellerSignupDetail = () => {
+const SellerSignupDetail = ({user}) => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [filename, setFilename] = useState("");
   const [filenames, setFilenames] = useState("");
-  const fileinput = useRef(null);
+  const fileinput = useRef();
   const [account, setAccount] = useState({
     bank_account: "",
     bank_accountowner: "",
     description: "",
+
   });
   const onChangeAccount = (e) => {
     setAccount({ ...account, [e.target.name]: e.target.value });
@@ -42,23 +43,36 @@ const SellerSignupDetail = () => {
     { value: "21", label: "케이뱅크" },
   ];
   const [selected, setSelected] = useState("");
-  const [product, setProduct] = useState("");
+  const [accountImg, setAccountImg] = useState("");
+  const [mainImg, setMainImg] = useState("");
 
   const handleChange = (e) => {
     setSelected(e.target.value);
   };
-  const handleChangeProduct = (e) => {
-    setProduct(e.target.value);
-  };
-  const handleClick = () => {
-    fileinput.current.click();
-  };
 
   const handleChangeFile = (e) => {
-    setFilename(e.target.files[0].name);
-  };
+    if(e.target.id === "BusinessRegistrationImg"){
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          setMainImg(e.target.result);
+          document.getElementById('Businesspreview').src = e.target.result;
+          document.getElementById('Businesspreview').style.width = "300px";
+          document.getElementById('Businesspreview').style.height = "300px";
+        }
+        reader.readAsDataURL(e.target.files[0]);
+      }
+  }
   const handleChangeFiles = (e) => {
-    setFilenames(e.target.files[0].name);
+    if(e.target.id === "AccountImg"){
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        setAccountImg(e.target.result);
+        document.getElementById('Accountprview').src = e.target.result;
+        document.getElementById('Accountprview').style.width = "300px";
+        document.getElementById('Accountprview').style.height = "300px";
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
   };
   const onSubmitt = (e) => {
     e.preventDefault();
@@ -80,15 +94,18 @@ const SellerSignupDetail = () => {
     }
     axios({
       method: "post",
-      url: "api/login/sellersignup",
+      url: "/api/login/sellersignup",
       data: {
+        user_id: user.user_id,
         ...state,
         ...account,
         bank_name: selected,
+        mainImg: mainImg,
+        user_role: 1
       },
     })
       .then(alert("신청이 완료되었습니다."))
-      .then(navigate("/mypage"))
+      // .then(navigate("/mypage"))
       .catch((err) => {
         console.log(err);
       });
@@ -98,12 +115,13 @@ const SellerSignupDetail = () => {
     setSelected(selectList[0].label);
   }, []);
 
+
   return (
-    <div className="container">
+    <div className="" style={{marginTop:"40px"}}>
       <div className="row">
-        <div className="col-md-6 mt-5 mx-auto">
+        <div className="">
           <form onSubmit={onSubmitt}>
-            <h1 className="h3 mb-3 font-weight-normal">회원가입</h1>
+          <h1 className="" style={{fontSize:"30px"}}>판매자 회원가입</h1>
             <div className="form-group">
               입금은행
               <select
@@ -150,12 +168,14 @@ const SellerSignupDetail = () => {
               </div>
               <div>
                 <input
+                  id="BusinessRegistrationImg"
                   type="file"
                   name="file"
                   ref={fileinput}
                   onChange={handleChangeFile}
                 />
               </div>
+              <img id="Businesspreview" src="" alt="" />
             </div>
 
             <div className="form-group">
@@ -170,12 +190,14 @@ const SellerSignupDetail = () => {
               </div>
               <div>
                 <input
+                  id="AccountImg"
                   type="file"
                   name="file"
                   ref={fileinput}
                   onChange={handleChangeFiles}
                 />
               </div>
+              <img id="Accountprview" src="" alt=""></img>
             </div>
             <div className="form-group">
               <label htmlFor="tel">회사소개</label>

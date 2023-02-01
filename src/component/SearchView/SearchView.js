@@ -3,12 +3,12 @@ import Header from "../Header/Header";
 import styled from "styled-components";
 
 
-const SearchView  = () => {
+const SearchView  = ({user}) => {
     
     return(
         <div>
             <Div>
-                <Header/>
+                <Header user={user} />
             </Div>
             <div className="container">
             <SearchViewData/>

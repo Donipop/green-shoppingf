@@ -21,7 +21,7 @@ function Mypage({ user }) {
       <LoginInterceptor/>
       <Header user={user} />
       <div className="d-flex">
-        <MypageSidebar />
+        <MypageSidebar user={user}/>
         <Routes>
           <Route path="/" element={<Shopping_basket user={user} />}></Route>
           <Route

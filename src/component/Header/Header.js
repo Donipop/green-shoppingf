@@ -106,7 +106,7 @@ const Header = ({user}) => {
                                             <LI><A onClick={ValueSelect}>출산/유아동</A></LI>
                                             <LI><A onClick={ValueSelect}>뷰티</A></LI>
                                             <LI><A onClick={ValueSelect}>식품</A></LI>
-                                            <LI><A onClick={ValueSelect}>주방용퓸</A></LI>
+                                            <LI><A onClick={ValueSelect}>주방용품</A></LI>
                                             <LI><A onClick={ValueSelect}>생활용품</A></LI>
                                         </Ul>
                                     </DIv>

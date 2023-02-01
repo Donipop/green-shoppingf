@@ -171,8 +171,18 @@ function Index({ user }) {
                   <SPan></SPan>
                 </a>
               </LIitem>
-              {/* 
-               */}
+              <LIitem>
+                <a href={`/view/${list[6].ID}`}>
+                  <img src={list[7].MAINIMAGE} width="228" height="298"></img>
+                  <SPan></SPan>
+                </a>
+              </LIitem>
+              <LIitem>
+                <a href={`/view/${list[6].ID}`}>
+                  <img src={list[8].MAINIMAGE} width="228" height="298"></img>
+                  <SPan></SPan>
+                </a>
+              </LIitem>
             </ul>
           </Divtodaylist>
           <ItemRecommend />

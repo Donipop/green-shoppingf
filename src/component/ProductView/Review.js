@@ -38,6 +38,10 @@ const Review = ({ user }) => {
   };
   const ReviewSubmit = (e) => {
     e.preventDefault();
+    if(user === undefined) {
+      alert("로그인 후 이용해주세요");
+      return;
+    }
     if (star === 0) {
       alert("별점을 입력해주세요");
       return;

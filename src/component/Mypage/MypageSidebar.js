@@ -6,7 +6,16 @@ import styled from "styled-components";
 
 export default MypageSidebar;
 
-function MypageSidebar() {
+function MypageSidebar({user}) {
+  const userRoleCheck = () => {
+    if (user.user_role === 1) {
+      alert("이미 판매자 회원입니다.");
+      return;
+    } else {
+      alert("판매자 회원등록을 진행합니다.");
+    }
+
+  }
   return (
     <div id="MypageSidebar" style={{ marginLeft:"125px",marginTop: "40px", marginRight:"100px", display: "flex" }}>
       <ul>
@@ -45,6 +54,7 @@ function MypageSidebar() {
             <a
               href="/mypage/SellerSignup"
               className="link-white d-inline-flex text-decoration-none rounded"
+              onClick={userRoleCheck}
             >
             판매자 회원등록 하기
             </a>
