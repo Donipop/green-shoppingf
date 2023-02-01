@@ -74,6 +74,10 @@ const QnA = ({ page, user }) => {
 
   // 질문하기
   const QnASite = () => {
+    if(user === undefined) {
+      alert("로그인이 필요한 서비스입니다.");
+      return;
+    }
     window.open(
       `http://localhost:3000/QnA/write/${page}/${user.user_id}`,
       "_blank",

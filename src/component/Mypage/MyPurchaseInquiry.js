@@ -69,13 +69,17 @@ import MypageModal from './Mypagemodal';
                     
                     <div style={{padding:"10px"}}>
                         {item.mainimage === null ? (
+                            <a href={`/view/${item.productid}`}>
                             <img  src={`http://donipop.com:3333/img/${item.productimage}`} width='80' height='80'></img>
+                            </a>
                         ) : (
                             <img  src={item.mainimage} width='80' height='80'></img>
                         )}
                         </div>
                      <div style={{width:"355px"}}>
+                        <a style={{textDecoration:"none",color:"black"}}href={`/view/${item.productid}`}>
                              {item.title}
+                        </a>
                      </div>
                      <div style={{color:"#aaa", fontSize:"14px", width:"180px", textAlign:"center"}}>
                        {item.time}
@@ -84,7 +88,7 @@ import MypageModal from './Mypagemodal';
                        {item.id}
                      </div>
                      <div style={{fontSize:"14px", width:"180px", textAlign:"center"}}>
-                       {(item.totalprice - 2500).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원({item.count})
+                       {(item.price * item.count).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원({item.count})
                      </div>
                      {item.state === 0 ? (
                          <div>
@@ -97,7 +101,15 @@ import MypageModal from './Mypagemodal';
                          </table>
                        </div>       
                         ):(item.state === 1 ? (
-                        "결제완료"
+                            <div>
+                            <table style={{fontSize:"14px",textAlign:"center", height:"50px",all:"initial",marginLeft:"45px"}}>
+                                <thead>
+                                    <tr>
+                                        <th style={{paddingLeft:"19px"}} >결제완료</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                          </div>       
                         ):(item.state === 2 ? (
                             <div>
                             <table style={{fontSize:"14px",textAlign:"center", height:"50px",all:"initial",marginLeft:"45px"}}>

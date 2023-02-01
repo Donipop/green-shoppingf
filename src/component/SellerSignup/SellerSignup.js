@@ -23,16 +23,16 @@ const SellerSignup = () => {
       alert("마켓이름을 입력하세요");
       return;
     }
-    navigate("/SellerSignup2", { state: account });
+    navigate("/mypage/SellerSignupDetail", { state: account });
   };
 
   return (
     //signup form
-    <div className="container">
+    <div className="" style={{marginTop:"40px"}}>
       <div className="row">
-        <div className="col-md-6 mt-5 mx-auto">
+        <div className="">
           <form noValidate onSubmit={onSubmit}>
-            <h1 className="h3 mb-3 font-weight-normal">회원가입</h1>
+            <h1 className="" style={{fontSize:"30px"}}>판매자 회원가입</h1>
             <div className="form-group">
               <label htmlFor="username">사업자등록번호</label>
               <input
@@ -41,6 +41,7 @@ const SellerSignup = () => {
                 name="business_number"
                 placeholder="사업자등록번호를 입력하세요"
                 onChange={onChangeAccount}
+                style={{ width: "300px" }}
               />
             </div>
             <div className="form-group">

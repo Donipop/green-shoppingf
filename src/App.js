@@ -65,7 +65,7 @@ const Router = (props) => {
         <Route path='/Sellercenter/reviewmanagement' element={<SellerReview/>} />
         {/* <Route path='/header' element={<Header user={data}/>} /> */}
         <Route path='/ct/:uuid' element={<TalkTalk user={data}/>} />
-        <Route path='/searchview' element={<SearchView/>} />
+        <Route path='/searchview' element={<SearchView user={data}/>} />
         <Route path='/SellercenterMainpage' element={<SellerCenterMain/>} />
         <Route path='/UserSignUp' element={<UserSignUp />} />
         <Route path='/UserFindId' element={<UserFindId/>} />
