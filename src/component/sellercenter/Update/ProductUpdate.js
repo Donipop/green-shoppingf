@@ -10,25 +10,24 @@ import axios from "axios";
 function ProductUpdate({ user, marketName }) {
   const [updateproduct, setUpdateProduct] = useState([]);
   const [productDetail, setProductDetail] = useState([]);
-  const [exsitingProduct, setExsitingProduct] = useState([]);
-  const [deleteProductId, setDeleteProductId] = useState([]);
   const [product, setProduct] = useState({
     category: "",
     title: "",
     cont: "",
     mainImg: "",
-    detailImg: [""],
-    product: [""],
-    market_name: user.marketName,
+    detailImg: [],
+    product: [],
+    marketName: user.marketName,
     event: "",
     userId: user.user_id,
     id: "",
   });
   useEffect(() => {
+    if(marketName === undefined) return;
     setProduct((product) => {
       return {
         ...product,
-        market_name: marketName,
+        marketName: marketName,
       };
     });
   }, [marketName]);
@@ -49,7 +48,6 @@ function ProductUpdate({ user, marketName }) {
       })
       .then((res) => {
         setProductDetail(res.data);
-        setExsitingProduct(res.data[0].PRODUCTIMG);
       })
       .catch((err) => {
         console.log(err);
@@ -57,6 +55,7 @@ function ProductUpdate({ user, marketName }) {
   }, [updateproduct]);
 
   const getData = (dataType, data) => {
+    
     if (dataType === "category") {
       setProduct((product) => {
         return {
@@ -121,13 +120,9 @@ function ProductUpdate({ user, marketName }) {
         };
       });
     }
-    if (dataType === "deleteProductId") {
-      setDeleteProductId(data);
-    }
   };
 
   const onClickUpdate = () => {
-    console.log(product);
     if (
       product.category === "" &&
       product.title === "" &&
@@ -139,21 +134,16 @@ function ProductUpdate({ user, marketName }) {
       alert("수정할 내용이 없습니다.");
       return;
     }
-    let da = {
-      sellerCenterCreateVo: product,
-      productImg: exsitingProduct,
-      deleteProductId: deleteProductId,
-    };
-    console.log(da);
+    console.log(product);
     axios
-      .post("/api/sellercenter/updateproduct", {
-        sellerCenterCreateVo: product,
-        productImg: exsitingProduct,
-        deleteProductId: deleteProductId,
-      })
+      .put("/api/sellercenter/product", product)
       .then((res) => {
-        // alert('수정되었습니다.');
-        console.log("수정되었습니다.");
+        console.log(product);
+        alert('수정되었습니다.');
+        
+        // console.log("수정되었습니다.");
+
+        // window.location.href = "/sellercenter/update";
       })
       .catch((err) => {
         console.log(err);
