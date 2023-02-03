@@ -1,12 +1,12 @@
+import { isFocusable } from '@testing-library/user-event/dist/utils';
 import axios from 'axios';
 import {useState, useEffect} from 'react';
+import { Alert } from 'react-bootstrap';
 import MypageModal from './Mypagemodal';
 
 
     const MypurChaseInquiry = ({user}) => { 
         const [purchaselist, setPurchaseList] = useState([]);
-        
-        let iu = "https://w.namu.la/s/59bbf73b123d0f9f693be3c3de9506b24a1f2a3067b4ffd0207a3a08eee32d750ebf1ca3e33084aa3bbcd6916bd0a8a187cc4556b87fa269c25f1a7ff3ea279f9808bcff5cd75221317e48e817290c6b7e7900c07b3e649379dc7a57a7653a886e08ae6b2df44d7d347e8c801f2b9f15"
         const [checked, setChecked] = useState({
             id: -1
         });
@@ -27,10 +27,10 @@ import MypageModal from './Mypagemodal';
             }
             })
             .then((res) => {
-                console.log(res.data)
                 setPurchaseList(res.data)
             })
             }, [user])
+            
         const nullcheck = () => {
             if(purchaselist.length === 0){
                 return (
@@ -39,6 +39,21 @@ import MypageModal from './Mypagemodal';
                     </div>
                 ) 
             }
+        }
+
+        const purchaseConfirm = (index) => {
+            if (window.confirm("구매확정 하시겠습니까?")) {
+            axios({
+                method: 'get',
+                url: `/api/mypage/MyPurchaseConfirm`,
+                params: {
+                purchaseid: purchaselist[index].purchaseid
+                }
+                })
+                .then(() => {alert("구매확정이 완료되었습니다.");
+                             window.location.reload()}) 
+            }
+
         }
 
     return(
@@ -130,8 +145,13 @@ import MypageModal from './Mypagemodal';
                                     </tr>
                                     <tr>
                                         <td>
-                                        <button role="button" onClick={e => {openModal(e,index)}} className="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" style={{border:"1px solid #e5e5e5", fontSize:"14px", fontWeight:"bold",borderRadius:"0px"}}>
+                                        <button type="button" onClick={e => {openModal(e,index)}} className="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" style={{border:"1px solid #e5e5e5", fontSize:"14px", fontWeight:"bold",borderRadius:"0px"}}>
                                         배송조회
+                                      </button>
+                                        </td>
+                                        <td>
+                                        <button type="button" onClick={()=>purchaseConfirm(index)} className="btn"  style={{border:"1px solid #e5e5e5", fontSize:"14px", fontWeight:"bold",borderRadius:"0px"}}>
+                                        구매확정
                                       </button>
                                         </td>
                                     
@@ -146,6 +166,15 @@ import MypageModal from './Mypagemodal';
                                     <tr>
                                         <th style={{paddingLeft:"19px"}} >배송완료</th>
                                     </tr>
+                                    <tr>
+                                        <td>
+                                    
+                                        <button type="button" onClick={()=>purchaseConfirm(index)} className="btn"  style={{border:"1px solid #e5e5e5", fontSize:"14px", fontWeight:"bold",borderRadius:"0px"}}>
+                                        구매확정
+                                      </button>
+                                      </td>
+                                    </tr>
+                                    
                                 </thead>
                             </table>
                           </div>       

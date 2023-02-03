@@ -9,10 +9,12 @@ export default MypageSidebar;
 function MypageSidebar({user}) {
   const userRoleCheck = () => {
     if (user.user_role === 1) {
-      alert("이미 판매자 회원입니다.");
+      alert("이미 판매자 회원입니다.")
       return;
+      
     } else {
       alert("판매자 회원등록을 진행합니다.");
+      window.location.href = "/mypage/Sellersignup";
     }
 
   }
@@ -52,7 +54,6 @@ function MypageSidebar({user}) {
             회원정보 수정
             </a>
             <a
-              href="/mypage/SellerSignup"
               className="link-white d-inline-flex text-decoration-none rounded"
               onClick={userRoleCheck}
             >

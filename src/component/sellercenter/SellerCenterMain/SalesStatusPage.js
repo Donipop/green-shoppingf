@@ -10,12 +10,26 @@ const SalesStauts = ({user}) => {
     let day = today.getDate();
     let month = today.getMonth() + 1
     let year = today.getFullYear();
+    const [xAxisDate, setXAxisDate] = useState(new Date(Date.now() - 8 * 24 * 60 * 60 * 1000));
     const [list, setList] = useState({
         data: [0],
     });
-   
+
+    //오늘로부터 8일 계산식
+    const xaxisCategories = [];
+  for (let i = 0; i < 8; i++) {
+    day -= 1;
+    if (day === 0) {
+      day = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+      month -= 1;
+      if (month === 0) {
+        month = 12;
+      }
+    }
+    xaxisCategories.unshift(`${month}.${String(day).padStart(2, '0')}`);
+  }
     useEffect( () => {  
-        if(user === undefined) {return ;}
+        if(user )
         axios({
             method: 'get',
             url: '/api/sellercenter/salesstatus',
@@ -64,9 +78,8 @@ const SalesStauts = ({user}) => {
                     },
                 },
                 xaxis: {
-                    categories: [(month + "." + (day - 8) ), (month + "." + (day - 7) ), (month + "." + (day - 6) ),(month + "." + (day - 5) ), 
-                    (month + "." + (day - 4) ), (month + "." + (day - 3 ) ), (month + "." + (day - 2) ), (month + "." + (day - 1) )],
-                }
+                    categories: [xaxisCategories[0], xaxisCategories[1], xaxisCategories[2], xaxisCategories[3], xaxisCategories[4], xaxisCategories[5],
+                        xaxisCategories[6],xaxisCategories[7]]}
             },
         }
     

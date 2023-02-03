@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 
 const SearchViewData = () => {
   const Array = [0, 1, 2, 3, 4];
+  const [loading, setLoading] = useState(false);
   const [searchviewList, setSearchviewList] = useState([]);
   const searchcont = new URLSearchParams(window.location.search).get(
     "searchcont"
@@ -18,19 +19,20 @@ const SearchViewData = () => {
       url: `/api/searchview?searchcont=${searchcont}&name=${name}&category=${category}`,
     }).then((res) => {
       setSearchviewList(res.data);
+      setLoading(true);
+      
     });
   }, [searchcont, name]);
 
   const searchviewListzero = () => {
     if (searchviewList.length === 0) {
       return (
-        <div style={{ margin: "20px 20px 20px 20px" }}>
+        <div style={{ margin: "20px 20px 20px 20px",textAlign:"center" }}>
           검색된 결과가 없습니다.
         </div>
       );
     }
   };
-  console.log(searchviewList);
 
   return (
     <div style={{ paddingTop: "50px" }}>
@@ -110,7 +112,15 @@ const SearchViewData = () => {
             </A>
           </LI>
         ))}
-        {searchviewListzero()}
+        {loading === false ? (
+          <div style={{textAlign:"center"}}>
+            <div className="spinner-border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+              ) : (
+    searchviewListzero()
+  )}
       </UL>
     </div>
   );

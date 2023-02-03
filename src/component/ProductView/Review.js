@@ -62,7 +62,7 @@ const Review = ({ user }) => {
         star: star,
         id: 1,
         product_num: page,
-        user_id: "admin",
+        user_id: user.user_id,
       },
     }).then((res) => {
       alert("후기가 등록되었습니다.");

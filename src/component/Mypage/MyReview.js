@@ -31,7 +31,6 @@ const MyReview = ({user}) => {
     )
     }
   }
-  console.log(reviewlist)
   return (
     <div style={{ marginTop: "40px" }}>
       <div>
@@ -55,8 +54,7 @@ const MyReview = ({user}) => {
         </Div>
       </div>
       {reviewlist.map((item) => (
-        <Ul key={item.id}>
-          <Li>
+        <div key={item.id}>
             <div style={{ width: "309px", float: "left" }}>
               <div
                 style={{
@@ -75,7 +73,7 @@ const MyReview = ({user}) => {
                     position: "relative",
                   }}
                 >
-                  <a style={{ height: "100%", textDecoration: "none" }}>
+                  <a style={{ height: "100%", textDecoration: "none" }}href={`/view/${item.product_num}`}>
                   {item.mainimage === null ? (
                             <img  src={`http://donipop.com:3333/img/${item.productimage}`} width='100' height='100'></img>
                         ) : (
@@ -90,6 +88,7 @@ const MyReview = ({user}) => {
                       color: "#000",
                       textDecoration: "none",
                     }}
+                    href={`/view/${item.product_num}`}
                   >
                     {item.product_title}
                   </a>
@@ -157,8 +156,7 @@ const MyReview = ({user}) => {
                 </div>
               </div>
             </Divvv>
-          </Li>
-        </Ul>
+            </div>
       ))}
       {reviewCheck()}
     </div>
@@ -208,7 +206,7 @@ const Img = styled.img`
 
 const Divv = styled.div`
   box-sizing: border-box;
-  width: 100%;
+  width: 150px;
   font-size: 14px;
   margin-left: 10px;
   padding-top: 1px;

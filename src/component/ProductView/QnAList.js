@@ -161,7 +161,6 @@ const QnA = ({ page, user }) => {
         return;
     }
     if (user.user_id !== test[index].user_id) {
-      console.log(user.user_id, test[index].user_id);
       alert("본인이 작성한 글만 삭제가 가능합니다.");
       return;
     }

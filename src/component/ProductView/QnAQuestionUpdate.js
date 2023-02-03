@@ -65,10 +65,6 @@ const QnAQuestionUpdate = () => {
          
     }
 
-    console.log(account)
-
-   
-
     return(
         <div>
                 <form id= "Subm"onSubmit={ContSend}>

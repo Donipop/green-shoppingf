@@ -20,7 +20,7 @@ function Categories() {
         aria-labelledby="dropdownMenuButton"
       >
         <li>
-          <a className="dropdown-item" href="/">
+          <a className="dropdown-item" href="/searchview?searchcont=&name=패션의류/잡화&category=01000000">
             패션의류/잡화
           </a>
           <ul className="dropdown-menu dropdown-submenu">

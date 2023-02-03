@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useRef, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 const SellerSignupDetail = ({user}) => {
   const { state } = useLocation();
@@ -92,6 +93,14 @@ const SellerSignupDetail = ({user}) => {
       alert("회사소개를 입력해주세요");
       return;
     }
+    if(account.bank_account.length < 10 || account.bank_account.length > 14){
+      alert("계좌번호를 확인해주세요");
+      return;
+    }
+    if(filename === "" || filenames === ""){
+      alert("사진을 업로드해주세요");
+      return;
+    } 
     axios({
       method: "post",
       url: "/api/login/sellersignup",
@@ -107,7 +116,6 @@ const SellerSignupDetail = ({user}) => {
       .then(alert("신청이 완료되었습니다."))
       // .then(navigate("/mypage"))
       .catch((err) => {
-        console.log(err);
       });
   };
 
@@ -138,10 +146,16 @@ const SellerSignupDetail = ({user}) => {
             </div>
             <div className="form-group">
               <label htmlFor="tel">계좌번호</label>
-              <input
-                type="text"
+              <Input
+               onInput={(e) => {
+                if (e.target.value.length > e.target.maxLength)
+                  e.target.value = e.target.value.slice(0, e.target.maxLength);
+                }}
+                onKeyDown={(e) => ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
+                type="number"
+                maxLength={15}
                 className="form-control"
-                placeholder="상호명을 입력하세요"
+                placeholder="계좌번호를 입력하세요"
                 name="bank_account"
                 onChange={onChangeAccount}
               />
@@ -222,3 +236,14 @@ const SellerSignupDetail = ({user}) => {
 };
 
 export default SellerSignupDetail;
+
+const Input = styled.input`
+  ::-webkit-inner-spin-button{
+  -webkit-appearance: none; 
+  margin: 0; 
+  }
+  ::-webkit-outer-spin-button{
+  -webkit-appearance: none; 
+  margin: 0; 
+  }  
+`;

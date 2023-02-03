@@ -18,6 +18,10 @@ const ReviewList = ({ page, user }) => {
   });
 
   const openModal = (e, index) => {
+    if(List[index].user_id !== user.user_id){
+      alert("본인이 작성한 리뷰만 수정 가능합니다.");
+      return false;
+    }
     const newArr = Array(List.length).fill(false);
     newArr[index] = true;
     setChecked({
@@ -55,7 +59,6 @@ const ReviewList = ({ page, user }) => {
   const truecheck = (e) => {
     const { checked } = e.target;
     let key = e.target.attributes.indexid.value;
-    console.log(checked);
     if (!checked) {
       setIschecked({ ...ischecked, [key]: true });
       document.getElementById(`collapseExample${e.target.id}`).style =
@@ -66,7 +69,12 @@ const ReviewList = ({ page, user }) => {
         "display:none";
     }
   };
+
   const Delete = (e, index) => {
+    if(List[index].user_id !== user.user_id){
+      alert("본인이 작성한 리뷰만 삭제 가능합니다.");
+      return false;
+    }
     if (window.confirm("정말 삭제하시겠습니까?")) {
       axios({
         method: "post",
