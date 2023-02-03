@@ -9,7 +9,18 @@ function SellerSettlement({ user }) {
   const [market_namelist, setmarket_namelist] = useState([]);
   const [before_settlement, setbefore_settlement] = useState([]);
   const [totalpricemap, settotalpricemap] = useState([]);
-  const [modalInfo, setModalInfo] = useState([]);
+  const [modalInfo, setModalInfo] = useState({
+    id: "",
+    market_name: "",
+    totalprice: 0,
+    user_id: "",
+    allmoney: 0,
+    bank_account: "",
+    bank_accountowner: "",
+    bank_name: "",
+    business_number: "",
+    format_today: "",
+  });
   const [seller_info, setseller_info] = useState([]);
   const [before_settlement_id, setbefore_settlement_id] = useState([]);
   const [dateInfo, setDateInfo] = useState({
@@ -39,7 +50,7 @@ function SellerSettlement({ user }) {
       })
       .then(
         axios({
-          method: "get", // 시발 이거 존나 이해안감 csrf 관련 설정인듯 (post 하면 안되고 get으로 해야함) 다음에 한번 알아보기로 백엔드는 postmapping으로 적혀있음에도 불구하고 됨 ㅅㅂ 이게 뭐냐고 개좆같은거
+          method: "get",
           url: "/api/sellercenter/getmarketnamelist",
           params: {
             user_id: user_id,
@@ -126,7 +137,7 @@ function SellerSettlement({ user }) {
                   return (
                     <tr key={index}>
                       <td>{item.market_name}</td>
-                      <td>{item.totalprice}</td>
+                      <td>{item.totalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                       <td>
                         <button
                           data-bs-toggle="modal"

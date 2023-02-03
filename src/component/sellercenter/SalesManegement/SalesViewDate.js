@@ -17,21 +17,34 @@ function ViewDate({ getDate }) {
     let date = new Date(); // Create a new Date object with the current date and time
     let year = date.getFullYear(); // Get the 4-digit year
     let month = date.getMonth() + 1;
+    let day = date.getDate(); // 오늘 날짜
+    let alltimeago = new Date(2000, 1, 1);
     if (month === 1) {
       year = year - 1;
       month = 12;
     } else if (2 <= month && month <= 9) {
       month = "0" + month;
     }
-    let date2 = new Date(year, month, 0).getDate();
-    let lastday = `${year}-${month}-${date2}`; // Combine the year, month, and date into a string
-    let monthbefore = `${year}-${month}-01`; // Combine the year, month, and date into a string
+    let today =
+      year +
+      "-" +
+      (month <= 9 ? month : month) +
+      "-" +
+      (day <= 9 ? "0" + day : day);
 
     setDateInfo({
-      start: monthbefore,
-      end: lastday,
+      start:
+        alltimeago.getFullYear() +
+        "-" +
+        (alltimeago.getMonth() <= 9
+          ? "0" + alltimeago.getMonth()
+          : alltimeago.getMonth()) +
+        "-" +
+        (alltimeago.getDate() < 9
+          ? "0" + alltimeago.getDate()
+          : alltimeago.getDate()),
+      end: today,
     });
-    
   }, []);
 
   const onClickOneClickDate = (index) => {
@@ -223,24 +236,6 @@ function ViewDate({ getDate }) {
 
       <div className="col-10">
         <div className="row">
-          <div className="col-12">
-            <div className="dropdown open">
-              <button
-                className="btn btn-secondary dropdown-toggle"
-                type="button"
-                id="triggerId"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                구매확정일
-              </button>
-              <div className="dropdown-menu" aria-labelledby="triggerId">
-                <button className="dropdown-item">Action</button>
-              </div>
-            </div>
-          </div>
-
           <div className="col-12 d-flex mt-3">
             <div className="btn-group" aria-label="dateBtnGroup">
               <button

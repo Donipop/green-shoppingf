@@ -41,20 +41,21 @@ const SellerReview = ({ user }) => {
       },
     }).then((res) => {
       setStarNum(res.data);
-      setAllReview(res.data.length);
-      let setList = new Set();
-      res.data.map((item) => {
-        setList.add(item.id);
-        let ListA = new Array();
-        ListA = [...setList];
-        ListA.sort(function(a,b) {
-          return a-b;
-        })
-        setIdList([...ListA]);
+      setAllReview(res.data.length)
+      axios({
+        method: "get",
+        url: `/api/sellercenter/reviewmanagement/reviewlistId`,
+        params: {
+          user_id: user.user_id,
+          start: dateinfo.start,
+          end: dateinfo.end,
+        },
+      }).then((response) => {
+        setIdList(response.data);
       })
     });
   }
-  else if (user !== undefined && selectedId !== 0) {
+  else if (user !== undefined && selectedId > 1) {
     axios({
       method: "post",
       url: `/api/sellercenter/reviewmanagement/reviewlistGetBySelectedId`,
@@ -311,7 +312,6 @@ const SellerReview = ({ user }) => {
   };
 
   const onChangeidList = (e) => {
-    console.log(e.target.value)
     setSelectedId(e.target.value);
   }
 
@@ -331,11 +331,12 @@ const SellerReview = ({ user }) => {
           >
             리뷰
           </h3>
-            <select style={{marginLeft:"650px", marginTop:"15px"}} onChange={onChangeidList}>
+          {/* <button onClick={() => console.log(IdList)} style={{marginLeft:"650px", marginTop:"15px"}}>테스트</button> */}
+            <select style={{marginLeft:"350px", marginTop:"15px"}} onChange={onChangeidList}>
               <option value={0}>전체</option>
-              {IdList.map((id, index) => (
+              {IdList.map(({id,title}, index) => (
                 <option key={index} value={id}>
-                  {id}
+                  {title}
                 </option>
               ))}
             </select>
@@ -378,7 +379,7 @@ const SellerReview = ({ user }) => {
             >
               별점 평균
               <span style={{ float: "right" }}>
-                <em style={{ fontStyle: "normal" }}>{avgstar.avg}</em>
+                <em style={{ fontStyle: "normal" }}>{avgstar.avg.toFixed(1)}</em>
                 <span>점</span>
               </span>
             </h3>

@@ -283,7 +283,7 @@ function Shopping_basket({user}) {
                 <td
                   style={{ borderBottom: "1px solid #e9ecef", width: "120px" }}
                 >
-                  {List.price - List.discount}원
+                  {(List.price - List.discount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원
                 </td>
                 <td
                   style={{
@@ -307,16 +307,16 @@ function Shopping_basket({user}) {
                     paddingLeft: "80px",
                   }}
                 >
-                  {List.count * List.price}원
+                  {(List.count * List.price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
         <div>
-          <h3>총 주문금액 : {orderprice}원</h3>
-          <h3>총 배송비 : {deliveryprice}원</h3>
-          <h3>총 결제금액 : {finalprice}원</h3>
+          <h3>총 주문금액 : {orderprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h3>
+          <h3>총 배송비 : {deliveryprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h3>
+          <h3>총 결제금액 : {finalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</h3>
           <div>
             <button onClick={order_shopping_basket}>주문하기</button>
             <button onClick={delete_shopping_basket}>삭제하기</button>

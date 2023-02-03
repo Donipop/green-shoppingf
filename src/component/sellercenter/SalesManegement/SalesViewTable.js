@@ -11,6 +11,8 @@ function SalesViewTable({ getDate }) {
   const [purchaseconfirm, setpurchaseconfirm] = useState([]);
   const [month_of_sales, setmonth_of_sales] = useState(0);
   const [modalInfo, setModalInfo] = useState([]);
+  const [titleList, setTitleList] = useState([]);
+  const [selectedTitle, setSelectedTitle] = useState("전체");
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
@@ -27,26 +29,51 @@ function SalesViewTable({ getDate }) {
   useEffect(() => {
     if (getStartDate === "" || getEndDate === "" || user_id === "") {
       return;
+    } else {
+      if (selectedTitle === "전체") {
+        let result = 0;
+        axios({
+          method: "post",
+          url: "/api/sellercenter/getpurchaseconfirm",
+          params: {
+            start: getDate[0].start,
+            end: getDate[0].end,
+            user_id: getDate[1],
+            selectedTitle: selectedTitle,
+          },
+        })
+          .then((res) => res.data)
+          .then((res) => {
+            setpurchaseconfirm(res);
+            let set = new Set();
+            for (let i = 0; i < res.length; i++) {
+              result += res[i].totalprice;
+              set.add(res[i].title);
+            }
+            setTitleList([...set]);
+            setmonth_of_sales(result);
+          });
+      } else {
+        let result = 0;
+        console.log(typeof selectedTitle)
+        axios({
+          method: "post",
+          url: "/api/sellercenter/getpurchaseconfirm",
+          params: {
+            start: getDate[0].start,
+            end: getDate[0].end,
+            user_id: getDate[1],
+            title: selectedTitle,
+          },
+        })
+          .then((res) => res.data)
+          .then((res) => {
+            setpurchaseconfirm(res);
+            setmonth_of_sales(result);
+          });
+      }
     }
-    let result = 0;
-    axios({
-      method: "post",
-      url: "/api/sellercenter/getpurchaseconfirm",
-      params: {
-        start: getDate[0].start,
-        end: getDate[0].end,
-        user_id: getDate[1],
-      },
-    })
-      .then((res) => res.data) 
-      .then((res) => {
-        setpurchaseconfirm(res);
-        for (let i = 0; i < res.length; i++) {
-          result += res[i].totalprice;
-        }
-        setmonth_of_sales(result);
-      });
-  }, []);
+  }, [getStartDate, getEndDate, user_id, selectedTitle]);
 
   return (
     <DOV className="row">
@@ -54,7 +81,9 @@ function SalesViewTable({ getDate }) {
         {getStartDate} ~ {getEndDate}
       </span>
       <span>총 매출액 : </span>
-      <COUNTGREEN>{month_of_sales}</COUNTGREEN>
+      <COUNTGREEN>
+        {month_of_sales.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+      </COUNTGREEN>
       <span>원</span>
       <label>
         페이지 당 표시할 게시물 수:&nbsp;
@@ -68,6 +97,23 @@ function SalesViewTable({ getDate }) {
           <option value="20">20</option>
           <option value="50">50</option>
           <option value="100">100</option>
+        </select>
+      </label>
+      <label>
+        제목:&nbsp;
+        <select
+          type="text"
+          value={selectedTitle}
+          onChange={({ target: { value } }) => setSelectedTitle(value)}
+        >
+          <option value="전체">전체</option>
+          {titleList.map((item, index) => {
+            return (
+              <option key={index} value={item}>
+                {item}
+              </option>
+            );
+          })}
         </select>
       </label>
 
@@ -98,8 +144,18 @@ function SalesViewTable({ getDate }) {
                     <td>{item.buyerid}</td>
                     <td>{item.purchasetime}</td>
                     <td>{item.purchaseconfirmtime}</td>
-                    <td>{item.delivery}</td>
-                    <td>{item.totalprice}</td>
+                    <td>
+                      {item.delivery
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      원
+                    </td>
+                    <td>
+                      {item.totalprice
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      원
+                    </td>
                     <td>{item.title}</td>
                   </tr>
                 );
