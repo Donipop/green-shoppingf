@@ -56,9 +56,9 @@ function SalesViewDetailInfo(DetailInfo) {
                   return (
                     <tr key={index}>
                       <td>{item.product_name}</td>
-                      <td>{item.price}</td>
-                      <td>{item.count}</td>
-                      <td>{item.price * item.count}</td>
+                      <td>{item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</td>
+                      <td>{item.count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}개</td>
+                      <td>{(item.price * item.count).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</td>
                     </tr>
                   );
                 })}

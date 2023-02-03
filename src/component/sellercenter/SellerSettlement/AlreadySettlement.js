@@ -7,14 +7,12 @@ function AlreadySettlement({ getDate }) {
   let getstartdate = getDate[0].start;
   let getenddate = getDate[0].end;
   let getuserid = getDate[1];
-
   const [AlreadySettlementList, setAlreadySettlementList] = useState([]);
-  const [AlreadySettleMoney, setAlreadySettleMoney] = useState();
-
+  const [AlreadySettleMoney, setAlreadySettleMoney] = useState(0);
+  const [OrderBy, setOrderBy] = useState("ID DESC");
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
-
   useEffect(() => {
     let result = 0;
     axios({
@@ -24,10 +22,12 @@ function AlreadySettlement({ getDate }) {
         start: getstartdate,
         end: getenddate,
         user_id: getuserid,
+        OrderBy : OrderBy,
       },
     })
       .then((res) => res.data)
       .then((res) => {
+
         setAlreadySettlementList(res);
         for (let i = 0; i < res.length; i++) {
           result += res[i].totalprice;
@@ -35,15 +35,14 @@ function AlreadySettlement({ getDate }) {
 
         setAlreadySettleMoney(result);
       });
-  }, [getstartdate, getenddate, getuserid]);
-
-  return (
+  }, [getstartdate, getenddate, getuserid, OrderBy]);
+  return (      
     <DOV className="row">
       <span>
         {getstartdate} ~ {getenddate}
       </span>
       <span>총 정산금액 : </span>
-      <COUNTGREEN>{AlreadySettleMoney}</COUNTGREEN>
+      <COUNTGREEN>{AlreadySettleMoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</COUNTGREEN>
       <span>원</span>
       <label>
         페이지 당 표시할 게시물 수:&nbsp;
@@ -59,6 +58,20 @@ function AlreadySettlement({ getDate }) {
           <option value="100">100</option>
         </select>
       </label>
+      <label>
+        순서 :&nbsp;
+        <select
+          type="text"
+          value={OrderBy}
+          onChange={({ target: { value } }) => setOrderBy(value)}>
+          <option value="ID DESC">정산 신청번호 내림차순</option>
+          <option value="ID ASC">정산 신청번호 오름차순</option>
+          <option value="TOTALPRICE DESC">정산금액 내림차순</option>
+          <option value="TOTALPRICE ASC">정산금액 오름차순</option>
+          <option value="SETTLE_DATE DESC">정산신청날짜 내림차순</option>
+          <option value="SETTLE_DATE ASC">정산신청날짜 오름차순</option>
+          </select>
+        </label>
       <div className="col-12">
         <table>
           <thead>
@@ -78,7 +91,7 @@ function AlreadySettlement({ getDate }) {
                   <tr key={index}>
                     <td>{item.id}</td>
                     <td>{item.market_name}</td>
-                    <td>{item.totalprice}</td>
+                    <td>{item.totalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</td>
                     <td>{item.idlist}</td>
                     <td>{item.bank_account}</td>
                     <td>{item.settle_date}</td>

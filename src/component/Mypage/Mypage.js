@@ -15,7 +15,6 @@ function Mypage({ user }) {
   if(user === undefined) {
     return;
   }
-
   return (
     <div>
       <LoginInterceptor/>

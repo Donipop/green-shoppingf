@@ -64,7 +64,7 @@ function SellerSettleup(DetailInfo) {
                 </tr>
                 <tr>
                   <th>총액</th>
-                  <td>{DetailInfo.DetailInfo.totalprice}</td>
+                  <td>{DetailInfo.DetailInfo.totalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</td>
                 </tr>
                 <tr>
                   <th>마켓명</th>
@@ -72,7 +72,7 @@ function SellerSettleup(DetailInfo) {
                 </tr>
                 <tr>
                   <th>지금까지 정산 금액 </th>
-                  <td>{DetailInfo.DetailInfo.allmoney}</td>
+                  <td>{DetailInfo.DetailInfo.allmoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</td>
                 </tr>
               </tbody>
             </table>

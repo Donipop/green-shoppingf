@@ -52,7 +52,8 @@ function SellerSettleDate({ getDate }) {
     let date = new Date(); // 현재시간
     let year = date.getFullYear(); // 이번년도
     let month = date.getMonth() + 1; // 이번달
-    let day = date.getDate(); // 오늘 날짜
+    let day = date.getDate() + 1; // 오늘 날짜 + 1
+    let daybefore = date.getDate(); // 오늘 날짜 
     let date2 = new Date(year, month, 0).getDate(); // 달의 마지막 날짜 구하기
     let month3 = new Date(
       date.getFullYear(),
@@ -81,7 +82,7 @@ function SellerSettleDate({ getDate }) {
             "-" +
             (month <= 9 ? "0" + month : month) +
             "-" +
-            (day <= 9 ? "0" + day : day),
+            (daybefore <= 9 ? "0" + daybefore : daybefore),
           end:
             year +
             "-" +

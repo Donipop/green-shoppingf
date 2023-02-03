@@ -5,27 +5,34 @@ import SalesViewTable from "./SalesViewTable";
 
 function SalesManageMent({ user }) {
   let user_id = user.user_id;
-  let date = new Date(); 
-  let year = date.getFullYear(); 
-  let month = date.getMonth() + 1;
-  if (month === 1) {
-    year = year - 1;
-    month = 12;
-  } else if (2 <= month && month <= 9) {
-    month = "0" + month;
-  }
-  let date2 = new Date(year, month, 0).getDate();
-  let lastday = `${year}-${month}-${date2}`; 
-  let monthbefore = `${year}-${month}-01`; 
+  let date = new Date(); // 현재시간
+  let year = date.getFullYear(); // 이번년도
+  let month = date.getMonth() + 1; // 이번달
+  let day = date.getDate(); // 오늘 날짜
+  let alltimeago = new Date(2000, 1, 1);
+  
 
   const [dateInfo, setDateInfo] = useState({
-    start: monthbefore,
-    end: lastday,
+    start: alltimeago.getFullYear() +
+    "-" +
+    (alltimeago.getMonth() <= 9
+      ? "0" + alltimeago.getMonth()
+      : alltimeago.getMonth()) +
+    "-" +
+    (alltimeago.getDate() < 9
+      ? "0" + alltimeago.getDate()
+      : alltimeago.getDate()),
+    end: year +
+    "-" +
+    (month <= 9 ? "0" + month : month) +
+    "-" +
+    (day <= 9 ? "0" + day : day),
   });
   useEffect(() => {
     if (user === undefined) {
       return;
     }
+
     
   }, [user]);
   return (
