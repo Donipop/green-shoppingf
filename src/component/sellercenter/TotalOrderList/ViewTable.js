@@ -51,6 +51,7 @@ function ViewTable({ getDate, marketName }) {
         },
       })
       .then((res) => {
+        
         setList(res.data);
         setIsChecked(new Array(res.data.length).fill(false));
       })

@@ -104,6 +104,8 @@ export default function ProductAdd({ getData, UpdateData }) {
   };
 
   const onClickDelete = (e, id) => {
+    console.log(e);
+    console.log(id);
     let index = e.target.id;
     let list = productList;
     list.splice(index, 1);
@@ -369,11 +371,21 @@ export default function ProductAdd({ getData, UpdateData }) {
                   <td>{product.product_count}</td>
                   <td>
                     <button
+                      id={index}
                       type="button"
                       className="btn btn-danger"
                       onClick={(e) => onClickDelete(e, product.id)}
                     >
-                      삭제
+                     {(() => {
+                      if(UpdateData === undefined){
+                        return "삭제"
+                      }else{
+                        if(product.id === undefined || product.id === null){
+                          return "삭제"
+                        }
+                        return "판매중지"
+                      }
+                     })()}
                     </button>
                   </td>
                 </tr>

@@ -59,6 +59,12 @@ function MypageSidebar({user}) {
             >
             판매자 회원등록 하기
             </a>
+            <a
+              href="/mypage/talktalk"
+              className="link-white d-inline-flex text-decoration-none rounded"
+            >
+            톡톡
+            </a>
           </Sidebar>
         </li>
       </ul>

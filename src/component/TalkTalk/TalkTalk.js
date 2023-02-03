@@ -13,15 +13,13 @@ import {
 import TalkMyMessage from "./TalkMyMessage";
 import "./TalkTalk.css";
 import * as StompJs from "@stomp/stompjs";
-import { FaWindows } from "react-icons/fa";
 
-function TalkTalk({user}){
+function TalkTalk({user, param}){
     const {uuid} = useParams();
-    const params = new URLSearchParams(window.location.search);
+    const params = param === undefined ? new URLSearchParams(window.location.search) : param;
     const chatBody = useRef();
     const [chat, setChat] = useState([]);
     const client = useRef({});
-    const [marketOwner, setMarketOwner] = useState();
     useEffect(() => {
         if(user === undefined || user === "undefine" || user === ''){return ;}
         connect();

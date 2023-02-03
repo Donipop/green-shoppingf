@@ -223,7 +223,7 @@ function ProductInfo({ product, user }) {
         productDetailId: "",
       };
       Item.name = listItem[i].name;
-      Item.price = listItem[i].price;
+      Item.price = listItem[i].price / listItem[i].count;
       Item.count = listItem[i].count;
       Item.productDetailId = listItem[i].productDetailId;
       changeListItem.push(Item);

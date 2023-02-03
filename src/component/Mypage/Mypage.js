@@ -10,6 +10,7 @@ import MyReview from "./MyReview";
 import Myinformation from "./Myinformation";
 import SellerSignup from "../SellerSignup/SellerSignup";
 import SellerSignupDetail from "../SellerSignup/SellerSignupDetail";
+import MypageTalkTalk from "./MypageTalkTalk";
 
 function Mypage({ user }) {
   if(user === undefined) {
@@ -33,6 +34,7 @@ function Mypage({ user }) {
           <Route path="/myinformation" element={<Myinformation user={user} />}></Route>
           <Route path="/sellersignup" element={<SellerSignup user={user} />}></Route>
           <Route path="/sellersignupdetail" element={<SellerSignupDetail user={user} />}></Route>
+          <Route path="/talktalk" element={<MypageTalkTalk user={user} />}></Route>
         </Routes>
       </div>
     </div>

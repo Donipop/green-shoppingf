@@ -56,8 +56,7 @@ const TokTokQnaPage = ({ user }) => {
           <ol className="list-group list-group-numbered">
             {chatList.map((item, index) => {
               return (
-                <a
-                  href={`/ct/${item.uuid}?m=${user.user_id}`}
+                <div
                   key={index}
                   style={{ textDecoration: "none" }}
                   target="_blank"
@@ -66,7 +65,7 @@ const TokTokQnaPage = ({ user }) => {
                   onClick={() => {
                     window.open(
                       `/ct/${item.uuid}?m=${user.user_id}`,
-                      "톡톡문의",
+                      "_blank",
                       "width=400, height=600, left=100, top=100, location=no, status=no, menubar=no, toolbar=no, scrollbars=no, resizable=no"
                     );
                   }}
@@ -89,7 +88,7 @@ const TokTokQnaPage = ({ user }) => {
                       </span>
                     )}
                   </li>
-                </a>
+                </div>
               );
             })}
           </ol>

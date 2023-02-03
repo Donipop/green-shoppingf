@@ -17,16 +17,24 @@ function ProductUpdateTable({ getProductData, marketName }) {
       })
       .then((res) => {
         setProduct(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [marketName]);
   const onChangeProduct = (e) => {
-    let item = selectProductRef.current.filter(item => item.value === e.target.value); //
+    let item = selectProductRef.current.filter(item => item.value === e.target.value);
     if(item.length === 0) {return;}
     let itemIndex = item[0].attributes["data-id"].value;
-    getProductData(product[itemIndex]);
+    // getProductData(product[itemIndex]);
+    axios.get("/api/sellercenter/product",{
+      params: {
+        productId: product[itemIndex].ID
+      }
+    }).then(res => {
+      getProductData(res.data);
+    });
   };
   return (
     <div>
@@ -37,7 +45,7 @@ function ProductUpdateTable({ getProductData, marketName }) {
       <datalist id="products">
         {product.map((item, index) => {
           return (
-            <option value={item.title} key={item.id} ref={(el) => selectProductRef.current[index] = el} data-id={index} >
+            <option value={item.TITLE} key={item.ID} ref={(el) => selectProductRef.current[index] = el} data-id={index} >
               
             </option>
           );
