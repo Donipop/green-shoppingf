@@ -28,7 +28,6 @@ function Shopping_basket({user}) {
       },
     })
       .then((res) => {
-        console.log(res.data)
         set_shoppingBasket(res.data);
         setIsChecked(new Array(res.data.length).fill(true));
       })
