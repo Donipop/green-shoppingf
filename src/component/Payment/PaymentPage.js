@@ -23,6 +23,7 @@ function PaymentPage({user}){
     const [payInfo, setPayInfo] = useState({
         totalProductPrice: 0, //상품금액
         totalCuponPrice: 0, //쿠폰금액
+        totalDiscountPrice: 0, //할인금액
         totalDeliveryPrice: 0, //배송비
         totalPaymentPrice: 0, //총결제금액
     });
@@ -46,13 +47,13 @@ function PaymentPage({user}){
                 products.marketName = state[i].marketName;
                 products.count = state[i].listItem[j].count;
                 products.price = state[i].listItem[j].price;
-                products.sale = 0;
+                products.sale = state[i].listItem[j].discount * state[i].listItem[j].count;
                 if(j===0){
                     products.delivery = state[i].delivery;
                 }else{
                     products.delivery = 0;
                 }
-                products.totalPrice = parseInt(products.count) * parseInt(products.price) + parseInt(products.delivery);
+                products.totalPrice = parseInt(state[i].listItem[j].totalPrice) + parseInt(products.delivery);
                 products.productDetailId = state[i].listItem[j].productDetailId;
                 products.productId = state[i].productId;
                 
@@ -63,7 +64,8 @@ function PaymentPage({user}){
                 setPayInfo((payInfo) => {
                     return {
                         ...payInfo,
-                        totalProductPrice: payInfo.totalProductPrice + parseInt(products.count) * parseInt(products.price),
+                        totalProductPrice: payInfo.totalProductPrice + parseInt(products.price),
+                        totalDiscountPrice: payInfo.totalDiscountPrice + parseInt(products.sale),
                         totalDeliveryPrice: payInfo.totalDeliveryPrice + parseInt(products.delivery),
                         totalPaymentPrice: payInfo.totalPaymentPrice + parseInt(products.totalPrice),
                     }
@@ -189,6 +191,10 @@ function PaymentPage({user}){
                             <tr>
                                 <th>할인쿠폰</th>
                                 <td>{payInfo.totalCuponPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</td>
+                            </tr>
+                            <tr>
+                                <th>총할인가격</th>
+                                <td>{payInfo.totalDiscountPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</td>
                             </tr>
                             <tr>
                                 <th>배송비</th>
