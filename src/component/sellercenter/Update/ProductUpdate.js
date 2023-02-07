@@ -138,12 +138,12 @@ function ProductUpdate({ user, marketName }) {
     axios
       .put("/api/sellercenter/product", product)
       .then((res) => {
-        console.log(product);
+        // console.log(product);
         alert('수정되었습니다.');
         
         // console.log("수정되었습니다.");
 
-        // window.location.href = "/sellercenter/update";
+        window.location.href = "/sellercenter/update";
       })
       .catch((err) => {
         console.log(err);

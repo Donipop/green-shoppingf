@@ -15,15 +15,13 @@ const TokTokQnaPage = ({ user }) => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         for (let i = 0; i < res.data.length; i++) {
           let data = {
-            id: res.data[i].chatList.sender,
-            lastMessage: res.data[i].chatList.message,
-            count: res.data[i].count,
-            uuid: res.data[i].uuid,
+            userNick: res.data[i].USER_NICK,
+            count: res.data[i].COUNT,
+            uuid: res.data[i].ID,
           };
-          // console.log(data);
           setChatList((chatList) => [...chatList, data]);
         }
       })
@@ -72,8 +70,7 @@ const TokTokQnaPage = ({ user }) => {
                 >
                   <li className="list-group-item d-flex justify-content-between align-items-start">
                     <div className="ms-2 me-auto">
-                      <div className="fw-bold">{item.id}</div>
-                      {item.lastMessage}
+                      <div className="fw-bold">{item.userNick}</div>
                     </div>
                     {item.count === 0 ? (
                       <span
