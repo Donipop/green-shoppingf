@@ -15,9 +15,8 @@ function Sidebar() {
             className="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom"
           >
             <img
-              src={logo}
+              src="https://cdn-icons-png.flaticon.com/512/660/660026.png"
               className="col-3"
-              style={{ width: 82, height: 42 }}
               alt="logo"
             />
           </a>
