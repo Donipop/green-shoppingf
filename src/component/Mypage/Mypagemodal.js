@@ -21,7 +21,7 @@ const MypageModal = (props) => {
            method: 'get',
            url: `/api/mypage/MyPurchaseInquiry/deliverytracking`,
               params: {
-                invoicenumber: purchaselist[num].id
+                invoicenumber: purchaselist[num].purchaseid
                 }
         })
         .then((res) => {
@@ -42,6 +42,7 @@ const MypageModal = (props) => {
     useEffect(() => {
     }, [postlist])
 
+    console.log(postlist)
 
     return (
         <div style={{all:"initial",width:"160px",marginTop:"15px"}}>
@@ -59,7 +60,7 @@ const MypageModal = (props) => {
                             <thead>
                                <tr>
                                     <th className="th1">현재상태</th>
-                                    <th className='th2'>구매확정</th>
+                                    <th className='th2'>배송중</th>
                                </tr>
                                <tr>
                                     <th className='th3'>송장번호</th>
@@ -77,7 +78,7 @@ const MypageModal = (props) => {
                                 </tr>
                                 {postlist.map((postlist) => {
                                     return (
-                                        <tr style={{borderBottom:"1px solid #ddd"}}>
+                                        <tr key={postlist}style={{borderBottom:"1px solid #ddd"}}>
                                             <td>{postlist.split(/-|\//)[0]}</td>
                                             <td>{postlist.split(/-|\//)[1]}</td>
                                             <td>{postlist.split(/-|\//)[2]}</td>
