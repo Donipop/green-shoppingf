@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect } from "react";
-import LoginInterceptor from "../Login/LoginInterceptor";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 function Shopping_basket({user}) {
   const [user_id, setuser_id] = useState(); // 유저 아이디
@@ -83,27 +83,26 @@ function Shopping_basket({user}) {
           if (shoppingBasket[i].marketName === list1[j]) {
             data.marketName = shoppingBasket[i].marketName;
             data.productId = parseInt(shoppingBasket[i].productId);
-
             let Item = {
               name: "",
               price: 0,
               count: 0,
               productDetailId: 0,
+              discount : 0,
+              totalprice : 0,
             };
-
             Item.name = shoppingBasket[i].name;
-            Item.price = shoppingBasket[i].price - shoppingBasket[i].discount;
+            Item.price = shoppingBasket[i].price * shoppingBasket[i].count;
+            Item.discount = shoppingBasket[i].discount;
             Item.count = shoppingBasket[i].count;
             Item.productDetailId = shoppingBasket[i].productDetailId;
-
+            Item.totalprice = (shoppingBasket[i].price - shoppingBasket[i].discount) * shoppingBasket[i].count;
             changeListItem.push(Item);
           }
         }
       }
-
       FinalOrderList.push(data);
     }
-
     Navigate("/Payment", { state: FinalOrderList });
   }
 
@@ -276,7 +275,9 @@ function Shopping_basket({user}) {
                   />
                 </td>
                 <td
-                  style={{ width: "500px", borderBottom: "1px solid #e9ecef" }}
+                  style={{ width: "500px", borderBottom: "1px solid #e9ecef", }} onClick={() => {
+                    window.location.href = "/view/" + List.productId;
+                  }}
                 >
                   {List.name}
                 </td>
@@ -307,7 +308,7 @@ function Shopping_basket({user}) {
                     paddingLeft: "80px",
                   }}
                 >
-                  {(List.count * List.price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원
+                  {(List.count * (List.price - List.discount)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원
                 </td>
               </tr>
             ))}
@@ -329,3 +330,9 @@ function Shopping_basket({user}) {
 }
 
 export default Shopping_basket;
+
+const hoverTd = styled.td`
+  &:hover {
+    background-color: #f8f9fa;
+  }
+`;

@@ -9,6 +9,7 @@ function SalesViewTable({ getDate }) {
   let getEndDate = getDate[0].end;
   let user_id = getDate[1];
   const [purchaseconfirm, setpurchaseconfirm] = useState([]);
+  const [totalPurchaseConfirmList, setTotalPurchaseConfirmList] = useState([]);
   const [month_of_sales, setmonth_of_sales] = useState(0);
   const [modalInfo, setModalInfo] = useState([]);
   const [titleList, setTitleList] = useState([]);
@@ -30,7 +31,6 @@ function SalesViewTable({ getDate }) {
     if (getStartDate === "" || getEndDate === "" || user_id === "") {
       return;
     } else {
-      if (selectedTitle === "전체") {
         let result = 0;
         axios({
           method: "post",
@@ -38,12 +38,12 @@ function SalesViewTable({ getDate }) {
           params: {
             start: getDate[0].start,
             end: getDate[0].end,
-            user_id: getDate[1],
-            selectedTitle: selectedTitle,
+            user_id: getDate[1]
           },
         })
           .then((res) => res.data)
           .then((res) => {
+            setTotalPurchaseConfirmList(res);
             setpurchaseconfirm(res);
             let set = new Set();
             for (let i = 0; i < res.length; i++) {
@@ -53,27 +53,30 @@ function SalesViewTable({ getDate }) {
             setTitleList([...set]);
             setmonth_of_sales(result);
           });
-      } else {
-        let result = 0;
-        console.log(typeof selectedTitle)
-        axios({
-          method: "post",
-          url: "/api/sellercenter/getpurchaseconfirm",
-          params: {
-            start: getDate[0].start,
-            end: getDate[0].end,
-            user_id: getDate[1],
-            title: selectedTitle,
-          },
-        })
-          .then((res) => res.data)
-          .then((res) => {
-            setpurchaseconfirm(res);
-            setmonth_of_sales(result);
-          });
-      }
     }
-  }, [getStartDate, getEndDate, user_id, selectedTitle]);
+  }, [getStartDate, getEndDate, user_id]);
+
+  useEffect(() => {
+    if(selectedTitle === "전체"){
+      setpurchaseconfirm(totalPurchaseConfirmList);
+      let result = 0;
+      for(let i = 0; i < totalPurchaseConfirmList.length; i++){
+        result += totalPurchaseConfirmList[i].totalprice;
+      }
+      setmonth_of_sales(result);
+    }else{
+      let result = 0;
+      let filter = totalPurchaseConfirmList.filter((item) => {
+        return item.title === selectedTitle;
+      }
+      );
+      setpurchaseconfirm(filter);
+      for(let i = 0; i < filter.length; i++){
+        result += filter[i].totalprice;
+      }
+      setmonth_of_sales(result);
+    }
+  },[selectedTitle])
 
   return (
     <DOV className="row">
