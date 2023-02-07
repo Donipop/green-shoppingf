@@ -14,10 +14,28 @@ const Review = ({ user }) => {
   const [letter, setletter] = useState(0);
   const [maintext, setMaintext] = useState(0);
   const [star, setStar] = useState(0);
+  const [purchaseCheck, setPurchaseCheck] = useState(false);
   const [account, setAccount] = useState({
     cont: "",
     title: "",
   });
+  useEffect(() => {
+    if(user === undefined) {
+      return;
+    }
+    //구매한 상품인지 확인
+    axios({
+      method: "get",
+      url: `/api/view/reviewCheck/${page}`,
+      params: {
+        user_id: user.user_id,
+        page: page,
+      }
+    }).then((res) => {
+      setPurchaseCheck(res.data);
+    });
+  }, [user]);
+
 
   const handleStarClick = (index) => {
     let clickStates = [...clicked];
@@ -41,6 +59,11 @@ const Review = ({ user }) => {
     if(user === undefined) {
       alert("로그인 후 이용해주세요");
       return;
+    } else {
+      if(!purchaseCheck) {
+        alert("구매한 상품만 후기를 작성할 수 있습니다.");
+        return;
+      }
     }
     if (star === 0) {
       alert("별점을 입력해주세요");
