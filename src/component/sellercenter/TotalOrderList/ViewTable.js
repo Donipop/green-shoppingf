@@ -60,7 +60,15 @@ function ViewTable({ getDate, marketName }) {
       });
   }, [marketName]);
 
-  const showProductModal = (e, index) => {
+  const showProductModal = (e, ID) => {
+    let index = 0;
+    list.filter(item => {
+        if(item["ID"] === ID){
+        index = list.indexOf(item);
+        return index;
+      }
+      return null;
+    })
     let data = {
       orderId: list[index]["ID"],
       postAddressId: list[index]["POSTADDRESSID"],
@@ -168,7 +176,7 @@ function ViewTable({ getDate, marketName }) {
                   <CLICKTD
                     data-bs-toggle="modal"
                     data-bs-target="#staticBackdrop"
-                    onClick={(e) => showProductModal(e, index)}
+                    onClick={(e) => showProductModal(e, item["ID"])}
                   >
                     {item["PRODUCTID"]}
                   </CLICKTD>

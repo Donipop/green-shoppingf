@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 function ProductInfo({ product, user }) {
+  let viewProductPrice = 999999999999999999999999999999999999999999999999999; // 제일 싼 제품의 가격
+  let viewProductId = 0; // 제일 싼 제품의 id
   const [listItem, setListItem] = useState([]);
   const [detailProduct, setDetailProduct] = useState([]);
   const [title, setTitle] = useState("");
@@ -47,7 +49,9 @@ function ProductInfo({ product, user }) {
             id: key,
             productDetailId: product.product[key].id,
             name: product.product[key].product_name,
-            price:
+            price: parseInt(product.product[key].product_price),
+            discount: parseInt(product.product[key].product_discount),
+            totalPrice:
               parseInt(product.product[key].product_price) -
               parseInt(product.product[key].product_discount),
             count: 1,
@@ -72,9 +76,7 @@ function ProductInfo({ product, user }) {
   const onChangeCount = (e) => {
     let key = parseInt(e.target.attributes.indexid.value);
     let type = e.target.attributes.btntype.value;
-    let realPrice =
-      parseInt(product.product[key].product_price) -
-      parseInt(product.product[key].product_discount);
+    let realPrice = parseInt(product.product[key].product_price);
 
     setListItem((listItem) => {
       return listItem.map((item) => {
@@ -99,7 +101,7 @@ function ProductInfo({ product, user }) {
     //총 상품금액
     let total = 0;
     listItem.map((item) => {
-      total = total + parseInt(item.price);
+      total = total + parseInt(item.totalPrice * item.count);
       return null;
     });
     setTotalPrice(total);
@@ -143,34 +145,40 @@ function ProductInfo({ product, user }) {
         setDetailProduct((detailProduct) => {
           return [...detailProduct, products];
         });
+        let productTotalPrice = parseInt(product.product[i].product_price - product.product[i].product_discount);
+        if(viewProductPrice > productTotalPrice){
+          viewProductPrice = productTotalPrice;
+          viewProductId = i;
+        }
       }
-
+      
       //메인 제품 가격
       if (
-        product.product[0].product_discount === 0 ||
-        product.product[0].product_discount === null ||
-        product.product[0].product_discount === undefined ||
-        product.product[0].product_discount === "0" ||
-        product.product[0].product_discount === "null" ||
-        product.product[0].product_discount === "undefined" ||
-        product.product[0].product_discount === ""
+        product.product[viewProductId].product_discount === 0 ||
+        product.product[viewProductId].product_discount === null ||
+        product.product[viewProductId].product_discount === undefined ||
+        product.product[viewProductId].product_discount === "0" ||
+        product.product[viewProductId].product_discount === "null" ||
+        product.product[viewProductId].product_discount === "undefined" ||
+        product.product[viewProductId].product_discount === ""
       ) {
+        console.log(viewProductPrice);
         setPrice({
           price: "",
-          discount: product.product[0].product_price + "원",
+          discount: product.product[viewProductId].product_price + "원",
           sale: "",
         });
       } else {
         setPrice({
-          price: product.product[0].product_price + "원",
+          price: product.product[viewProductId].product_price + "원",
           discount:
-            product.product[0].product_price -
-            product.product[0].product_discount +
+            product.product[viewProductId].product_price -
+            product.product[viewProductId].product_discount +
             "원",
           sale:
             Math.floor(
-              (product.product[0].product_discount /
-                product.product[0].product_price) *
+              (product.product[viewProductId].product_discount /
+                product.product[viewProductId].product_price) *
                 100
             ) + "%",
         });
@@ -205,8 +213,8 @@ function ProductInfo({ product, user }) {
     setMainImg(imgList[key].url);
   };
   const onClickBuyBtn = () => {
-    if(user === undefined || user === ''){
-      alert('로그인이 필요합니다.');
+    if (user === undefined || user === "") {
+      alert("로그인이 필요합니다.");
       return;
     }
     if (totalPrice === 0) {
@@ -218,12 +226,16 @@ function ProductInfo({ product, user }) {
     for (let i = 0; i < listItem.length; i++) {
       let Item = {
         name: "",
-        price: "",
+        price: 0,
+        discount: 0,
+        totalPrice: 0,
         count: "",
         productDetailId: "",
       };
       Item.name = listItem[i].name;
-      Item.price = listItem[i].price / listItem[i].count;
+      Item.price = listItem[i].price;
+      Item.discount = listItem[i].discount;
+      Item.totalPrice = listItem[i].totalPrice * listItem[i].count;
       Item.count = listItem[i].count;
       Item.productDetailId = listItem[i].productDetailId;
       changeListItem.push(Item);
@@ -239,8 +251,8 @@ function ProductInfo({ product, user }) {
   };
 
   function onClickToShoppingBasket() {
-    if(user === undefined || user === ''){
-      alert('로그인이 필요합니다.');
+    if (user === undefined || user === "") {
+      alert("로그인이 필요합니다.");
       return;
     }
     if (totalPrice === 0) {
@@ -272,34 +284,33 @@ function ProductInfo({ product, user }) {
     };
     let productDetailIdList = [];
     let countList = [];
-    for(let i = 0; i < data.listItem.length; i++){
-      productDetailIdList.push(data.listItem[i].productDetailId)
-      countList.push(data.listItem[i].count)
+    for (let i = 0; i < data.listItem.length; i++) {
+      productDetailIdList.push(data.listItem[i].productDetailId);
+      countList.push(data.listItem[i].count);
     }
-    
+
     axios({
       method: "post",
       url: "/api/sellercenter/addShoppingBasket",
       data: {
         productDetailIdList: productDetailIdList,
         countList: countList,
-        user_id: user.user_id
+        user_id: user.user_id,
       },
     }).then((res) => {
-      alert("장바구니에 담겼습니다.")
+      alert("장바구니에 담겼습니다.");
       window.location.reload();
     });
     //naviGate("/ShoppingBasket", { state: [data] });
   }
-  const onClickTalkBtn = () =>{
-    if(user === undefined || user === ''){
-      alert('로그인이 필요합니다.');
+  const onClickTalkBtn = () => {
+    if (user === undefined || user === "") {
+      alert("로그인이 필요합니다.");
       return;
     }
-    let productId = window.location.pathname.replace('/view/','');
-    window.open(`http://localhost:3000/ct/view?p=${productId}`)
-    
-  }
+    let productId = window.location.pathname.replace("/view/", "");
+    window.open(`http://localhost:3000/ct/view?p=${productId}`);
+  };
   return (
     <>
       <div className="col-1">
@@ -454,7 +465,18 @@ function ProductInfo({ product, user }) {
                       {/* 가격 */}
                       <div className="col-8 text-end mt-4">
                         <h5>
-                          {item.price
+                          {parseInt(item.price) === parseInt(item.totalPrice * item.count) ? null : (
+                              <del style={{ color: "red" }}>
+                                {item.price
+                                  .toString()
+                                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                  원
+                                  
+                              </del>
+                          )}
+                        </h5>
+                        <h5>
+                          {(item.totalPrice * item.count)
                             .toString()
                             .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                           원
@@ -490,7 +512,10 @@ function ProductInfo({ product, user }) {
         </div>
         <div className="row w-100 mt-2">
           <div className="col-4">
-            <button className="btn btn-outline-secondary w-100" onClick={onClickTalkBtn}>
+            <button
+              className="btn btn-outline-secondary w-100"
+              onClick={onClickTalkBtn}
+            >
               톡톡문의
             </button>
           </div>

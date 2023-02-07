@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useRef } from "react";
 import { useState } from "react";
+import styled from "styled-components";
 
 function ProductUpdateTable({ getProductData, marketName }) {
   const [product, setProduct] = useState([]);
@@ -40,7 +41,7 @@ function ProductUpdateTable({ getProductData, marketName }) {
     <div>
       <label>
         상품선택:
-        <input list="products" name="myBrowser" onChange={(e) => onChangeProduct(e)} />
+        <Input list="products" name="productInput" onChange={(e) => onChangeProduct(e)} />
       </label>
       <datalist id="products">
         {product.map((item, index) => {
@@ -57,5 +58,11 @@ function ProductUpdateTable({ getProductData, marketName }) {
     </div>
   );
 }
+
+const Input = styled.input`
+  font-size: 1rem;
+  padding: 0.5rem;
+  color: #333;
+`;
 
 export default ProductUpdateTable;
