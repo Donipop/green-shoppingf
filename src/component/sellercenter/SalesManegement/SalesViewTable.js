@@ -14,6 +14,7 @@ function SalesViewTable({ getDate }) {
   const [modalInfo, setModalInfo] = useState([]);
   const [titleList, setTitleList] = useState([]);
   const [selectedTitle, setSelectedTitle] = useState("전체");
+  const [orderBy, setOrderBy] = useState("none");
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
@@ -31,52 +32,83 @@ function SalesViewTable({ getDate }) {
     if (getStartDate === "" || getEndDate === "" || user_id === "") {
       return;
     } else {
-        let result = 0;
-        axios({
-          method: "post",
-          url: "/api/sellercenter/getpurchaseconfirm",
-          params: {
-            start: getDate[0].start,
-            end: getDate[0].end,
-            user_id: getDate[1]
-          },
-        })
-          .then((res) => res.data)
-          .then((res) => {
-            setTotalPurchaseConfirmList(res);
-            setpurchaseconfirm(res);
-            let set = new Set();
-            for (let i = 0; i < res.length; i++) {
-              result += res[i].totalprice;
-              set.add(res[i].title);
-            }
-            setTitleList([...set]);
-            setmonth_of_sales(result);
-          });
+      let result = 0;
+      axios({
+        method: "post",
+        url: "/api/sellercenter/getpurchaseconfirm",
+        params: {
+          start: getDate[0].start,
+          end: getDate[0].end,
+          user_id: getDate[1],
+        },
+      })
+        .then((res) => res.data)
+        .then((res) => {
+          setTotalPurchaseConfirmList(res);
+          setpurchaseconfirm(res);
+          let set = new Set();
+          for (let i = 0; i < res.length; i++) {
+            result += res[i].totalprice;
+            set.add(res[i].title);
+          }
+          setTitleList([...set]);
+          setmonth_of_sales(result);
+        });
     }
   }, [getStartDate, getEndDate, user_id]);
 
   useEffect(() => {
-    if(selectedTitle === "전체"){
+    if (selectedTitle === "전체") {
       setpurchaseconfirm(totalPurchaseConfirmList);
       let result = 0;
-      for(let i = 0; i < totalPurchaseConfirmList.length; i++){
+      for (let i = 0; i < totalPurchaseConfirmList.length; i++) {
         result += totalPurchaseConfirmList[i].totalprice;
       }
       setmonth_of_sales(result);
-    }else{
+      setOrderBy("none");
+    } else {
       let result = 0;
       let filter = totalPurchaseConfirmList.filter((item) => {
         return item.title === selectedTitle;
-      }
-      );
+      });
       setpurchaseconfirm(filter);
-      for(let i = 0; i < filter.length; i++){
+      for (let i = 0; i < filter.length; i++) {
         result += filter[i].totalprice;
       }
       setmonth_of_sales(result);
+      setOrderBy("none");
     }
-  },[selectedTitle])
+  }, [selectedTitle]);
+
+  useEffect(() => {
+    if (orderBy === "none") {
+      return;
+    }
+    if (orderBy === "ID ASC") {
+      let sort = purchaseconfirm.sort((a, b) => {
+        return a.id - b.id;
+      });
+      console.log(sort)
+      setpurchaseconfirm(sort);
+    } else if (orderBy === "ID DESC") {
+      let sort = purchaseconfirm.sort((a, b) => {
+        return b.id - a.id;
+      });
+      setpurchaseconfirm(sort);
+      
+    } else if (orderBy === "totalprice ASC") {
+      let sort = purchaseconfirm.sort((a, b) => {
+        return a.totalprice - b.totalprice;
+      });
+      setpurchaseconfirm(sort);
+      
+    } else if (orderBy === "totalprice DESC") {
+      let sort = purchaseconfirm.sort((a, b) => {
+        return b.totalprice - a.totalprice;
+      });
+      setpurchaseconfirm(sort);
+    }
+  }, [orderBy]);
 
   return (
     <DOV className="row">
@@ -119,11 +151,26 @@ function SalesViewTable({ getDate }) {
           })}
         </select>
       </label>
+      <label>
+        순서:&nbsp;
+        <select
+          type="text"
+          value={orderBy}
+          onChange={({ target: { value } }) => setOrderBy(value)}
+        >
+          <option value="none">설정안됨</option>
+          <option value="ID ASC">ID 정순</option>
+          <option value="ID DESC">ID 역순</option>
+          <option value="totalprice ASC">총 주문금액 정순</option>
+          <option value="totalprice DESC">총 주문금액 역순</option>
+        </select>
+      </label>
 
       <div className="col-12">
         <table>
           <thead>
             <tr>
+              <th>주문번호</th>
               <th>구매자</th>
               <th>결제시간</th>
               <th>주문확정시간</th>
@@ -143,7 +190,7 @@ function SalesViewTable({ getDate }) {
                     data-bs-target="#exampleModal"
                     onClick={(e) => showProductModal(index)}
                   >
-                    <td style={{ display: "none" }}>{item.id}</td>
+                    <td>{item.id}</td>
                     <td>{item.buyerid}</td>
                     <td>{item.purchasetime}</td>
                     <td>{item.purchaseconfirmtime}</td>

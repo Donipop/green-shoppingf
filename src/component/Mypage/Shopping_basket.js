@@ -89,14 +89,14 @@ function Shopping_basket({user}) {
               count: 0,
               productDetailId: 0,
               discount : 0,
-              totalprice : 0,
+              totalPrice : 0,
             };
             Item.name = shoppingBasket[i].name;
             Item.price = shoppingBasket[i].price * shoppingBasket[i].count;
             Item.discount = shoppingBasket[i].discount;
             Item.count = shoppingBasket[i].count;
             Item.productDetailId = shoppingBasket[i].productDetailId;
-            Item.totalprice = (shoppingBasket[i].price - shoppingBasket[i].discount) * shoppingBasket[i].count;
+            Item.totalPrice = (shoppingBasket[i].price - shoppingBasket[i].discount) * shoppingBasket[i].count;
             changeListItem.push(Item);
           }
         }
@@ -112,7 +112,7 @@ function Shopping_basket({user}) {
 
     for (var i = 0; i < shoppingBasket.length; i++) {
       if (isChecked[i] === true) {
-        finalorderprice += shoppingBasket[i].price * shoppingBasket[i].count;
+        finalorderprice += (shoppingBasket[i].price - shoppingBasket[i].discount) * shoppingBasket[i].count;
       }
     }
     set_orderprice(finalorderprice);
@@ -330,9 +330,3 @@ function Shopping_basket({user}) {
 }
 
 export default Shopping_basket;
-
-const hoverTd = styled.td`
-  &:hover {
-    background-color: #f8f9fa;
-  }
-`;

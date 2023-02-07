@@ -2,7 +2,7 @@ import Header from "../Header/Header";
 import LoginInterceptor from "../Login/LoginInterceptor";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import MypageSidebar from "./MypageSidebar";
-import { useNavigate, Route, Routes } from "react-router-dom";
+import { useNavigate, Route, Routes, Navigate } from "react-router-dom";
 import MypurChaseInquiry from "./MyPurchaseInquiry";
 import Shopping_basket from "./Shopping_basket";
 import Coupon from "./Coupon";
@@ -11,10 +11,11 @@ import Myinformation from "./Myinformation";
 import SellerSignup from "../SellerSignup/SellerSignup";
 import SellerSignupDetail from "../SellerSignup/SellerSignupDetail";
 import MypageTalkTalk from "./MypageTalkTalk";
-
 function Mypage({ user }) {
   if(user === undefined) {
-    return;
+    return<div>
+      <LoginInterceptor/>
+    </div>;
   }
   return (
     <div>

@@ -96,6 +96,7 @@ function SellerSettlement({ user }) {
       settotalpricemap([
         { market_name: market_namelist[i], totalprice: totalprice },
       ]);
+      console.log(before_settlement)
     }
   }, [before_settlement]);
 
