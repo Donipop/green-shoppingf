@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { NavItem } from "react-bootstrap";
 import styled from "styled-components";
 
 function OrderConfirmTable({ getDate, setModalInfo, marketName }) {
@@ -47,9 +48,56 @@ function OrderConfirmTable({ getDate, setModalInfo, marketName }) {
               </thead>
               <tbody>
                 {orderConfirm.map((order, index) => {
+                  if(getDate.start === "" && getDate.end === ""){
+                    let Istate = "";
+                    switch (String(order.STATE)) {
+                      case "0":
+                        Istate = "주문접수";
+                        break;
+                      case "1":
+                        Istate = "결제완료";
+                        break;
+                      case "2":
+                        Istate = "배송준비중";
+                        break;
+                      case "3":
+                        Istate = "배송중";
+                        break;
+                      case "4":
+                        Istate = "배송완료";
+                        break;
+                      case "5":
+                        Istate = "구매확정";
+                        break;
+                      case "6":
+                        Istate = "구매취소";
+                        break;
+                      default:
+                        Istate = "주문접수";
+                        break;
+                    }
+                    return (
+                      <tr key={index}>
+                        <CLICKTD
+                          data-bs-toggle="modal"
+                          data-bs-target="#staticBackdrop2"
+                          onClick={(e) => showProductModal(e, index)}
+                        >
+                          {order.ID}
+                        </CLICKTD>
+                        <td>{order.TIME}</td>
+                        <td>{Istate}</td>
+                        <td>{order.TITLE}</td>
+                        <td>{order.USER_NAME}</td>
+                        <td>{order.USER_TEL}</td>
+                        <td>{order.USER_ADDRESS}</td>
+                        <td>{order.USER_EMAIL}</td>
+                      </tr>
+                    );
+                  }
                   if (
                     order["TIME"] >= getDate.start &&
-                    order["TIME"] <= getDate.end
+                    order["TIME"] <= (getDate.end + " 23:59:59")
                   ) {
                     let Istate = "";
                     switch (String(order.STATE)) {
