@@ -60,14 +60,14 @@ function Shopping_basket({user}) {
   // 주문하기 버튼을 눌렀을 때
   function order_shopping_basket() {
     let FinalOrderList = [];
-    let marketNamelist = new Set();
+    let productDetailIdList = new Set();
     for (let i = 0; i < shoppingBasket.length; i++) {
       if (isChecked[i] === true) {
-        marketNamelist.add(shoppingBasket[i].marketName);
+        productDetailIdList.add(shoppingBasket[i].productDetailId);
       }
     }
 
-    let list1 = Array.from(marketNamelist);
+    let list1 = Array.from(productDetailIdList);
 
     for (let j = 0; j < list1.length; j++) {
       let changeListItem = [];
@@ -80,7 +80,7 @@ function Shopping_basket({user}) {
 
       for (let i = 0; i < shoppingBasket.length; i++) {
         if (isChecked[i] === true) {
-          if (shoppingBasket[i].marketName === list1[j]) {
+          if (shoppingBasket[i].productDetailId === list1[j]) {
             data.marketName = shoppingBasket[i].marketName;
             data.productId = parseInt(shoppingBasket[i].productId);
             let Item = {
@@ -103,8 +103,7 @@ function Shopping_basket({user}) {
       }
       FinalOrderList.push(data);
     }
-    console.log(FinalOrderList)
-    // Navigate("/Payment", { state: FinalOrderList });
+    Navigate("/Payment", { state: FinalOrderList });
   }
 
   // 체크 여부에 따른 주문금액 계산
