@@ -31,7 +31,7 @@ function ViewTable({ getDate, marketName }) {
           return item;
         } else if (
           item["TIME"] >= getDate.start &&
-          item["TIME"] <= getDate.end
+          item["TIME"] <= (getDate.end + " 23:59:59")
         ) {
           return item;
         } else {
