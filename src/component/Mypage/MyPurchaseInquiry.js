@@ -1,7 +1,5 @@
-import { isFocusable } from '@testing-library/user-event/dist/utils';
 import axios from 'axios';
 import {useState, useEffect} from 'react';
-import { Alert } from 'react-bootstrap';
 import MypageModal from './Mypagemodal';
 
 
@@ -53,9 +51,8 @@ import MypageModal from './Mypagemodal';
                 .then(() => {alert("구매확정이 완료되었습니다.");
                              window.location.reload()}) 
             }
-
         }
-
+        console.log(purchaselist)
     return(
     <div className='MyPurchaseInquiry' style={{marginTop:"40px"}}>
         <div>
@@ -189,7 +186,15 @@ import MypageModal from './Mypagemodal';
                             </table>
                           </div>       
                         ):(item.state === 6 ? (
-                        "구매취소"
+                            <div>
+                            <table style={{fontSize:"14px",textAlign:"center", height:"50px",all:"initial",marginLeft:"45px"}}>
+                                <thead>
+                                    <tr>
+                                        <th style={{paddingLeft:"19px"}} >구매취소</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                          </div>       
                         ):(null)))))))}
                 </div>
 
