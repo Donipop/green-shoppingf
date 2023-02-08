@@ -14,12 +14,7 @@ function PaymentPage({user}){
     const [productList, setProductList] = useState([]);
     const [isChecked, setIsChecked] = useState([true,false,false]);
     const [payType, setPayType] = useState('신용카드');
-    const [purchase, setPurchase] = useState({
-        delivery: '',
-        marketName: '',
-        productId:'',
-        listItem: [],
-    });
+    const [purchase, setPurchase] = useState([]);
     const [payInfo, setPayInfo] = useState({
         totalProductPrice: 0, //상품금액
         totalCuponPrice: 0, //쿠폰금액
@@ -78,20 +73,10 @@ function PaymentPage({user}){
                 productId: state[i].productId,
                 listItem: state[i].listItem,
             }
-            
             setPurchase((purchase) => {
-                return {
-                    ...purchase,
-                    delivery: parseInt(data.delivery),
-                    marketName: data.marketName,
-                    productId: data.productId,
-                    listItem: data.listItem,
-                }
+                return [...purchase, data]
             })
         }
-        
-
-        
     }, [state])
 
     const onChangeCheck = (e) => {
@@ -104,23 +89,28 @@ function PaymentPage({user}){
     }
 
     const onClickBuy = () => {
-        let data = {
-            paymentVo: purchase,
-            userId: user.user_id,
-            postAddress: postAddress,
-        }
-        axios.post('/api/payment/purchase',data)
-        .then((res) => {
-            if(res.data === 'success'){
-                alert('구매가 완료되었습니다.');
-                window.location.href = '/';
-            }else{
-                alert('구매에 실패하였습니다.');
-                window.location.href = '/';
+        for(let i=0; i<purchase.length; i++){
+            let data = {
+                paymentVo: purchase[i],
+                userId: user.user_id,
+                postAddress: postAddress,
             }
-        }).catch((err) => {
-            console.log(err);
-        })
+            axios.post('/api/payment/purchase',data)
+            .then((res) => {
+                if(i === purchase.length-1){
+                    if(res.data === 'success'){
+                        alert('구매가 완료되었습니다.');
+                        window.location.href = '/';
+                    }else{
+                        alert('구매에 실패하였습니다.');
+                        window.location.href = '/';
+                    }
+                }
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
+        
 
     }
     return (
