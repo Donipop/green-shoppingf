@@ -8,6 +8,7 @@ const SearchViewData = () => {
   const Array = [0, 1, 2, 3, 4];
   const [loading, setLoading] = useState(false);
   const [searchviewList, setSearchviewList] = useState([]);
+  const [categoryList, setCategoryList] = useState();
   const searchcont = new URLSearchParams(window.location.search).get(
     "searchcont"
   );
@@ -19,10 +20,15 @@ const SearchViewData = () => {
       url: `/api/searchview?searchcont=${searchcont}&name=${name}&category=${category}`,
     }).then((res) => {
       setSearchviewList(res.data);
+      setCategoryList(res.data.slice(-1))
       setLoading(true);
       
     });
   }, [searchcont, name]);
+
+  useEffect(() => {
+    console.log(categoryList)
+  }, [searchviewList]);
 
   const searchviewListzero = () => {
     if (searchviewList.length === 0) {
@@ -37,7 +43,7 @@ const SearchViewData = () => {
   return (
     <div style={{ paddingTop: "50px" }}>
       <UL>
-        {searchviewList.map((item) => (
+        {searchviewList.slice(0, -1).map((item,index) => (
           <LI key={item.id}>
             <A href={`view/${item.id}`}>
               <Dl>

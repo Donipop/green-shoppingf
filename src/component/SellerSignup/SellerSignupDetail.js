@@ -52,6 +52,7 @@ const SellerSignupDetail = ({user}) => {
   };
 
   const handleChangeFile = (e) => {
+    setFilename(e.target.files[0].name);
     if(e.target.id === "BusinessRegistrationImg"){
         let reader = new FileReader();
         reader.onload = (e) => {
@@ -64,6 +65,7 @@ const SellerSignupDetail = ({user}) => {
       }
   }
   const handleChangeFiles = (e) => {
+    setFilenames(e.target.files[0].name);
     if(e.target.id === "AccountImg"){
       let reader = new FileReader();
       reader.onload = (e) => {
@@ -93,7 +95,7 @@ const SellerSignupDetail = ({user}) => {
       alert("회사소개를 입력해주세요");
       return;
     }
-    if(account.bank_account.length < 10 || account.bank_account.length > 14){
+    if(account.bank_account.length < 10 || account.bank_account.length > 15){
       alert("계좌번호를 확인해주세요");
       return;
     }
@@ -114,7 +116,7 @@ const SellerSignupDetail = ({user}) => {
       },
     })
       .then(alert("신청이 완료되었습니다."))
-      // .then(navigate("/mypage"))
+      .then(navigate("/mypage"))
       .catch((err) => {
       });
   };
@@ -153,7 +155,7 @@ const SellerSignupDetail = ({user}) => {
                 }}
                 onKeyDown={(e) => ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
                 type="number"
-                maxLength={15}
+                maxLength={14}
                 className="form-control"
                 placeholder="계좌번호를 입력하세요"
                 name="bank_account"
