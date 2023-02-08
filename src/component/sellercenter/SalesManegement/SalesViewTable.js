@@ -88,20 +88,17 @@ function SalesViewTable({ getDate }) {
       let sort = purchaseconfirm.sort((a, b) => {
         return a.id - b.id;
       });
-      console.log(sort)
       setpurchaseconfirm(sort);
     } else if (orderBy === "ID DESC") {
       let sort = purchaseconfirm.sort((a, b) => {
         return b.id - a.id;
       });
       setpurchaseconfirm(sort);
-      
     } else if (orderBy === "totalprice ASC") {
       let sort = purchaseconfirm.sort((a, b) => {
         return a.totalprice - b.totalprice;
       });
       setpurchaseconfirm(sort);
-      
     } else if (orderBy === "totalprice DESC") {
       let sort = purchaseconfirm.sort((a, b) => {
         return b.totalprice - a.totalprice;

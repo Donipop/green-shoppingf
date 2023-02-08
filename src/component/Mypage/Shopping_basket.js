@@ -103,7 +103,8 @@ function Shopping_basket({user}) {
       }
       FinalOrderList.push(data);
     }
-    Navigate("/Payment", { state: FinalOrderList });
+    console.log(FinalOrderList)
+    // Navigate("/Payment", { state: FinalOrderList });
   }
 
   // 체크 여부에 따른 주문금액 계산

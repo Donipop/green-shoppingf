@@ -218,24 +218,34 @@ export default function UserSignUp() {
     }
   }
   function userSignUp() {
-    if (window.confirm("회원가입 하시겠습니까?")) {
-      // let tel = account.tel;
-      // let fixTel = tel.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
-      // setAccount({ ...account, tel: fixTel });
-      axios({
-        method: "post",
-        url: "/api/login/userSignUp",
-        data: account,
-      }).then((res) => {
-        console.log(res.data);
-        if (res.data === 1) {
-          alert("회원가입에 성공하셨습니다.");
-          Navigate("/login");
-        } else {
-          alert("죄송합니다. 나중에 다시 시도해주십시오.");
+    axios({
+      method: "post",
+      url: "/api/login/checkDuplicateNameAndTel",
+      params: {
+        user_name: account.name,
+        user_tel: account.tel,
+      }
+    }).then((res) => {
+      if (res.data > 0) {
+        alert("이미 가입된 회원입니다.");
+        Navigate("/login");
+        return;
+      } else {
+        if (window.confirm("회원가입 하시겠습니까?")) {
+          axios({
+            method: "post",
+            url: "/api/login/userSignUp",
+            data: account,
+          }).then((res) => {
+            if (res.data === 1) {
+              alert("회원가입에 성공하셨습니다.");
+              Navigate("/login");
+            } else {
+              alert("죄송합니다. 나중에 다시 시도해주십시오.");
+            }
+          });
         }
-      });
-    }
+  }})
   }
   const CheckDuplicateId = () => {
     if (account.username.length < 4) {
@@ -459,7 +469,7 @@ export default function UserSignUp() {
         <div className="list-group-item d-flex gap-3 py-3">
           <div className="d-flex gap-2 w-100 justify-content-between">
             <div className="w-100">
-              <span className="mb-0 d-block text-start">상제 주소</span>
+              <span className="mb-0 d-block text-start">상세 주소</span>
               <input
                 id="detailAddress"
                 name="detailAddress"
