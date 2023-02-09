@@ -10,39 +10,40 @@ const SalesStauts = ({user}) => {
     let day = today.getDate();
     let month = today.getMonth() + 1
     let year = today.getFullYear();
-    const [xAxisDate, setXAxisDate] = useState(new Date(Date.now() - 8 * 24 * 60 * 60 * 1000));
     const [list, setList] = useState({
         data: [0],
     });
 
     //오늘로부터 8일 계산식
-    const xaxisCategories = [];
-  for (let i = 0; i < 8; i++) {
-    day -= 1;
-    if (day === 0) {
-      day = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
-      month -= 1;
-      if (month === 0) {
-        month = 12;
+    const xaxisCategories = useState([]);
+    for (let i = 0; i < 8; i++) {
+        day -= 1;
+        if (day === 0) {
+          day = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+          month -= 1;
+          if (month === 0) {
+            month = 12;
+          }
+        }
+        xaxisCategories.unshift(`${month}.${String(day).padStart(2, '0')}`);
       }
-    }
-    xaxisCategories.unshift(`${month}.${String(day).padStart(2, '0')}`);
-  }
-    useEffect( () => {  
+    useEffect( () => {
+        if(xaxisCategories.length === 0) return;
         if(user )
         axios({
             method: 'get',
             url: '/api/sellercenter/salesstatus',
             params: {
                 id:  user.user_id,
-                start: year + "-" + month + "-" + (day-8),
-                end: year + "-" + month + "-" + (day),
+                start: year + "-" + month + "-" + xaxisCategories[0].split(".")[1],
+                end: year + "-" + month + "-" + xaxisCategories[7].split(".")[1],
             },
             })
-
-            .then(res => setList({...list,
-                data: res.data
-                }))
+            .then(res => {
+                setList({...list,
+                    data: res.data
+                    })
+            })
     }, [user])
       
     const linedata = {
@@ -63,14 +64,12 @@ const SalesStauts = ({user}) => {
                         sizeOffset: 6
                     }
                 },
-
                 dataLabels: {
                     enabled: false
                 },
                 stroke: {
                     curve: 'straight'
                 },
-            
                 grid: {
                     row: {
                         colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
@@ -93,7 +92,6 @@ const SalesStauts = ({user}) => {
                 
                 <ReactApexChart options={linedata.options} series={linedata.series} type="line" height={230} />    
                            
-
             </div>
         </div>
         
