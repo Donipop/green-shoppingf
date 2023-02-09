@@ -52,7 +52,6 @@ import MypageModal from './Mypagemodal';
                              window.location.reload()}) 
             }
         }
-        console.log(purchaselist)
     return(
     <div className='MyPurchaseInquiry' style={{marginTop:"40px"}}>
         <div>
@@ -101,7 +100,7 @@ import MypageModal from './Mypagemodal';
                        {item.id}
                      </div>
                      <div style={{fontSize:"14px", width:"180px", textAlign:"center"}}>
-                       {(item.price * item.count).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원({item.count})
+                       {((item.price * item.count) - (item.sale * item.count)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원({item.count})
                      </div>
                      {item.state === 0 ? (
                          <div>
