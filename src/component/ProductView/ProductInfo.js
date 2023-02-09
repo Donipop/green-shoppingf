@@ -342,12 +342,12 @@ function ProductInfo({ product, user }) {
         ) : (
           <div className="card">
             <a
-              href={product.mainimage}
+              href={product.mainImage}
               target="_blank"
               rel="noopener noreferrer"
             >
               <img
-                src={product.mainimage}
+                src={product.mainImage}
                 className="card-img-top"
                 alt="..."
               ></img>
