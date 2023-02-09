@@ -97,7 +97,7 @@ function ViewDate({ getDate }) {
               ? "0" + (month3.getMonth() + 1)
               : month3.getMonth() + 1) +
             "-" +
-            (month3.getDate() < 9 ? "0" + month3.getDate() : month3.getDate()),
+            (month3.getDate() <= 9 ? "0" + month3.getDate() : month3.getDate()),
           end:
             year +
             "-" +
