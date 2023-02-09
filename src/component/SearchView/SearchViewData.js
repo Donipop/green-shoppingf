@@ -3,6 +3,7 @@ import { FaStar } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { setCookie } from "../DataCollection/Cookie";
 
 const SearchViewData = () => {
   const Array = [0, 1, 2, 3, 4];
@@ -27,7 +28,9 @@ const SearchViewData = () => {
   }, [searchcont, name]);
 
   useEffect(() => {
-    console.log(categoryList)
+    if(categoryList === undefined){return}
+    console.log(categoryList[0].categoryList)
+    setCookie("searchCategory", categoryList[0].categoryList, { path: "/" });
   }, [searchviewList]);
 
   const searchviewListzero = () => {

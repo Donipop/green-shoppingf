@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Review from "./Review";
 import QnAList from "./QnAList";
 import Header from "../Header/Header";
+import Cookie, { setCookie } from "../DataCollection/Cookie";
 
 function View({user}) {
   const { page } = useParams();
@@ -27,6 +28,8 @@ function View({user}) {
       .get(`/api/view/product?product_num=${page}`)
       .then((res) => {
         setProductinfo(res.data);
+        //View카테고리 쿠키 저장
+        setCookie('viewCategory', res.data.category, {path: '/'})
       })
       .catch((err) => {
         console.log(err);

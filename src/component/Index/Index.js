@@ -3,6 +3,7 @@ import axios from "axios";
 import Header from "../Header/Header";
 import styled from "styled-components";
 import ItemRecommend from "./ItemRecommend";
+import { getCookie } from "../DataCollection/Cookie";
 
 export default Index;
 
@@ -47,10 +48,23 @@ function Index({ user }) {
   ]);
 
   useEffect(() => {
+    let viewCategory = getCookie("viewCategory");
+    let searchCategory = getCookie("searchCategory");
+    if (viewCategory === undefined && searchCategory === undefined) {
+      return;
+    }
+    let categorySet = new Set();
+    categorySet.add(viewCategory === undefined ? "" : viewCategory);
+    searchCategory.forEach(item => {
+      categorySet.add(item === undefined ? "" : item);
+    });
+    console.log(categorySet);
+
     axios.get("/api/randomitemlist").then((res) => {
       setList(res.data);
     });
   }, []);
+
 
   return (
     <div className="">
