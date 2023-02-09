@@ -31,7 +31,7 @@ const SearchViewData = () => {
   }, [searchviewList]);
 
   const searchviewListzero = () => {
-    if (searchviewList.length === 0) {
+    if (searchviewList.length === 1) {
       return (
         <div style={{ margin: "20px 20px 20px 20px",textAlign:"center" }}>
           검색된 결과가 없습니다.
