@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { useRef } from "react";
-
+import { getCookie } from "../DataCollection/Cookie";
 const ItemRecommend = () => {
   const Array = [0, 1, 2, 3, 4];
   const [page, setPage] = useState(1);
@@ -14,9 +14,38 @@ const ItemRecommend = () => {
   const nextRef = useRef();
 
   useEffect(() => {
-    axios.get("/api/recommenditemlist").then((res) => {
-      setList(res.data);
+    
+    // axios.get("/api/recommenditemlist").then((res) => {
+    //   // setList(res.data);
+    //   console.log(res.data);
+    // });
+    let viewCategory = getCookie("viewCategory");
+    let searchCategory = getCookie("searchCategory");
+    
+    if (viewCategory === undefined && searchCategory === undefined) {
+      axios.get("/api/recommenditemlist").then((res) => {
+        setList(res.data);
+      });
+      return;
+    }
+    let categorySet = new Set();
+    categorySet.add(viewCategory === undefined ? "" : viewCategory);
+    searchCategory.forEach(item => {
+      categorySet.add(item === undefined ? "" : item);
     });
+    let categoryArry = [];
+    categorySet.forEach((item)=>{
+      categoryArry.push(item.slice(0,6));
+    }) 
+     axios.get('/api/categoryItemList', {
+      params:{
+        category: categoryArry
+      }
+     })
+    .then((res)=>{
+      setList(res.data);
+    })
+
   }, []);
 
   const next = () => {
@@ -87,7 +116,7 @@ const ItemRecommend = () => {
               /3
             </span>
             </div>
-            <Span>이런 아이템 어떠세요?</Span>
+            <Span>최근 본 상품과 관련된 제품</Span>
           </HeaderDiv>
           <BodyDiv>
             <BodyscrollerDiv>
