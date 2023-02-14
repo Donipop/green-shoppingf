@@ -7,7 +7,6 @@ import Logout from "./component/Login/Logout";
 import Notice from "./component/Notice/Noticelist";
 import NoticeView from "./component/Notice/NoticeView";
 import Mypage from "./component/Mypage/Mypage";
-import Writenotice from "./component/Notice/Writenotice";
 import Review from "./component/ProductView/Review";
 import QnAList from "./component/ProductView/QnAList";
 import QnAQuestionWrite from "./component/ProductView/QnAQuestionWrite";
@@ -17,7 +16,6 @@ import QnAQuestionUpdate from "./component/ProductView/QnAQuestionUpdate";
 import QnAanswerUpdate from "./component/ProductView/QnAanswerUpdate";
 import PaymentPage from "./component/Payment/PaymentPage";
 import SellerReview from "./component/SellerCenter/reviewmanagement/SellerReview";
-import Header from "./component/Header/Header";
 import TalkTalk from "./component/TalkTalk/TalkTalk";
 import UserSignUp from "./component/SignUp/UserSignUp";
 import UserFindId from "./component/SignUp/UserFindId";
@@ -53,7 +51,6 @@ const Router = (props) => {
         <Route path='/Notice' element={<Notice/>} />
         <Route path='/NoticeDetail/:id' element={<NoticeView/>} />
         <Route path='/Mypage/*' element={<Mypage user={data}/>} />
-        <Route path='/writenotice' element={<Writenotice/>} />
         <Route path="/view/:page" element={<View user={data}/>} />
         <Route path='/view/:page/Review' element={<Review/>} />
         <Route path='/QnA:page' element={<QnAList/>} />
@@ -63,7 +60,6 @@ const Router = (props) => {
         <Route path='/QnA/answerUpdate/:page/:id/:child_id/:cont' element={<QnAanswerUpdate/>} />
         <Route path='/Payment' element={<PaymentPage user={data}/>} />
         <Route path='/Sellercenter/reviewmanagement' element={<SellerReview/>} />
-        {/* <Route path='/header' element={<Header user={data}/>} /> */}
         <Route path='/ct/:uuid' element={<TalkTalk user={data}/>} />
         <Route path='/searchview' element={<SearchView user={data}/>} />
         <Route path='/SellercenterMainpage' element={<SellerCenterMain/>} />
