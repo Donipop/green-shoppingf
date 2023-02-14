@@ -82,7 +82,7 @@ import MypageModal from './Mypagemodal';
                     <div style={{padding:"10px"}}>
                         {item.mainimage === null ? (
                             <a href={`/view/${item.productid}`}>
-                            <img  src={`http://donipop.com:3333/img/${item.productimage}`} width='80' height='80'></img>
+                            <img  src={`http://donipop.com/img/${item.productimage}`} width='80' height='80'></img>
                             </a>
                         ) : (
                             <img  src={item.mainimage} width='80' height='80'></img>

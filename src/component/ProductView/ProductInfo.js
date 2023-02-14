@@ -194,11 +194,11 @@ function ProductInfo({ product, user }) {
 
           if (i === 0) {
             img.id = i;
-            img.url = "http://donipop.com:3333/img/" + product.mainImg;
+            img.url = "http://donipop.com/img/" + product.mainImg;
             setMainImg(img.url);
           } else {
             img.id = i;
-            img.url = "http://donipop.com:3333/img/" + product.detailImg[i - 1];
+            img.url = "http://donipop.com/img/" + product.detailImg[i - 1];
           }
           setImgList((img2) => {
             return [...img2, img];

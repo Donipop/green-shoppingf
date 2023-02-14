@@ -55,7 +55,7 @@ const SearchViewData = () => {
                     <img src={item.mainimage} width="212" height="212"></img>
                   ) : (
                     <img
-                      src={`http://donipop.com:3333/img/${item.FILE_NAME}`}
+                      src={`http://donipop.com/img/${item.FILE_NAME}`}
                       width="212"
                       height="212"
                     ></img>

@@ -75,7 +75,7 @@ const MyReview = ({user}) => {
                 >
                   <a style={{ height: "100%", textDecoration: "none" }}href={`/view/${item.product_num}`}>
                   {item.mainimage === null ? (
-                            <img  src={`http://donipop.com:3333/img/${item.productimage}`} width='100' height='100'></img>
+                            <img  src={`http://donipop.com/img/${item.productimage}`} width='100' height='100'></img>
                         ) : (
                             <img  src={item.mainimage} width='100' height='100'></img>
                         )}
