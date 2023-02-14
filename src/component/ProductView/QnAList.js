@@ -79,7 +79,7 @@ const QnA = ({ page, user }) => {
       return;
     }
     window.open(
-      `http://localhost:3000/QnA/write/${page}/${user.user_id}`,
+      `QnA/write/${page}/${user.user_id}`,
       "_blank",
       "width=650, height=730"
     );
@@ -90,7 +90,7 @@ const QnA = ({ page, user }) => {
     e.preventDefault();
     let key = e.target.attributes.id.value;
     window.open(
-      `http://localhost:3000/QnA/reply/${page}/${key}/${user.user_id}`,
+      `/QnA/reply/${page}/${key}/${user.user_id}`,
       "_blank",
       "width=650, height=730"
     );
@@ -240,7 +240,7 @@ const QnA = ({ page, user }) => {
       return;
     }
     window.open(
-      `http://localhost:3000/QnA/update/${page}/${e.target.id}`,
+      `/QnA/update/${page}/${e.target.id}`,
       "_blank",
       "width=650, height=730"
     );
@@ -250,7 +250,7 @@ const QnA = ({ page, user }) => {
     let cont = reply[e.target.attributes.indexid.value].cont;
     let child_id = reply[e.target.attributes.indexid.value].child_id;
     window.open(
-      `http://localhost:3000/QnA/answerUpdate/${page}/${e.target.id}/${child_id}/${cont}`,
+      `/QnA/answerUpdate/${page}/${e.target.id}/${child_id}/${cont}`,
       "_blank",
       "width=650, height=730"
     );

@@ -28,7 +28,7 @@ function TalkTalk({user, param}){
 
     const connect = () => {
         client.current = new StompJs.Client({
-            brokerURL: "ws://localhost:8080/api/ws", // 웹소켓 서버로 직접 접속
+            brokerURL: "ws://donipop.com:8080/api/ws", // 웹소켓 서버로 직접 접속
             connectHeaders: {
                 "userId" : user.user_id ? user.user_id : null,
                 "marketOwner": params.get("m") ? params.get("m") : null,

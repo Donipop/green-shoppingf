@@ -309,7 +309,7 @@ function ProductInfo({ product, user }) {
       return;
     }
     let productId = window.location.pathname.replace("/view/", "");
-    window.open(`http://localhost:3000/ct/view?p=${productId}`);
+    window.open(`/ct/view?p=${productId}`);
   };
   return (
     <>
