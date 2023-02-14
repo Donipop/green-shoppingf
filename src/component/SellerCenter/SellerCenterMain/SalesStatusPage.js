@@ -13,7 +13,12 @@ const SalesStauts = ({user}) => {
     const [list, setList] = useState({
         data: [0],
     });
-
+    
+    if (month < 10) {
+        const zeroDate = ('00' + month).slice(-2);
+        month = zeroDate;
+      }
+    
     //오늘로부터 8일 계산식
     const xaxisCategories = useState([]);
     for (let i = 0; i < 8; i++) {
