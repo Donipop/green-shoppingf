@@ -88,7 +88,7 @@ export default function ProductImg({ getData, UpdateData }) {
 
       if (UpdateData[0].PRODUCTIMG[i].ISMAIN === "1") {
         mimg.src =
-          "http://donipop.com/img/" +
+          "http://donipop.com:3333/img/" +
           UpdateData[0].PRODUCTIMG[i].FILE_NAME;
         mimg.width = 150;
         mimg.height = 150;
@@ -102,7 +102,7 @@ export default function ProductImg({ getData, UpdateData }) {
         };
       } else {
         cimg.src =
-          "http://donipop.com/img/" +
+          "http://donipop.com:3333/img/" +
           UpdateData[0].PRODUCTIMG[i].FILE_NAME;
         cimg.width = 150;
         cimg.height = 150;
