@@ -28,7 +28,7 @@ function TalkTalk({user, param}){
 
     const connect = () => {
         client.current = new StompJs.Client({
-            brokerURL: "ws://donipop.com:8080/api/ws", // 웹소켓 서버로 직접 접속
+            brokerURL: "ws://localhost:8080/api/ws",
             connectHeaders: {
                 "userId" : user.user_id ? user.user_id : null,
                 "marketOwner": params.get("m") ? params.get("m") : null,
@@ -50,8 +50,6 @@ function TalkTalk({user, param}){
     }
     
     client.current.onStompError = function (frame) {
-    //   console.log('Broker reported error: ' + frame.headers['message']);
-    //   console.log('Additional details: ' + frame.body);
     };
 
     const disconnect = () => {
@@ -115,10 +113,7 @@ function TalkTalk({user, param}){
                 client.current.publish({
                     destination: "/api/queue",
                     body: JSON.stringify(msgData)
-                    // binaryBody: binaryData,
-                    // headers: { 'content-type': 'application/octet-stream' },
                 })
-                // setChat([...chat, TalkMyMessage(msgData.message.toString(),0)]);
                 e.target.value = '';
             }
         }
@@ -141,7 +136,7 @@ function TalkTalk({user, param}){
                 }}
                 >
                 <MDBIcon fas icon="angle-left" />
-                <p className="mb-0 fw-bold">Live chat</p>
+                <p className="mb-0 fw-bold">톡톡</p>
                 <MDBIcon fas icon="times" />
                 </MDBCardHeader>
                     <div className='scrollarea' ref={chatBody}>
@@ -155,7 +150,7 @@ function TalkTalk({user, param}){
                     </div>
                 <MDBTextArea
                             className="form-outline"
-                            label="Type your message"
+
                             id="textAreaExample"
                             rows={2}
                             style={{ resize: "none" }}

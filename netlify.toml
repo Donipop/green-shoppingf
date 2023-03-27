@@ -1,6 +1,6 @@
 [[redirects]]
 from = "/api/*"
-  to = "http://donipop.com:8080/api/:splat"  
+  to = "http://localhost:8080/api/:splat"  
   status = 200
   force = true
 

@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import { FaStar } from "react-icons/fa";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState,useEffect, useRef } from "react";
 import axios from "axios";
-import { useRef } from "react";
 import { getCookie } from "../DataCollection/Cookie";
 const ItemRecommend = () => {
   const Array = [0, 1, 2, 3, 4];
@@ -14,11 +12,6 @@ const ItemRecommend = () => {
   const nextRef = useRef();
 
   useEffect(() => {
-    
-    // axios.get("/api/recommenditemlist").then((res) => {
-    //   // setList(res.data);
-    //   console.log(res.data);
-    // });
     let viewCategory = getCookie("viewCategory");
     let searchCategory = getCookie("searchCategory");
     
@@ -28,10 +21,11 @@ const ItemRecommend = () => {
       });
       return;
     }
+
     let categorySet = new Set();
     categorySet.add(viewCategory === undefined ? "" : viewCategory);
     searchCategory.forEach(item => {
-      categorySet.add(item === undefined ? "" : item);
+      categorySet.add(item === undefined ? "" : item.slice(0,6));
     });
     let categoryArry = [];
     categorySet.forEach((item)=>{

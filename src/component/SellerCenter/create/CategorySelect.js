@@ -97,7 +97,6 @@ function CategorySelect({ getData, UpdateData }) {
   }, [UpdateProductData]);
 
   useEffect(() => {
-    //getData("category",category);
     getData("category", current_Categoy);
   }, [current_Categoy]);
   /**
@@ -128,7 +127,6 @@ function CategorySelect({ getData, UpdateData }) {
           setcurrent_Category((current_Categoy) => category.num);
           //선택한 카테고리의 하위 카테고리 목록을 가져옴
           get_CategoryList(category.num).then((res) => {
-            //console.log(categorylist);
             setCategorylist((categorylist) => {
               return {
                 ...categorylist,
